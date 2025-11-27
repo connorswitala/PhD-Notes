@@ -1,0 +1,439 @@
+\documentclass[10pt]{article}
+
+% Core math & graphics
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor} % load once, with options
+
+% Floats, tables, layout
+\usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{booktabs}
+
+% Units/symbol helpers (see notes about gensymb below)
+\usepackage{gensymb} % OK; if conflicts with \micro or \perthousand, consider siunitx
+
+% Captions/subcaptions (caption options applied before subcaption)
+\usepackage[labelfont=bf]{caption}
+\usepackage{subcaption}
+
+% Misc utilities
+\usepackage[export]{adjustbox}
+\usepackage{setspace}
+\usepackage{listings} % load once
+\usepackage{mdframed}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage{marginnote}
+\usepackage{csquotes}
+\usepackage[normalem]{ulem} % keep \emph as italics
+\usepackage{multicol}
+\usepackage{amsthm}
+
+% Number equations by section
+\numberwithin{equation}{section}
+
+% Theorem definition style
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section] % number within section
+
+% Nomenclature
+\usepackage[intoc]{nomencl}
+\makenomenclature
+
+% Hyperlinks (keep near the end)
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+
+
+
+
+\begin{document}
+\begin{flushleft}
+
+
+
+\onehalfspacing
+\tableofcontents
+\newpage
+
+
+\section{Thermodynamics}
+
+\subsection{Definitions}
+
+\begin{definition}[Moles]
+A mole is the amount of mass of a substance equal to its molecular weight, i.e., if you have $O_2$, than 32 kg of $O_2$ constitutes one kg-mole and 32 grams would constitute 32 gm-mole.
+\end{definition}
+
+\begin{definition}[Avagadro's constant]
+Avogradro's constant is the number of particles in one mole of that substance. It is denoted as '$\text{N}_\text{A}$' and is equal to $6.02 \cdot 10^{26}$ particles per kg-mole.    
+\end{definition}
+
+\begin{definition}[Universal gas constant]
+The universal gas constant is denoted by $\hat{R}$ and is equal to 8.314 J/mol-K. Its units are `energy per amount of substance per temperature increment` as it is a proportionality constant that relates energy to temperature and amount of substance. 
+\end{definition}
+
+\begin{definition}[Boltzmann constant]
+The Boltzmann constant is denoted by $k_B$ and is equal to $1.381 \cdot 10^{-23}$ J/k. It is the equivalent of the universal gas constant but on a \textit{per particle} basis. 
+\end{definition}
+
+\begin{definition}[Dalton's law of partial pressures]
+The pressure of a system can be found my summing up the partial pressures of each individual species:
+\begin{equation}
+    p = \sum_j p_j
+\end{equation}
+\end{definition}
+
+\begin{definition}[Mass fractions]
+The mass fraction of species $j$ ($Y_j$) is defined as the ratio of the density of species $j$ to the density of the mixture:
+\begin{equation}
+    Y_j = \frac{\rho_j}{\rho}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Molar fractions]
+The molar fraction of species $j$ ($X_j$) can be taken as the ratio of the partial pressure of species $j$ to the pressure of the mixture, or the ratio of the number of moles of species $j$ to the total number of moles in the system:
+\begin{equation}
+    \frac{p_j}{p} = \frac{\mathcal{N}_j}{\mathcal{N}} = X_j
+\end{equation}
+\end{definition}
+
+\begin{definition}[Mixture moleular weight]
+The mixture molecular weight, $\mathcal{M}$ can be defined as:
+\begin{equation}
+    \mathcal{M} = \frac{1}{\sum_j Y_j / \mathcal{M}_j} = \sum_j X_j \mathcal{M}_j
+\end{equation}
+Where $\mathcal{M}_j$ is the molecular weight of species $j$.
+\end{definition}
+
+\begin{definition}[Molar fractions to mass fractions] 
+The mass fraction of species $j$ can be obtained from the molar fraction by using:
+\begin{equation}
+    Y_j = X_j \frac{\mathcal{M}_j}{\mathcal{M}}
+\end{equation}
+The sum of the mass fractions
+\end{definition}
+
+\begin{definition}[Mixture gas constant]
+The gas constant of the mixture can be found with:
+\begin{equation}
+    R = \sum_j Y_j R_j
+\end{equation}
+
+where $R$ is the mixture specific gas constant ($\hat{R}/\mathcal{M}$) and $R_j$ is the specific gas constant of species $j$.
+\end{definition}
+
+\begin{definition}[Calorically perfect gas]
+A calorically perfect gas is a gas where the specific heats $c_p$ and $c_v$ are taken to be constant. The enthalpy is then $h = c_p T$, and the internal energy is $e = c_v T$.
+\end{definition}
+
+\begin{definition}{Thermally perfect gas}
+A thermally perfect gas is one there $c_p$ and $c_v$ are variables are are functions of $T$ only. Differential changes in enthalpy and internal energy is then d$h = c_p$d$T$, and d$e$ = $c_v$d$T$
+\end{definition}
+
+
+\subsection{Equations}
+
+\subsubsection{Equation of state}
+
+\begin{align}
+    PV &= mRT  
+    \\ pv &= RT
+    \\ pV &= \mathcal{N} \hat{R} T
+    \\ p &= \rho R T
+    \\ p V &= \mathcal{N} \hat{R} T
+    \\ p \mathcal{V} &= \hat{R} T
+    \\ p &= C\hat{R}T
+    \\ pv &= \eta \mathcal{R} T
+    \\ pV &= NkT
+    \\ p &= nkT
+\end{align}
+
+Where
+
+\begin{itemize}
+    \item $P$ is the pressure
+    \item $V$ is the volume
+    \item $v$ is the specific gas constant
+    \item $m$ is the mass
+    \item $T$ is the temperature
+    \item $\rho$ is the density
+    \item $\mathcal{V}$ is the molar volume (volume per mole)
+    \item $C$ is the concentration of moles per unit volume.
+    \item $\eta$ is the mole-mass ratio
+    \item $n$ is the number density, or number of particles per unit volume.
+\end{itemize}
+
+\section{Statistical thermodynamics}
+
+\begin{definition}[Bose-Einstein (BE) statistics]
+    For atoms and molecults made up of an \textit{even} number of elementary particles such as electrons, protons, and neutrons, there is no limit to the number particles that can be in any energy state at a given instant.
+\end{definition}
+
+\begin{definition}[Fermi-Dirac (FD) statistics]
+    For atoms and molecules made up of an \textit{odd} number of elementary particles, no energy state can be occupied by more than one particle.
+\end{definition}
+
+\begin{definition}[$W(N_j)$]
+
+    For these statistics, the number of microstates in a given macrostate is given by:
+
+    \begin{subequations}
+        \begin{align}
+            W(N_j) &= \prod_j \frac{(N_j + C_j - 1)!}{(C_j - 1)! N_j!} \label{Wbose}
+            \\ W(N_j) &= \prod_j \frac{C_j!}{(C_j - N_j)! N_j!} \label{Wfermi}
+        \end{align}
+        \label{W}
+    \end{subequations}
+
+    Here, Eq. [\ref{Wbose}] is used for BE statistics while Eg. [\ref{Wfermi}] is used for FD statistics. $C_j$ is the number of energy states, and $N_j$ is the number of particles in a group.
+    
+\end{definition}
+
+\begin{definition}[$W_\text{max}$]
+
+    $W_\text{max}$ is defined as the largest of the individual terms in Equations [\ref{W}] and is sometimes refered to as the \textit{most probable microstate}. By solving for this value by setting $\delta (\ln W) = 0$, we can find the particular values of $N_j$ that maximize $W$, giving:
+
+    \begin{equation}
+        N_j^* = \frac{C_j}{e^{\alpha + \beta \epsilon_j} \pm 1} \label{Nstar}
+    \end{equation}
+
+    Where the minus sign is for BE, and the plus for FD. $\alpha$ and $\beta$ are Lagrange multiplers used to enforce the constraints:
+
+    \begin{equation}
+        \sum_j \delta N_j = 0, \hspace{5mm} \sum_j \epsilon_j = \delta N_j
+    \end{equation}    
+\end{definition}
+
+\begin{definition}[Boltzmann limit]
+    The Boltzmann limit is used for conditions where the number of energy states far out numbers the number of group of particles. Therefore, $C_j >> N_j$, and Eqn. [\ref{Nstar}] reduced to:
+
+    \begin{equation}
+        N_j^* = C_j e^{-\alpha - \beta \epsilon_j}
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Boltzmann distribution]
+    The Boltzmann distribution, after solving for $\alpha$ and $\beta$ in the above, gives:
+
+    \begin{equation}
+        N_j^* = N \frac{C_j e^{-\epsilon_j / kT}}{\sum_j C_j e^{-\epsilon_j / kT}} \label{BoltzmannDist}
+    \end{equation}
+
+\end{definition}
+
+\begin{definition}[Molecular partition function]
+    The molecular partition function, $Q$, is defined as the denominator in Eq. [\ref{BoltzmannDist}]:
+
+    \begin{equation}
+        Q = \sum_j C_j e^{-\epsilon_j / kT}
+    \end{equation}
+    
+    However, this is in terms of groups of energy states having the same energy level $\epsilon_j$. If we we transition to the use of individual energy states, $\epsilon_j$ becomes $\epsilon_i$, and the $C_j$ term is neglected. The equation becomes:
+    
+    \begin{equation}
+        Q = \sum_i e^{-\epsilon_i / kT}
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Population of energy states]
+    The population of energy state $\epsilon_i$ then becomes:
+    \begin{equation}
+        N_i^{*'} = N \frac{ e^{-\epsilon_i / kT}}{\sum_i e^{-\epsilon_i / kT}}
+    \end{equation}    
+\end{definition}
+
+\begin{definition}[Energy levels and degeneracy]
+    Energy levels are sometimes more convenient to use. An energy level can have multiple energy states in it. If a level contains more than one state, it is said to be \textit{degnerate}, and the number of states inside an energy level $\epsilon_l$ is given as $g_l$. Therefore, the population of particles in energy level $\epsilon_l$, and the partition function is given as:
+
+    \begin{align}
+        Q &= \sum_l g_l e^{-\epsilon_l / kT}
+        \\ N_l^{*'} &= N \frac{ g_l e^{-\epsilon_l / kT}}{\sum_i g_l e^{-\epsilon_i / kT}}
+    \end{align}
+\end{definition}
+
+\begin{definition}[Boltzmann's relation]
+    Boltzmann's relation finds the relationship between the number of microstates $\Omega$ and the entropy of a system as:
+    \begin{equation}
+        S = k \ln \Omega
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Entropy]
+
+    Entropy can then be shown to be of the form:
+
+    \begin{equation}
+        S = Nk \left( \ln \frac{Q}{N} + 1 \right) + \frac{E}{T}
+    \end{equation}
+    
+\end{definition}
+
+
+\begin{definition}[Helmholtz free energy]
+    The Helmholtz free energy, $F$, is defined as:
+    \begin{equation}
+        F = E - TS \label{Helmholtz}
+    \end{equation}
+
+    Here, $E$ is the internal energy, $T$ is the temperature, and $S$ the entropy of the system. Differentiation of [\ref{Helmholtz}] yields:
+
+    \begin{equation}
+        dF = dE - TdS - SdT
+    \end{equation}
+
+    Since $dE - TdS = \mu dN - p dV$, ($\mu$ is the chemical potental per molecule, N is the number of particles, and $p$, $V$ is the pressure and volume of the system), this equation can be rewritten as:
+
+    \begin{equation}
+        dF = -SdT - pdV + \mu dN
+    \end{equation}
+
+    Which yields the following results:
+
+    \begin{equation}
+        S = - \left( \frac{\partial F}{\partial T} \right)_{V, N} \hspace{5mm} p = - \left( \frac{\partial F}{\partial V} \right)_{T, N} \hspace{5mm} \mu = \left( \frac{\partial F}{\partial N} \right)_{T, V}
+    \end{equation}
+    
+\end{definition}
+
+\begin{definition}[Thermodynamic properties of a system]
+    The thermodynamic properties of a system, assuming $Q$ and $\epsilon_i$'s are independant of $N$, are:
+
+    \begin{subequations}
+        \begin{align}
+            F &= -NkT \left(\ln \frac{Q}{N} + 1 \right)
+            \\ S &= Nk \left[ \ln \frac{Q}{N} + 1 + T \frac{\partial(\ln Q)}{\partial T} \right]
+            \\ E &= NkT^2 \frac{\partial (\ln Q)}{\partial T}
+            \\ p &= NkT \frac{\partial (\ln Q)}{\partial V}
+            \\ \mu &= -kT \ln \frac{Q}{T}
+        \end{align}
+    \end{subequations}
+\end{definition}
+
+\begin{definition}[Total partion function and energy]
+
+    As will be defined shortly, the total partion function is the product of all energy-type specific partion functions, i.e.:
+
+    \begin{equation}
+        Q = Q_{tr} Q_{rot} Q_{vib} Q_{el} = Q_{tr} \cdot \prod_{int} Q_{int}
+    \end{equation}
+
+    The total internal energy of a molecule is:
+
+    \begin{equation}
+        \epsilon = \epsilon_{tr} + \epsilon_{rot} + \epsilon_{vib} + \epsilon_{el}
+    \end{equation}
+
+    This also works for specific heat, $c_v$.
+    
+\end{definition}
+
+\begin{definition}[Partition function for translation energy]
+The partition function for translation energy is:
+
+\begin{equation}
+    Q_{tr} = V \left( \frac{2 \pi m k T}{h^2} \right)^\frac{3}{2}
+\end{equation}
+
+The translational internal energy can be found as:
+
+\begin{equation}
+    E_{tr} = \frac{3}{2} NkT \hspace{5mm} e_{tr} = \frac{3}{2}R T
+\end{equation}
+
+Where the first equation is per N molecules, and the second equation is on a per-unit mass basis. The specific heat is then:
+
+\begin{equation}
+    c_{v_{tr}} = \left(\frac{\partial e_{tr}}{\partial T} \right)_{v} = \frac{3}{2} R
+\end{equation}
+    
+\end{definition}
+
+\subsection{Electronic energies}
+
+Since monoatomic molecules do not have rotational or vibrational energies, the only internal energy is the electronic one. However, this still applies to diatomic molecules.
+
+\begin{definition}[Electronic internal energy]
+    The electronic internal energy can largely be ignored at moderate temperatures for some species of gases. However, they can become important at higher temperatures. Because the spacing between the levels can be so large, usually only a few degenerate levels are accounted for. Electronic energy accounts for when electrons populate higher electronic energy levels.
+\end{definition}
+
+\begin{definition}[Electronic partition function]
+
+    The electronic partition function is:
+
+    \begin{equation}
+        Q_{el} = \sum_l g_l e^{-\epsilon_l / kT} = \sum_l g_l e^{\theta_l / T}
+    \end{equation}
+
+    Where $\theta_l = \epsilon_l / k$ are the \textit{characteristic temperatures for electronic excitation}. Energy of the ground level is taken to be 0, so the first term is just $g_0$ with no exponential. If we assume that just the first two terms are used, the internal energy becomes:
+    
+    \begin{equation}
+        e_{el} = R \theta_1 \frac{(g_1 / g_0)e^{-\theta_l / T}}{1 + (g_1/g_0)e^{-\theta_1 / T}}
+    \end{equation}
+
+    and the specific heat:
+
+    \begin{equation}
+        c_{v_{el}} = R \left( \frac{\theta_1}{T} \right)^2 \frac{(g_1/g_0) e^{-\theta_1 / T}}{[1 + (g_1/g_0) e^{-\theta_1 / T}]^2}
+    \end{equation}
+    
+\end{definition}
+
+\subsection{Diatomic internal energies}
+
+
+\section{Thermochemical Nonequilibrium}
+
+\begin{definition}[Total continuity equation]
+    For chemically reacting flows, the total continuity equation is unaffected. It is:
+
+    \begin{equation}
+        \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \textbf{u}) = 0
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Species mass conservation]
+    For each independant species $j$, a conservation equation is necessary to include chemical reactions. The equation is then:
+
+    \begin{equation}
+        \frac{\partial \rho_j}{\partial t} + \nabla \cdot (\rho_j \textbf{u}) + \nabla \cdot (\rho_j \textbf{V}_j) = \dot{\omega}_j + \dot{\phi}_j
+    \end{equation}
+
+    Where:
+
+    \begin{itemize}
+        \item $\rho_j$ is the density of the species.
+        \item $\textbf{u}$ is the mass-averaged velocity of the mixture.
+        \item $\textbf{V}_j$ is te diffusion velocity.
+        \item $\dot{\omega}_j$ is the mass production due to chemical reaction.
+        \item $\dot{\phi}_j$ is the mass production due to radiative processes.
+    \end{itemize}
+    
+\end{definition}
+
+
+\begin{definition}[Conservation of momentum]
+    The same goes for conservation of momentum.
+
+    \begin{equation}
+        \rho \frac{Du_i}{Dx_i} = -\frac{\partial p}{\partial x_i}
+    \end{equation}
+    
+\end{definition}
+
+
+
+
+\section{Turbulence}
+
+
+\end{flushleft}
+\end{document}
