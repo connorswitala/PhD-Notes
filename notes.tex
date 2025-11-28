@@ -34,6 +34,9 @@
 
 % Custom commands
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ub}[2]{\underbracket{#1}_{#2}}
+\newcommand{\bb}[1]{\left[ #1 \right]}
+\newcommand{\bp}[1]{\left( #1 \right)}
 
 % Number equations by section
 \numberwithin{equation}{section}
@@ -398,7 +401,6 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
 
 
 \begin{definition}[Species conservation equation]
-
     \begin{equation}
     \underbracket{ \pd{}{t} \rho_s}_1 + \underbracket{\pd{}{x_j} \rho_s u_j}_2 = \underbracket{\pd{}{x_j} (\rho D_s \pd{}{x_j} y_s)}_3 + \underbracket{\dot{\omega}_s}_4
     \end{equation}
@@ -406,22 +408,21 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
     The terms are:
 
     \begin{enumerate}
-        \item Rate of change of mass of species s
-        \item Flux of mass due to convection
-        \item Molecular diffusion flux of mass
-        \item Chemical production rate
+        \item Rate of change of mass of species $s$.
+        \item Flux of mass due to convection.
+        \item Molecular diffusion flux of mass.
+        \item Chemical production rate.
     \end{enumerate}
 
     The variables are:
     \begin{itemize}
         \item $\rho_s$ is the density of species s
         \item $u_j$ is the mass-averaged velocity in the $j$-direction
-        \item $D_s$ is the mass diffusion coefficient of species s
+        \item $D_s$ is the effective diffusion coefficient of species s
         \item $y_s$ is the molar fraction of species s
         \item $\dot{\omega}_s$ is the chemical production rate of species s
-    
+    \end{itemize}
 \end{definition}
-
 
 \begin{definition}[Total continuity equation]
     For chemically reacting flows, the total continuity equation is unaffected. It is:
@@ -429,38 +430,122 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
     \begin{equation}
         \pd{\rho}{t} + \nabla \cdot (\rho \textbf{u}) = 0
     \end{equation}
-\end{definition}
 
-\begin{definition}[Species mass conservation]
-    For each independant species $j$, a conservation equation is necessary to include chemical reactions. The equation is then:
+    Since no mass can be created or destroyed, the condition of atomic conservation is applied, which yields:
 
     \begin{equation}
-        \frac{\partial \rho_j}{\partial t} + \nabla \cdot (\rho_j \textbf{u}) + \nabla \cdot (\rho_j \textbf{V}_j) = \dot{\omega}_j + \dot{\phi}_j
+        \sum_{s} \dot{w}_s = 0
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Mixture momentum conservation]
+
+    \begin{equation}
+        \underbracket{\pd{}{t} \rho u_i}_{1} + \underbracket{\pd{}{x_j} \rho u_i u_j}_{2} = \underbracket{-\pd{p}{x_i}}_{3} + \underbracket{\pd{}{x_j} \left[ \mu \left( \pd{u_i}{x_j} + \pd{u_j}{x_i} \right) - \frac{2}{3} \mu \pd{u_k}{x_k} \delta_{ij} \right]}_4
     \end{equation}
 
-    Where:
+    The terms are:
+
+    \begin{enumerate}
+        \item Rate of change of $i$th component of momentum.
+        \item Flux of $i$th component of momentum due to convection.
+        \item Pressure forces in $i$th direction.
+        \item Viscous terms acting in $i$th direction.
+    \end{enumerate}
+
+    Here, the mixture pressure is defined with Dalton's law of partial pressures, and the pressure of an individual heavy species is:
+
+    \begin{equation}
+        p_s = \frac{\rho_s \hat{R}T}{\mathcal{M}_s}
+    \end{equation}
+
+    For electron pressure, we get:
+
+    \begin{equation}
+        p_e = \frac{\rho_e \hat{R} T_e}{\mathcal{M}_e}
+    \end{equation}
+
+    Where the $e$ subscript denotes an electron property.
+    
+\end{definition}
+
+
+\begin{definition}[Vibrational energy conservation]
+
+    \begin{multline}
+        \ub{\pd{}{t} \rho e_v}{1} + \ub{\pd{}{x_j}\rho e_v u_j}{2} = \ub{\pd{}{x_j} \bp{\eta_v \pd{T_v}{x_j}}}{3} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{v,s} D_s \pd{y_s}{x_j}}}{4} \\ + \ub{\sum_\text{s = mol.} \rho_s \frac{(e_{v,s}^* - e_{v,s})}{<\tau_s>}}{5} + \ub{\sum_\text{s=mol.} \rho_s \frac{(e_{v,s}^{**} - e_{v,s})}{<\tau_{es}>}}{6} + \ub{\sum_\text{s=mol.}\dot{w}_s \hat{D}_s}{7}
+    \end{multline}
+
+    The terms are:
+
+    \begin{enumerate}
+        \item Rate of change of vibrational energy per unit volume.
+        \item The flux of vibrational energy due to convection.
+        \item The conduction of vibrational energy due to vibrational temperature gradients.
+        \item The diffusion of vibrational energy due to molecular concentration gradients.
+        \item The energy exchange (relaxation) between vibrational and translational modes due to collisions within the cell.
+        \item The energy exchange between vibrational and electronic modes.
+        \item The vibrational lost/gained due to molecular depletion (dissociation) or production (recombination).
+    \end{enumerate}
+
+    The variables are:
 
     \begin{itemize}
-        \item $\rho_j$ is the density of the species.
-        \item $\textbf{u}$ is the mass-averaged velocity of the mixture.
-        \item $\textbf{V}_j$ is te diffusion velocity.
-        \item $\dot{\omega}_j$ is the mass production due to chemical reaction.
-        \item $\dot{\phi}_j$ is the mass production due to radiative processes.
+        \item $e_v$ is the vibrational energy per unit mass, defined as $\displaystyle e_v = \sum_{s=1}^\text{NS} \frac{\rho_s e_{v,s}}{\rho}$. $e_v$ is defined as a function of $T_v$, the vibrational temperature.
+        \item $\eta_v$ is the vibrational thermal conductivity.
+        \item $h_{v,s}$ is the vibrational enthalpy. It is identical to $e_{v,s}$.
+        \item $e_{v,s}^*$ is the vibrational energy of species $s$ at the translational-rotational temperature.
+        \item $e_{v,s}^{**}$ is the vibrational energy at the electron temperature. 
+        \item $<\tau_s>$ is the characteristic relaxation times for translational-vibrational (T-V) energy exchange.
+        \item $<\tau_{es}>$ is the characteristic relation times for electron-vibrational (e-V) energy exchange.
+        \item $\hat{D}_s$ is the vibration energy level representative of those molecules of species $s$ which are created or destroyed (recombined or dissociated) because of their high vibrational quantum numbers.
     \end{itemize}
     
 \end{definition}
 
 
-\begin{definition}[Conservation of momentum]
-    The same goes for conservation of momentum.
+\begin{definition}[Electron and electronic excitation energy conservation]
 
-    \begin{equation}
-        \rho \frac{Du_i}{Dx_i} = -\frac{\partial p}{\partial x_i}
-    \end{equation}
+    \begin{multline}
+        \ub{\pd{}{t} \rho e_e}{1} + \ub{\pd{}{x_j} \bb{u_j(\rho e_e + p_e)}}{2} = \ub{u_j \pd{p_e}{x_j} }{3} + \ub{\pd{}{x_j} \bp{\eta_e \pd{T_e}{x_j}}}{4} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{e,s} D_s \pd{y_s}{x_j}}}{5} \\ + \ub{2 \rho_e \frac{3}{2} \hat{R}(T - T_e) \sum_{s=1}^\text{NS - 1} \frac{\nu_{es}}{\mathcal{M}_s}}{6}  - \ub{\sum_\text{s=ion}\dot{n}_{e,s} \hat{I}_s}{7} - \ub{\sum_\text{s=mol.} \rho_s \frac{e_{v,s}^{**} - e_{v,s}}{<\tau_{es}>}}{8} - \ub{Q_\text{rad}}{9}
+    \end{multline}
+
+    Terms are:
+
+    \begin{enumerate}
+        \item Rate of change of electronic energy per unit volume.
+        \item The flux of electronic enthalpy due to convection.
+        \item The word done on electrons by an electron field by an electron pressure gradient.
+        \item The conduction of electronic energy due to electron temperature gradient.
+        \item The diffuction of electronic energy due to concentration gradients.
+        \item The energy exchange due to elastic collisions between electrons and heavy particles.
+        \item Energy loss due to electron impact ionization (note the sum indices sum over ionized species only).
+        \item The relaxation due to inelastic collisions between electrons and molecules. 
+        \item Rate of energy loss due to radiation caused by electronic transitions.
+    \end{enumerate}
+
+    The variables are:
+    \begin{itemize}
+        \item $e_e$ is the electronic energy per unit mass and contains contributions from electronic energy levels. It is defined as $\displaystyle e_e = \sum_{s=1}^\text{NS} \frac{\rho_s e_{e,s}}{\rho}$
+        \item  $e_{e,s}$ is the electronic energy per unit mass of species $s$ and is defined as a function of $T_e$.
+        \item $T_e$ is the electron temperature.
+        \item $\eta_e$ is the is the electronic thermal conductivity.
+        \item $h_{e,s}$ is the electronic enthalpy per unit mass and is idential to $e_{e,s}$ for all species except free electrons. For free electrons it is defined as: $ \displaystyle h_{e,e} = e_{e,e} + \frac{\hat{R}T_e}{\mathcal{M}_e}$
+        \item $\nu_{e,s}$ is the effective collision frequency of electrons with heavy particles.
+        \item $\dot{n}_{e,s}$ is the molar rate of production of species $s$ by electron impact ionizations.
+        \item $\hat{I}_s$ is the energy per unit mole lost by a free electron in producing species $s$ through electron impact ionization.
+        \item $Q_\text{rad}$ is the radiant energy transfer rate due to electron transitions.
+    \end{itemize}
     
 \end{definition}
 
+\begin{definition}[Total energy conservation]
 
+    \begin{multline}
+        \ub{\pd{}{t} \rho E}{1} + \ub{\pd{}{x_j} \rho H u_j}{2} = \ub{\pd{}{x_j} \bp{\eta \pd{T}{x_j} + \eta_v \pd{T_v}{x_j} + \eta_e \pd{T_e}{x_j}}}{3} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_s D_s \pd{y_s}{x_j}}}{4} + \ub{\pd{}{x_j} \bb{u_i \mu \bp{\pd{u_i}{x_j} + \pd{u_j}{x_i}}}}{5} - \ub{Q_\text{rad}}{6}
+    \end{multline}
+    
+\end{definition}
 
 
 \section{Turbulence}
