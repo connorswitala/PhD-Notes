@@ -30,6 +30,10 @@
 \usepackage[normalem]{ulem} % keep \emph as italics
 \usepackage{multicol}
 \usepackage{amsthm}
+\usepackage{mathtools}
+
+% Custom commands
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 
 % Number equations by section
 \numberwithin{equation}{section}
@@ -392,11 +396,38 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
 
 \section{Thermochemical Nonequilibrium}
 
+
+\begin{definition}[Species conservation equation]
+
+    \begin{equation}
+    \underbracket{ \pd{}{t} \rho_s}_1 + \underbracket{\pd{}{x_j} \rho_s u_j}_2 = \underbracket{\pd{}{x_j} (\rho D_s \pd{}{x_j} y_s)}_3 + \underbracket{\dot{\omega}_s}_4
+    \end{equation}
+
+    The terms are:
+
+    \begin{enumerate}
+        \item Rate of change of mass of species s
+        \item Flux of mass due to convection
+        \item Molecular diffusion flux of mass
+        \item Chemical production rate
+    \end{enumerate}
+
+    The variables are:
+    \begin{itemize}
+        \item $\rho_s$ is the density of species s
+        \item $u_j$ is the mass-averaged velocity in the $j$-direction
+        \item $D_s$ is the mass diffusion coefficient of species s
+        \item $y_s$ is the molar fraction of species s
+        \item $\dot{\omega}_s$ is the chemical production rate of species s
+    
+\end{definition}
+
+
 \begin{definition}[Total continuity equation]
     For chemically reacting flows, the total continuity equation is unaffected. It is:
 
     \begin{equation}
-        \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \textbf{u}) = 0
+        \pd{\rho}{t} + \nabla \cdot (\rho \textbf{u}) = 0
     \end{equation}
 \end{definition}
 
