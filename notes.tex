@@ -469,7 +469,6 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
     
 \end{definition}
 
-
 \begin{definition}[Vibrational energy conservation]
 
     \begin{multline}
@@ -500,9 +499,7 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
         \item $<\tau_{es}>$ is the characteristic relation times for electron-vibrational (e-V) energy exchange.
         \item $\hat{D}_s$ is the vibration energy level representative of those molecules of species $s$ which are created or destroyed (recombined or dissociated) because of their high vibrational quantum numbers.
     \end{itemize}
-    
 \end{definition}
-
 
 \begin{definition}[Electron and electronic excitation energy conservation]
 
@@ -536,7 +533,6 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
         \item $\hat{I}_s$ is the energy per unit mole lost by a free electron in producing species $s$ through electron impact ionization.
         \item $Q_\text{rad}$ is the radiant energy transfer rate due to electron transitions.
     \end{itemize}
-    
 \end{definition}
 
 \begin{definition}[Total energy conservation]
@@ -563,11 +559,30 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
         \item $H$ is the total enthalpy per unit mass, defined as $\displaystyle H = E + \frac{p}{\rho}$
         \item $\eta$ is the frozen thermal conductivity of heavy particles. The part in which exchanges of translational and rotational energy occur.
     \end{itemize}
-
-
-
 \end{definition}
 
+\begin{definition}[Two temperature model]
+
+    Everything before this assumes a three-temperature model, where there is a single temperature dedicated to translational-rotational energy, vibrational energy, and electronic-electron energies. The two temperature model assumes that one temperature can be used for describing the energy of translational-rotational energies, and then the rest (vib-electronic-electron) are desibed by the second temperature, $T_V$. Therefore:
+    
+    \begin{equation}
+        T_v = T_e = T_V
+    \end{equation}
+
+    By combining the vibrational and electronic energy equations, we get the vibrational-electronic energy conservation equation:
+
+    \begin{multline}
+        \ub{ \pd{}{t} \rho e_V}{1} + \ub{\pd{}{x_j} \rho e_V u_j}{2} = \ub{- p_e \pd{u_j}{x_j}}{3} + \ub{\pd{}{x_j} \bb{(\eta_v + \eta_e) \pd{T_V}{x_j}}}{4} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{V,s} D_s \pd{y_s}{x_j}}}{5} + \ub{\sum_{s=mol.} \rho_s \frac{(e_{v,s}^* - e_{v,s})}{<\tau_s>}}{6} \\ + \ub{2 \rho_e \frac{3}{2} \hat{R}(T - T_V) \sum_{s=1}^\text{NS - 1} \frac{\nu_{es}}{\mathcal{M}_s}}{7}  - \ub{\sum_\text{s=ion} \dot{n}_{e,s} \hat{I}_s}{8} + \ub{ \sum_{s=mol.} \dot{w}_s \hat{D}_s}{9}- \ub{Q_\text{rad}}{10}
+    \end{multline}
+
+    Where:
+
+    \begin{align}
+        e_V &= e_v + e_e
+        \\ h_{V,s} &= h_{v,s} h_{e,s}
+    \end{align}
+    
+\end{definition}
 
 
 
