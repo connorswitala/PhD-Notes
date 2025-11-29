@@ -545,10 +545,30 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
         \ub{\pd{}{t} \rho E}{1} + \ub{\pd{}{x_j} \rho H u_j}{2} = \ub{\pd{}{x_j} \bp{\eta \pd{T}{x_j} + \eta_v \pd{T_v}{x_j} + \eta_e \pd{T_e}{x_j}}}{3} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_s D_s \pd{y_s}{x_j}}}{4} + \ub{\pd{}{x_j} \bb{u_i \mu \bp{\pd{u_i}{x_j} + \pd{u_j}{x_i}}}}{5} - \ub{Q_\text{rad}}{6}
     \end{multline}
     
+    The terms are:
+
+    \begin{enumerate}
+        \item Rate of change of total energy per unit volume.
+        \item The flux of total enthalpy due to convection.
+        \item The conduction of energy due to temperature, vibrational temperature, and electron temperature gradients.
+        \item The diffusion of energy due to concentration gradients.
+        \item The word done by shear forces.
+        \item The rate of energy loss due to radiation caused by electronic transitions.
+    \end{enumerate}
+
+    The variables are:
+
+    \begin{itemize}
+        \item $E$ is the total energy per unit volume, defined as $\displaystyle E = \frac{u_i u_i}{2} + \sum_{s=1}^\text{NS} \frac{\rho_s e_s}{\rho}$
+        \item $H$ is the total enthalpy per unit mass, defined as $\displaystyle H = E + \frac{p}{\rho}$
+        \item $\eta$ is the frozen thermal conductivity of heavy particles. The part in which exchanges of translational and rotational energy occur.
+    \end{itemize}
+
+
+
 \end{definition}
 
 
-\section{Turbulence}
 
 
 \end{flushleft}

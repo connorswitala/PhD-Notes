@@ -6,4 +6,3 @@
 \contentsline {subsection}{\numberline {2.1}Electronic energies}{8}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Diatomic internal energies}{9}{subsection.2.2}%
 \contentsline {section}{\numberline {3}Thermochemical Nonequilibrium}{9}{section.3}%
-\contentsline {section}{\numberline {4}Turbulence}{13}{section.4}%
