@@ -42,7 +42,16 @@
 \numberwithin{equation}{section}
 
 % Theorem definition style
-\theoremstyle{definition}
+\newtheoremstyle{defwithitnote}      % name
+  {3pt}{3pt}                         % space above/below
+  {\normalfont}                      % body font
+  {}                                 % indent
+  {\bfseries}                        % head font (Definition)
+  {:}                                % punctuation after head
+  {0.5em}                            % space after head
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ \textit{(#3)}}}
+  %                                 % #1 = name, #2 = number, #3 = optional note
+\theoremstyle{defwithitnote}
 \newtheorem{definition}{Definition}[section] % number within section
 
 % Nomenclature
@@ -397,10 +406,151 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
 \subsection{Diatomic internal energies}
 
 
+\newpage
+\section{High Temperature Transport Models}
+
+\textit{References for this section}
+
+\begin{enumerate}
+    \item \textit{A Review of Reaction Rates and Thermodynamic and Transport Properties for an 11-Species Air Model for Chemical and Thermal Nonequilibrium Calculations to 30,000 K}, Gupta, Yos, Thompson, Lee, 1990 NASA RP 1232.
+    \item \textit{An assessment of Transport Property Methodologies for Hypersonic Flows}, Palmer, 1971, AIAA.
+\end{enumerate}
+
+
+\subsection{Collision integral definitions}
+
+\begin{definition}[Collision cross sections]
+    The collision cross section has infinitely many values. Four of them are used for fluid dynamics to determine transport properties. The collision cross sections are, in general, the weighted averages of the cross sections for collisions between species $i$ and $j$. They are defined as:
+    
+    \begin{equation}
+        \pi \bar{\Omega}_{ij}^{(l,s)} = \frac{\int_{0}^{\infty} \int_{0}^{\pi} \exp(-\gamma^2) \gamma^{2s+3}(1 - \cos^l \chi) 4 \pi \sigma_{ij} \sin\chi d \chi d\gamma}{\int_{0}^{\infty} \int_{0}^{\pi} \exp(-\gamma^2) \gamma^{2s + 3} (1 - \cos^l{\chi}) \sin{\chi} d\chi d \gamma }
+    \end{equation}
+
+    Variables are:
+
+    \begin{itemize}
+        \item $\sigma_{ij} = \sigma_{ij}(\chi, g)$ is the differential-scattering cross section for the pair ($i,j$).
+        \item $\chi$ is the scattering angle in the center of mass system.
+        \item $g$ is the relative velocity of the colliding particles.
+        \item $\gamma$ is the reduced velocity equal to $\displaystyle \bp{ \bb{\frac{m_i m_j}{2(m_i + m_j)kT}}^\frac{1}{2} }g$
+    \end{itemize}
+
+    In the collision integral symbol, $l$ controls how strong the contribution of the differential-scattering angle ($\chi$) is. $s$ is a weighting on the reduced velocity $(\gamma)$ of the particles. Of course, the subscript $(ii)$ refers to the collision integral for similar particles. Here is a list of where certain collision integrals show up:
+
+    \begin{itemize}
+        \item Viscosity ($\mu$) is a function of $\pi \bar{\Omega}_{ij}^{(2,2)}$ only.
+        \item Translational component of thermal conductivity ($\kappa_\text{tr}$) is a function of $\pi \bar{\Omega}_{ij}^{(2,2)}$ only.
+        \item The internal component of thermal conductivity ($\kappa_\text{int}$) is a function of $\pi \bar{\Omega}_{ij}^{(1,1)}$ only or a function of $\pi \bar{\Omega}_{ij}^{(1,1)}$ and $\pi \bar{\Omega}_{ij}^{(2,2)}$, depending on the expression used.
+        \item The diffusion coefficient $D_{ij}$ is a function of $\pi \bar{\Omega}_{ij}^{(1,1)}$ only.
+    \end{itemize}
+\end{definition}
+
+
+\begin{definition}[Gupta's curve fits for collision integrals]
+    Gupta utilizes curve fits for the collision integrals. They have the following form:
+
+    \begin{equation}
+        \pi \bar{\Omega}_{ij}^{(l,s)} = \bb{\exp{D}} T^{\bb{A (\ln T)^2 + B \ln T + C}}
+    \end{equation}
+
+    \begin{equation}
+        B_{i,j}^{*(2,2)} = \bb{\exp{C}} T^{\bb{A (\ln T)^2 + B \ln T}}
+    \end{equation}
+
+
+\end{definition}
+
+
+\begin{definition}[Chapman-Enskog procedure]
+    
+\end{definition}
+
+\subsection{Transport properties of a single species}
+
+\begin{definition}[Viscosity of a single species]
+
+    The viscosity of a gas containing a single species is:  
+
+    \begin{equation}
+        \mu_i = \frac{5}{16} \frac{\sqrt{\pi m_i k T}}{\pi \bar{\Omega}_{ii}^{(2,2)}} = 8.3861 \cdot 10^{-6} \frac{\sqrt{M_i T}}{\pi \bar{\Omega}_{ij}^{(2,2)}} \hspace{5mm} \text{units = } \frac{\text{N - s}}{\text{m}^2}
+    \end{equation}
+
+    Where $\mathcal{M}_i$ is the molecular weight of species $i$, and $T$ is the temperature in kelvins. 
+
+\end{definition}
+
+\begin{definition}[Thermal conductivity of a single species]
+    
+    
+    For the thermal conductivity of a single species, we get a number of parts. The total $\kappa$ of the species is the sum of its internal energy specific parts, i.e.:
+    
+    \begin{equation}
+        \kappa = \kappa_\text{tr} + \kappa_\text{rot} + \kappa_\text{vib} + \kappa_\text{el} = \kappa_\text{tr} + \kappa_\text{int}
+    \end{equation}
+
+    Where the internal energies that are not translational have been grouped into $\kappa_\text{int}$. 
+
+    \begin{equation}
+        \kappa_{\text{tr}, i} = \frac{5}{2} \frac{\mu_i}{\mathcal{M}_i} (c_{v,i})_\text{tr} = \frac{15}{4} \frac{\hat{R}}{\mathcal{M}_i}\mu_i \hspace{5mm} \text{units = } \frac{\text{J}}{\text{m-s-K}}
+    \end{equation}
+
+    \begin{equation}
+        \kappa_{\text{int}, i} = \frac{6}{5}\frac{c_{p_{\text{int},i}}}{\hat{R}} \frac{\hat{R}}{\mathcal{M}_i} \mu_i \frac{\pi \bar{\Omega}_{ii}^{(2,2)}}{\pi \bar{\Omega}_{ii}^{(1,1)}}
+    \end{equation}
+
+    Here, $c_{p_{\text{int},i}}$ is the total specific heat with the translation specific heat subtracted.
+
+\end{definition}
+
+
+\subsection{Transport properties of a mixture}
+
+\begin{definition}[Species summation]
+
+    The concept of the species summation version of finding mixture transport properties is quite simple. It assumes no interaction between species and if expressed as:
+
+    \begin{equation}
+        \mu = \sum_{j=1}^\text{NS} X_j \mu_j \hspace{7.5mm} \kappa = \sum_{j=1}^\text{NS} X_j \kappa_j
+    \end{equation}
+    
+\end{definition}
+
+
+
+\begin{definition}[Wilke's mixing rule]
+
+    Both viscosity and thermal conductivity can be approximated using Wilke's mixing rule. It uses a quantity, $\phi_i$, which is expressed as:
+
+    \begin{equation}
+        \phi_i = \sum_{j=1}^\text{NS} \frac{X_j \bb{1 + \sqrt{\frac{\mu_i}{\mu_j}} \bp{\frac{\mathcal{M}_j}{\mathcal{M}_i}}^\frac{1}{4}}^2}{\sqrt{8 \bp{1 + \frac{\mathcal{M}_i}{\mathcal{M}_j}}}} = \sum_{j=1}^\text{NS} \frac{X_j \bb{1 + \sqrt{\frac{\pi \bar{\Omega}_{jj}^{(2,2)}}{\pi \bar{\Omega}_{ii}^{(2,2)}}}}^2}{\sqrt{8 \bp{1 + \frac{\mathcal{M}_i}{\mathcal{M}_j}}}}
+    \end{equation}
+
+    Then the viscosity and thermal conductivity is found as:
+
+    \begin{equation}
+        \mu = \sum_{j=1}^\text{NS} \frac{X_j \mu_j}{\phi_j} \hspace{5mm} \kappa = \sum_{j=1}^\text{NS} \frac{X_j \kappa_j}{\phi_j}
+    \end{equation}    
+\end{definition}
+
+
+\begin{definition}[Chapman-Enskog approximation method]
+    For obtaining mixture transport quantities using Chapman-Enskog approximations, a number of new variables are used. This is the most rigorous method for finding the properties.
+
+    \begin{equation}
+        \Delta_{ij}^{(2)} = \frac{16}{5} \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2}
+    \end{equation}
+
+    \begin{equation}
+        \Delta_{ij}^{(1)} = \frac{8}{3} \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2} \pi \bar{\Omega}_{ij}^{(1,1)} = \Delta_{ij}^{(2)} \frac{5}{6} \frac{\pi \bar{\Omega}_{ij}^{(1,1)}}{\pi \bar{\Omega}_{ij}^{(2,2)}}
+    \end{equation}
+\end{definition}
+
 \section{Thermochemical Nonequilibrium}
 
 
-\begin{definition}[Species conservation equation]
+\subsection{Chemical rate kinetics}
+
+\subsection{Species conservation equation}
     \begin{equation}
     \underbracket{ \pd{}{t} \rho_s}_1 + \underbracket{\pd{}{x_j} \rho_s u_j}_2 = \underbracket{\pd{}{x_j} (\rho D_s \pd{}{x_j} y_s)}_3 + \underbracket{\dot{\omega}_s}_4
     \end{equation}
@@ -422,7 +572,6 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
         \item $y_s$ is the molar fraction of species s
         \item $\dot{\omega}_s$ is the chemical production rate of species s
     \end{itemize}
-\end{definition}
 
 \begin{definition}[Total continuity equation]
     For chemically reacting flows, the total continuity equation is unaffected. It is:
