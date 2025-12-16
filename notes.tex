@@ -31,6 +31,15 @@
 \usepackage{multicol}
 \usepackage{amsthm}
 \usepackage{mathtools}
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\color{blue}\normalfont\Large\bfseries}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\color{violet}\normalfont\large\bfseries}
+  {\thesubsection}{1em}{}
 
 % Custom commands
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
@@ -420,7 +429,7 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
 \subsection{Collision integral definitions}
 
 \begin{definition}[Collision cross sections]
-    The collision cross section has infinitely many values. Four of them are used for fluid dynamics to determine transport properties. The collision cross sections are, in general, the weighted averages of the cross sections for collisions between species $i$ and $j$. They are defined as:
+    The collision cross section has infinitely many values. Four of them are used for fluid dynamics to determine transport properties. The collision cross sections are, in general, the weighted averages of the cross sections for collisions between species $i$ and $j$ (sometimes denoted $s$ and $r$). They are defined as:
     
     \begin{equation}
         \pi \bar{\Omega}_{ij}^{(l,s)} = \frac{\int_{0}^{\infty} \int_{0}^{\pi} \exp(-\gamma^2) \gamma^{2s+3}(1 - \cos^l \chi) 4 \pi \sigma_{ij} \sin\chi d \chi d\gamma}{\int_{0}^{\infty} \int_{0}^{\pi} \exp(-\gamma^2) \gamma^{2s + 3} (1 - \cos^l{\chi}) \sin{\chi} d\chi d \gamma }
@@ -472,17 +481,17 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
     The viscosity of a gas containing a single species is:  
 
     \begin{equation}
-        \mu_i = \frac{5}{16} \frac{\sqrt{\pi m_i k T}}{\pi \bar{\Omega}_{ii}^{(2,2)}} = 8.3861 \cdot 10^{-6} \frac{\sqrt{M_i T}}{\pi \bar{\Omega}_{ij}^{(2,2)}} \hspace{5mm} \text{units = } \frac{\text{N - s}}{\text{m}^2}
+        \mu_i = \frac{5}{16} \frac{\sqrt{\pi m_i k T}}{\pi \bar{\Omega}_{ii}^{(2,2)}} = 8.3861 \cdot 10^{-6} \frac{\sqrt{\mathcal{M}_i T}}{\pi \bar{\Omega}_{ij}^{(2,2)}} \hspace{5mm} \text{units = } \frac{\text{N - s}}{\text{m}^2}
     \end{equation}
 
-    Where $\mathcal{M}_i$ is the molecular weight of species $i$, and $T$ is the temperature in kelvins. 
+    Where $\mathcal{M}_i$ is the molecular weight of species $i$, and $T$ is the temperature in Kelvin. 
 
 \end{definition}
 
 \begin{definition}[Thermal conductivity of a single species]
     
     
-    For the thermal conductivity of a single species, we get a number of parts. The total $\kappa$ of the species is the sum of its internal energy specific parts, i.e.:
+    For the thermal conductivity of a single species, we have a number of contributions. The total $\kappa$ of the species is the sum of its internal energy specific contributions, i.e.:
     
     \begin{equation}
         \kappa = \kappa_\text{tr} + \kappa_\text{rot} + \kappa_\text{vib} + \kappa_\text{el} = \kappa_\text{tr} + \kappa_\text{int}
@@ -534,16 +543,27 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
 
 
 \begin{definition}[Chapman-Enskog approximation method]
-    For obtaining mixture transport quantities using Chapman-Enskog approximations, a number of new variables are used. This is the most rigorous method for finding the properties.
+    For obtaining mixture transport quantities using Chapman-Enskog approximations, a number of new variables are used. This is the most rigorous method for finding the properties. The units on $\Delta$ is centimeter-second.
 
     \begin{equation}
-        \Delta_{ij}^{(2)} = \frac{16}{5} \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2}
+        \Delta_{ij}^{(1)} = \frac{8}{3} (1.5460 \cdot 10^{-20}) \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2} \pi \bar{\Omega}_{ij}^{(1,1)}
     \end{equation}
 
     \begin{equation}
-        \Delta_{ij}^{(1)} = \frac{8}{3} \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2} \pi \bar{\Omega}_{ij}^{(1,1)} = \Delta_{ij}^{(2)} \frac{5}{6} \frac{\pi \bar{\Omega}_{ij}^{(1,1)}}{\pi \bar{\Omega}_{ij}^{(2,2)}}
+        \Delta_{ij}^{(2)} = \frac{16}{5} (1.5460 \cdot 10^{-20}) \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2}  \pi \bar{\Omega}_{ij}^{(2,2)}
     \end{equation}
+
+    Assuming thermochemical Nonequilibrium, the mixture viscosity is found with:
+
+    \begin{equation}
+        \mu = \sum_{j=1}^{\text{NS} - 1} \bb{\frac{\frac{\mathcal{M}_i}{N_A}X_i}{\sum_{j=1}^\text{NS - 1} X_j \Delta_{ij}^{(2)}(T) + X_e \Delta_{ie}^{(2)}(T_e) }} + \frac{\frac{\mathcal{M}_e}{N_A} X_e }{\sum_{j=1}^\text{NS} X_j \Delta_{ej}^{(2)}(T_e)}
+    \end{equation}
+
+    Where $X_j$ is the molar fraction, $T$ is the Temperature, and $T_e$ is the electron temperature.
+
 \end{definition}
+
+
 
 \section{Thermochemical Nonequilibrium}
 

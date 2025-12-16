@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1764567709.99666 "c:/Users/frodo/programs/PhD Notes/notes.tex" "notes.pdf" "notes" 1764567711.96292 0
-  "c:/Users/frodo/programs/PhD Notes/notes.tex" 1764567708.96505 32637 1a7f33f09094e93af5039a7dae029eb4 ""
+["pdflatex"] 1765857001.90771 "c:/Users/frodo/programs/PhD Notes/notes.tex" "notes.pdf" "notes" 1765857003.88343 0
+  "c:/Users/frodo/programs/PhD Notes/notes.tex" 1765857000.8919 33429 871954683ab71ca7ee266651e7c525a9 ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1762307540.38749 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1762309140.55469 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1762308513.99736 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -174,6 +174,7 @@
   "c:/texlive/2025/texmf-dist/tex/latex/refcount/refcount.sty" 1762312683.62488 9878 9e94e8fa600d95f9c7731bb21dfb67a4 ""
   "c:/texlive/2025/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1762312710.06486 9684 a33a14b82ce60d6e77cb9be689d79ee6 ""
   "c:/texlive/2025/texmf-dist/tex/latex/setspace/setspace.sty" 1762312960.51349 22490 8cac309b79a4c53a4ffce4b1b07aead0 ""
+  "c:/texlive/2025/texmf-dist/tex/latex/titlesec/titlesec.sty" 1762313677.59759 48766 87a17a4ef312a39cd43896e34a679a56 ""
   "c:/texlive/2025/texmf-dist/tex/latex/tools/array.sty" 1762313745.53189 15651 9d7c62df82cb29a555c00550babfe364 ""
   "c:/texlive/2025/texmf-dist/tex/latex/tools/calc.sty" 1762313745.53289 10374 2ffd4f27c7f90b8a300608069537743c ""
   "c:/texlive/2025/texmf-dist/tex/latex/tools/multicol.sty" 1762313745.5419 33142 efe8f4750fc02524935e7423b4bdef69 ""
@@ -189,9 +190,9 @@
   "c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1762314378 5482364 373d37b6d8e9b119bc15228a0f3a86f7 ""
   "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1762314715 2286077 b2064bcabc760389ac2c85bafdab679e ""
   "c:/texlive/2025/texmf.cnf" 1762314349.75088 713 baa45e065482d44c4cd81b98ef72c63b ""
-  "notes.aux" 1764567711.66665 2416 a014ae8919caacd7d6ec2f90f7ba3e31 "pdflatex"
-  "notes.out" 1764567711.66865 2522 2051086e488a366c824cc4b0c04be92f "pdflatex"
-  "notes.toc" 1764567711.67065 1239 72feee8dac14dbd33fde73964159cda9 "pdflatex"
+  "notes.aux" 1765857003.58132 2416 a014ae8919caacd7d6ec2f90f7ba3e31 "pdflatex"
+  "notes.out" 1765857003.58332 2522 2051086e488a366c824cc4b0c04be92f "pdflatex"
+  "notes.toc" 1765857003.58434 1239 72feee8dac14dbd33fde73964159cda9 "pdflatex"
   (generated)
   "notes.aux"
   "notes.log"

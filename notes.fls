@@ -254,6 +254,8 @@ INPUT c:/texlive/2025/texmf-dist/tex/latex/tools/calc.sty
 INPUT c:/texlive/2025/texmf-dist/tex/latex/tools/calc.sty
 INPUT c:/texlive/2025/texmf-dist/tex/latex/mathtools/mhsetup.sty
 INPUT c:/texlive/2025/texmf-dist/tex/latex/mathtools/mhsetup.sty
+INPUT c:/texlive/2025/texmf-dist/tex/latex/titlesec/titlesec.sty
+INPUT c:/texlive/2025/texmf-dist/tex/latex/titlesec/titlesec.sty
 INPUT c:/texlive/2025/texmf-dist/tex/latex/nomencl/nomencl.sty
 INPUT c:/texlive/2025/texmf-dist/tex/latex/nomencl/nomencl.sty
 INPUT c:/texlive/2025/texmf-dist/tex/latex/base/ifthen.sty
