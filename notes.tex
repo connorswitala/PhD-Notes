@@ -514,9 +514,12 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
 
 \subsection{Transport properties of a mixture}
 
+For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calculated using the above equations for single species viscosity and conductivity.
+
+
 \begin{definition}[Species summation]
 
-    The concept of the species summation version of finding mixture transport properties is quite simple. It assumes no interaction between species and if expressed as:
+    The concept of the species summation version of finding mixture transport properties is quite simple. It assumes no interaction between species and is expressed as:
 
     \begin{equation}
         \mu = \sum_{j=1}^\text{NS} X_j \mu_j \hspace{7.5mm} \kappa = \sum_{j=1}^\text{NS} X_j \kappa_j
@@ -543,7 +546,7 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
 
 
 \begin{definition}[Chapman-Enskog approximation method]
-    For obtaining mixture transport quantities using Chapman-Enskog approximations, a number of new variables are used. This is the most rigorous method for finding the properties. The units on $\Delta$ is centimeter-second.
+    For obtaining mixture transport quantities using Chapman-Enskog approximations, a number of new variables are used. This is the most rigorous method for finding the properties. The units of $\Delta$ is in centimeters-second, while $\alpha_{ij}$ is unitless.
 
     \begin{equation}
         \Delta_{ij}^{(1)} = \frac{8}{3} (1.5460 \cdot 10^{-20}) \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2} \pi \bar{\Omega}_{ij}^{(1,1)}
@@ -553,13 +556,60 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
         \Delta_{ij}^{(2)} = \frac{16}{5} (1.5460 \cdot 10^{-20}) \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2}  \pi \bar{\Omega}_{ij}^{(2,2)}
     \end{equation}
 
-    Assuming thermochemical Nonequilibrium, the mixture viscosity is found with:
-
     \begin{equation}
-        \mu = \sum_{j=1}^{\text{NS} - 1} \bb{\frac{\frac{\mathcal{M}_i}{N_A}X_i}{\sum_{j=1}^\text{NS - 1} X_j \Delta_{ij}^{(2)}(T) + X_e \Delta_{ie}^{(2)}(T_e) }} + \frac{\frac{\mathcal{M}_e}{N_A} X_e }{\sum_{j=1}^\text{NS} X_j \Delta_{ej}^{(2)}(T_e)}
+        \alpha_{ij} = 1 + \frac{[1 - (\mathcal{M}_i / \mathcal{M}_j)][0.45 - 2.54(\mathcal{M}_i / \mathcal{M}_j)]}{[1 + (\mathcal{M}_i / \mathcal{M}_j)]^2}
     \end{equation}
 
-    Where $X_j$ is the molar fraction, $T$ is the Temperature, and $T_e$ is the electron temperature.
+    Assuming thermochemical nonequilibrium, the mixture viscosity \textit{appears} to not be a function of vibrational or rotation energy, and is thus found with:
+
+    \begin{equation}
+        \mu = \sum_{i=1}^{\text{NS} - 1} \bb{\frac{\frac{\mathcal{M}_i}{N_A}X_i}{\sum_{j=1}^\text{NS - 1} X_j \Delta_{ij}^{(2)}(T) + X_e \Delta_{ie}^{(2)}(T_e) }} + \frac{\frac{\mathcal{M}_e}{N_A} X_e }{\sum_{j=1}^\text{NS} X_j \Delta_{ej}^{(2)}(T_e)}
+    \end{equation}
+
+    Where $X_j$ is the molar fraction, $T$ is the Temperature, and $T_e$ is the electron temperature. In constrast to viscosity, the thermal conductivity is dependant on all energy modes, and therefore has contributions from each mode. They are:
+    \vspace{5mm}
+
+    Translational component without electron-heavy-particle and electron-electron collision:
+
+    \begin{equation}
+        K_\text{tr}^* = (2.3901 \cdot 10^{-8}) \frac{15}{4} k \sum_{i=1}^\text{NS-1} \bb{\frac{X_i}{\sum_{j=1} \alpha_{ij} \Delta_{ij}^{(2)}(T) + 3.54 X_e \Delta_{ie}^{(2)}(T_e) }}
+    \end{equation}
+
+    Rotational component. "p.e." means  "partial excitation" while "f.e." mean "full excitation". If it is in equilibrium with translational temperature, $T_\text{rot} = T$:
+
+    \begin{equation}
+        (K_\text{rot})_\text{p.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{\bb{\frac{c_{p,i}(T_\text{rot})}{\hat{R}} - \frac{5}{2}} X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+    \begin{equation}
+        (K_\text{rot})_\text{f.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+
+    Vibrational component:
+
+    \begin{equation}
+        (K_\text{vib})_\text{p.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{\bb{\frac{c_{p,i}(T_\text{vib})}{\hat{R}} - \frac{7}{2}} X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+    \begin{equation}
+        (K_\text{vib})_\text{f.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+    Electronic component:
+
+    \begin{equation}
+        K_\text{el} = (2.3901 \cdot 10^{-8})k \sum_\text{i=1}^\text{NS-1} \bb{\frac{\bb{\frac{c_{p,i}(T_\text{el})}{\hat{R}} - \frac{9}{2}} X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+    Free electron component:
+
+    \begin{equation}
+        (K_\text{el})_\text{p.e.} = (2.3901 \cdot 10^{-8})k \frac{X_e}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ej}^{(2)}(T_e) + X_e \Delta_{ee}^{(2)}(T_e)}
+    \end{equation}
+
+
+
 
 \end{definition}
 
