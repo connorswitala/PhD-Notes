@@ -662,6 +662,8 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
 \newpage
 \section{Chemical Rate Kinetics}
 
+\subsection{Rate equations}
+
 \begin{definition}[Reactions]
     For multicomponent gas with NS reacting species and NR different reactions, the stoichiometric relations for the change in reactants and products are:
 
@@ -674,25 +676,171 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
 \end{definition}
 
 \begin{definition}[Mass production]
-    The net mass rate of production of a species per unit volume is found with:
+    The net mass rate of production of a species per unit volume has a number of different expressions. Consider the reaction:
 
     \begin{equation}
-        \dot{w}_i = \mathcal{M}_i \sum_{r=1}^\text{NR} \bp{\frac{dX_i}{dt}}_r = \sum_{r=1}^\text{NR} \bp{\frac{d \rho_i}{d t}}_r
-    \end{equation}
+        O_2 + M \longrightarrow 2O + M
+        \label{ReactionExample1}
+    \end{equation} 
 
-    of 
+    Here, M is an arbitrary collision partner. Concentration of species $j$ is the moles of $j$ per unit volume. $[O_2]$ is the concentration of $O_2$. The time rate of change of the concentration of $O$ is then:
 
     \begin{equation}
-        \dot{w}_i = \mathcal{M}_i \sum_{r=1}^\text{NR} (\beta_{i,r} - \alpha_{i,r})(R_{f,r} - R_{b,r})
+        \frac{d [O]}{dt} = 2k [O_2][M]
     \end{equation}
 
-    Where 
-    \begin{align}
-         R_{f,r} &= k_{f,r} \prod_{j=1}^\text{NJ} (\gamma_j \rho)^{\alpha_{j,r}}     
-         \\ R_{b,r} &= k_{b,r} \prod_{j=1}^\text{NJ} (\gamma_j \rho)^{\beta_{j,r}}     
-    \end{align}
-   
+    Where $k$ is the reaction rate. This equation gives the rate at which Eq. [\ref{ReactionExample1}] goes from left to right. Therefore, $k$ is actually the \textit{forward} reaction rate, $k_f$. The two previous equations should then be:
+
+    \begin{equation}    
+        O_2 + M \overset{k_f}{\longrightarrow} 2O + M
+    \end{equation} 
+
+    \begin{equation}
+        \frac{d [O]}{dt} = 2k_f [O_2][M]
+    \end{equation}
+
+    Of course, the right to left reaction is the \textit{backwards} reaction and is governed by the backwards rate coefficient:
+
+    \begin{equation}
+        O_2 + M \underset{k_b}{\longleftarrow} 2O + M
+    \end{equation}
+
+    \begin{equation}
+        \frac{d [O]}{dt} = -2 k_b [O]^2[M]
+    \end{equation}
+
+    You must combine these forward and backwards equations because both reactions happen. This gives:
+
+    \begin{equation}
+        O_2 + M \overset{k_f}{\underset{k_b}{\longleftrightarrow}} 2O + M
+    \end{equation}
+
+    \begin{equation}
+        \frac{d [O]}{dt} = 2 k_f [O_2][M] -2 k_f [O]^2[M]
+    \end{equation}
+
+    For an arbitrary reaction, we have the sum of reactants and products as:
+
+    \begin{equation}
+        \sum_{i=1}^n \nu_i' X_i \leftrightarrows \sum_{i=1}^n \nu_i'' X_i
+    \end{equation}
+
+    The net rate equation for an arbitrary reaction is then:
+
+    \begin{equation}
+        \frac{d [X_i]}{dt} = (\nu_i'' - \nu_i') \left \{ k_f \prod_i [X_i]^{\nu_i'} - k_b \prod_i [X_i]^{\nu_i''} \right \}
+    \end{equation}
+
 \end{definition}
+
+\begin{definition}[Reaction rate relations]
+
+    The equilibrium constant is very useful to find one reaction rate from the other. There are two equilibrium constants: $K_c$ is the equilibrium constant based on concentrations, and $K_p$ is the equilibrium constant based on partial pressures. They are related through:
+
+    \begin{equation}
+        K_c = \bp{\frac{1}{\hat{R}T}}^{\sum_i \nu_i}K_p
+    \end{equation}
+
+    Where it is raised to a sum due to the complicated nature of the equilibrium constant. Typically, the rate coefficient has variable units, since it depends on the number of molecules in the reaction, which gives rise to a key concept:
+    
+    \vspace{5mm} 
+    \textit{For most chemical kinetic models, the reaction's reactants always consist of 2 species, while the reaction's products may contain two or three species. Therefore, the forwards rate coefficients $k_f$ should always have the same units. Since the equilibrium constant is used to find $k_b$, no unit conversions are necessary besides perhaps from cgs to mks units.}
+    
+    Curve fits of the following form are used to find the equilibrium constant:
+
+    \begin{equation}
+        \ln (K_\text{eq,r}) = A Z^5 + B Z^4 + C Z^3 + D Z^2 + E Z + F 
+    \end{equation}
+
+    with:
+
+    \begin{equation}
+        Z = \ln \frac{10^4}{T}
+    \end{equation}
+
+    With the equilibrium constant of a reaction known, you can find the forward/backward reaction rates as stated above with:
+
+    \begin{equation}
+        \frac{k_{f,r}(T)}{k_{b,r}(T)} = K_\text{eq,r}
+    \end{equation}
+
+\end{definition}
+
+\begin{definition}[Arrhenius equations]
+
+    Both forward and backward rate coefficients can be found using the Arrhenius or modified Arrhenius equations, though usually the forward rate is computed and the backward rate is found with the equilibrium constant. The Arrhenius equation has the form:
+
+    \begin{equation}
+        k_{f,r} = C e^{-E_a/kT}
+    \end{equation}
+
+    Where C is a constant, $E_a$ is the activation energy, $k$ is the Boltzmann constant, and $T$ is the temperature. The modified Arrhenius form (more widely used) is:
+
+    \begin{equation}
+        k_{f,r} = C T^\eta e^{-E_0/kT}
+    \end{equation}
+
+    Here, $\eta$ is a reaction specific exponent, and $E_0$ depends on the reaction (could be a dissociation energy, could be 0 for recombination, etc.)
+    
+\end{definition}
+
+\subsection{Reaction Types}
+
+\begin{definition}[Dissociation Reaction]
+
+    A dissociation reaction occurs when a molucule collides with some other species and one or more atoms "detatch" from the molecule. Examples are:
+
+    \begin{align}
+        O_2 + M &\leftrightarrows 2O + M
+        \\ N_2 + M &\leftrightarrows 2N + M
+        \\ NO + M &\leftrightarrows N + O + M
+        \\ O_2 + N &\leftrightarrows NO + O 
+        \label{shuffle}
+        \\ N_2 + O &\leftrightarrows NO + N
+        \\ N_2 + O_2 &\leftrightarrows 2NO
+        \\ N + O &\leftrightarrows NO^+ + e^- 
+        \label{dissrecomb}
+    \end{align}
+
+    Eq. [\ref{shuffle}] is an example of a \textit{bimolecular exchange} reaction. Eq. [\ref{dissrecomb}] is called a \textit{dissociative-recombination}  reaction since the recombination of the $NO^+$ ion with an electron produces a dissociated product.
+
+    \vspace{5mm} To be continued...
+    
+\end{definition}
+
+
+\subsection{Example rate equation solution}
+
+    Here, and example is done to find the rate of production of $NO$. Consider the following reactions that all contain $NO$:
+
+    \begin{subequations}
+        \begin{align}
+            NO + O_2 &\leftrightarrows N + O + O_2
+            \\ NO + N_2 &\leftrightarrows N + O + N_2
+            \\ NO + NO &\leftrightarrows N + O + NO
+            \\ NO + O &\leftrightarrows N + O + O
+            \\ NO + N &\leftrightarrows N + O + N
+            \\ NO + NO^+ &\leftrightarrows N + O + NO^+
+            \\ NO + e^- &\leftrightarrows N + O + e^-
+            \\ O_2 + N &\leftrightarrows NO + O
+            \\ N_2 + O &\leftrightarrows NO + N
+            \\ N_2 + O_2 &\leftrightarrows 2NO
+        \end{align}
+    \end{subequations}
+
+    The forward and backward rate coefficients for the reactions are $k_{f,a}$ and $k_{b,a}$ for the first reaction, all the way down with consistent lettering with the equation number. Recall:
+
+    \begin{equation}
+        \frac{d [X_i]}{dt} = (\nu_i'' - \nu_i') \left \{ k_f \prod_i [X_i]^{\nu_i'} - k_b \prod_i [X_i]^{\nu_i''} \right \}
+    \end{equation}
+
+    Therefore, filling in and walling the time derivative $\dot{w}_{a \dots j}$, we get: 
+
+    \begin{align}
+        $\dot{w}_{a}$ = & (0 - 1) (k_{f,a} [NO][O2] - k_{b,a} [N][O][O_2] ) 
+    \end{align}
+
+
 
 
 \newpage
