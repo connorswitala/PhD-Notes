@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/TeX Live for SUSE Linux) (preloaded format=pdflatex 2024.9.12)  16 DEC 2025 20:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/TeX Live for SUSE Linux) (preloaded format=pdflatex 2024.9.12)  17 DEC 2025 15:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -716,7 +716,16 @@ Package: titlesec 2019/10/16 v2.13 Sectioning titles
 \titlewidth=\dimen327
 \titlewidthlast=\dimen328
 \titlewidthfirst=\dimen329
-)
+) (/usr/share/texmf/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+ (/usr/share/texmf/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
 \c@definition=\count338
  (/usr/share/texmf/tex/latex/nomencl/nomencl.sty
 Package: nomencl 2020/12/29 v5.5 Nomenclature package
@@ -750,7 +759,7 @@ Package tocbasic Info: babel extension for `nls' omitted
 \@nomenclaturefile=\write4
 \openout4 = `notes.nlo'.
 
-Package nomencl Info: Writing nomenclature file notes.nlo on input line 68.
+Package nomencl Info: Writing nomenclature file notes.nlo on input line 69.
  (/usr/share/texmf/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
  (/usr/share/texmf/tex/generic/pdfescape/pdfescape.sty
@@ -828,30 +837,30 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 \Hy@SectionHShift=\skip135
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 78.
+Package hyperref Info: Option `colorlinks' set `true' on input line 79.
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... none found.
  (/project/swita014/projects/Projects/my-codes/PhD-Notes/notes.aux)
 \openout1 = `notes.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
  (/usr/share/texmf/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count350
@@ -871,14 +880,14 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/share/texmf/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Info: Redefining \celsius on input line 83.
-Package gensymb Info: Faking symbols for \degree and \celsius on input line 83.
+LaTeX Info: Redefining \celsius on input line 84.
+Package gensymb Info: Faking symbols for \degree and \celsius on input line 84.
 
 
 Package gensymb Warning: Not defining \perthousand.
 
-LaTeX Info: Redefining \ohm on input line 83.
-Package gensymb Info: Using \Omega for \ohm on input line 83.
+LaTeX Info: Redefining \ohm on input line 84.
+Package gensymb Info: Using \Omega for \ohm on input line 84.
 
 Package gensymb Warning: Not defining \micro.
 
@@ -887,7 +896,7 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count356
-Package hyperref Info: Link coloring ON on input line 83.
+Package hyperref Info: Link coloring ON on input line 84.
 (/usr/share/texmf/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texmf/tex/latex/refcount/refcount.sty
@@ -897,41 +906,49 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count357
 )
-LaTeX Info: Redefining \ref on input line 83.
-LaTeX Info: Redefining \pageref on input line 83.
-LaTeX Info: Redefining \nameref on input line 83.
+LaTeX Info: Redefining \ref on input line 84.
+LaTeX Info: Redefining \pageref on input line 84.
+LaTeX Info: Redefining \nameref on input line 84.
  (/project/swita014/projects/Projects/my-codes/PhD-Notes/notes.out) (/project/swita014/projects/Projects/my-codes/PhD-Notes/notes.out)
 \@outlinefile=\write5
 \openout5 = `notes.out'.
 
- (/project/swita014/projects/Projects/my-codes/PhD-Notes/notes.toc)
+ (/project/swita014/projects/Projects/my-codes/PhD-Notes/notes.toc
+LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+ (/usr/share/texmf/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+ (/usr/share/texmf/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+))
 \tf@toc=\write6
 \openout6 = `notes.toc'.
 
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16]
-Overfull \hbox (14.0977pt too wide) detected at line 727
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18]
+Overfull \hbox (14.0977pt too wide) detected at line 805
  []$[]   [] \OT1/cmr/m/n/10 + [] = [] + [] + []$ 
  []
 
-[17] [18] [19] [20] (/project/swita014/projects/Projects/my-codes/PhD-Notes/notes.aux)
+[19] [20] [21] [22] (/project/swita014/projects/Projects/my-codes/PhD-Notes/notes.aux)
 Package rerunfilecheck Info: File `notes.out' has not changed.
-(rerunfilecheck)             Checksum: 2051086E488A366C824CC4B0C04BE92F;2522.
+(rerunfilecheck)             Checksum: 665DF2B48F67E877340B4EBB75D088F3;2508.
  ) 
 Here is how much of TeX's memory you used:
- 26576 strings out of 479007
- 470633 string characters out of 5867743
- 841257 words of memory out of 5000000
- 43388 multiletter control sequences out of 15000+600000
- 407885 words of font info for 42 fonts, out of 8000000 for 9000
+ 27097 strings out of 479007
+ 476125 string characters out of 5867743
+ 841766 words of memory out of 5000000
+ 43872 multiletter control sequences out of 15000+600000
+ 409130 words of font info for 48 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 113i,17n,116p,602b,753s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on /project/swita014/projects/Projects/my-codes/PhD-Notes/notes.pdf (20 pages, 245237 bytes).
+ 113i,17n,116p,602b,755s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on /project/swita014/projects/Projects/my-codes/PhD-Notes/notes.pdf (22 pages, 259971 bytes).
 PDF statistics:
- 432 PDF objects out of 1000 (max. 8388607)
- 391 compressed objects within 4 object streams
- 192 named destinations out of 1000 (max. 500000)
+ 464 PDF objects out of 1000 (max. 8388607)
+ 419 compressed objects within 5 object streams
+ 210 named destinations out of 1000 (max. 500000)
  125 words of extra memory for PDF output out of 10000 (max. 10000000)
 

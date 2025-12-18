@@ -32,6 +32,7 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{titlesec}
+\usepackage{amssymb}
 
 \titleformat{\section}
   {\color{blue}\normalfont\Large\bfseries}
@@ -556,6 +557,50 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
         \Delta_{ij}^{(2)} = \frac{16}{5} (1.5460 \cdot 10^{-20}) \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2}  \pi \bar{\Omega}_{ij}^{(2,2)}
     \end{equation}
 
+    For electron-electron collisions, we have:
+
+    \begin{equation}
+        \pi \bar{\Omega}_{ee}^{(2,2)} = 1.29 Q_e \cdot 10^{16}
+    \end{equation}
+
+    For ion-ion collisions, we have:
+
+    \begin{equation}
+        \pi \bar{\Omega}_{II}^{(2,2)} = 1.36 Z^4 Q_e \cdot 10^{16}
+    \end{equation}
+
+    Then for both:
+
+    \begin{equation}
+        \pi \bar{\Omega}_{ee}^{(1,1)} = \pi \bar{\Omega}_{II}^{(1,1)} = 0.795 Z^4 Q_e \cdot 10^{16}
+    \end{equation}
+
+    Here, $Z=1$ for singly ionized species (for aerospace applications this is fine), and:
+
+    \begin{equation}
+        Q_e = \frac{e^4}{(kT)^2} \ln \Lambda \hspace{5mm} \text{cm}^2
+    \end{equation}
+
+    \begin{align}
+        \Lambda &= \bb{\frac{9 (kT)^3}{4 \pi e^6 n_e} + \frac{16 (kT)^2}{e^4 n_e^{2/3}}}^{1/2}
+        \\ &= \bb{2.09 \cdot 10^{-2} \bp{\frac{T^4}{10^{12} p_e}} + 1.52 \bp{\frac{T^4}{10^{12}p_e}}^{2/3}}^{1/2}
+    \end{align}
+
+    Here, $p_e$ is the electron pressure in atmospheres, $n_e$ is the number density of electrons, and $e = 4.8 \cdot 10^{-10}$  esu. These equations are only useful unter for $p_e < $ some limiting value, which should be true in aerospace applications:
+
+    \begin{equation}
+        p_{em} = 0.0975 \bp{\frac{T}{10^3}}^4
+    \end{equation}
+
+    Depending on the data given, the Coulomb cross section may need to be altered. Gupta and Yos give collision cross sections at the above limiting electron pressure, so at any other pressure the cross section needs to be changed:
+
+    \begin{align}
+        \frac{\pi \bar{\Omega}_{ij}^{(l,s)}(p_e)}{\pi \bar{\Omega}_{ij}^{(l,s)}(p_{em})} &= \ln \Lambda (p_e)
+        \\ &= \frac{1}{2} \ln \bb{2.09 \cdot 10^{-2} \bp{\frac{T}{1000 p_e^{1/4}}}^4 + 1.52 \bp{\frac{T}{1000 p_e^{1/4}}}^{8/3}}
+    \end{align}
+
+    Finally, $\alpha_{ij}$ is needed for the heavy-particle translational component of thermal conductivity:
+
     \begin{equation}
         \alpha_{ij} = 1 + \frac{[1 - (\mathcal{M}_i / \mathcal{M}_j)][0.45 - 2.54(\mathcal{M}_i / \mathcal{M}_j)]}{[1 + (\mathcal{M}_i / \mathcal{M}_j)]^2}
     \end{equation}
@@ -605,7 +650,7 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     Free electron component:
 
     \begin{equation}
-        (K_\text{el})_\text{p.e.} = (2.3901 \cdot 10^{-8})k \frac{X_e}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ej}^{(2)}(T_e) + X_e \Delta_{ee}^{(2)}(T_e)}
+        K_\text{e} = (2.3901 \cdot 10^{-8})k \frac{X_e}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ej}^{(2)}(T_e) + X_e \Delta_{ee}^{(2)}(T_e)}
     \end{equation}
 
 
@@ -614,11 +659,44 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
 \end{definition}
 
 
+\newpage
+\section{Chemical Rate Kinetics}
 
+\begin{definition}[Reactions]
+    For multicomponent gas with NS reacting species and NR different reactions, the stoichiometric relations for the change in reactants and products are:
+
+    \begin{eqnarray}
+        \sum_{i=1}^\text{NJ} \alpha_{i,r} X_i \leftrightarrows \sum_{i=1}^\text{NJ} \beta_{i,r} X_i
+    \end{eqnarray}
+
+    Where NJ is is the sum of NS with the number of catalytic bodies. $\alpha$ and $\beta$ are the stroichiometric coefficients for reactants and products respectively. $k_{f,r}$ foverns the forward reaction (right arrow), and $k_{b,r}$ governs the backward reaction (left arrow). Catalytic bodies are species that do no undergo chemical change. 
+    
+\end{definition}
+
+\begin{definition}[Mass production]
+    The net mass rate of production of a species per unit volume is found with:
+
+    \begin{equation}
+        \dot{w}_i = \mathcal{M}_i \sum_{r=1}^\text{NR} \bp{\frac{dX_i}{dt}}_r = \sum_{r=1}^\text{NR} \bp{\frac{d \rho_i}{d t}}_r
+    \end{equation}
+
+    of 
+
+    \begin{equation}
+        \dot{w}_i = \mathcal{M}_i \sum_{r=1}^\text{NR} (\beta_{i,r} - \alpha_{i,r})(R_{f,r} - R_{b,r})
+    \end{equation}
+
+    Where 
+    \begin{align}
+         R_{f,r} &= k_{f,r} \prod_{j=1}^\text{NJ} (\gamma_j \rho)^{\alpha_{j,r}}     
+         \\ R_{b,r} &= k_{b,r} \prod_{j=1}^\text{NJ} (\gamma_j \rho)^{\beta_{j,r}}     
+    \end{align}
+   
+\end{definition}
+
+
+\newpage
 \section{Thermochemical Nonequilibrium}
-
-
-\subsection{Chemical rate kinetics}
 
 \subsection{Species conservation equation}
     \begin{equation}
