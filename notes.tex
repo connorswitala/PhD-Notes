@@ -47,6 +47,7 @@
 \newcommand{\ub}[2]{\underbracket{#1}_{#2}}
 \newcommand{\bb}[1]{\left[ #1 \right]}
 \newcommand{\bp}[1]{\left( #1 \right)}
+\newcommand{\bcb}[1]{\left\{ #1 \right\}}
 
 % Number equations by section
 \numberwithin{equation}{section}
@@ -667,23 +668,24 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
 \begin{definition}[Reactions]
     For multicomponent gas with NS reacting species and NR different reactions, the stoichiometric relations for the change in reactants and products are:
 
-    \begin{eqnarray}
-        \sum_{i=1}^\text{NJ} \alpha_{i,r} X_i \leftrightarrows \sum_{i=1}^\text{NJ} \beta_{i,r} X_i
-    \end{eqnarray}
+    \begin{equation}
+        \sum_{i=1}^\text{NS} \nu_i' X_i \leftrightarrows \sum_{i=1}^\text{NS} \nu_i'' X_i, 
+        \hspace{5mm} r=1, \dots , NR
+    \end{equation}
 
-    Where NJ is is the sum of NS with the number of catalytic bodies. $\alpha$ and $\beta$ are the stroichiometric coefficients for reactants and products respectively. $k_{f,r}$ foverns the forward reaction (right arrow), and $k_{b,r}$ governs the backward reaction (left arrow). Catalytic bodies are species that do no undergo chemical change. 
+    $\nu_i'$ and $\nu_i''$ are the stoichiometric coefficients for reactants and products respectively. $k_{f,r}$ governs the forward reaction (right arrow), and $k_{b,r}$ governs the backward reaction (left arrow). 
     
 \end{definition}
 
 \begin{definition}[Mass production]
-    The net mass rate of production of a species per unit volume has a number of different expressions. Consider the reaction:
+    The net rate of MASS production of a species per unit volume has a number of different expressions. Consider the reaction:
 
     \begin{equation}
         O_2 + M \longrightarrow 2O + M
         \label{ReactionExample1}
     \end{equation} 
 
-    Here, M is an arbitrary collision partner. Concentration of species $j$ is the moles of $j$ per unit volume. $[O_2]$ is the concentration of $O_2$. The time rate of change of the concentration of $O$ is then:
+    Here, M is an arbitrary collision partner, deemed a \textit{third-body}. Concentration of species $j$ is the moles of $j$ per unit volume. $[O_2]$ is the concentration of $O_2$. The time rate of change of the concentration of $O$ is then:
 
     \begin{equation}
         \frac{d [O]}{dt} = 2k [O_2][M]
@@ -719,17 +721,13 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
         \frac{d [O]}{dt} = 2 k_f [O_2][M] -2 k_f [O]^2[M]
     \end{equation}
 
-    For an arbitrary reaction, we have the sum of reactants and products as:
-
-    \begin{equation}
-        \sum_{i=1}^n \nu_i' X_i \leftrightarrows \sum_{i=1}^n \nu_i'' X_i
-    \end{equation}
-
     The net rate equation for an arbitrary reaction is then:
 
     \begin{equation}
         \frac{d [X_i]}{dt} = (\nu_i'' - \nu_i') \left \{ k_f \prod_i [X_i]^{\nu_i'} - k_b \prod_i [X_i]^{\nu_i''} \right \}
     \end{equation}
+
+    Where $\nu'$ is the stoichiometric for a reactant species, and $\nu''$ is for product species.
 
 \end{definition}
 
@@ -746,17 +744,13 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     \vspace{5mm} 
     \textit{For most chemical kinetic models, the reaction's reactants always consist of 2 species, while the reaction's products may contain two or three species. Therefore, the forwards rate coefficients $k_f$ should always have the same units. Since the equilibrium constant is used to find $k_b$, no unit conversions are necessary besides perhaps from cgs to mks units.}
     
+    \vspace{5mm}
     Curve fits of the following form are used to find the equilibrium constant:
 
-    \begin{equation}
-        \ln (K_\text{eq,r}) = A Z^5 + B Z^4 + C Z^3 + D Z^2 + E Z + F 
-    \end{equation}
-
-    with:
-
-    \begin{equation}
-        Z = \ln \frac{10^4}{T}
-    \end{equation}
+    \begin{align*}
+        (K_\text{eq,r}) &= \exp(\beta)
+        \\ \beta &= A_1 \frac{T}{10^4} + A_2 + A_3 \ln \frac{10^4}{T} + A_4 \frac{10^4}{T} + A_5 \bp{\frac{10^4}{T}}^2  
+    \end{align*}
 
     With the equilibrium constant of a reaction known, you can find the forward/backward reaction rates as stated above with:
 
@@ -808,6 +802,64 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     
 \end{definition}
 
+\begin{definition}[Efficiencies]
+    For certain reactions like dissociation, the outcome of the reaction is the same regardless of the other reactant. These are called \textit{third-body reactions}, since the secondary reactant does not change chemically. The third-body is usually represented with an $M$ as we have already discussed:
+
+    \begin{equation}
+        N_2 + M \rightleftarrows N + N + M \label{thirdbody}
+    \end{equation}
+
+    This $M$ can be any species, and the Arrhenius equation is nearly identical for any $M$, with only a slight change in the leading ceofficient $C$. This coefficient change is called an \textit{efficiency} (denoted here as $\epsilon$), and the algebra will be shown as to how this is beneficial to use. A list of efficiencies in certain reactions are shown in Table \ref{efficiencies}.
+
+    \begin{table}[!h]
+    \centering
+    \caption{Change in modified Ahhrenius constant $C$ for some third-bodies in $N_2$ dissociation.}
+    \begin{tabular}{p{25mm} p{15mm} p{15mm}}
+    \hline
+    Third body & C & $\epsilon$ \\
+    \hline
+    $M = O_2$ & 7.0e21 & 1.0 \\
+    $M = NO$ & 7.0e21 & 1.0 \\
+    $M = O$ & 3.0e22 & 4.2857 \\
+    \hline
+    \end{tabular}
+    \label{efficiencies}
+    \end{table}
+
+    Since $7.0e21$ is the smallest value, this is given an efficiency of 1.0, and then any other reaction's efficiency is given as some multiplier of this base value. The physical meaning of efficiencies is how "efficient" that third body is at making that reaction happen. $\epsilon$ is larger for atoms, since they are more efficient in sending their energy into dissociation of a molecule. We can now do some algebra on the Arrhenius equation by letting $C$ = $\epsilon C_c$, then $\gamma$ = $C_c T^\eta e^{E_0/kT}$. The forward  and backwards reaction constants are then:
+
+    \begin{equation}
+        k_f = \epsilon \gamma, \hspace{5mm} k_b = \frac{\epsilon \gamma}{K_{eq}}
+    \end{equation}
+
+    For a third body reaction, the change in the concentration of $N_2$ is then:
+
+    \begin{align*}
+        \frac{d[N_2]}{dt} &= (0 - 1)\left\{ \epsilon \gamma [N_2][M] - \frac{\epsilon \gamma}{K_{eq}}[N]^2[M] \right\} 
+        \\ &= -1 \cdot \epsilon [M] \left\{ \gamma [N_2] - \frac{\gamma}{K_{eq}}[N]^2 \right\}
+        \\ &= -1 \cdot \epsilon [M] R
+    \end{align*}
+
+    $R$ is independant of the third-body, so it is a constant and only needs to be computed once. Summing over contributions from all independant reactions gives:
+
+    \begin{align*}
+        \frac{d[N_2]}{dt} &= \sum_{i} \epsilon_i [M_i] R
+    \end{align*}
+
+    Where:
+
+    \begin{equation}
+        \sum_i \epsilon_i [M_i] = \epsilon_{N_2} [N_2] + \epsilon_{O_2} [O_2] + \epsilon_{NO} [NO] + \epsilon_{N} [N] + \epsilon_{O} [O] + \dots
+    \end{equation}
+
+    $R$ is retained for the production of $N$ atoms as well, you only need to change the coefficient from the $\nu_i'' - \nu_i''$ term:
+
+    \begin{align*}
+        \frac{d[N]}{dt} = \sum_i \epsilon_i [M_i] \ub{(2 - 0)}{\nu_{N}'' - \nu_N'} R
+    \end{align*}
+
+\end{definition}
+
 
 \subsection{Example rate equation solution}
 
@@ -820,28 +872,19 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
             \\ NO + NO &\leftrightarrows N + O + NO
             \\ NO + O &\leftrightarrows N + O + O
             \\ NO + N &\leftrightarrows N + O + N
-            \\ NO + NO^+ &\leftrightarrows N + O + NO^+
-            \\ NO + e^- &\leftrightarrows N + O + e^-
             \\ O_2 + N &\leftrightarrows NO + O
             \\ N_2 + O &\leftrightarrows NO + N
-            \\ N_2 + O_2 &\leftrightarrows 2NO
         \end{align}
     \end{subequations}
 
-    The forward and backward rate coefficients for the reactions are $k_{f,a}$ and $k_{b,a}$ for the first reaction, all the way down with consistent lettering with the equation number. Recall:
-
-    \begin{equation}
-        \frac{d [X_i]}{dt} = (\nu_i'' - \nu_i') \left \{ k_f \prod_i [X_i]^{\nu_i'} - k_b \prod_i [X_i]^{\nu_i''} \right \}
-    \end{equation}
-
-    Therefore, filling in and walling the time derivative $\dot{w}_{a \dots j}$, we get: 
-
-    \begin{align}
-        $\dot{w}_{a}$ = & (0 - 1) (k_{f,a} [NO][O2] - k_{b,a} [N][O][O_2] ) 
-    \end{align}
-
-
-
+    The forward and backward rate coefficients for the reactions are $k_{f,a}$ and $k_{b,a}$ for the first reaction, all the way down with consistent lettering with the equation number. The entire equation is then:
+    
+    \begin{align*}
+        \frac{d[NO]}{dt} &= -\bcb{\gamma [NO] - \frac{\gamma}{K_{eq}} [N][O]} \sum_i \epsilon_i [M]
+        \\ &+ \bcb{k_{f,f} [O_2][N] - k_{b,f} [NO][O]}
+        \\ &+ \bcb{k_{f,g} [N_2][O] - k_{b,g} [NO][N] }
+    \end{align*}
+    
 
 \newpage
 \section{Thermochemical Nonequilibrium}
