@@ -896,15 +896,8 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
 \section{Thermochemical Nonequilibrium CFD}
 
 
-\section{Internal energy relaxation}
-
-
-
-
-
-
-
 \subsection{Species conservation equation}
+
     \begin{equation}
     \underbracket{ \pd{}{t} \rho_s}_1 + \underbracket{\pd{}{x_j} \rho_s u_j}_2 = \underbracket{\pd{}{x_j} (\rho D_s \pd{}{x_j} y_s)}_3 + \underbracket{\dot{\omega}_s}_4
     \end{equation}
@@ -927,7 +920,7 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
         \item $\dot{\omega}_s$ is the chemical production rate of species s
     \end{itemize}
 
-\begin{definition}[Total continuity equation]
+\subsection{Total continuity equation}
     For chemically reacting flows, the total continuity equation is unaffected. It is:
 
     \begin{equation}
@@ -939,9 +932,8 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     \begin{equation}
         \sum_{s} \dot{w}_s = 0
     \end{equation}
-\end{definition}
 
-\begin{definition}[Mixture momentum conservation]
+\subsection{Mixture momentum conservation}
 
     \begin{equation}
         \underbracket{\pd{}{t} \rho u_i}_{1} + \underbracket{\pd{}{x_j} \rho u_i u_j}_{2} = \underbracket{-\pd{p}{x_i}}_{3} + \underbracket{\pd{}{x_j} \left[ \mu \left( \pd{u_i}{x_j} + \pd{u_j}{x_i} \right) - \frac{2}{3} \mu \pd{u_k}{x_k} \delta_{ij} \right]}_4
@@ -969,10 +961,8 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     \end{equation}
 
     Where the $e$ subscript denotes an electron property.
-    
-\end{definition}
 
-\begin{definition}[Vibrational energy conservation]
+\subsection{Vibrational energy conservation}
 
     \begin{multline}
         \ub{\pd{}{t} \rho e_v}{1} + \ub{\pd{}{x_j}\rho e_v u_j}{2} = \ub{\pd{}{x_j} \bp{\eta_v \pd{T_v}{x_j}}}{3} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{v,s} D_s \pd{y_s}{x_j}}}{4} \\ + \ub{\sum_\text{s = mol.} \rho_s \frac{(e_{v,s}^* - e_{v,s})}{<\tau_s>}}{5} + \ub{\sum_\text{s=mol.} \rho_s \frac{(e_{v,s}^{**} - e_{v,s})}{<\tau_{es}>}}{6} + \ub{\sum_\text{s=mol.}\dot{w}_s \hat{D}_s}{7}
@@ -1002,9 +992,8 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
         \item $<\tau_{es}>$ is the characteristic relation times for electron-vibrational (e-V) energy exchange.
         \item $\hat{D}_s$ is the vibration energy level representative of those molecules of species $s$ which are created or destroyed (recombined or dissociated) because of their high vibrational quantum numbers.
     \end{itemize}
-\end{definition}
 
-\begin{definition}[Electron and electronic excitation energy conservation]
+\subsection{Electron and electronic excitation energy conservation}
 
     \begin{multline}
         \ub{\pd{}{t} \rho e_e}{1} + \ub{\pd{}{x_j} \bb{u_j(\rho e_e + p_e)}}{2} = \ub{u_j \pd{p_e}{x_j} }{3} + \ub{\pd{}{x_j} \bp{\eta_e \pd{T_e}{x_j}}}{4} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{e,s} D_s \pd{y_s}{x_j}}}{5} \\ + \ub{2 \rho_e \frac{3}{2} \hat{R}(T - T_e) \sum_{s=1}^\text{NS - 1} \frac{\nu_{es}}{\mathcal{M}_s}}{6}  - \ub{\sum_\text{s=ion}\dot{n}_{e,s} \hat{I}_s}{7} - \ub{\sum_\text{s=mol.} \rho_s \frac{e_{v,s}^{**} - e_{v,s}}{<\tau_{es}>}}{8} - \ub{Q_\text{rad}}{9}
@@ -1036,9 +1025,8 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
         \item $\hat{I}_s$ is the energy per unit mole lost by a free electron in producing species $s$ through electron impact ionization.
         \item $Q_\text{rad}$ is the radiant energy transfer rate due to electron transitions.
     \end{itemize}
-\end{definition}
 
-\begin{definition}[Total energy conservation]
+\subsection{Total energy conservation}
 
     \begin{multline}
         \ub{\pd{}{t} \rho E}{1} + \ub{\pd{}{x_j} \rho H u_j}{2} = \ub{\pd{}{x_j} \bp{\eta \pd{T}{x_j} + \eta_v \pd{T_v}{x_j} + \eta_e \pd{T_e}{x_j}}}{3} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_s D_s \pd{y_s}{x_j}}}{4} + \ub{\pd{}{x_j} \bb{u_i \mu \bp{\pd{u_i}{x_j} + \pd{u_j}{x_i}}}}{5} - \ub{Q_\text{rad}}{6}
@@ -1062,9 +1050,8 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
         \item $H$ is the total enthalpy per unit mass, defined as $\displaystyle H = E + \frac{p}{\rho}$
         \item $\eta$ is the frozen thermal conductivity of heavy particles. The part in which exchanges of translational and rotational energy occur.
     \end{itemize}
-\end{definition}
 
-\begin{definition}[Two temperature model]
+\subsection{Two temperature model}
 
     Everything before this assumes a three-temperature model, where there is a single temperature dedicated to translational-rotational energy, vibrational energy, and electronic-electron energies. The two temperature model assumes that one temperature can be used for describing the energy of translational-rotational energies, and then the rest (vib-electronic-electron) are desibed by the second temperature, $T_V$. Therefore:
     
@@ -1084,8 +1071,40 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
         e_V &= e_v + e_e
         \\ h_{V,s} &= h_{v,s} h_{e,s}
     \end{align}
-    
-\end{definition}
+
+\subsection{Jacobians}
+
+\subsubsection{Flux Jacobians}
+
+\subsubsection{Source term Jacobians}
+
+The general equation for the trans-vib relaxation source term Jacobian entries is:
+
+\begin{equation}
+    \pd{}{U_i} Q_{t-v,s}^{LT} = \delta_{si} \frac{e_{vs}^* - e_{vs}}{<\tau_s>} + \frac{\rho_s}{<\tau_s>} \pd{}{U_i}(e_{vs}^* - e_{vs}) - \rho_s \frac{e_{vs}^* - e_{vs}}{<\tau_s>^2} \pd{}{U_i} <\tau_s>
+\end{equation}
+
+Given the following derivatives:
+
+\begin{align}
+    \pd{e_{vs}}{\rho_i} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{\rho_i}, &\hspace{10mm} \pd{e_{vs}^*}{\rho_i} =  \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{\rho_i}
+    \\ \pd{e_{vs}}{(\rho u)} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{(\rho u)}, &\hspace{10mm} \pd{e_{vs}^*}{(\rho u)} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{(\rho u)}
+    \\ \pd{e_{vs}}{(\rho v)} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{(\rho v)}, &\hspace{10mm} \pd{e_{vs}^*}{(\rho v)} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{(\rho v)}
+    \\ \pd{e_{vs}}{(\rho w)} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{(\rho w)}, &\hspace{10mm} \pd{e_{vs}^*}{(\rho w)} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{(\rho w)}
+    \\ \pd{e_{vs}}{E_v} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{E_v}, &\hspace{10mm} \pd{e_{vs}^*}{E_v} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{E_v}
+    \\ \pd{e_{vs}}{E} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{E}, &\hspace{10mm} \pd{e_{vs}^*}{E} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{E}
+\end{align}
+
+\begin{align}
+    \pd{T_v}{\rho_i} &= -e_{vi} / \sum_{s=1}^\text{NS} \bb{\rho_s \bp{\pd{e_{vs}}{T_v}}}
+    \\ \pd{T_v}{(\rho u)} = 0, \hspace{10mm} \pd{T_v}{(\rho v)} &= 0, \hspace{10mm} \pd{T_v}{(\rho w)} = 0
+    \\ \pd{T_v}{E_v} &= 1 / \sum_{s=1}^\text{NS} \bb{\rho_s \bp{\pd{e_{vs}}{T_v}}}
+    \\ \pd{T_v}{E} &= 0
+\end{align}
+
+
+The individual Jacobian entries are then:
+
 
 
 

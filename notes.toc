@@ -16,5 +16,13 @@
 \contentsline {section}{\numberline {5}Internal energy relaxation}{22}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Landau-Teller model}{22}{subsection.5.1}%
 \contentsline {section}{\numberline {6}Thermochemical Nonequilibrium CFD}{23}{section.6}%
-\contentsline {section}{\numberline {7}Internal energy relaxation}{23}{section.7}%
-\contentsline {subsection}{\numberline {7.1}Species conservation equation}{23}{subsection.7.1}%
+\contentsline {subsection}{\numberline {6.1}Species conservation equation}{23}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Total continuity equation}{23}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Mixture momentum conservation}{24}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Vibrational energy conservation}{24}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Electron and electronic excitation energy conservation}{26}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Total energy conservation}{27}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}Two temperature model}{28}{subsection.6.7}%
+\contentsline {subsection}{\numberline {6.8}Jacobians}{29}{subsection.6.8}%
+\contentsline {subsubsection}{\numberline {6.8.1}Flux Jacobians}{29}{subsubsection.6.8.1}%
+\contentsline {subsubsection}{\numberline {6.8.2}Source term Jacobians}{29}{subsubsection.6.8.2}%
