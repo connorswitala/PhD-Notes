@@ -1072,6 +1072,77 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
         \\ h_{V,s} &= h_{v,s} h_{e,s}
     \end{align}
 
+
+\subsection{Derivatives}
+
+\subsubsection{Partial derivatives of pressure ($P$)}
+
+\begin{subequations}
+    \begin{align}
+        \pd{p}{\rho_s} &= \bp{\frac{\hat{R}}{\mathcal{M}_s} - c_{vs} \frac{R}{c_v}} T + \frac{R}{c_v} \bb{\frac{1}{2} (u^2 + v^2 + w^2) - h_s^\circ}
+    \\ \pd{p}{(\rho u)} &= -u \frac{R}{c_v}
+    \\ \pd{p}{(\rho v)} &= -v \frac{R}{c_v}
+    \\ \pd{p}{(\rho w)} &= -w \frac{R}{c_v}
+    \\ \pd{p}{E_v} &= -\frac{R}{c_v}
+    \\ \pd{p}{E} &= \frac{R}{c_v}
+    \end{align}
+\end{subequations}
+
+\subsubsection{Partial derivatives of total energy ($E$)}
+
+\begin{subequations}
+    \begin{align}
+        \pd{E}{\rho_s} &= \bp{c_{vs} - \frac{c_v}{R} \frac{\hat{R}}{\mathcal{M}_s}}T + \frac{1}{2} (u^2 + v^2 + w^2) + e_v + h_s^\circ
+        \\ \pd{E}{u} &= \rho u 
+        \\ \pd{E}{v} &= \rho v
+        \\ \pd{E}{w} &= \rho w
+        \\ \pd{E}{e_v} &= \sum_{s=1}^\text{NS} \rho_s
+        \\ \pd{E}{p} &= \frac{c_v}{R}
+    \end{align}
+\end{subequations}
+
+
+\subsubsection{Partial derivatives of $T$}
+
+\begin{subequations}
+    \begin{align}
+        \pd{T}{\rho_s} &= \frac{1}{\rho c_v} \bp{-c_{vs}T + \frac{1}{2} (u^2 + v^2 + w^2) - h_s^\circ}
+        \\ \pd{T}{(\rho u)} &= -\frac{u}{\rho c_v}
+        \\ \pd{T}{(\rho v)} &= -\frac{v}{\rho c_v}
+        \\ \pd{T}{(\rho w)} &= -\frac{w}{\rho c_v}
+        \\ \pd{T}{E_v} &= -\frac{1}{\rho c_v}
+        \\ \pd{T}{E} &= \frac{1}{\rho c_v}
+        \\ \pd{c_r}{\rho_s} &= (\delta_{rs} - c_r) \frac{1}{\rho}
+    \end{align}
+\end{subequations}
+
+\subsubsection{Partial derivatives of vibrational energy ($e_vs$)}
+
+\begin{subequations}
+    \begin{align}
+        \pd{e_{vs}}{\rho_i} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{\rho_i}, &\hspace{10mm} \pd{e_{vs}^*}{\rho_i} =  \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{\rho_i}
+        \\ \pd{e_{vs}}{(\rho u)} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{(\rho u)}, &\hspace{10mm} \pd{e_{vs}^*}{(\rho u)} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{(\rho u)}
+        \\ \pd{e_{vs}}{(\rho v)} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{(\rho v)}, &\hspace{10mm} \pd{e_{vs}^*}{(\rho v)} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{(\rho v)}
+        \\ \pd{e_{vs}}{(\rho w)} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{(\rho w)}, &\hspace{10mm} \pd{e_{vs}^*}{(\rho w)} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{(\rho w)}
+        \\ \pd{e_{vs}}{E_v} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{E_v}, &\hspace{10mm} \pd{e_{vs}^*}{E_v} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{E_v}
+        \\ \pd{e_{vs}}{E} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{E}, &\hspace{10mm} \pd{e_{vs}^*}{E} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{E}
+    \end{align}    
+\end{subequations}
+
+\subsubsection{Partial derivatives of vibrational temperature ($T_v$)}
+
+\begin{subequations}
+    \begin{align}
+    \pd{T_v}{\rho_i} &= -e_{vi} / \sum_{s=1}^\text{NS} \bb{\rho_s \bp{\pd{e_{vs}}{T_v}}}
+    \\ \pd{T_v}{(\rho u)} &= 0
+    \\ \pd{T_v}{(\rho v)} &= 0
+    \\ \pd{T_v}{(\rho w)} &= 0
+    \\ \pd{T_v}{E_v} &= 1 / \sum_{s=1}^\text{NS} \bb{\rho_s \bp{\pd{e_{vs}}{T_v}}}
+    \\ \pd{T_v}{E} &= 0
+\end{align}
+\end{subequations}
+
+
 \subsection{Jacobians}
 
 \subsubsection{Flux Jacobians}
@@ -1085,22 +1156,6 @@ The general equation for the trans-vib relaxation source term Jacobian entries i
 \end{equation}
 
 Given the following derivatives:
-
-\begin{align}
-    \pd{e_{vs}}{\rho_i} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{\rho_i}, &\hspace{10mm} \pd{e_{vs}^*}{\rho_i} =  \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{\rho_i}
-    \\ \pd{e_{vs}}{(\rho u)} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{(\rho u)}, &\hspace{10mm} \pd{e_{vs}^*}{(\rho u)} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{(\rho u)}
-    \\ \pd{e_{vs}}{(\rho v)} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{(\rho v)}, &\hspace{10mm} \pd{e_{vs}^*}{(\rho v)} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{(\rho v)}
-    \\ \pd{e_{vs}}{(\rho w)} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{(\rho w)}, &\hspace{10mm} \pd{e_{vs}^*}{(\rho w)} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{(\rho w)}
-    \\ \pd{e_{vs}}{E_v} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{E_v}, &\hspace{10mm} \pd{e_{vs}^*}{E_v} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{E_v}
-    \\ \pd{e_{vs}}{E} = \bp{\pd{e_{vs}}{T_v}}_{T_v} \pd{T_v}{E}, &\hspace{10mm} \pd{e_{vs}^*}{E} = \bp{\pd{e_{vs}}{T_v}}_{T_v  = T} \pd{T_v}{E}
-\end{align}
-
-\begin{align}
-    \pd{T_v}{\rho_i} &= -e_{vi} / \sum_{s=1}^\text{NS} \bb{\rho_s \bp{\pd{e_{vs}}{T_v}}}
-    \\ \pd{T_v}{(\rho u)} = 0, \hspace{10mm} \pd{T_v}{(\rho v)} &= 0, \hspace{10mm} \pd{T_v}{(\rho w)} = 0
-    \\ \pd{T_v}{E_v} &= 1 / \sum_{s=1}^\text{NS} \bb{\rho_s \bp{\pd{e_{vs}}{T_v}}}
-    \\ \pd{T_v}{E} &= 0
-\end{align}
 
 
 The individual Jacobian entries are then:
