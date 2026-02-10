@@ -832,18 +832,17 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
         k_f = \epsilon \gamma, \hspace{5mm} k_b = \frac{\epsilon \gamma}{K_{eq}}
     \end{equation}
 
-    For a third body reaction, the change in the concentration of $N_2$ is then:
+    For a third body reaction, the change in the concentration of $N_2$ due to a single third-body $M$ is then:
 
     \begin{align*}
         \frac{d[N_2]}{dt} &= (0 - 1)\left\{ \epsilon \gamma [N_2][M] - \frac{\epsilon \gamma}{K_{eq}}[N]^2[M] \right\} 
-        \\ &= -1 \cdot \epsilon [M] \left\{ \gamma [N_2] - \frac{\gamma}{K_{eq}}[N]^2 \right\}
-        \\ &= -1 \cdot \epsilon [M] R
+        \\ &= -1 \cdot \epsilon [M] \underbracket{ \left\{ \gamma [N_2] - \frac{\gamma}{K_{eq}}[N]^2 \right\}}_{R}
     \end{align*}
 
     $R$ is independant of the third-body, so it is a constant and only needs to be computed once. Summing over contributions from all independant reactions gives:
 
     \begin{align*}
-        \frac{d[N_2]}{dt} &= \sum_{i} \epsilon_i [M_i] R
+        \frac{d[N_2]}{dt} &= \bb{\sum_{i} \epsilon_i [M_i]} R
     \end{align*}
 
     Where:
@@ -1325,6 +1324,12 @@ This gives:
 \begin{eqnarray}
     \pd{}{U_j} <\tau_s> = \pd{}{U_j} \bb{\sum_r X_r} \frac{1}{\sum_r X_r / \tau_{sr}} + \sum_r X_r \pd{}{U_j} \bb{\sum_r X_r / \tau_{sr}}^{-1}
 \end{eqnarray}
+
+We know:
+
+\begin{align}
+    X_r = 
+\end{align}
 
 
 \end{flushleft}
