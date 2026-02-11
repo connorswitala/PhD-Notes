@@ -1334,7 +1334,7 @@ Since the first term is zero, this leaves us with:
 Differentiating the second bracketed term:
 
 \begin{equation}
-    \pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1} = - \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \bb{\pd{}{U_j} \sum_{r=1}^\text{NS} \frac{X_r}{\tau_sr} }
+    \pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1} = - \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \bb{\pd{}{U_j} \sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}} }
 \end{equation}
 
 Bringing the derivative inside, using the product rule and splitting the sums gives the final derivative as:
@@ -1374,36 +1374,9 @@ And all other derivatives WRT conserved variables are 0. $\delta_{jr}$ is the Kr
     \textcolor{blue}{ \sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \frac{1}{\tau_{sr}}}  }
 \end{equation}
 
-A possible trick uses the following identity. Consider a constant $C$, and the fact that:
-
-\begin{equation}
-    \sum_{r=1}^\text{NS} \pd{X_r}{U_j} = \pd{}{U_j} \underbracket{\sum_{r=1}^\text{NS} X_r}_{1} = 0
-\end{equation}
-
-Clearly, multiplying this by $C$ does not change the result:
-
-\begin{equation}
-    \sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} C} = 0
-\end{equation}
-
-If you subtract this from the above blue term, you get:
-
-\begin{equation}
-    \textcolor{blue}{\sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \frac{1}{\tau_{sr}}}} - \sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} C} = \sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \bp{\frac{1}{\tau_{sr}} - C}}
-\end{equation}
-
-If $C$ is a constant that is chosen properly, you may be able to help the stiffness of the problem. To start, choose
-
-\begin{equation}
-    C = \sum_{k=1}^\text{NS} \frac{X_k}{\tau_{sk}}
-\end{equation}
-
-For a diatomic species $s$, this is essentially a mean relaxation time. Since this does not change when summing over $r$, this will not effect the result of the above equation, but may help with stiffness since we are calculating based off of how far away from the mean the relaxation times are.
-Therefore, the derivative of $<\tau_s>$ may be expressed as:
-
 \begin{multline}
     \pd{<\tau_s>}{U_j}  = - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots 
-    \\ \bcb{ \textcolor{blue}{\sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \bp{\frac{1}{\tau_{sr}} - \sum_{k=1}^\text{NS} \frac{X_k}{\tau_{sk}}}}} + \textcolor{red}{\sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}}
+    \\ \bcb{ \textcolor{blue}{\sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \frac{1}{\tau_{sr}}}} + \textcolor{red}{\sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}}
 \end{multline}
 
 The red term expands to the following \textit{without} Park's correction:
@@ -1412,21 +1385,13 @@ The red term expands to the following \textit{without} Park's correction:
     \sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}} &= - \sum_{r=1}^\text{NS} \bb{X_r \tau_{sr}^{-2} \pd{\tau_{sr}}{U_j}}
 \end{align}
 
-The Millikan-White relaxation derivative is:
+The Millikan-White-only relaxation derivative is:
 
 \begin{equation}
     \boxed{\pd{\tau_{sr}^\text{MW}}{U_j} = -\tau_{sr}^\text{MW} \textcolor{blue}{\bb{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}}
 \end{equation}
 
-So the completed red term is:
-
-\begin{align}
-     \sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}} &= \sum_{r=1}^\text{NS} \bb{- X_r \tau_{sr}^{-2} \bb{-\tau_{sr} \bp{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}}
-    \\ &=  \sum_{r=1}^\text{NS} \bb{\frac{X_r}{\tau_{sr}} \bp{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}
-\end{align}
-
-
-With Park's correction we have:
+but if we want Park's correction we have:
 
 \begin{equation}
     \tau_{sr} = \tau_{sr}^\text{MW} + \tau_{sr}^\text{P}
@@ -1534,32 +1499,29 @@ If Millikan-White is used with Park's correction, the final derivative for $\tau
 \end{multline}
 
 
-
-
-
-
-
-
-
 So, we have:
 
 \begin{multline}
-    \pd{<\tau_s>}{U_j} = \overbracket{-\bb{\sum_r X_r} \bb{\sum_r \frac{X_r}{\tau_{sr}}}^{-2}}^{-<\tau_s> / \bb{\sum_r X_r / \tau_{sr}}} \times \dots
-    \\ \bcb{\sum_r \bb{ \underbracket{\bp{\frac{1}{\sum_i \rho_i \mathcal{M}_i} \bb{\frac{\delta_{jr}}{\mathcal{M}_r} - \frac{X_r}{\mathcal{M}_j}} \frac{1}{\tau_{sr}}}}_{\text{only if $U_j$ = $\rho_j$}} +  \frac{X_r}{\tau_{sr}} \bb{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}  }}
+    \pd{<\tau_s>}{U_j} = -\bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots
+    \\ \left\{ \frac{\mathcal{M}}{\rho} \sum_{r=1}^\text{NS} \bb{ \bp{ \frac{\delta_{jr}}{\mathcal{M}_r} - \frac{X_r}{\mathcal{M}_j} } \frac{1}{\tau_{sr}}} - \sum_{r=1}^\text{NS} \bb{X_r \tau_{sr}^{-2} \pd{\tau_{sr}}{U_j}}  \right\}
 \end{multline}
 
+\begin{multline}
+    \pd{<\tau_s>}{U_j} = -\bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots
+    \\ \left\{ \underbracket{\frac{\mathcal{M}}{\rho \mathcal{M}_j} \bb{\frac{1}{\tau_{sr}}  - \sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}}_{\text{when $U_j$ = $\rho_j$}} - \sum_{r=1}^\text{NS} \bb{X_r \tau_{sr}^{-2} \pd{\tau_{sr}}{U_j}} \right\}
+\end{multline}
 
-Taking this per conserved variable gives:
+If we make some assumptions, such as:
 
-\begin{align}
-    \pd{<\tau_s>}{\rho_j} = -<\tau_s> \frac{1}{\sum_r X_r / \tau_{sr}}
-\end{align}
+\begin{eqnarray}
+    \sum_{r=1}^\text{NS} X_r = 1, \hspace{5mm} <\tau_s> = \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1}
+\end{eqnarray}
 
+The above equation becomes:
 
-We can rearrange this to:
 
 \begin{multline}
-    \pd{<\tau_s>}{U_j} = - \frac{}{} \frac{<\tau_s>}{\sum_r X_r / \tau_{sr}} \bcb{\sum_r \bb{ \bp{\pd{}{U_j} X_r} \frac{1}{\tau_{sr}} + X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}
+    \boxed{\pd{<\tau_s>}{U_j} = -<\tau_s>^2  \bcb {\underbracket{\frac{\mathcal{M}}{\rho \mathcal{M}_j} \bp{\frac{1}{\tau_{sr}}  - \frac{1}{<\tau_s>}}}_{\text{when $U_j$ = $\rho_j$}} - \sum_{r=1}^\text{NS} \bb{ \frac{X_r}{\tau_{sr}^2} \pd{\tau_{sr}}{U_j}} }}
 \end{multline}
 
 
