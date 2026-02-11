@@ -1327,12 +1327,23 @@ This gives:
 
 Since the first term is zero, this leaves us with:
 
-\begin{multline}
-    \pd{<\tau_s>}{U_j} = \sum_{r=1}^\text{NS} X_r \bb{\pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1} }
-    \\ = - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \bcb{\sum_{r=1}^\text{NS} \bb{ \bp{\pd{X_r}{U_j} } \frac{1}{\tau_{sr}} + X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}
-\end{multline}
+\begin{equation}
+    \pd{<\tau_s>}{U_j} = \bb{\sum_{r=1}^\text{NS} X_r} \bb{\pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1} }
+\end{equation}
 
-The first term inside the curly brace expands to:
+Differentiating the second bracketed term:
+
+\begin{equation}
+    \pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1} = - \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \bb{\pd{}{U_j} \sum_{r=1}^\text{NS} \frac{X_r}{\tau_sr} }
+\end{equation}
+
+Bringing the derivative inside, using the product rule and splitting the sums gives the final derivative as:
+
+\begin{equation}
+    \boxed{\pd{<\tau_s>}{U_j}  = - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \bcb{ \textcolor{blue}{\sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \frac{1}{\tau_{sr}}}} + \textcolor{red}{\sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}}}
+\end{equation}
+
+The blue term inside expands using an identity:
 
 \begin{align}
     X_r &= \frac{\rho_r / \mathcal{M}_r}{\sum_{i=1}^\text{NS} \rho_i / \mathcal{M}_i}
@@ -1342,16 +1353,78 @@ The first term inside the curly brace expands to:
 Giving:
 
 \begin{eqnarray}
-    \boxed{\pd{X_r}{\rho_j} = \frac{1}{\sum_{i=1}^\text{NS} \rho_i / \mathcal{M}_i} \bb{\frac{\delta_{jr}}{\mathcal{M}_r} - \frac{X_r}{\mathcal{M}_j}}}
+    \pd{X_r}{\rho_j} = \frac{1}{\sum_{i=1}^\text{NS} \rho_i / \mathcal{M}_i} \bb{\frac{\delta_{jr}}{\mathcal{M}_r} - \frac{X_r}{\mathcal{M}_j}}
 \end{eqnarray}
 
-And all other derivatives WRT conserved variables are 0. $\delta_{jr}$ is the Kronecker delta. Then $\rho_j$ = $\rho_r$, it is 1, otherwise it is 0. The second term expands to the following without Park's correction:
+Noting that:
+
+\begin{eqnarray}
+     \frac{1}{\sum_{i=1}^\text{NS} \rho_i / \mathcal{M}_i} = \frac{\mathcal{M}_\text{mix}}{\rho_\text{mix}}
+\end{eqnarray}
+
+These mixture properties will be given no subscript going forward. This gives:
+
+\begin{eqnarray}
+    \boxed{\pd{X_r}{\rho_j} = \frac{\mathcal{M}}{\rho} \bb{\frac{\delta_{jr}}{\mathcal{M}_r} - \frac{X_r}{\mathcal{M}_j}}}
+\end{eqnarray}
+
+And all other derivatives WRT conserved variables are 0. $\delta_{jr}$ is the Kronecker delta. Then $\rho_j$ = $\rho_r$, it is 1, otherwise it is 0. We still need to sum this with the reciprocal of $\tau_{sr}$. This produces:
+
+\begin{equation}
+    \textcolor{blue}{ \sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \frac{1}{\tau_{sr}}}  }
+\end{equation}
+
+A possible trick uses the following identity. Consider a constant $C$, and the fact that:
+
+\begin{equation}
+    \sum_{r=1}^\text{NS} \pd{X_r}{U_j} = \pd{}{U_j} \underbracket{\sum_{r=1}^\text{NS} X_r}_{1} = 0
+\end{equation}
+
+Clearly, multiplying this by $C$ does not change the result:
+
+\begin{equation}
+    \sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} C} = 0
+\end{equation}
+
+If you subtract this from the above blue term, you get:
+
+\begin{equation}
+    \textcolor{blue}{\sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \frac{1}{\tau_{sr}}}} - \sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} C} = \sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \bp{\frac{1}{\tau_{sr}} - C}}
+\end{equation}
+
+If $C$ is a constant that is chosen properly, you may be able to help the stiffness of the problem. To start, choose
+
+\begin{equation}
+    C = \sum_{k=1}^\text{NS} \frac{X_k}{\tau_{sk}}
+\end{equation}
+
+For a diatomic species $s$, this is essentially a mean relaxation time. Since this does not change when summing over $r$, this will not effect the result of the above equation, but may help with stiffness since we are calculating based off of how far away from the mean the relaxation times are.
+Therefore, the derivative of $<\tau_s>$ may be expressed as:
+
+\begin{multline}
+    \pd{<\tau_s>}{U_j}  = - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots 
+    \\ \bcb{ \textcolor{blue}{\sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \bp{\frac{1}{\tau_{sr}} - \sum_{k=1}^\text{NS} \frac{X_k}{\tau_{sk}}}}} + \textcolor{red}{\sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}}
+\end{multline}
+
+The red term expands to the following \textit{without} Park's correction:
 
 \begin{align}
-    X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}} &= - X_r \tau_{sr}^{-2} \pd{\tau_{sr}}{U_j}
-    \\ &= -X_r \tau_{sr}^{-2} \bb{-\tau_{sr} \bp{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}
-    \\ &=  \frac{X_r}{\tau_{sr}} \bb{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}
+    \sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}} &= - \sum_{r=1}^\text{NS} \bb{X_r \tau_{sr}^{-2} \pd{\tau_{sr}}{U_j}}
 \end{align}
+
+The Millikan-White relaxation derivative is:
+
+\begin{equation}
+    \boxed{\pd{\tau_{sr}^\text{MW}}{U_j} = -\tau_{sr}^\text{MW} \textcolor{blue}{\bb{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}}
+\end{equation}
+
+So the completed red term is:
+
+\begin{align}
+     \sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}} &= \sum_{r=1}^\text{NS} \bb{- X_r \tau_{sr}^{-2} \bb{-\tau_{sr} \bp{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}}
+    \\ &=  \sum_{r=1}^\text{NS} \bb{\frac{X_r}{\tau_{sr}} \bp{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}
+\end{align}
+
 
 With Park's correction we have:
 
@@ -1365,16 +1438,10 @@ So:
     \pd{\tau_{sr}}{U_j} = \pd{\tau_{sr}^\text{MW}}{U_j} + \pd{\tau_{sr}^\text{P}}{U_j}
 \end{equation}
 
-As we saw:
+The harder derivative (somehow) is Park's term:
 
 \begin{equation}
-    \pd{\tau_{sr}^\text{MW}}{U_j} = -\tau_{sr}^\text{MW} \bb{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}
-\end{equation}
-
-The harder derivative is:
-
-\begin{equation}
-    \pd{\tau_{sr}^\text{P}}{U_j} = \pd{}{U_j} \bb{\frac{1}{\bar{c} \sigma n}} = -(\bar{c} \sigma n)^{-2} \bcb{\pd{\bar{c}}{U_j} \sigma n + \bar{c} \bb{\pd{\sigma}{U_j} + \sigma \pd{n}{U_j}}}
+    \pd{\tau_{sr}^\text{P}}{U_j} = \pd{}{U_j} \bb{\frac{1}{\bar{c} \sigma n}} = -(\bar{c} \sigma n)^{-2} \bcb{\pd{\bar{c}}{U_j} \sigma n + \bar{c} \bb{\pd{\sigma}{U_j} n + \sigma \pd{n}{U_j}}}
 \end{equation}
 
 
@@ -1386,9 +1453,91 @@ With:
 
 We begin with:
 
+\begin{equation}
+    \pd{\bar{c}}{U_j} = \sqrt{\frac{8 \hat{R}}{\pi}} \pd{}{U_j} \bb{T^{1/2} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-1/2}}
+\end{equation}
+
+\begin{multline}
+     \pd{\bar{c}}{U_j} = \sqrt{\frac{8 \hat{R}}{\pi}} \times \left\{ \frac{1}{2} T^{-1/2} \pd{T}{U_j} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-1/2} \right.
+     \\ \left. - \frac{1}{2} T^{1/2} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-3/2} \textcolor{red}{ \bb{\pd{}{U_j} \sum_{i=1}^\text{NS} \bp{X_i \mathcal{M}_i}}} \right\}
+\end{multline}
+
+The term in read expands as the following:
+
 \begin{align}
-    \pd{\bar{c}}{U_j}
+    \bb{\pd{}{U_j} \sum_{i=1}^\text{NS} \bp{X_i M_i}} &= \sum_{i=1}^\text{NS} \bb{\mathcal{M}_i \pd{X_i}{U_j}}
+    \\ &= \sum_{i=1}^\text{NS} \bb{\mathcal{M}_i \bp{\frac{\mathcal{M}}{\rho} \bb{\frac{\delta_{ji}}{\mathcal{M}_i} - \frac{X_i}{\mathcal{M}_j}}}}
+    \\ &= \frac{\mathcal{M}}{\rho} \bcb{ \sum_{i=1}^\text{NS} [\delta_{ij}] - \sum_{i=1}^\text{NS} \bb{\frac{\mathcal{M}_i X_i}{\mathcal{M}_j}}   }
+    \\ &= \frac{\mathcal{M}}{\rho} \bb{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}
 \end{align}
+
+
+The derivative of $\bar{c}$ is then:
+
+\begin{multline}
+    \pd{\bar{c}}{U_j} = \sqrt{\frac{8 \hat{R}}{\pi}} \left\{\frac{1}{2}T^{-1/2} \pd{T}{U_j} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-1/2} \right. 
+    \\ \left. - \frac{1}{2} T^{1/2} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-3/2} \bb{\frac{\mathcal{M}}{\rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}}  \right\}
+\end{multline}
+
+
+\begin{equation}
+    \boxed{\pd{\bar{c}}{U_j} = \bar{c} \textcolor{blue}{\bb{\frac{1}{2T} \pd{T}{U_j} \underbracket{- \frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}}_{\text{if $U_j$ = $\rho_j$}}}}}
+\end{equation}
+
+The derivative of $n$ is far more straight forward:
+
+\begin{align}
+    \pd{n}{U_j} &= \pd{p}{U_j} \frac{1}{kT} + \frac{p}{k} \bp{\pd{}{U_j} \frac{1}{T}}
+    \\ &= \pd{p}{U_j} \frac{1}{kT} - \frac{p}{k} \frac{1}{T^2} \pd{T}{U_j}
+\end{align}
+
+\begin{equation}
+    \boxed{\pd{n}{U_j} = n \bb{ \frac{1}{p} \pd{p}{U_j} - \frac{1}{T} \pd{T}{U_j}}}
+\end{equation}
+
+Finally, the derivative wrt to $\sigma$:
+
+\begin{align}
+    \pd{\sigma}{U_j} &= \pd{}{U_j} \bb{\sigma_v' \bp{\frac{50000}{T}}^2}
+    \\ &= \sigma_v' 50000^2 \pd{}{U_j} \frac{1}{T^2}
+    \\ &= \sigma_v' 50000^2 \bp{-2 T^{-3} \pd{T}{U_j}}
+\end{align}
+
+\begin{equation}
+    \boxed{\pd{\sigma}{U_j} = \sigma \bb{-\frac{2}{T} \pd{T}{U_j}}}
+\end{equation}
+
+
+Putting it all together for Park's derivative, we have:
+
+\begin{multline}
+    \pd{\tau^\text{P}}{U_j} = - (\bar{c}\sigma n)^{-2} \left\{ \bar{c} \bb{\frac{1}{2 T} \pd{T}{U_j} - \frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}} \sigma n \right.
+    \\ \left. + \bar{c} \sigma \bb{-\frac{2}{T} \pd{T}{U_j}}n + \bar{c} \sigma n \bb{\frac{1}{p} \pd{p}{U_j} - \frac{1}{T} \pd{T}{U_j}} \right\}
+\end{multline}
+
+\begin{multline}
+    \pd{\tau^\text{P}}{U_j} = - (\bar{c} \sigma n) ^{-2} \left\{ \bar{c} \sigma n \left[ \frac{1}{2T} \pd{T}{U_j} - \frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}} \right. \right.
+    \\ \left. \left. - \frac{2}{T} \pd{T}{U_j} + \frac{1}{p} \pd{p}{U_j} - \frac{1}{T} \pd{T}{U_j} \right] \right\}
+\end{multline}
+
+Collecting terms, cancelling out, and flipping signs gives:
+
+\begin{equation}
+    \boxed{ \pd{\tau^\text{P}}{U_j} = \tau^\text{P} \textcolor{blue}{ \bb{\frac{5}{2T} \pd{T}{U_j} - \frac{1}{p} \pd{p}{U_j} + \underbracket{\frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}}_{\text{if $U_j$ = $\rho_j$}}}}} 
+\end{equation}
+
+If Millikan-White is used with Park's correction, the final derivative for $\tau_{sr}$ is:
+
+\begin{multline}
+    \pd{\tau_{sr}}{U_j} = -\tau_{sr}^\text{MW} \textcolor{blue}{\bb{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}
+    \\ + \tau^\text{P} \textcolor{blue}{ \bb{\frac{5}{2T} \pd{T}{U_j} - \frac{1}{p} \pd{p}{U_j} + \underbracket{\frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}}_{\text{if $U_j$ = $\rho_j$}}}}
+\end{multline}
+
+
+
+
+
+
 
 
 
