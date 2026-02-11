@@ -842,7 +842,7 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     $R$ is independant of the third-body, so it is a constant and only needs to be computed once. Summing over contributions from all independant reactions gives:
 
     \begin{align*}
-        \frac{d[N_2]}{dt} &= \bb{\sum_{i} \epsilon_i [M_i]} R
+        \frac{d[N_2]}{dt} &= - \bb{\sum_{i} \epsilon_i [M_i]} R
     \end{align*}
 
     Where:
@@ -1313,23 +1313,105 @@ And
     \pd{e_{vs}^*}{T_v} = \left. \pd{e_{vs}}{T_v} \right|_{T_v = T_{tr}}
 \end{equation}
 
-We now aim to find the partical derivatives of the relaxation time:
+We now aim to find the partial derivatives of the relaxation time:
 
 \begin{equation}
-    \pd{}{U_j} <\tau_s> = \pd{}{U_j} \frac{\sum X_r}{\sum X_r / \tau_{sr}}
+    \pd{<\tau_s>}{U_j} = \pd{}{U_j} \frac{\sum_{r=1}^\text{NS} X_r}{\sum_{r=1}^\text{NS} X_r / \tau_{sr}}
 \end{equation}
 
 This gives:
 
 \begin{eqnarray}
-    \pd{}{U_j} <\tau_s> = \pd{}{U_j} \bb{\sum_r X_r} \frac{1}{\sum_r X_r / \tau_{sr}} + \sum_r X_r \pd{}{U_j} \bb{\sum_r X_r / \tau_{sr}}^{-1}
+    \pd{<\tau_s>}{U_j} = \underbracket{ \bb{\pd{}{U_j} \sum_{r=1}^\text{NS} X_r} \frac{1}{\sum_{r=1}^\text{NS} X_r / \tau_{sr}}}_{0} + \sum_{r=1}^\text{NS} X_r \bb{\pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1}}
 \end{eqnarray}
 
-We know:
+Since the first term is zero, this leaves us with:
+
+\begin{multline}
+    \pd{<\tau_s>}{U_j} = \sum_{r=1}^\text{NS} X_r \bb{\pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1} }
+    \\ = - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \bcb{\sum_{r=1}^\text{NS} \bb{ \bp{\pd{X_r}{U_j} } \frac{1}{\tau_{sr}} + X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}
+\end{multline}
+
+The first term inside the curly brace expands to:
 
 \begin{align}
-    X_r = 
+    X_r &= \frac{\rho_r / \mathcal{M}_r}{\sum_{i=1}^\text{NS} \rho_i / \mathcal{M}_i}
+    \\ \pd{X_r}{\rho_j} &= \bb{\pd{}{\rho_j} \frac{\rho_r}{\mathcal{M}_r}} \frac{1}{\sum_{i=1}^\text{NS} \rho_i / \mathcal{M}_i} + \frac{\rho_r}{\mathcal{M}_r} \bb{\pd{}{\rho_j} \frac{1}{\sum_{i=1}^\text{NS} \rho_i / \mathcal{M}_i}}
 \end{align}
+
+Giving:
+
+\begin{eqnarray}
+    \boxed{\pd{X_r}{\rho_j} = \frac{1}{\sum_{i=1}^\text{NS} \rho_i / \mathcal{M}_i} \bb{\frac{\delta_{jr}}{\mathcal{M}_r} - \frac{X_r}{\mathcal{M}_j}}}
+\end{eqnarray}
+
+And all other derivatives WRT conserved variables are 0. $\delta_{jr}$ is the Kronecker delta. Then $\rho_j$ = $\rho_r$, it is 1, otherwise it is 0. The second term expands to the following without Park's correction:
+
+\begin{align}
+    X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}} &= - X_r \tau_{sr}^{-2} \pd{\tau_{sr}}{U_j}
+    \\ &= -X_r \tau_{sr}^{-2} \bb{-\tau_{sr} \bp{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}
+    \\ &=  \frac{X_r}{\tau_{sr}} \bb{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}
+\end{align}
+
+With Park's correction we have:
+
+\begin{equation}
+    \tau_{sr} = \tau_{sr}^\text{MW} + \tau_{sr}^\text{P}
+\end{equation}
+
+So:
+
+\begin{equation}
+    \pd{\tau_{sr}}{U_j} = \pd{\tau_{sr}^\text{MW}}{U_j} + \pd{\tau_{sr}^\text{P}}{U_j}
+\end{equation}
+
+As we saw:
+
+\begin{equation}
+    \pd{\tau_{sr}^\text{MW}}{U_j} = -\tau_{sr}^\text{MW} \bb{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}
+\end{equation}
+
+The harder derivative is:
+
+\begin{equation}
+    \pd{\tau_{sr}^\text{P}}{U_j} = \pd{}{U_j} \bb{\frac{1}{\bar{c} \sigma n}} = -(\bar{c} \sigma n)^{-2} \bcb{\pd{\bar{c}}{U_j} \sigma n + \bar{c} \bb{\pd{\sigma}{U_j} + \sigma \pd{n}{U_j}}}
+\end{equation}
+
+
+With:
+
+\begin{equation}
+    \bar{c} = \sqrt{\frac{8 \hat{R} T}{\pi \sum_{i=1}^\text{NS} X_i \mathcal{M}_i}}, \hspace{5mm} n = \frac{p}{kT}, \hspace{5mm} \sigma = \sigma_v' \bp{\frac{50000}{T}}^2
+\end{equation}
+
+We begin with:
+
+\begin{align}
+    \pd{\bar{c}}{U_j}
+\end{align}
+
+
+
+So, we have:
+
+\begin{multline}
+    \pd{<\tau_s>}{U_j} = \overbracket{-\bb{\sum_r X_r} \bb{\sum_r \frac{X_r}{\tau_{sr}}}^{-2}}^{-<\tau_s> / \bb{\sum_r X_r / \tau_{sr}}} \times \dots
+    \\ \bcb{\sum_r \bb{ \underbracket{\bp{\frac{1}{\sum_i \rho_i \mathcal{M}_i} \bb{\frac{\delta_{jr}}{\mathcal{M}_r} - \frac{X_r}{\mathcal{M}_j}} \frac{1}{\tau_{sr}}}}_{\text{only if $U_j$ = $\rho_j$}} +  \frac{X_r}{\tau_{sr}} \bb{\frac{101325}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}  }}
+\end{multline}
+
+
+Taking this per conserved variable gives:
+
+\begin{align}
+    \pd{<\tau_s>}{\rho_j} = -<\tau_s> \frac{1}{\sum_r X_r / \tau_{sr}}
+\end{align}
+
+
+We can rearrange this to:
+
+\begin{multline}
+    \pd{<\tau_s>}{U_j} = - \frac{}{} \frac{<\tau_s>}{\sum_r X_r / \tau_{sr}} \bcb{\sum_r \bb{ \bp{\pd{}{U_j} X_r} \frac{1}{\tau_{sr}} + X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}
+\end{multline}
 
 
 \end{flushleft}
