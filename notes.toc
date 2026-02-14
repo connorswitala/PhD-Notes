@@ -35,3 +35,5 @@
 \contentsline {subsubsection}{\numberline {6.9.2}Source term Jacobians - Third body reactions}{33}{subsubsection.6.9.2}%
 \contentsline {subsubsection}{\numberline {6.9.3}Source term Jacobians - Normal reactions}{38}{subsubsection.6.9.3}%
 \contentsline {subsubsection}{\numberline {6.9.4}Source term Jacobians - Vibrational relaxation}{39}{subsubsection.6.9.4}%
+\contentsline {subsubsection}{\numberline {6.9.5}Explicit 0D Reactor}{45}{subsubsection.6.9.5}%
+\contentsline {subsubsection}{\numberline {6.9.6}Implicit 0D Reactor}{45}{subsubsection.6.9.6}%

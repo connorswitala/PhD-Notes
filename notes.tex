@@ -1381,7 +1381,7 @@ The full derivative is:
 Recall the vibrational energy source term:
 
 \begin{equation}
-    Q_{t-v,s} = \rho_s \frac{e_{vs} - e_{vs}^*}{<\tau_s>}
+    Q_{t-v,s} = \rho_s \frac{e_{vs}^* - e_{vs}}{<\tau_s>}
 \end{equation}
 
 \begin{equation}
@@ -1391,8 +1391,8 @@ Recall the vibrational energy source term:
 The derivative is then:
 
 \begin{multline}
-    \pd{Q_{t-v,s}}{U_j} = \bb{\pd{}{U_j} \rho_s} \frac{e_{vs} - e_{vs}^*}{<\tau_s>} 
-    \\ + \rho_s \bcb{ \bb{\pd{}{U_j} (e_{vs} - e_{vs}^*)} \frac{1}{<\tau_s>} + (e_{vs} - e_{vs}^*)  \bp{-<\tau_s> ^{-2} \bb{\pd{}{U_j} <\tau_s>}}}
+    \pd{Q_{t-v,s}}{U_j} = \bb{\pd{}{U_j} \rho_s} \frac{e_{vs}^* - e_{vs}}{<\tau_s>} 
+    \\ + \rho_s \bcb{ \bb{\pd{}{U_j} (e_{vs}^* - e_{vs})} \frac{1}{<\tau_s>} + (e_{vs}^* - e_{vs})  \bp{-<\tau_s> ^{-2} \bb{\pd{}{U_j} <\tau_s>}}}
 \end{multline}
 
 Where:
@@ -1618,6 +1618,41 @@ The above equation becomes:
     \boxed{\pd{<\tau_s>}{U_j} = -<\tau_s>^2  \bcb {\underbracket{\frac{\mathcal{M}}{\rho \mathcal{M}_j} \bp{\frac{1}{\tau_{sj}}  - \frac{1}{<\tau_s>}}}_{\text{when $U_j$ = $\rho_j$}} - \sum_{r=1}^\text{NS} \bb{ \frac{X_r}{\tau_{sr}^2} \pd{\tau_{sr}}{U_j}} }}
 \end{multline}
 
+\subsubsection{Explicit 0D Reactor}
+
+With no fluxes, the updated equation for the 0D reactor is:
+
+\begin{equation}
+    \frac{U^{n+1} - U^n}{\Delta t} = S(U^n)
+\end{equation}
+
+or:
+
+\begin{equation}
+    \delta U = U^{n+1} - U^n, \hspace{5mm} \delta U = \Delta t S(U^n)
+\end{equation}
+
+\subsubsection{Implicit 0D Reactor}
+
+The backward Euler time discretization for the 0D reactor look like:
+
+\begin{equation}
+    \frac{U^{n+1} - U^n}{\Delta t} = S(U^{n+1})
+\end{equation}
+
+Linearize the source term as:
+
+\begin{equation}
+    S(U^{n+1}) = S(U^n) + \pd{S(U^n)}{U_j} \delta U_j
+\end{equation}
+
+The nonlinear residual is:
+
+\begin{equation}
+    R(U) = U - U^n - \Delta t S(U)
+\end{equation}
+
+Where $U$ = $U^{n+1}$ or $U^{k+1}$. We aim to find a $U$ that satisfies $R(U^{n+1})$ = 0. 
 
 \end{flushleft}
 \end{document}
