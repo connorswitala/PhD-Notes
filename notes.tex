@@ -1391,17 +1391,19 @@ Recall the vibrational energy source term:
 The derivative is then:
 
 \begin{multline}
-    \pd{Q_{t-v,s}}{U_j} = \bb{\pd{}{U_j} \rho_s} \frac{e_{vs}^* - e_{vs}}{<\tau_s>} 
-    \\ + \rho_s \bcb{ \bb{\pd{}{U_j} (e_{vs}^* - e_{vs})} \frac{1}{<\tau_s>} + (e_{vs}^* - e_{vs})  \bp{-<\tau_s> ^{-2} \bb{\pd{}{U_j} <\tau_s>}}}
+    \pd{Q_{t-v,s}}{U_j} = \bb{\pd{}{U_j} \rho_s} \frac{e_{vs}^* - e_{vs}}{\tau_s} 
+    \\ + \rho_s \bcb{ \bb{\pd{}{U_j} (e_{vs}^* - e_{vs})} \frac{1}{\tau_s} + (e_{vs}^* - e_{vs})  \bp{-\tau_s ^{-2} \bb{\pd{}{U_j} \tau_s}}}
 \end{multline}
 
-Where:
+Where we have the following:
+
+\begin{equation}
+    \tau_s = <\tau_s> + \tau_s^P = \frac{\sum_{r=1}^\text{NS} X_r}{\sum_{r=1}^\text{NS} X_r / \tau_{sr}} + \tau_s^P
+\end{equation}
 
 \begin{equation}
     \pd{e_{vs}}{T_v} = \frac{\hat{R}}{\mathcal{M}_s} \bp{\frac{\theta_{vs}}{T_v}}^2 \frac{\exp{(\theta_{vs} / T_v)}}{\bb{\exp{(\theta_{vs} / T_v) - 1}}^2}
 \end{equation}
-
-And 
 
 \begin{equation}
     \pd{e_{vs}^*}{T_v} = \left. \pd{e_{vs}}{T_v} \right|_{T_v = T_{tr}}
@@ -1410,19 +1412,20 @@ And
 We now aim to find the partial derivatives of the relaxation time:
 
 \begin{equation}
-    \pd{<\tau_s>}{U_j} = \pd{}{U_j} \frac{\sum_{r=1}^\text{NS} X_r}{\sum_{r=1}^\text{NS} X_r / \tau_{sr}}
+    \pd{\tau_s}{U_j} = \pd{}{U_j} \bb{\frac{\sum_{r=1}^\text{NS} X_r}{\sum_{r=1}^\text{NS} X_r / \tau_{sr}} + \tau_s^P}
 \end{equation}
 
 This gives:
 
-\begin{eqnarray}
-    \pd{<\tau_s>}{U_j} = \underbracket{ \bb{\pd{}{U_j} \sum_{r=1}^\text{NS} X_r} \frac{1}{\sum_{r=1}^\text{NS} X_r / \tau_{sr}}}_{0} + \sum_{r=1}^\text{NS} X_r \bb{\pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1}}
-\end{eqnarray}
+\begin{multline}
+    \pd{\tau_s}{U_j} = \underbracket{ \bb{\pd{}{U_j} \sum_{r=1}^\text{NS} X_r} \frac{1}{\sum_{r=1}^\text{NS} X_r / \tau_{sr}}}_{0} 
+    \\ + \sum_{r=1}^\text{NS} X_r \bb{\pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1}} + \pd{\tau_s^P}{U_j}
+\end{multline}
 
 Since the first term is zero, this leaves us with:
 
 \begin{equation}
-    \pd{<\tau_s>}{U_j} = \bb{\sum_{r=1}^\text{NS} X_r} \bb{\pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1} }
+    \pd{\tau_s}{U_j} = \bb{\sum_{r=1}^\text{NS} X_r} \bb{\pd{}{U_j} \bp{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-1} } + \pd{\tau_s^P}{U_j}
 \end{equation}
 
 Differentiating the second bracketed term:
@@ -1433,9 +1436,10 @@ Differentiating the second bracketed term:
 
 Bringing the derivative inside, using the product rule and splitting the sums gives the final derivative as:
 
-\begin{equation}
-    \boxed{\pd{<\tau_s>}{U_j}  = - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \bcb{ \textcolor{blue}{\sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \frac{1}{\tau_{sr}}}} + \textcolor{red}{\sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}}}
-\end{equation}
+\begin{multline}
+    \pd{\tau_s}{U_j} = \textcolor{orange}{\pd{\tau_s^P}{U_j}} - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots
+    \\ \bcb{ \textcolor{blue}{\sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \frac{1}{\tau_{sr}}}} + \textcolor{red}{\sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}}
+\end{multline}
 
 The blue term inside expands using an identity:
 
@@ -1469,11 +1473,11 @@ And all other derivatives WRT conserved variables are 0. $\delta_{jr}$ is the Kr
 \end{equation}
 
 \begin{multline}
-    \pd{<\tau_s>}{U_j}  = - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots 
+    \pd{\tau_s}{U_j}  = \textcolor{orange}{\pd{\tau_s^P}{U_j}} - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots 
     \\ \bcb{ \textcolor{blue}{\sum_{r=1}^\text{NS} \bb{\pd{X_r}{U_j} \frac{1}{\tau_{sr}}}} + \textcolor{red}{\sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}}}}
 \end{multline}
 
-The red term expands to the following \textit{without} Park's correction:
+The red term expands to the following:
 
 \begin{align}
     \sum_{r=1}^\text{NS} \bb{X_r \bp{\pd{}{U_j} \frac{1}{\tau_{sr}}}} &= - \sum_{r=1}^\text{NS} \bb{X_r \tau_{sr}^{-2} \pd{\tau_{sr}}{U_j}}
@@ -1482,68 +1486,29 @@ The red term expands to the following \textit{without} Park's correction:
 The Millikan-White-only relaxation derivative is:
 
 \begin{equation}
-    \boxed{\pd{\tau_{sr}^\text{MW}}{U_j} = -\tau_{sr}^\text{MW} \textcolor{blue}{\bb{\frac{1}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}}
+    \boxed{\pd{\tau_{sr}}{U_j} = -\tau_{sr} \textcolor{blue}{\bb{\frac{1}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}}
 \end{equation}
 
-but if we want Park's correction we have:
+The derivatives of Park's high-temperature correction (in orange) can be found as:
 
 \begin{equation}
-    \tau_{sr} = \tau_{sr}^\text{MW} + \tau_{sr}^\text{P}
+    \pd{\tau_{s}^\text{P}}{U_j} = \pd{}{U_j} \bb{\frac{1}{\bar{c}_s \sigma n}} = -(\bar{c}_s \sigma n)^{-2} \bcb{\pd{\bar{c}_s}{U_j} \sigma n + \bar{c}_s \bb{\pd{\sigma}{U_j} n + \sigma \pd{n}{U_j}}}
 \end{equation}
-
-So:
-
-\begin{equation}
-    \pd{\tau_{sr}}{U_j} = \pd{\tau_{sr}^\text{MW}}{U_j} + \pd{\tau_{sr}^\text{P}}{U_j}
-\end{equation}
-
-The harder derivative (somehow) is Park's term:
-
-\begin{equation}
-    \pd{\tau_{sr}^\text{P}}{U_j} = \pd{}{U_j} \bb{\frac{1}{\bar{c} \sigma n}} = -(\bar{c} \sigma n)^{-2} \bcb{\pd{\bar{c}}{U_j} \sigma n + \bar{c} \bb{\pd{\sigma}{U_j} n + \sigma \pd{n}{U_j}}}
-\end{equation}
-
 
 With:
 
 \begin{equation}
-    \bar{c} = \sqrt{\frac{8 \hat{R} T}{\pi \sum_{i=1}^\text{NS} X_i \mathcal{M}_i}}, \hspace{5mm} n = \frac{p}{kT}, \hspace{5mm} \sigma = \sigma_v' \bp{\frac{50000}{T}}^2
+    \bar{c} = \sqrt{\frac{8 R_s T}{\pi}}, \hspace{5mm} n = \frac{p}{kT}, \hspace{5mm} \sigma = \sigma_v' \bp{\frac{50000}{T}}^2
 \end{equation}
 
-We begin with:
+We begin with the $\bar{c}$ derivative:
 
 \begin{equation}
-    \pd{\bar{c}}{U_j} = \sqrt{\frac{8 \hat{R}}{\pi}} \pd{}{U_j} \bb{T^{1/2} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-1/2}}
+    \pd{\bar{c}}{U_j} = \sqrt{\frac{8  R_s}{\pi}} \pd{}{U_j} \bb{T^{1/2}} = \bar{c}_s \textcolor{blue}{\bb{\frac{1}{2T} \pd{T}{U_j}}}
 \end{equation}
 
-\begin{multline}
-     \pd{\bar{c}}{U_j} = \sqrt{\frac{8 \hat{R}}{\pi}} \times \left\{ \frac{1}{2} T^{-1/2} \pd{T}{U_j} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-1/2} \right.
-     \\ \left. - \frac{1}{2} T^{1/2} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-3/2} \textcolor{red}{ \bb{\pd{}{U_j} \sum_{i=1}^\text{NS} \bp{X_i \mathcal{M}_i}}} \right\}
-\end{multline}
 
-The term in read expands as the following:
-
-\begin{align}
-    \bb{\pd{}{U_j} \sum_{i=1}^\text{NS} \bp{X_i M_i}} &= \sum_{i=1}^\text{NS} \bb{\mathcal{M}_i \pd{X_i}{U_j}}
-    \\ &= \sum_{i=1}^\text{NS} \bb{\mathcal{M}_i \bp{\frac{\mathcal{M}}{\rho} \bb{\frac{\delta_{ji}}{\mathcal{M}_i} - \frac{X_i}{\mathcal{M}_j}}}}
-    \\ &= \frac{\mathcal{M}}{\rho} \bcb{ \sum_{i=1}^\text{NS} [\delta_{ij}] - \sum_{i=1}^\text{NS} \bb{\frac{\mathcal{M}_i X_i}{\mathcal{M}_j}}   }
-    \\ &= \frac{\mathcal{M}}{\rho} \bb{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}
-\end{align}
-
-
-The derivative of $\bar{c}$ is then:
-
-\begin{multline}
-    \pd{\bar{c}}{U_j} = \sqrt{\frac{8 \hat{R}}{\pi}} \left\{\frac{1}{2}T^{-1/2} \pd{T}{U_j} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-1/2} \right. 
-    \\ \left. - \frac{1}{2} T^{1/2} \bp{\sum_{i=1}^\text{NS} X_i \mathcal{M}_i}^{-3/2} \bb{\frac{\mathcal{M}}{\rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}}  \right\}
-\end{multline}
-
-
-\begin{equation}
-    \boxed{\pd{\bar{c}}{U_j} = \bar{c} \textcolor{blue}{\bb{\frac{1}{2T} \pd{T}{U_j} \underbracket{- \frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}}_{\text{if $U_j$ = $\rho_j$}}}}}
-\end{equation}
-
-The derivative of $n$ is far more straight forward:
+The derivative of $n$ is:
 
 \begin{align}
     \pd{n}{U_j} &= \pd{p}{U_j} \frac{1}{kT} + \frac{p}{k} \bp{\pd{}{U_j} \frac{1}{T}}
@@ -1551,7 +1516,7 @@ The derivative of $n$ is far more straight forward:
 \end{align}
 
 \begin{equation}
-    \boxed{\pd{n}{U_j} = n \bb{ \frac{1}{p} \pd{p}{U_j} - \frac{1}{T} \pd{T}{U_j}}}
+    \boxed{\pd{n}{U_j} = n \textcolor{blue}{\bb{ \frac{1}{p} \pd{p}{U_j} - \frac{1}{T} \pd{T}{U_j}}}}
 \end{equation}
 
 Finally, the derivative wrt to $\sigma$:
@@ -1563,45 +1528,32 @@ Finally, the derivative wrt to $\sigma$:
 \end{align}
 
 \begin{equation}
-    \boxed{\pd{\sigma}{U_j} = \sigma \bb{-\frac{2}{T} \pd{T}{U_j}}}
+    \boxed{\pd{\sigma}{U_j} = \textcolor{blue}{\sigma \bb{-\frac{2}{T} \pd{T}{U_j}}}}
 \end{equation}
 
 
 Putting it all together for Park's derivative, we have:
 
 \begin{multline}
-    \pd{\tau^\text{P}}{U_j} = - (\bar{c}\sigma n)^{-2} \left\{ \bar{c} \bb{\frac{1}{2 T} \pd{T}{U_j} - \frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}} \sigma n \right.
+    \pd{\tau_s^\text{P}}{U_j} = - (\bar{c}_s \sigma n)^{-2} \left\{ \bar{c}_s \bb{\frac{1}{2 T} \pd{T}{U_j}} \sigma n \right.
     \\ \left. + \bar{c} \sigma \bb{-\frac{2}{T} \pd{T}{U_j}}n + \bar{c} \sigma n \bb{\frac{1}{p} \pd{p}{U_j} - \frac{1}{T} \pd{T}{U_j}} \right\}
-\end{multline}
-
-\begin{multline}
-    \pd{\tau^\text{P}}{U_j} = - (\bar{c} \sigma n) ^{-2} \left\{ \bar{c} \sigma n \left[ \frac{1}{2T} \pd{T}{U_j} - \frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}} \right. \right.
-    \\ \left. \left. - \frac{2}{T} \pd{T}{U_j} + \frac{1}{p} \pd{p}{U_j} - \frac{1}{T} \pd{T}{U_j} \right] \right\}
 \end{multline}
 
 Collecting terms, cancelling out, and flipping signs gives:
 
 \begin{equation}
-    \boxed{ \pd{\tau^\text{P}}{U_j} = \tau^\text{P} \textcolor{blue}{ \bb{\frac{5}{2T} \pd{T}{U_j} - \frac{1}{p} \pd{p}{U_j} + \underbracket{\frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}}_{\text{if $U_j$ = $\rho_j$}}}}} 
+    \boxed{ \textcolor{orange}{\pd{\tau_s^\text{P}}{U_j}} = \tau_s^\text{P} \textcolor{blue}{ \bb{\frac{5}{2T} \pd{T}{U_j} - \frac{1}{p} \pd{p}{U_j}}}} 
 \end{equation}
-
-If Millikan-White is used with Park's correction, the final derivative for $\tau_{sr}$ is:
-
-\begin{multline}
-    \pd{\tau_{sr}}{U_j} = -\tau_{sr}^\text{MW} \textcolor{blue}{\bb{\frac{1}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}
-    \\ + \tau^\text{P} \textcolor{blue}{ \bb{\frac{5}{2T} \pd{T}{U_j} - \frac{1}{p} \pd{p}{U_j} + \underbracket{\frac{1}{2 \rho} \bp{1 - \frac{\mathcal{M}}{\mathcal{M}_j}}}_{\text{if $U_j$ = $\rho_j$}}}}
-\end{multline}
-
 
 So, we have:
 
 \begin{multline}
-    \pd{<\tau_s>}{U_j} = -\bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots
+    \pd{\tau_s}{U_j} = \tau_s^\text{P} \textcolor{blue}{ \bb{\frac{5}{2T} \pd{T}{U_j} - \frac{1}{p} \pd{p}{U_j}}} - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots
     \\ \left\{ \frac{\mathcal{M}}{\rho} \sum_{r=1}^\text{NS} \bb{ \bp{ \frac{\delta_{jr}}{\mathcal{M}_r} - \frac{X_r}{\mathcal{M}_j} } \frac{1}{\tau_{sr}}} - \sum_{r=1}^\text{NS} \bb{X_r \tau_{sr}^{-2} \pd{\tau_{sr}}{U_j}}  \right\}
 \end{multline}
 
 \begin{multline}
-    \pd{<\tau_s>}{U_j} = -\bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots
+    \pd{\tau_s}{U_j} = \tau_s^\text{P} \textcolor{blue}{ \bb{\frac{5}{2T} \pd{T}{U_j} - \frac{1}{p} \pd{p}{U_j}}} - \bb{\sum_{r=1}^\text{NS} X_r} \bb{\sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}^{-2} \times \dots
     \\ \left\{ \underbracket{\frac{\mathcal{M}}{\rho \mathcal{M}_j} \bb{\frac{1}{\tau_{sj}}  - \sum_{r=1}^\text{NS} \frac{X_r}{\tau_{sr}}}}_{\text{when $U_j$ = $\rho_j$}} - \sum_{r=1}^\text{NS} \bb{X_r \tau_{sr}^{-2} \pd{\tau_{sr}}{U_j}} \right\}
 \end{multline}
 
@@ -1613,9 +1565,9 @@ If we make some assumptions, such as:
 
 The above equation becomes:
 
-
 \begin{multline}
-    \boxed{\pd{<\tau_s>}{U_j} = -<\tau_s>^2  \bcb {\underbracket{\frac{\mathcal{M}}{\rho \mathcal{M}_j} \bp{\frac{1}{\tau_{sj}}  - \frac{1}{<\tau_s>}}}_{\text{when $U_j$ = $\rho_j$}} - \sum_{r=1}^\text{NS} \bb{ \frac{X_r}{\tau_{sr}^2} \pd{\tau_{sr}}{U_j}} }}
+    \pd{\tau_s}{U_j} = \tau_s^\text{P} \textcolor{blue}{ \bb{\frac{5}{2T} \pd{T}{U_j} - \frac{1}{p} \pd{p}{U_j}}} 
+    \\-<\tau_s>^2  \bcb {\underbracket{\frac{\mathcal{M}}{\rho \mathcal{M}_j} \bp{\frac{1}{\tau_{sj}}  - \frac{1}{<\tau_s>}}}_{\text{when $U_j$ = $\rho_j$}} - \sum_{r=1}^\text{NS} \bb{ \frac{X_r}{\tau_{sr}} \textcolor{blue}{\bp{\frac{1}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T}{U_j} T^{-4/3} A_{sr}}}} }
 \end{multline}
 
 \subsubsection{Explicit 0D Reactor}
