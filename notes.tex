@@ -1394,7 +1394,7 @@ The derivative is then:
 
 \begin{multline}
     \pd{Q_{t-v,s}}{U_j} = \bb{\pd{}{U_j} \rho_s} \frac{e_{vs}^* - e_{vs}}{\tau_s} 
-    \\ + \rho_s \bcb{ \bb{\pd{}{U_j} (e_{vs}^* - e_{vs})} \frac{1}{\tau_s} + (e_{vs}^* - e_{vs})  \bp{-\tau_s ^{-2} \underbracket{\bb{\pd{}{U_j} \tau_s}}_{\text{frightening}}}}
+    \\ + \rho_s \bcb{ \bb{\pd{}{U_j} (e_{vs}^* - e_{vs})} \frac{1}{\tau_s} + (e_{vs}^* - e_{vs})  \bp{-\tau_s ^{-2} \bb{\pd{}{U_j} \tau_s}}}
 \end{multline}
 
 Where we have the following:
