@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1771886417.60852 "c:/Users/frodo/programs/PhD Notes/notes.tex" "notes.pdf" "notes" 1771886419.78012 0
-  "c:/Users/frodo/programs/PhD Notes/notes.tex" 1771886416.58649 73391 6d35b8d32ebfe8082d0a537de93c4f4f ""
+["pdflatex"] 1772685287.13773 "c:/Users/frodo/programs/PhD Notes/notes.tex" "notes.pdf" "notes" 1772685289.4634 0
+  "c:/Users/frodo/programs/PhD Notes/notes.tex" 1772685286.05457 74014 bdbc101605ba229c9a897ce4e08eff9f ""
   "c:/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1762307540.38749 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1762309140.55469 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1762308513.99736 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -33,7 +33,6 @@
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb" 1762306002.84562 32915 7bf7720c61a5b3a7ff25b0964421c9b6 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1762306002.84762 32716 08e384dc442464e7285e891af9f45947 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1762306002.85363 37944 359e864bd06cde3b1cf57bb20757fb06 ""
-  "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb" 1762306002.87064 30457 bc0868ebece724ed7c3d37e3d9bff7bd ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb" 1762306002.91168 31764 459c573c03a4949a528c2cc7f557e217 ""
   "c:/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb" 1762307540.57966 138258 6525c253f16cededa14c7fd0da7f67b2 ""
   "c:/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1762311360.1715 71627 94eb9990bed73c364d7f53f960cc8c5b ""
@@ -202,9 +201,9 @@
   "c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1762314378 5482364 373d37b6d8e9b119bc15228a0f3a86f7 ""
   "c:/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1762314715 2286077 b2064bcabc760389ac2c85bafdab679e ""
   "c:/texlive/2025/texmf.cnf" 1762314349.75088 713 baa45e065482d44c4cd81b98ef72c63b ""
-  "notes.aux" 1771886419.46311 6645 586880795001571b00c6bcee41c24915 "pdflatex"
-  "notes.out" 1771886419.46511 7972 e8d1fd9c586904579bb6dfe3c98dde1e "pdflatex"
-  "notes.toc" 1771886419.46712 3755 5c364703429c49e2000689b28a9044d7 "pdflatex"
+  "notes.aux" 1772685289.13009 6645 4ee231e5081609d30d3f0c14618161a0 "pdflatex"
+  "notes.out" 1772685289.1321 7972 e8d1fd9c586904579bb6dfe3c98dde1e "pdflatex"
+  "notes.toc" 1772685289.1331 3755 3986fb0f9ec4a403543c5b248f8acf4d "pdflatex"
   (generated)
   "notes.aux"
   "notes.log"

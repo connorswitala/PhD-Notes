@@ -736,26 +736,18 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     The equilibrium constant is very useful to find one reaction rate from the other. There are two equilibrium constants: $K_c$ is the equilibrium constant based on concentrations, and $K_p$ is the equilibrium constant based on partial pressures. They are related through:
 
     \begin{equation}
-        K_c = \bp{\frac{1}{\hat{R}T}}^{\sum_i \nu_i}K_p
+        K_{c,r} = \bp{\frac{p_\circ}{\hat{R}T}}^{\nu_m} \exp{\bb{- \sum_s (\nu_s'' - \nu_s') \bp{\frac{H_s^\circ}{\hat{R}T} - \frac{S_s^\circ}{\hat{R}}}}}
     \end{equation}
 
     Where it is raised to a sum due to the complicated nature of the equilibrium constant. Typically, the rate coefficient has variable units, since it depends on the number of molecules in the reaction, which gives rise to a key concept:
     
     \vspace{5mm} 
     \textit{For most chemical kinetic models, the reaction's reactants always consist of 2 species, while the reaction's products may contain two or three species. Therefore, the forwards rate coefficients $k_f$ should always have the same units. Since the equilibrium constant is used to find $k_b$, no unit conversions are necessary besides perhaps from cgs to mks units.}
-    
-    \vspace{5mm}
-    Curve fits of the following form are used to find the equilibrium constant:
-
-    \begin{align*}
-        (K_\text{eq,r}) &= \exp(\beta)
-        \\ \beta &= A_1 \frac{T}{10^4} + A_2 + A_3 \ln \frac{10^4}{T} + A_4 \frac{10^4}{T} + A_5 \bp{\frac{10^4}{T}}^2  
-    \end{align*}
 
     With the equilibrium constant of a reaction known, you can find the forward/backward reaction rates as stated above with:
 
     \begin{equation}
-        \frac{k_{f,r}(T)}{k_{b,r}(T)} = K_\text{eq,r}
+        \frac{k_{f,r}(T)}{k_{b,r}(T)} = K_\text{c,r}
     \end{equation}
 
 \end{definition}
@@ -835,14 +827,14 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     For a third body reaction, the change in the concentration of $N_2$ due to a single third-body $M$ is then:
 
     \begin{align*}
-        \frac{d[N_2]}{dt} &= (0 - 1)\left\{ \epsilon \gamma [N_2][M] - \frac{\epsilon \gamma}{K_{eq}}[N]^2[M] \right\} 
-        \\ &= -1 \cdot \epsilon [M] \underbracket{ \left\{ \gamma [N_2] - \frac{\gamma}{K_{eq}}[N]^2 \right\}}_{R}
+        \frac{d[N_2]}{dt} &= (\nu'' - \nu') \left\{ \epsilon \gamma [N_2][M] - \frac{\epsilon \gamma}{K_{eq}}[N]^2[M] \right\} 
+        \\ &= (\nu'' - \nu') \cdot \epsilon \cdot [M] \underbracket{ \left\{ \gamma [N_2] - \frac{\gamma}{K_{eq}}[N]^2 \right\}}_{R}
     \end{align*}
 
     $R$ is independant of the third-body, so it is a constant and only needs to be computed once. Summing over contributions from all independant reactions gives:
 
     \begin{align*}
-        \frac{d[N_2]}{dt} &= - \bb{\sum_{i} \epsilon_i [M_i]} R
+        \frac{d[N_2]}{dt} &= \underbracket{(0 - 1)}_{\nu_{N_2}'' - \nu_{N_2}'} \bcb{\sum_{i} \epsilon_i \cdot [M_i]} R
     \end{align*}
 
     Where:
@@ -854,7 +846,7 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     $R$ is retained for the production of $N$ atoms as well, you only need to change the coefficient from the $\nu_i'' - \nu_i''$ term:
 
     \begin{align*}
-        \frac{d[N]}{dt} = \sum_i \epsilon_i [M_i] \ub{(2 - 0)}{\nu_{N}'' - \nu_N'} R
+        \frac{d[N]}{dt} = \ub{(2 - 0)}{\nu_{N}'' - \nu_N'} \bcb{\sum_i \epsilon_i \cdot [M_i]} R
     \end{align*}
 
 \end{definition}
@@ -926,9 +918,9 @@ The Park correction is:
 
 \begin{align}
     \tau_{sr}^\text{P} &= \frac{1}{\bar{c} \sigma n}
-    \\ \bar{c} &= \sqrt{\frac{8 \hat{R} T}{\pi}}
-    \\ \sigma &=  3 \times 10^{-21} \bp{\frac{50000}{T}}^2
-    \\ n &= \frac{p}{k_b T}
+    \\ \bar{c} &= \sqrt{\frac{8 \hat{R} T_{tr}}{ \mathcal{M}_s \pi}}
+    \\ \sigma &=  3 \times 10^{-21} \bp{\frac{50000}{T_{tr}}}^2
+    \\ n &= \frac{p}{k_b T_{tr}}
 \end{align}
 
 
@@ -1212,7 +1204,13 @@ where
 For a third-body reaction, the rate of production of species $s$ can be expressed as:
 
 \begin{equation}
-    \frac{d [X_i]}{dt} = (\nu_i'' - \nu_i') \underbracket{\sum_{i=1}^\text{NS} \epsilon_i [M_i]}_{E_\text{eff}} \underbracket{\left \{ \gamma(T_f) [X_{s,f}]^{\nu_s'} - \frac{\gamma(T_b)}{K_c(T_b)} [X_{s,f}]^{\nu_s''} \right \}}_{L_r}
+    \frac{d [X_i]}{dt} = (\nu_i'' - \nu_i') \underbracket{\sum_{i=1}^\text{NS} \epsilon_i [M_i]}_{E_\text{eff}} \overbracket{\left \{ \underbracket{\gamma(T_f) [X_{s,f}]^{\nu_s'}}_{F} - \underbracket{\frac{\gamma(T_b)}{K_c(T_b)} [X_{s,b}]^{\nu_s''}}_{B} \right \}}^{L_r}
+\end{equation}
+
+Another useful equation for the derivations in the future is:
+
+\begin{equation}
+    R_r = \underbracket{\sum_{i=1}^\text{NS} \epsilon_i [M_i]}_{E_\text{eff}} \overbracket{\left \{ \underbracket{\gamma(T_f) [X_{s,f}]^{\nu_s'}}_{F} - \underbracket{\frac{\gamma(T_b)}{K_c(T_b)} [X_{s,b}]^{\nu_s''}}_{B} \right \}}^{L_r}
 \end{equation}
 
 Here, $T_f$ is the temperature used to compute the forward rate coefficient, and $T_b$ is the temperature used to compute the backward rate coefficient. For now, we are only interest in the two underbracketed sections, $E_\text{eff}$ and $L_r$. The reaction rate (without the stoichiometric coefficients in the front) can then be described by:
@@ -1232,20 +1230,24 @@ The two derivatives on the right hand side are then:
 \begin{equation}
     \pd{E_\text{eff}}{U_j} = 
     \begin{cases}
-        E_\text{eff} + \frac{\epsilon_j}{\mathcal{M}_j} (1 - \rho_j), \hspace{5mm} \text{if $U_j$ = $\rho_j$}
+        \frac{\epsilon_j}{\mathcal{M}_j}, \hspace{5mm} \text{if $U_j$ = $\rho_j$}
         \\ 0, \hspace{5mm} \text{if $U_j$ = $\rho u$, $\rho v$, etc.}
     \end{cases}
 \end{equation}
 
 \begin{multline}
-    \pd{L_r}{U_j} = \overbracket{\bcb{ \pd{\gamma(T_f)}{U_j}} \bb{\frac{\rho_{s,f}}{\mathcal{M}_{s,f}}}^{\nu_s'} + \gamma(T_f) \bcb{\pd{}{U_j} \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s'}}}^{\text{F}}
-    \\ \underbracket{- \bcb{\pd{}{U_j} \bb{\frac{\gamma(T_b)}{K_c(T_b)}}} \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s''} + \frac{\gamma(T_b)}{K_c(T_b)} \bcb{\pd{}{U_j} \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s''}}}_{\text{B}}
+    \pd{L_r}{U_j} = \overbracket{\bcb{ \pd{\gamma(T_f)}{U_j}} \bb{\frac{\rho_{s,f}}{\mathcal{M}_{s,f}}}^{\nu_s'} + \gamma(T_f) \bcb{\pd{}{U_j} \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s'}}}^{\partial \text{F}}
+    \\ \underbracket{- \bcb{\pd{}{U_j} \bb{\frac{\gamma(T_b)}{K_c(T_b)}}} \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s''} + \frac{\gamma(T_b)}{K_c(T_b)} \bcb{\pd{}{U_j} \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s''}}}_{\partial \text{B}}
 \end{multline}
 
 Note that the product across concentrations has been removed in the $L_r$ derivative. This is because of the form of third-body reactions and how it has gotten moved into the $E_\text{eff}$ term.
 \\
 \vspace{5mm}
  Taking it step by step, we first look at three important derivatives. Since $\gamma(T_f)$ is a function of the forward rate-controlling temperature, which can have a form of $T^q T_v^{1-q}$, while $\gamma(T_b)$ only depends on $T$ or $T_e$. We will use the chain rule to compute the derivative of $\gamma(T_c)$, where $T_c$ is the rate controlling temperature for forwards or backwards rates:
+
+\begin{equation}
+    T = T^q T_v^{1-q} T_e^p
+\end{equation}
 
 \begin{align}
     \pd{\gamma(T_c)}{U_j} &= \pd{\gamma(T_f)}{T} \pd{T}{U_j} = \pd{\gamma(T_f)}{T_c} \pd{T_c}{T} \pd{T}{U_j}
@@ -1344,8 +1346,8 @@ Like before, the only derivative that matters here is the one with respect to $\
 
 
 \begin{multline}
-    \pd{L_r}{U_j} = \gamma(T_f) \bb{\frac{\rho_{s,f}}{\mathcal{M}_{s,f}}}^{\nu_s'} \textcolor{blue}{\bcb{ \underbracket{\frac{\nu_s'}{\rho_s}}_{\text{if $U_j$ = $\rho_s$}} + \frac{1}{T} \pd{T}{U_j} \bp{ \eta q + \frac{E_a q}{T_f}} }} 
-    \\ -  \frac{\gamma(T_b)}{K_{c,m}(T_b)} \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s'}   \textcolor{blue}{ \bcb{\underbracket{\frac{\nu_j''}{\rho_j}}_{\text{if $U_j$ =$\rho_s$}} + \frac{1}{T} \pd{T}{U_j} \bb{ \eta + \frac{E_a}{T} + \nu_m - \bp{\sum_s(\nu_s'' - \nu_s') \frac{H_s^\circ}{\hat{R}T} }}}} 
+    \pd{L_r}{U_j} = \overbracket{\gamma(T_f) \bb{\frac{\rho_{s,f}}{\mathcal{M}_{s,f}}}^{\nu_s'}}^{F} \textcolor{blue}{\bcb{ \underbracket{\frac{\nu_s'}{\rho_s}}_{\text{if $U_j$ = $\rho_s$}} + \frac{1}{T} \pd{T}{U_j} \bp{ \eta q + \frac{E_a q}{T_f}} }} 
+    \\ -  \underbracket{\frac{\gamma(T_b)}{K_{c,m}(T_b)} \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s'}}_{B}   \textcolor{blue}{ \bcb{\underbracket{\frac{\nu_j''}{\rho_j}}_{\text{if $U_j$ =$\rho_s$}} + \frac{1}{T} \pd{T}{U_j} \bb{ \eta + \frac{E_a}{T} + \nu_m - \bp{\sum_s(\nu_s'' - \nu_s') \frac{H_s^\circ}{\hat{R}T} }}}} 
 \end{multline}
 
 
@@ -1355,7 +1357,7 @@ Like before, the only derivative that matters here is the one with respect to $\
 For normal reaction, we can revert to the usual notation of $k_f$ and $k_b$ for the forward and backward rate coefficients with no efficiencies. We also need the product across all concentrations. The following is the usual form:
 
 \begin{equation}
-    R_r = \underbracket{k_f(T_f) \prod_i \bb{\frac{\rho_i}{\mathcal{M}_i}}^{\nu_i'}}_{F} - \underbracket{\frac{k_f(T_b)}{K_c(T_b)} \prod_i \bb{\frac{\rho_i}{\mathcal{M}_i}}^{\nu_i''}}_{B} 
+    R_r = \overbracket{\underbracket{k_f(T_f) \prod_i \bb{\frac{\rho_i}{\mathcal{M}_i}}^{\nu_i'}}_{F} - \underbracket{\frac{k_f(T_b)}{K_c(T_b)} \prod_i \bb{\frac{\rho_i}{\mathcal{M}_i}}^{\nu_i''}}_{B}}^{L_r}
 \end{equation}
 
 The derivative of $F$ and $B$ wrt $U_j$ is extremely similar to the third-body reaction ones:
@@ -1381,7 +1383,7 @@ The full derivative is:
 Recall the vibrational energy source term:
 
 \begin{equation}
-    Q_{t-v,s} = \rho_s \frac{e_{vs}^* - e_{vs}}{<\tau_s>}
+    Q_{t-v,s} = \rho_s \frac{e_{vs}^* - e_{vs}}{\tau_s}
 \end{equation}
 
 \begin{equation}
@@ -1392,7 +1394,7 @@ The derivative is then:
 
 \begin{multline}
     \pd{Q_{t-v,s}}{U_j} = \bb{\pd{}{U_j} \rho_s} \frac{e_{vs}^* - e_{vs}}{\tau_s} 
-    \\ + \rho_s \bcb{ \bb{\pd{}{U_j} (e_{vs}^* - e_{vs})} \frac{1}{\tau_s} + (e_{vs}^* - e_{vs})  \bp{-\tau_s ^{-2} \bb{\pd{}{U_j} \tau_s}}}
+    \\ + \rho_s \bcb{ \bb{\pd{}{U_j} (e_{vs}^* - e_{vs})} \frac{1}{\tau_s} + (e_{vs}^* - e_{vs})  \bp{-\tau_s ^{-2} \underbracket{\bb{\pd{}{U_j} \tau_s}}_{\text{frightening}}}}
 \end{multline}
 
 Where we have the following:
@@ -1596,6 +1598,18 @@ Linearize the source term as:
 
 \begin{equation}
     S(U^{n+1}) = S(U^n) + \pd{S(U^n)}{U_j} \delta U_j
+\end{equation}
+
+And the final equation is:
+
+\begin{equation}
+    \bb{I - \Delta t J} \delta U = \Delta t S
+\end{equation}
+
+Then:
+
+\begin{equation}
+    U^{n+1} = U^n + \delta U
 \end{equation}
 
 The nonlinear residual is:
