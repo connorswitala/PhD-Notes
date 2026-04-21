@@ -718,7 +718,7 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     \end{equation}
 
     \begin{equation}
-        \frac{d [O]}{dt} = 2 k_f [O_2][M] -2 k_f [O]^2[M]
+        \frac{d [O]}{dt} = 2 \bp{k_f [O_2][M] - k_b [O]^2[M]}
     \end{equation}
 
     The net rate equation for an arbitrary reaction is then:
@@ -810,15 +810,27 @@ For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calcula
     \hline
     Third body & C & $\epsilon$ \\
     \hline
+    $M = N_2$ & 7.0e21 & 1.0 \\
     $M = O_2$ & 7.0e21 & 1.0 \\
     $M = NO$ & 7.0e21 & 1.0 \\
+    $M = N$ & 3.0e22 & 4.2857 \\
     $M = O$ & 3.0e22 & 4.2857 \\
     \hline
     \end{tabular}
     \label{efficiencies}
     \end{table}
 
-    Since $7.0e21$ is the smallest value, this is given an efficiency of 1.0, and then any other reaction's efficiency is given as some multiplier of this base value. The physical meaning of efficiencies is how "efficient" that third body is at making that reaction happen. $\epsilon$ is larger for atoms, since they are more efficient in sending their energy into dissociation of a molecule. We can now do some algebra on the Arrhenius equation by letting $C$ = $\epsilon C_c$, then $\gamma$ = $C_c T^\eta e^{E_0/kT}$. The forward  and backwards reaction constants are then:
+    Since $7.0e21$ is the smallest value, this is given an efficiency of 1.0, and then any other reaction's efficiency is given as some multiplier of this base value. The physical meaning of efficiencies is how "efficient" that third body is at making that reaction happen. $\epsilon$ is larger for atoms, since they are more efficient in sending their energy into dissociation of a molecule. We can now do some algebra on the Arrhenius equation by letting:
+    
+    \begin{equation}
+        C = \epsilon C_c
+    \end{equation}
+
+    \begin{equation}
+        \gamma = C_c T^\eta e^{E_0/kT}
+    \end{equation}
+    
+    The forward and backwards reaction constants are then:
 
     \begin{equation}
         k_f = \epsilon \gamma, \hspace{5mm} k_b = \frac{\epsilon \gamma}{K_{eq}}
@@ -917,9 +929,9 @@ Where $A_sr$ and $B_{sr}$ are either set constants or computed from:
 The Park correction is:
 
 \begin{align}
-    \tau_{sr}^\text{P} &= \frac{1}{\bar{c} \sigma n}
-    \\ \bar{c} &= \sqrt{\frac{8 \hat{R} T_{tr}}{ \mathcal{M}_s \pi}}
-    \\ \sigma &=  3 \times 10^{-21} \bp{\frac{50000}{T_{tr}}}^2
+    \tau_{s}^\text{P} &= \frac{1}{\bar{c}_s \sigma_s n}
+    \\ \bar{c}_s &= \sqrt{\frac{8 \hat{R} T_{tr}}{ \mathcal{M}_s \pi}}
+    \\ \sigma_s &=  \sigma_{v,s} \bp{\frac{50000}{T_{tr}}}^2
     \\ n &= \frac{p}{k_b T_{tr}}
 \end{align}
 
@@ -927,6 +939,10 @@ The Park correction is:
 
 
 \subsection{Chemical-Vibrational relaxation}
+
+\begin{equation}
+    Q_{c-v,s} = \dot{w}_s e_{v,s}
+\end{equation}
 
 
 
@@ -1246,15 +1262,14 @@ Note that the product across concentrations has been removed in the $L_r$ deriva
  Taking it step by step, we first look at three important derivatives. Since $\gamma(T_f)$ is a function of the forward rate-controlling temperature, which can have a form of $T^q T_v^{1-q}$, while $\gamma(T_b)$ only depends on $T$ or $T_e$. We will use the chain rule to compute the derivative of $\gamma(T_c)$, where $T_c$ is the rate controlling temperature for forwards or backwards rates:
 
 \begin{equation}
-    T = T^q T_v^{1-q} T_e^p
+    T = T_{tr}^q T_v^{1-q} T_e^p
 \end{equation}
 
 \begin{align}
     \pd{\gamma(T_c)}{U_j} &= \pd{\gamma(T_f)}{T} \pd{T}{U_j} = \pd{\gamma(T_f)}{T_c} \pd{T_c}{T} \pd{T}{U_j}
-    \\ &= \bb{\pd{}{T_c} \bp{C_c T_f^\eta e^{-E_a / T}}} \pd{T_c}{T} \pd{T}{U_j}
-    \\ &= \bb{\eta C_c T_c^{\eta - 1} e^{-E_a / T} + C_c T_c^\eta e^{-E_a / T} E_a T_c^{-2}} \pd{T_c}{T} \pd{T}{U_j}
-    \\ &= \bcb{\gamma(T_c) \bb{\frac{\eta}{T_c} + \frac{E_a}{T_c^2}} T_c \frac{q}{T}} \pd{T}{U_j} 
-    \\ &= \gamma(T_c) \bb{\pd{T}{U_j} \bp{\frac{\eta q}{T} + \frac{E_a q}{T_c T}} }
+    \\ &= \bb{\pd{}{T_c} \bp{C_c T_f^\eta e^{-E_a / T_c}}} \pd{T_c}{T} \pd{T}{U_j}
+    \\ &= \bb{\eta C_c T_c^{\eta - 1} e^{-E_a / T_c} + C_c T_c^\eta e^{-E_a / T_c} E_a T_c^{-2}} \pd{T_c}{T} \pd{T}{U_j}
+    \\ &= \gamma(T_c) \bb{\frac{\eta}{T_c} + \frac{E_a}{T_c^2}}  \bb{ \pd{T_c}{T}\pd{T}{U_j} + \pd{T_c}{T_v} \pd{T_v}{U_j} }
 \end{align}
 
 \begin{equation}
@@ -1320,6 +1335,12 @@ Putting it together, the $F$ term in the $L_r$ derivative is:
     \boxed{F = \gamma(T_f) \bb{\frac{\rho_{s,f}}{\mathcal{M}_{s,f}}}^{\nu_s'} \textcolor{blue}{\bcb{ \bb{ \frac{1}{T} \pd{T}{U_j} \bp{ \eta q + \frac{E_a q}{T_f}}} + \underbracket{\frac{\nu_s'}{\rho_s}}_{\text{if $U_j$ = $\rho_s$}} }}}
 \end{equation}
 
+or:
+
+\begin{equation}
+    \boxed{F = \gamma(T_f) \bb{\frac{\rho_{s,f}}{\mathcal{M}_{s,f}}}^{\nu_s'} \textcolor{blue}{ \bb{ \frac{1}{T} \pd{T}{U_j} \bp{ \eta q + \frac{E_a q}{T_f}}}} + \textcolor{blue}{\underbracket{\gamma(T_f) \nu_s' \bb{\frac{\rho_{s,f}}{\mathcal{M}_{s,f}}}^{\nu_s' - 1}}_{\text{if $U_j$ = $\rho_s$}}}}
+\end{equation}
+
 For the $B$ term we must start by expanding the first term:
 
 \begin{multline}
@@ -1342,6 +1363,13 @@ Like before, the only derivative that matters here is the one with respect to $\
 
 \begin{multline}
     \boxed{B = \frac{\gamma(T_b)}{K_{c,m}(T_b)} \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s'}   \textcolor{blue}{ \bcb{\underbracket{\bb{\frac{\nu_j''}{\rho_j}}}_{\text{if $U_j$ =$\rho_s$}} + \frac{1}{T} \pd{T}{U_j} \bb{ \eta + \frac{E_a}{T} + \nu_m - \bp{\sum_s(\nu_s'' - \nu_s') \frac{H_s^\circ}{\hat{R}T} }}}} }
+\end{multline}
+
+or:
+
+\begin{multline}
+    B = \frac{\gamma(T_b)}{K_{c,m}(T_b)} \prod_{i=1} \bb{\frac{\rho_i}{\mathcal{M}_i}}^{\nu_i''} \textcolor{blue} {\bb{\frac{1}{T} \pd{T}{U_j} \bb{ \eta + \frac{E_a}{T} + \nu_m - \bp{\sum_s(\nu_s'' - \nu_s') \frac{H_s^\circ}{\hat{R}T}}}}}
+    \\ + \frac{\gamma(T_b)}{K_{c,m}(T_b)} \nu_s' \bb{\frac{\rho_{s,b}}{\mathcal{M}_{s,b}}}^{\nu_s'' - 1}
 \end{multline}
 
 
@@ -1619,6 +1647,191 @@ The nonlinear residual is:
 \end{equation}
 
 Where $U$ = $U^{n+1}$ or $U^{k+1}$. We aim to find a $U$ that satisfies $R(U^{n+1})$ = 0. Therefore, we use Newton steps to find this value. First, take your current $U_n$, and set it as $U_k$. 
+
+
+\section{Stagnation line solver}
+
+The conserved variable vector convective flux vector for the stagnation line solver is:
+
+\begin{equation}
+    \boldmath{U} = \begin{bmatrix}
+        \rho_s \\
+        \rho u_r \\
+        \rho u_\theta \\
+        \rho E \\
+        \rho e^{ve}
+    \end{bmatrix}
+    \hspace{5mm} 
+    \boldmath{F^c} = \begin{bmatrix}
+        \rho_s u_r\\
+        \rho u_r^2 + p \\
+        \rho u_r u_\theta \\
+        \rho u_r H \\
+        \rho u_r e^{ve}
+    \end{bmatrix}
+\end{equation}
+
+Some very useful identities for the Jacobian of the convective fluxes are:
+
+\begin{equation*}
+    \rho E = \underbracket{\sum_s \rho_s e_s^\text{tr-rot}}_{\rho e^\text{tr}} + \underbracket{\sum_s \rho_s e_s^\text{vib}}_{\rho e^\text{ve}} + \frac{1}{2} \rho u_r^2 + \sum_s \rho_s h_s^f
+\end{equation*}
+
+
+
+\begin{equation*}
+    \rho e^{ve} = \sum_s \rho_s e_s^\text{vib}
+\end{equation*}
+
+\begin{equation*}
+    H + E + \frac{p}{\rho}
+\end{equation*}
+
+Per Scoggins, the most useful derivatives are the ones of pressure. His notation is:
+
+\begin{equation*}
+    \pd{p}{U} = \begin{bmatrix}
+        \Phi_j \\
+        -\beta^1 u_r \\
+        0 \\
+        \beta^1 \\
+        \beta^n - \beta^1   
+    \end{bmatrix}
+    = \begin{bmatrix}
+        \pd{p}{\rho_j} \\
+        \pd{p}{\rho u_r} \\
+        \pd{p}{\rho u_\theta} \\
+        \pd{p}{\rho E} \\
+        \pd{p}{\rho e^{ve}}
+    \end{bmatrix}
+\end{equation*}
+
+Let us begin with $\phi_j$ using the classic equation of state for a mixture of ideal gases:
+
+\begin{equation*}
+    p = \rho R_\text{mix} T_\text{tr} = \sum_s \rho_s R_s T_\text{tr}
+\end{equation*}
+
+Where the following identity has been used:
+
+\begin{equation*}
+    \rho R_\text{mix} = \sum_s \rho_s R_s
+\end{equation*}
+
+In order to continue, we must find the derivatives of the translational temperature with respect to the conserved variables. This is done by using the definition of the translational energy:
+
+\begin{equation*}
+    \rho e^\text{tr} = \sum_s \rho_s e_s^\text{tr-rot}
+\end{equation*}
+
+as well as using the total energy equation and solving for $E_\text{tr}$:
+
+\begin{equation*}
+    \rho e^\text{tr} = \rho E - \rho e^\text{ve} - \frac{1}{2} \rho u_r^2 - \sum_s \rho_s h_s^f
+\end{equation*}
+
+We first work on this equation, taking derivatives with respect to conserved variables:
+
+\begin{equation*}
+    \pd{(\rho e^\text{tr})}{U_j} = \pd{(\rho E)}{U_j} - \pd{(\rho e^\text{ve})}{U_j} - \pd{}{U_j} \bb{\frac{1}{2} \rho u_r^2} - \pd{}{U_j} \bb{\sum_s \rho_s h_s^f}
+\end{equation*}
+
+This gives:
+
+\begin{align*}
+    \pd{(\rho e^\text{tr})}{\rho_j} &= \frac{1}{2} u_r^2 - h_j^f
+    \\ \pd{(\rho e^\text{tr})}{\rho u_r} &= -u_r
+    \\ \pd{(\rho e^\text{tr})}{\rho u_\theta} &= 0
+    \\ \pd{(\rho e^\text{tr})}{\rho E} &= 1
+    \\ \pd{(\rho e^\text{tr})}{\rho e^{ve}} &= -1
+\end{align*}
+
+Then we go to the first equation:
+
+\begin{equation*}
+    \pd{(\rho e^\text{tr})}{U_j} = \pd{}{U_j} \bb{\sum_s \rho_s e_s^\text{tr}} = \sum_s \bb{\pd{}{U_j} \rho_s e_s^\text{tr}} = \sum_s \bb{ \pd{\rho_s}{U_j} e_s^\text{tr} + \rho_s \pd{e_s^\text{tr}}{T_\text{tr}} \pd{T_\text{tr}}{U_j} }
+\end{equation*}
+
+Which becomes:
+
+\begin{equation*}
+    \pd{(\rho e^\text{tr})}{U_j} = \underbracket{\delta_{js} e_j^\text{tr}}_{\text{if $U_j$ is $\rho_j$}} + \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{U_j} 
+\end{equation*}
+
+
+Now we can solve for the derivative of the translational temperature by setting the two equations equal to each other:
+
+\vspace{5mm}
+$\partial / \partial \rho_j$:
+
+\begin{equation*}
+    \frac{1}{2} u_r^2 - h_j^f = e_j^\text{tr} + \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho_j}
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\pd{T_\text{tr}}{\rho_j} = \frac{\frac{1}{2} u_r^2 - h_j^f - e_j^\text{tr}}{\rho c_{v,\text{mix}}^\text{tr}}}
+\end{equation*}
+
+\vspace{5mm}
+$\partial / \partial \rho u_r$:
+
+\begin{equation*}
+    -u_r = \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho u_r}
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\pd{T_\text{tr}}{\rho u_r} = -\frac{u_r}{\rho c_{v,\text{mix}}^\text{tr}}}
+\end{equation*}
+
+\vspace{5mm}
+$\partial / \partial \rho u_\theta$:
+
+\begin{equation*}
+    0 = \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho u_\theta}
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\pd{T_\text{tr}}{\rho u_\theta} = 0}
+\end{equation*}
+
+\vspace{5mm}
+$\partial / \partial \rho e^\text{tr}$:
+
+\begin{equation*}
+    1 = \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho E}
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\pd{T_\text{tr}}{\rho E} = \frac{1}{\rho c_{v,\text{mix}}^\text{tr}}}
+\end{equation*}
+
+\vspace{5mm}
+$\partial / \partial \rho e^{ve}$:
+\begin{equation*}
+    -1 = \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho e^{ve}}
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\pd{T_\text{tr}}{\rho e^{ve}} = -\frac{1}{\rho c_{v,\text{mix}}^\text{tr}}}
+\end{equation*}
+
+Therefore, the full derivatives of pressure WRT the conserved variables are:
+
+\begin{equation*}
+    \boxed{\Phi_j = \pd{p}{\rho_j} = R_j T_\text{tr} + \sum_s \rho_s R_s \pd{T_\text{tr}}{\rho_j} = R_j T_\text{tr} + \sum_s \rho_s R_s \frac{-\frac{1}{2} u_r^2 - h_j^f - e_j^\text{tr}}{\rho c_{v,\text{mix}}^\text{tr}}}
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\beta^1 = \frac{R_\text{mix}}{c_{v,\text{mix}}^\text{tr}} }
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\beta^{n} = 0}
+\end{equation*}
+
+\begin{equation}
+    \boxed{\beta^n - \beta^1 = -\frac{R_\text{mix}}{c_{v,\text{mix}}^\text{tr}}}
+\end{equation}
 
 \end{flushleft}
 \end{document}
