@@ -1654,7 +1654,7 @@ Where $U$ = $U^{n+1}$ or $U^{k+1}$. We aim to find a $U$ that satisfies $R(U^{n+
 The conserved variable vector convective flux vector for the stagnation line solver is:
 
 \begin{equation}
-    \boldmath{U} = \begin{bmatrix}
+    U = \begin{bmatrix}
         \rho_s \\
         \rho u_r \\
         \rho u_\theta \\
@@ -1662,7 +1662,7 @@ The conserved variable vector convective flux vector for the stagnation line sol
         \rho e^{ve}
     \end{bmatrix}
     \hspace{5mm} 
-    \boldmath{F^c} = \begin{bmatrix}
+    F^c = \begin{bmatrix}
         \rho_s u_r\\
         \rho u_r^2 + p \\
         \rho u_r u_\theta \\
@@ -1677,7 +1677,13 @@ Some very useful identities for the Jacobian of the convective fluxes are:
     \rho E = \underbracket{\sum_s \rho_s e_s^\text{tr-rot}}_{\rho e^\text{tr}} + \underbracket{\sum_s \rho_s e_s^\text{vib}}_{\rho e^\text{ve}} + \frac{1}{2} \rho u_r^2 + \sum_s \rho_s h_s^f
 \end{equation*}
 
+\begin{equation*}
+    \rho E = \bb{\frac{\sum_s \rho_s c_{v,s}}{\sum_s \rho_s R_s}} p + \sum_s^d \rho_s e_s^{ve} + \sum_s \rho_s u_r^2 + \sum_s \rho_s h_s^f
+\end{equation*}
 
+\begin{equation*}
+    p = \rho R_\text{mix} T_\text{tr} = \sum_s \rho_s R_s T_\text{tr}
+\end{equation*}
 
 \begin{equation*}
     \rho e^{ve} = \sum_s \rho_s e_s^\text{vib}
@@ -1687,7 +1693,9 @@ Some very useful identities for the Jacobian of the convective fluxes are:
     H + E + \frac{p}{\rho}
 \end{equation*}
 
-Per Scoggins, the most useful derivatives are the ones of pressure. His notation is:
+\subsection{Pressure derivatives}
+
+Per Scoggins, the most useful derivatives are the ones of pressure and total energy. His notation for the pressure derivatives is:
 
 \begin{equation*}
     \pd{p}{U} = \begin{bmatrix}
@@ -1706,19 +1714,7 @@ Per Scoggins, the most useful derivatives are the ones of pressure. His notation
     \end{bmatrix}
 \end{equation*}
 
-Let us begin with $\phi_j$ using the classic equation of state for a mixture of ideal gases:
-
-\begin{equation*}
-    p = \rho R_\text{mix} T_\text{tr} = \sum_s \rho_s R_s T_\text{tr}
-\end{equation*}
-
-Where the following identity has been used:
-
-\begin{equation*}
-    \rho R_\text{mix} = \sum_s \rho_s R_s
-\end{equation*}
-
-In order to continue, we must find the derivatives of the translational temperature with respect to the conserved variables. This is done by using the definition of the translational energy:
+Let us begin with $\phi_j$ using the above equation of state for a mixture of ideal gases. In order to continue, we must find the derivatives of the translational temperature with respect to the conserved variables. This is done by using the definition of the translational energy:
 
 \begin{equation*}
     \rho e^\text{tr} = \sum_s \rho_s e_s^\text{tr-rot}
@@ -1730,7 +1726,7 @@ as well as using the total energy equation and solving for $E_\text{tr}$:
     \rho e^\text{tr} = \rho E - \rho e^\text{ve} - \frac{1}{2} \rho u_r^2 - \sum_s \rho_s h_s^f
 \end{equation*}
 
-We first work on this equation, taking derivatives with respect to conserved variables:
+We can now implcitly solve for the translational temperature derivatives:
 
 \begin{equation*}
     \pd{(\rho e^\text{tr})}{U_j} = \pd{(\rho E)}{U_j} - \pd{(\rho e^\text{ve})}{U_j} - \pd{}{U_j} \bb{\frac{1}{2} \rho u_r^2} - \pd{}{U_j} \bb{\sum_s \rho_s h_s^f}
@@ -1832,6 +1828,29 @@ Therefore, the full derivatives of pressure WRT the conserved variables are:
 \begin{equation}
     \boxed{\beta^n - \beta^1 = -\frac{R_\text{mix}}{c_{v,\text{mix}}^\text{tr}}}
 \end{equation}
+
+\subsection{Energy derivatives}
+
+We utilize the following equation for the energy derivatives (putting them into functions of primitive variables):
+
+\begin{equation*}
+    \rho E = \bb{\frac{\sum_s \rho_s c_{v,s}}{\sum_s \rho_s R_s}} p + \sum_s^d \rho_s e_s^{ve} + \sum_s \rho_s u_r^2 + \sum_s \rho_s h_s^f
+\end{equation*}
+
+Then we have: 
+
+\begin{align*}
+    \pd{(\rho E)}{\rho_j} &= \bb{c_{v,j}^\text{tr-rot} - \frac{c_{v, \text{mix}}^\text{tr-rot}}{R_\text{mix}} R_j} T_\text{tr} + \frac{u_r^2}{2} + e_j^{ve} + h_j^f
+    \\ \pd{(\rho E)}{u_r} &= \rho u_R
+    \\ \pd{(\rho E)}{u_\theta} &= 0
+    \\ \pd{(\rho E)}{p} &= \frac{c_{v,\text{mix}}^\text{tr-rot}}{R_\text{mix}}
+    \\ \pd{(\rho E)}{e_v} &= \sum_d^\text{ND} \rho_d
+\end{align*}
+
+Where the finally entry is the sum of the densities of polyatomic molecules in the gas mixture.
+
+
+
 
 \end{flushleft}
 \end{document}

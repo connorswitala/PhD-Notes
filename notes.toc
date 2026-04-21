@@ -38,3 +38,5 @@
 \contentsline {subsubsection}{\numberline {6.9.5}Explicit 0D Reactor}{44}{subsubsection.6.9.5}%
 \contentsline {subsubsection}{\numberline {6.9.6}Implicit 0D Reactor}{45}{subsubsection.6.9.6}%
 \contentsline {section}{\numberline {7}Stagnation line solver}{45}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Pressure derivatives}{46}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Energy derivatives}{49}{subsection.7.2}%
