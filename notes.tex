@@ -1651,205 +1651,218 @@ Where $U$ = $U^{n+1}$ or $U^{k+1}$. We aim to find a $U$ that satisfies $R(U^{n+
 
 \section{Stagnation line solver}
 
-The conserved variable vector convective flux vector for the stagnation line solver is:
+The conserved variable vector, primitive variable vector, and convective flux vector for the stagnation line solver are:
 
 \begin{equation}
-    U = \begin{bmatrix}
+    \boldsymbol{U} = \begin{bmatrix}
         \rho_s \\
         \rho u_r \\
         \rho u_\theta \\
-        \rho E \\
-        \rho e^{ve}
+        \rho e^{ve} \\
+        \rho E 
     \end{bmatrix}
     \hspace{5mm} 
-    F^c = \begin{bmatrix}
+    \boldsymbol{V} = \begin{bmatrix}
+        \rho_s \\
+        u_r \\
+        u_\theta \\
+        e^{ve} \\
+        p 
+    \end{bmatrix}
+    \hspace{5mm} 
+    \boldsymbol{F^c} = \begin{bmatrix}
         \rho_s u_r\\
         \rho u_r^2 + p \\
         \rho u_r u_\theta \\
-        \rho u_r H \\
-        \rho u_r e^{ve}
+        \rho u_r e^{ve} \\
+        \rho u_r H 
     \end{bmatrix}
 \end{equation}
 
-Some very useful identities for the Jacobian of the convective fluxes are:
+\subsection{Jacobians}
+
+In order to find the flux Jacobian, we need to compute a series of Jacobians. The first is the Jacobian of $\boldsymbol{U}$ with respect to $\boldsymbol{V}$. This is done by putting the conserved variables in terms of the primitive variables and then taking the derivatives. Then for the Jacobians of $\boldsymbol{V}$ with respect to $\boldsymbol{U}$, we do the same. By denoting $\rho_s$ as either $U_s$ or $V_s$, $\rho u_r$ as $U_2$, $u_r$ as $V_2$, etc., we can write the vectors as:
 
 \begin{equation*}
-    \rho E = \underbracket{\sum_s \rho_s e_s^\text{tr-rot}}_{\rho e^\text{tr}} + \underbracket{\sum_s \rho_s e_s^\text{vib}}_{\rho e^\text{ve}} + \frac{1}{2} \rho u_r^2 + \sum_s \rho_s h_s^f
-\end{equation*}
-
-\begin{equation*}
-    \rho E = \bb{\frac{\sum_s \rho_s c_{v,s}}{\sum_s \rho_s R_s}} p + \sum_s^d \rho_s e_s^{ve} + \sum_s \rho_s u_r^2 + \sum_s \rho_s h_s^f
-\end{equation*}
-
-\begin{equation*}
-    p = \rho R_\text{mix} T_\text{tr} = \sum_s \rho_s R_s T_\text{tr}
-\end{equation*}
-
-\begin{equation*}
-    \rho e^{ve} = \sum_s \rho_s e_s^\text{vib}
-\end{equation*}
-
-\begin{equation*}
-    H + E + \frac{p}{\rho}
-\end{equation*}
-
-\subsection{Pressure derivatives}
-
-Per Scoggins, the most useful derivatives are the ones of pressure and total energy. His notation for the pressure derivatives is:
-
-\begin{equation*}
-    \pd{p}{U} = \begin{bmatrix}
-        \Phi_j \\
-        -\beta^1 u_r \\
-        0 \\
-        \beta^1 \\
-        \beta^n - \beta^1   
+    \boldsymbol{\boldsymbol{V}(\boldsymbol{U})} = \begin{bmatrix}
+        U_s \\
+        U_2 / \sum_s U_s \\
+        U_3 / \sum_s U_s \\
+        U_4 / \sum_s U_s \\
+        p(\boldsymbol{U})
     \end{bmatrix}
-    = \begin{bmatrix}
-        \pd{p}{\rho_j} \\
-        \pd{p}{\rho u_r} \\
-        \pd{p}{\rho u_\theta} \\
-        \pd{p}{\rho E} \\
-        \pd{p}{\rho e^{ve}}
+    \hspace{5mm}
+    \boldsymbol{\boldsymbol{U}(\boldsymbol{V})} = \begin{bmatrix}
+        V_s \\
+        \sum_s V_s V_2 \\
+        \sum_s V_s V_3\\
+        \sum_s V_s V_4 \\
+        \rho E(\boldsymbol{V})
+    \end{bmatrix}
+    \hspace{5mm}
+    \boldsymbol{\boldsymbol{F^c}(\boldsymbol{V})} = \begin{bmatrix}
+        V_s V_2 \\
+        \sum_s V_s V_2^2 + V_5 \\
+        \sum_s V_s V_2 V_3\\
+        \sum_s V_s V_2 V_4 \\
+        [\rho E(\boldsymbol{V}) + V_5]V_2
+    \end{bmatrix}   
+\end{equation*}
+
+Pressure is found by using the equation of state for a mixture of ideal gases and recovering translational energy from the total energy equation by subtracting out the other energy modes:
+
+\begin{equation*}
+    p = \rho R_\text{mix} T_\text{tr} = \frac{R_\text{mix}}{c_{v, \text{mix}}^\text{tr}} \bb{\rho e^\text{tr}} = \frac{R_\text{mix}}{c_{v, \text{mix}}^\text{tr}} \bb{\rho E - \frac{\rho}{2} u_r^2 - \rho e^{ve} - \sum_s \rho_s h_s^f}
+\end{equation*}
+
+In conserved variable form, this is:
+
+\begin{equation*}
+    p(\boldsymbol{U}) = \frac{\sum U_s R_s}{\sum U_s c_{v,s}^\text{tr}} \bb{U_5 - \frac{1}{2} \frac{1}{\sum_s U_s} U_2^2 - U_4 - \sum_s U_s h_s^\circ}
+\end{equation*}
+
+For internal energy, we can rearrange the above equation to get:
+
+\begin{equation*}
+    \rho E = \frac{c_{v, \text{mix}}^\text{tr}}{R_\text{mix}} p + \frac{1}{2} \rho u_r^2 + \rho e^{ve} + \sum_s \rho_s h_s^f
+\end{equation*}
+
+In primitive variable form, this is:
+
+\begin{equation*}
+    \rho E(\boldsymbol{V}) = \frac{\sum_s V_s c_{v,s}}{\sum_s V_s R_s} V_5 + \frac{1}{2} \sum_s V_s \cdot V_2^2 + \sum_s V_s \cdot V_4 + \sum_s V_s h_s^\circ
+\end{equation*}
+
+The derivates are now straightforward and the Jacobians are as follows: 
+\begin{equation*}
+    \pd{\boldsymbol{U}}{\boldsymbol{V}} = \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & \ddots & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        u_r & \dots & u_r & \rho & 0 & 0 & 0 \\
+        u_\theta & \dots & u_\theta & 0 & \rho & 0 & 0 \\
+        e_{ve} & \dots & e_{ve} & 0 & 0 & \rho & 0 \\
+        \pd{\rho E}{\rho_s} & \dots & \pd{\rho E}{\rho_s} & \pd{\rho E}{u_r} & \pd{\rho E}{u_\theta} & \pd{\rho E}{e_{ve}} & \pd{\rho E}{p}
     \end{bmatrix}
 \end{equation*}
 
-Let us begin with $\phi_j$ using the above equation of state for a mixture of ideal gases. In order to continue, we must find the derivatives of the translational temperature with respect to the conserved variables. This is done by using the definition of the translational energy:
 
 \begin{equation*}
-    \rho e^\text{tr} = \sum_s \rho_s e_s^\text{tr-rot}
+    \pd{\boldsymbol{V}}{\boldsymbol{U}} = \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & \ddots & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        -\frac{u_r}{\rho} & \dots & -\frac{u_r}{\rho} & \frac{1}{\rho} & 0 & 0 & 0 \\
+        -\frac{u_\theta}{\rho} & \dots & -\frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0 & 0 \\
+        -\frac{e_{ve}}{\rho} & \dots & -\frac{e_{ve}}{\rho} & 0 & 0 & \frac{1}{\rho} & 0 \\
+        \pd{p}{\rho_s} & \dots & \pd{p}{\rho_s} & \pd{p}{(\rho u_r)} & \pd{p}{(\rho u_\theta)} & \pd{p}{(\rho e_{ve})} & \pd{p}{(\rho E)}
+    \end{bmatrix}
 \end{equation*}
-
-as well as using the total energy equation and solving for $E_\text{tr}$:
 
 \begin{equation*}
-    \rho e^\text{tr} = \rho E - \rho e^\text{ve} - \frac{1}{2} \rho u_r^2 - \sum_s \rho_s h_s^f
+    \pd{\boldsymbol{F^c}}{\boldsymbol{V}} = \begin{bmatrix}
+        u_r & 0 & 0 & \rho_s & 0 & 0 & 0 \\
+        0 & \ddots & 0 & \vdots & 0 & 0 & 0 \\
+        0 & 0 & u_r & \rho_s & 0 & 0 & 0 \\
+        u_r^2 & \dots & u_r^2 & 2 \rho u_r & 0 & 0 & 1 \\
+        u_r u_\theta & \dots & u_r u_\theta & \rho u_\theta & \rho u_r & 0 & 0 \\
+        u_r e_{ve} & \dots & u_r e_{ve} & \rho e_{ve} & 0 & \rho u_r & 0 \\
+        \pd{\rho E}{\rho_s} u_r & \dots & \pd{\rho E}{\rho_s} u_r & \Phi & \pd{\rho E}{u_\theta} u_r & \pd{\rho E}{e_{ve}} u_r & \Theta
+    \end{bmatrix}
 \end{equation*}
 
-We can now implcitly solve for the translational temperature derivatives:
-
-\begin{equation*}
-    \pd{(\rho e^\text{tr})}{U_j} = \pd{(\rho E)}{U_j} - \pd{(\rho e^\text{ve})}{U_j} - \pd{}{U_j} \bb{\frac{1}{2} \rho u_r^2} - \pd{}{U_j} \bb{\sum_s \rho_s h_s^f}
-\end{equation*}
-
-This gives:
+Where we have the following derivatives for pressure and energy as well as the following definitions for $\Phi$ and $\Theta$:
 
 \begin{align*}
-    \pd{(\rho e^\text{tr})}{\rho_j} &= \frac{1}{2} u_r^2 - h_j^f
-    \\ \pd{(\rho e^\text{tr})}{\rho u_r} &= -u_r
-    \\ \pd{(\rho e^\text{tr})}{\rho u_\theta} &= 0
-    \\ \pd{(\rho e^\text{tr})}{\rho E} &= 1
-    \\ \pd{(\rho e^\text{tr})}{\rho e^{ve}} &= -1
+    \pd{p}{\rho_s} &= \bb{R_s - \frac{R_\text{mix}}{c_v^\text{mix}} c_{v,s}} T_\text{tr} + \frac{R_\text{mix}}{c_v^\text{mix}} \bb{\frac{u_r^2}{2} - h_s^\circ}
+    \\ \pd{p}{\rho u_r} &= -\frac{R_\text{mix}}{c_v^\text{mix}} u_r
+    \\ \pd{p}{\rho u_\theta} &= 0
+    \\ \pd{p}{\rho e^{ve}} &= -\frac{R_\text{mix}}{c_v^\text{mix}}
+    \\ \pd{p}{\rho E} &= \frac{R_\text{mix}}{c_v^\text{mix}}
 \end{align*}
-
-Then we go to the first equation:
-
-\begin{equation*}
-    \pd{(\rho e^\text{tr})}{U_j} = \pd{}{U_j} \bb{\sum_s \rho_s e_s^\text{tr}} = \sum_s \bb{\pd{}{U_j} \rho_s e_s^\text{tr}} = \sum_s \bb{ \pd{\rho_s}{U_j} e_s^\text{tr} + \rho_s \pd{e_s^\text{tr}}{T_\text{tr}} \pd{T_\text{tr}}{U_j} }
-\end{equation*}
-
-Which becomes:
-
-\begin{equation*}
-    \pd{(\rho e^\text{tr})}{U_j} = \underbracket{\delta_{js} e_j^\text{tr}}_{\text{if $U_j$ is $\rho_j$}} + \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{U_j} 
-\end{equation*}
-
-
-Now we can solve for the derivative of the translational temperature by setting the two equations equal to each other:
-
-\vspace{5mm}
-$\partial / \partial \rho_j$:
-
-\begin{equation*}
-    \frac{1}{2} u_r^2 - h_j^f = e_j^\text{tr} + \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho_j}
-\end{equation*}
-
-\begin{equation*}
-    \boxed{\pd{T_\text{tr}}{\rho_j} = \frac{\frac{1}{2} u_r^2 - h_j^f - e_j^\text{tr}}{\rho c_{v,\text{mix}}^\text{tr}}}
-\end{equation*}
-
-\vspace{5mm}
-$\partial / \partial \rho u_r$:
-
-\begin{equation*}
-    -u_r = \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho u_r}
-\end{equation*}
-
-\begin{equation*}
-    \boxed{\pd{T_\text{tr}}{\rho u_r} = -\frac{u_r}{\rho c_{v,\text{mix}}^\text{tr}}}
-\end{equation*}
-
-\vspace{5mm}
-$\partial / \partial \rho u_\theta$:
-
-\begin{equation*}
-    0 = \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho u_\theta}
-\end{equation*}
-
-\begin{equation*}
-    \boxed{\pd{T_\text{tr}}{\rho u_\theta} = 0}
-\end{equation*}
-
-\vspace{5mm}
-$\partial / \partial \rho e^\text{tr}$:
-
-\begin{equation*}
-    1 = \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho E}
-\end{equation*}
-
-\begin{equation*}
-    \boxed{\pd{T_\text{tr}}{\rho E} = \frac{1}{\rho c_{v,\text{mix}}^\text{tr}}}
-\end{equation*}
-
-\vspace{5mm}
-$\partial / \partial \rho e^{ve}$:
-\begin{equation*}
-    -1 = \rho c_{v,\text{mix}}^\text{tr} \pd{T_\text{tr}}{\rho e^{ve}}
-\end{equation*}
-
-\begin{equation*}
-    \boxed{\pd{T_\text{tr}}{\rho e^{ve}} = -\frac{1}{\rho c_{v,\text{mix}}^\text{tr}}}
-\end{equation*}
-
-Therefore, the full derivatives of pressure WRT the conserved variables are:
-
-\begin{equation*}
-    \boxed{\Phi_j = \pd{p}{\rho_j} = R_j T_\text{tr} + \sum_s \rho_s R_s \pd{T_\text{tr}}{\rho_j} = R_j T_\text{tr} + \sum_s \rho_s R_s \frac{-\frac{1}{2} u_r^2 - h_j^f - e_j^\text{tr}}{\rho c_{v,\text{mix}}^\text{tr}}}
-\end{equation*}
-
-\begin{equation*}
-    \boxed{\beta^1 = \frac{R_\text{mix}}{c_{v,\text{mix}}^\text{tr}} }
-\end{equation*}
-
-\begin{equation*}
-    \boxed{\beta^{n} = 0}
-\end{equation*}
-
-\begin{equation}
-    \boxed{\beta^n - \beta^1 = -\frac{R_\text{mix}}{c_{v,\text{mix}}^\text{tr}}}
-\end{equation}
-
-\subsection{Energy derivatives}
-
-We utilize the following equation for the energy derivatives (putting them into functions of primitive variables):
-
-\begin{equation*}
-    \rho E = \bb{\frac{\sum_s \rho_s c_{v,s}}{\sum_s \rho_s R_s}} p + \sum_s^d \rho_s e_s^{ve} + \sum_s \rho_s u_r^2 + \sum_s \rho_s h_s^f
-\end{equation*}
-
-Then we have: 
 
 \begin{align*}
-    \pd{(\rho E)}{\rho_j} &= \bb{c_{v,j}^\text{tr-rot} - \frac{c_{v, \text{mix}}^\text{tr-rot}}{R_\text{mix}} R_j} T_\text{tr} + \frac{u_r^2}{2} + e_j^{ve} + h_j^f
-    \\ \pd{(\rho E)}{u_r} &= \rho u_R
-    \\ \pd{(\rho E)}{u_\theta} &= 0
-    \\ \pd{(\rho E)}{p} &= \frac{c_{v,\text{mix}}^\text{tr-rot}}{R_\text{mix}}
-    \\ \pd{(\rho E)}{e_v} &= \sum_d^\text{ND} \rho_d
+    \pd{\rho E}{\rho_s} &= \bb{c_{v,s} - \frac{c_v^\text{mix}}{R_\text{mix}} R_s} T_\text{tr} + \frac{u_r^2}{2} + e_{ve} + h_s^\circ
+    \\ \pd{\rho E}{u_r} &= \rho u_r
+    \\ \pd{\rho E}{u_\theta} &= 0
+    \\ \pd{\rho E}{e^{ve}} &= \rho
+    \\ \pd{\rho E}{p} &= \frac{c_v^\text{mix}}{R_\text{mix}}
 \end{align*}
 
-Where the finally entry is the sum of the densities of polyatomic molecules in the gas mixture.
+\begin{equation*}
+    \Phi = \pd{(\rho E)}{u_r} u_r + \rho E + p = \rho (H + u_r^2)
+\end{equation*}
+
+\begin{equation*}
+    \Theta = \pd{\rho E}{p} u_r + u_r = u_r \bp{\frac{c_v^\text{mix}}{R_\text{mix}} + 1}
+\end{equation*}
+
+The matrix product of $\partial V / \partial U$ and $\partial F^c / \partial V$ gives the flux Jacobian that needs to be diagonlized for the upwinding:
+
+\begin{equation*}
+    \pd{\boldsymbol{V}}{\boldsymbol{U}} \pd{\boldsymbol{F^c}}{\boldsymbol{V}} = \begin{bmatrix}
+        u_r & 0 & 0 & \rho_s & 0 & 0 & 0 \\
+        0 & \ddots & 0 & \vdots & 0 & 0 & 0 \\
+        0 & 0 & u_r & \rho_s & 0 & 0 & 0 \\
+        0 & \dots & 0 & u_r & 0 & 0 & \frac{1}{\rho} \\
+        0 & \dots & 0 & 0 & u_r & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & u_r & 0 \\
+        0 & \dots & 0 & p(1 + \frac{R}{c_v}) & 0 & 0 & u_r
+    \end{bmatrix}
+\end{equation*}
+
+The eigenvalues of this matrix are:
+
+\begin{equation*}
+    \lambda = \begin{bmatrix}
+        u_r, \dots, u_r, u_r - a, u_r + a
+    \end{bmatrix}
+\end{equation*}
+
+Where $a$ is the speed of sound, which is found by using the following formula:
+
+\begin{equation*}
+    a = \sqrt{\frac{p}{\rho}\bp{1 + \frac{R}{c_v}}}
+\end{equation*}
+
+The left and right matrix of eigenvectors are:
+
+\begin{equation*}
+    L = \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & 0 & -\frac{\rho_s}{\rho a^2} \\
+        0 & \ddots & 0 & \vdots & 0 & 0 & \vdots \\
+        0 & 0 & 1 & 0 & 0 & 0 & -\frac{\rho_s}{\rho a^2} \\
+        0 & \dots & 0 & 0 & 1 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 1 & 0 \\
+        0 & \dots & 0 & - \frac{1}{2 a} & 0 & 0 & \frac{1}{2 \rho a^2} \\
+        0 & \dots & 0 & \frac{1}{2 a} & 0 & 0 & \frac{1}{2 \rho a^2}
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    R = \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & \rho_s & \rho_s \\
+        0 & \ddots & 0 & 0 & 0 & \vdots & \vdots \\
+        0 & \dots & 1 & 0 & 0 & \rho_s & \rho_s \\
+        0 & \dots & 0 & 0 & 0 & -a & a  \\
+        0 & \dots & 0 & 1 & 0 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 1 & 0 & 0 \\
+        0 & \dots & 0 & \rho a & 0 & \rho a^2 & \rho a^2
+    \end{bmatrix}
+\end{equation*}
 
 
+\begin{equation*}
+    L \pd{V}{U} = \begin{bmatrix}
+        1 - \frac{Y_s p_{\rho_s}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & -\frac{Y_s}{a} p_{\rho u_r} & -\frac{Y_s}{a} p_{\rho u_\theta} & -\frac{Y_s}{a} p_{\rho e_v} & -\frac{Y_s}{a} p_{\rho E} \\
+        - \frac{Y_s p_{\rho_j}}{a^2} & \ddots & - \frac{Y_s p_{\rho_j}}{a^2} &  -\frac{Y_s}{a} p_{\rho u_r} & -\frac{Y_s}{a} p_{\rho u_\theta} & -\frac{Y_s}{a} p_{\rho e_v} & -\frac{Y_s}{a} p_{\rho E} \\
+        - \frac{Y_s p_{\rho_j}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & 1 - \frac{Y_s p_{\rho_s}}{a^2} & -\frac{Y_s}{a} p_{\rho u_r} & -\frac{Y_s}{a} p_{\rho u_\theta} & -\frac{Y_s}{a} p_{\rho e_v} & -\frac{Y_s}{a} p_{\rho E} \\
+        - \frac{u_\theta}{\rho} & \dots & - \frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0 & 0 \\
+        - \frac{e_v}{\rho} & \dots & - \frac{e_v}{\rho} & 0 & 0 & \frac{1}{\rho} & 0 \\
+        \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} + 1} & \dots & 0 & - \frac{1}{2 a} & 0 & 0 & \frac{1}{2 \rho a^2} \\
+        0 & \dots & 0 & \frac{1}{2 a} & 0 & 0 & \frac{1}{2 \rho a^2}
+    \end{bmatrix}
+\end{equation*}
 
 
 \end{flushleft}
