@@ -1658,7 +1658,7 @@ The conserved variable vector, primitive variable vector, and convective flux ve
         \rho_s \\
         \rho u_r \\
         \rho u_\theta \\
-        \rho e^{ve} \\
+        \rho e_v \\
         \rho E 
     \end{bmatrix}
     \hspace{5mm} 
@@ -1666,7 +1666,7 @@ The conserved variable vector, primitive variable vector, and convective flux ve
         \rho_s \\
         u_r \\
         u_\theta \\
-        e^{ve} \\
+        e_v \\
         p 
     \end{bmatrix}
     \hspace{5mm} 
@@ -1674,7 +1674,7 @@ The conserved variable vector, primitive variable vector, and convective flux ve
         \rho_s u_r\\
         \rho u_r^2 + p \\
         \rho u_r u_\theta \\
-        \rho u_r e^{ve} \\
+        \rho u_r e_v \\
         \rho u_r H 
     \end{bmatrix}
 \end{equation}
@@ -1712,7 +1712,7 @@ In order to find the flux Jacobian, we need to compute a series of Jacobians. Th
 Pressure is found by using the equation of state for a mixture of ideal gases and recovering translational energy from the total energy equation by subtracting out the other energy modes:
 
 \begin{equation*}
-    p = \rho R_\text{mix} T_\text{tr} = \frac{R_\text{mix}}{c_{v, \text{mix}}^\text{tr}} \bb{\rho e^\text{tr}} = \frac{R_\text{mix}}{c_{v, \text{mix}}^\text{tr}} \bb{\rho E - \frac{\rho}{2} u_r^2 - \rho e^{ve} - \sum_s \rho_s h_s^f}
+    p = \rho R_\text{mix} T_\text{tr} = \frac{R_\text{mix}}{c_{v, \text{mix}}^\text{tr}} \bb{\rho e^\text{tr}} = \frac{R_\text{mix}}{c_{v, \text{mix}}^\text{tr}} \bb{\rho E - \frac{\rho}{2} u_r^2 - \rho e_v - \sum_s \rho_s h_s^f}
 \end{equation*}
 
 In conserved variable form, this is:
@@ -1724,7 +1724,7 @@ In conserved variable form, this is:
 For internal energy, we can rearrange the above equation to get:
 
 \begin{equation*}
-    \rho E = \frac{c_{v, \text{mix}}^\text{tr}}{R_\text{mix}} p + \frac{1}{2} \rho u_r^2 + \rho e^{ve} + \sum_s \rho_s h_s^f
+    \rho E = \frac{c_{v, \text{mix}}^\text{tr}}{R_\text{mix}} p + \frac{1}{2} \rho u_r^2 + \rho e_v + \sum_s \rho_s h_s^f
 \end{equation*}
 
 In primitive variable form, this is:
@@ -1741,8 +1741,8 @@ The derivates are now straightforward and the Jacobians are as follows:
         0 & 0 & 1 & 0 & 0 & 0 & 0 \\
         u_r & \dots & u_r & \rho & 0 & 0 & 0 \\
         u_\theta & \dots & u_\theta & 0 & \rho & 0 & 0 \\
-        e_{ve} & \dots & e_{ve} & 0 & 0 & \rho & 0 \\
-        \pd{\rho E}{\rho_s} & \dots & \pd{\rho E}{\rho_s} & \pd{\rho E}{u_r} & \pd{\rho E}{u_\theta} & \pd{\rho E}{e_{ve}} & \pd{\rho E}{p}
+        e_v & \dots & e_v & 0 & 0 & \rho & 0 \\
+        \pd{\rho E}{\rho_s} & \dots & \pd{\rho E}{\rho_s} & \pd{\rho E}{u_r} & \pd{\rho E}{u_\theta} & \pd{\rho E}{e_v} & \pd{\rho E}{p}
     \end{bmatrix}
 \end{equation*}
 
@@ -1754,8 +1754,8 @@ The derivates are now straightforward and the Jacobians are as follows:
         0 & 0 & 1 & 0 & 0 & 0 & 0 \\
         -\frac{u_r}{\rho} & \dots & -\frac{u_r}{\rho} & \frac{1}{\rho} & 0 & 0 & 0 \\
         -\frac{u_\theta}{\rho} & \dots & -\frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0 & 0 \\
-        -\frac{e_{ve}}{\rho} & \dots & -\frac{e_{ve}}{\rho} & 0 & 0 & \frac{1}{\rho} & 0 \\
-        \pd{p}{\rho_s} & \dots & \pd{p}{\rho_s} & \pd{p}{(\rho u_r)} & \pd{p}{(\rho u_\theta)} & \pd{p}{(\rho e_{ve})} & \pd{p}{(\rho E)}
+        -\frac{e_v}{\rho} & \dots & -\frac{e_v}{\rho} & 0 & 0 & \frac{1}{\rho} & 0 \\
+        \pd{p}{\rho_s} & \dots & \pd{p}{\rho_s} & \pd{p}{(\rho u_r)} & \pd{p}{(\rho u_\theta)} & \pd{p}{(\rho e_v)} & \pd{p}{(\rho E)}
     \end{bmatrix}
 \end{equation*}
 
@@ -1766,8 +1766,8 @@ The derivates are now straightforward and the Jacobians are as follows:
         0 & 0 & u_r & \rho_s & 0 & 0 & 0 \\
         u_r^2 & \dots & u_r^2 & 2 \rho u_r & 0 & 0 & 1 \\
         u_r u_\theta & \dots & u_r u_\theta & \rho u_\theta & \rho u_r & 0 & 0 \\
-        u_r e_{ve} & \dots & u_r e_{ve} & \rho e_{ve} & 0 & \rho u_r & 0 \\
-        \pd{\rho E}{\rho_s} u_r & \dots & \pd{\rho E}{\rho_s} u_r & \Phi & \pd{\rho E}{u_\theta} u_r & \pd{\rho E}{e_{ve}} u_r & \Theta
+        u_r e_{v} & \dots & u_r e_{v} & \rho e_{v} & 0 & \rho u_r & 0 \\
+        \pd{\rho E}{\rho_s} u_r & \dots & \pd{\rho E}{\rho_s} u_r & \Phi & \pd{\rho E}{u_\theta} u_r & \pd{\rho E}{e_v} u_r & \Theta
     \end{bmatrix}
 \end{equation*}
 
@@ -1777,12 +1777,12 @@ Where we have the following derivatives for pressure and energy as well as the f
     \pd{p}{\rho_s} &= \bb{R_s - \frac{R_\text{mix}}{c_v^\text{mix}} c_{v,s}} T_\text{tr} + \frac{R_\text{mix}}{c_v^\text{mix}} \bb{\frac{u_r^2}{2} - h_s^\circ}
     \\ \pd{p}{\rho u_r} &= -\frac{R_\text{mix}}{c_v^\text{mix}} u_r
     \\ \pd{p}{\rho u_\theta} &= 0
-    \\ \pd{p}{\rho e^{ve}} &= -\frac{R_\text{mix}}{c_v^\text{mix}}
+    \\ \pd{p}{\rho e_v} &= -\frac{R_\text{mix}}{c_v^\text{mix}}
     \\ \pd{p}{\rho E} &= \frac{R_\text{mix}}{c_v^\text{mix}}
 \end{align*}
 
 \begin{align*}
-    \pd{\rho E}{\rho_s} &= \bb{c_{v,s} - \frac{c_v^\text{mix}}{R_\text{mix}} R_s} T_\text{tr} + \frac{u_r^2}{2} + e_{ve} + h_s^\circ
+    \pd{\rho E}{\rho_s} &= \bb{c_{v,s} - \frac{c_v^\text{mix}}{R_\text{mix}} R_s} T_\text{tr} + \frac{u_r^2}{2} + e_{v,s} + h_s^\circ
     \\ \pd{\rho E}{u_r} &= \rho u_r
     \\ \pd{\rho E}{u_\theta} &= 0
     \\ \pd{\rho E}{e^{ve}} &= \rho
@@ -1825,10 +1825,24 @@ Where $a$ is the speed of sound, which is found by using the following formula:
     a = \sqrt{\frac{p}{\rho}\bp{1 + \frac{R}{c_v}}}
 \end{equation*}
 
-The left and right matrix of eigenvectors are:
+The diagonal matrix of eigenvalues is:
 
 \begin{equation*}
-    L = \begin{bmatrix}
+    \Lambda = \begin{bmatrix}
+        \lambda_1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & \ddots & 0 & 0 & 0 & 0 & 0 \\
+        0 & \dots & \lambda_1 & 0 & 0 & 0 & 0 \\
+        0 & \dots & 0 & \lambda_1 & 0 & 0 & 0  \\
+        0 & \dots & 0 & 0 & \lambda_1 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 &\lambda_2 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & \lambda_3
+    \end{bmatrix}
+\end{equation*}
+
+Where $\lambda_1 = u_r$, $\lambda_2 = u_r - a$, and $\lambda_3 = u_r + a$. The left and right matrix of eigenvectors are:
+
+\begin{equation*}
+    \tilde{L} = \begin{bmatrix}
         1 & 0 & 0 & 0 & 0 & 0 & -\frac{\rho_s}{\rho a^2} \\
         0 & \ddots & 0 & \vdots & 0 & 0 & \vdots \\
         0 & 0 & 1 & 0 & 0 & 0 & -\frac{\rho_s}{\rho a^2} \\
@@ -1840,7 +1854,7 @@ The left and right matrix of eigenvectors are:
 \end{equation*}
 
 \begin{equation*}
-    R = \begin{bmatrix}
+    \tilde{R} = \begin{bmatrix}
         1 & 0 & 0 & 0 & 0 & \rho_s & \rho_s \\
         0 & \ddots & 0 & 0 & 0 & \vdots & \vdots \\
         0 & \dots & 1 & 0 & 0 & \rho_s & \rho_s \\
@@ -1851,19 +1865,51 @@ The left and right matrix of eigenvectors are:
     \end{bmatrix}
 \end{equation*}
 
-
 \begin{equation*}
-    L \pd{V}{U} = \begin{bmatrix}
-        1 - \frac{Y_s p_{\rho_s}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & -\frac{Y_s}{a} p_{\rho u_r} & -\frac{Y_s}{a} p_{\rho u_\theta} & -\frac{Y_s}{a} p_{\rho e_v} & -\frac{Y_s}{a} p_{\rho E} \\
-        - \frac{Y_s p_{\rho_j}}{a^2} & \ddots & - \frac{Y_s p_{\rho_j}}{a^2} &  -\frac{Y_s}{a} p_{\rho u_r} & -\frac{Y_s}{a} p_{\rho u_\theta} & -\frac{Y_s}{a} p_{\rho e_v} & -\frac{Y_s}{a} p_{\rho E} \\
-        - \frac{Y_s p_{\rho_j}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & 1 - \frac{Y_s p_{\rho_s}}{a^2} & -\frac{Y_s}{a} p_{\rho u_r} & -\frac{Y_s}{a} p_{\rho u_\theta} & -\frac{Y_s}{a} p_{\rho e_v} & -\frac{Y_s}{a} p_{\rho E} \\
+    \boldsymbol{L} = \tilde{L} \pd{V}{U} = \begin{bmatrix}
+        1 - \frac{Y_s p_{\rho_s}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
+        - \frac{Y_s p_{\rho_j}}{a^2} & \ddots & - \frac{Y_s p_{\rho_j}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
+        - \frac{Y_s p_{\rho_j}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & 1 - \frac{Y_s p_{\rho_s}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
         - \frac{u_\theta}{\rho} & \dots & - \frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0 & 0 \\
         - \frac{e_v}{\rho} & \dots & - \frac{e_v}{\rho} & 0 & 0 & \frac{1}{\rho} & 0 \\
-        \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} + 1} & \dots & 0 & - \frac{1}{2 a} & 0 & 0 & \frac{1}{2 \rho a^2} \\
-        0 & \dots & 0 & \frac{1}{2 a} & 0 & 0 & \frac{1}{2 \rho a^2}
+        \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} + u_r} & \dots & \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} + u_r} & -\frac{1}{2 \rho a} \bb{1 + \frac{\bar{R} u_r}{\bar{c}_v a}} & 0 & -\frac{\bar{R}}{2 \rho a^2 \bar{c}_v} & \frac{\bar{R}}{2 \rho a^2 \bar{c}_v} \\
+        \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} - u_r} & \dots & \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} - u_r} & \frac{1}{2 \rho a} \bb{1 - \frac{\bar{R} u_r}{\bar{c}_v a}} & 0 & -\frac{\bar{R}}{2 \rho a^2 \bar{c}_v} & \frac{\bar{R}}{2 \rho a^2 \bar{c}_v} \\
     \end{bmatrix}
 \end{equation*}
 
+\begin{equation*}
+    \boldsymbol{R} = \pd{U}{V} \tilde{R} = \begin{bmatrix}
+        1 & 0 & 0 & 0 & 0 & \rho_s & \rho_s \\
+        0 & \ddots & 0 & 0 & 0 & \vdots & \vdots \\
+        0 & \dots & 1 & 0 & 0 & \rho_s & \rho_s \\
+        u_r & \dots & u_r & 0 & 0 & \rho(u_r - a) & \rho(u_r + a)  \\
+        u_\theta & \dots & u_\theta & \rho & 0 & \rho u_\theta & \rho u_\theta \\
+        e_v & \dots & e_v & 0 & \rho & \rho e_v & \rho e_v \\
+        E_{\rho_s} & \dots & E_{\rho_s} & \rho a \frac{\bar{c}_v}{\bar{R}} & \rho & \Psi^- & \Psi^+ 
+    \end{bmatrix}
+\end{equation*}
+
+Where 
+
+\begin{equation*}
+    \Psi^\pm = \rho E - \rho c_v T \pm \rho u_r a + \frac{\bar{c}_v}{\bar{R}} \rho a^2 
+\end{equation*}
+
+Then
+
+\begin{equation*}
+    \pd{U}{V} R \Lambda = \begin{bmatrix}
+        \lambda_1 & 0 & 0 & 0 & 0 & \rho_s \lambda_2 & \rho_s \lambda_3 \\
+        0 & \ddots & 0 & 0 & 0 & \vdots & \vdots \\        
+        0 & \dots & \lambda_1 & 0 & 0 & \rho_s \lambda_2 & \rho_s \lambda_3 \\
+        u_r \lambda_1 & \dots & u_r \lambda_1 & 0 & 0 & \rho \lambda_2^2 & \rho \lambda_3^2  \\
+        u_\theta \lambda_1 & \dots & u_\theta \lambda_1 & \rho \lambda_1 & 0 & \rho u_\theta \lambda_2 & \rho u_\theta \lambda_3 \\
+        e_v \lambda_1 & \dots & e_v \lambda_1 & 0 & \rho \lambda_1 & \rho e_v \lambda_2 & \rho e_v \lambda_3 \\
+        E_{\rho_s} \lambda_1 & \dots & E_{\rho_s} \lambda_1 & \rho a \frac{\bar{c}_v}{\bar{R}} \lambda_1 & \rho \lambda_1 & \Psi^- \lambda_2 & \Psi^+ \lambda_3 
+    \end{bmatrix}
+\end{equation*}
+
+\
 
 \end{flushleft}
 \end{document}
