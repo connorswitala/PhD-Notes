@@ -1,0 +1,154 @@
+
+% ── Fonts ────────────────────────────────────────────────────────────────────
+% \usepackage[T1]{fontenc}
+% \usepackage{lmodern}
+\usepackage{palatino}
+
+% ── Page geometry ─────────────────────────────────────────────────────────────
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.8cm, right=2.8cm]{geometry}
+
+% ── Core math & graphics ──────────────────────────────────────────────────────
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{graphicx}
+
+% ── Units ─────────────────────────────────────────────────────────────────────
+\usepackage{siunitx}   % replaces gensymb; use \unit{} and \qty{}
+
+% ── Colors ────────────────────────────────────────────────────────────────────
+\usepackage[dvipsnames]{xcolor}
+
+% ── Floats, tables, layout ────────────────────────────────────────────────────
+\usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multicol}
+
+% ── Captions ──────────────────────────────────────────────────────────────────
+\usepackage[labelfont=bf]{caption}
+\usepackage{subcaption}
+
+% ── Misc utilities ────────────────────────────────────────────────────────────
+\usepackage[export]{adjustbox}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{mdframed}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage{marginnote}
+\usepackage{csquotes}
+\usepackage[normalem]{ulem}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+
+% ── Spacing ───────────────────────────────────────────────────────────────────
+\setstretch{1.1}
+\setlength{\abovedisplayskip}{8pt}
+\setlength{\belowdisplayskip}{8pt}
+
+\definecolor{defblue}{HTML}{029ba3}
+\definecolor{defred}{HTML}{8f0342}
+\definecolor{deforange}{HTML}{ba6006}
+\definecolor{defgreen}{HTML}{017301}
+
+% ── Section heading styles ────────────────────────────────────────────────────
+\titleformat{\section}
+  {\color{defblue}\normalfont\Large\bfseries}
+  {\thesection}{1em}{}
+  [\color{defblue!40}\titlerule]
+\titleformat{\subsection}
+  {\color{deforange}\normalfont\large\bfseries}
+  {\thesubsection}{1em}{}
+  [\color{deforange!40}\titlerule]
+\titleformat{\subsubsection}
+  {\color{defred}\normalfont\large\bfseries}
+  {\thesubsubsection}{1em}{}
+  [\color{defred!40}\titlerule]
+
+
+% ── Custom commands ───────────────────────────────────────────────────────────
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ub}[2]{\underbracket{#1}_{#2}}
+\newcommand{\bb}[1]{\left[ #1 \right]}
+\newcommand{\bp}[1]{\left( #1 \right)}
+\newcommand{\bcb}[1]{\left\{ #1 \right\}}
+
+% ── Nomenclature ──────────────────────────────────────────────────────────────
+\usepackage[intoc]{nomencl}
+\makenomenclature
+\renewcommand{\nomgroup}[1]{%
+  \item[\bfseries
+  \ifstrequal{#1}{G}{Greek Symbols}{%
+  \ifstrequal{#1}{R}{Roman Symbols}{%
+  \ifstrequal{#1}{M}{Calligraphic Symbols}{%
+  \ifstrequal{#1}{S}{Subscripts}{}}}}%  % 4 closing }
+]}
+
+% ── Equation numbering ────────────────────────────────────────────────────────
+\numberwithin{equation}{section}
+
+% ── Definition environment (boxed with left bar) ──────────────────────────────
+\newtheoremstyle{defwithitnote}
+  {3pt}{3pt}
+  {\normalfont}
+  {}
+  {\bfseries}
+  {:}
+  {0.5em}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ \textit{(#3)}}}
+\theoremstyle{defwithitnote}
+\newtheorem{definitioninner}{Definition}[section]
+
+\newenvironment{definition}[1][]{%
+  \begin{mdframed}[
+    linecolor=defblue,
+    backgroundcolor=white,
+    linewidth=1.5pt,
+    topline=false,
+    rightline=false,
+    bottomline=false,
+    nobreak=false,
+    leftline=true,
+    innerleftmargin=8pt,
+    innerrightmargin=8pt,
+    innertopmargin=4pt,
+    innerbottommargin=4pt
+  ]%
+  \begin{definitioninner}[#1]%
+}{%
+  \end{definitioninner}%
+  \end{mdframed}%
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % clear all defaults
+
+% Thin colored top rule
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{{\color{defblue!50}\hrule width\headwidth height\headrulewidth}}
+
+% Left: your name | Middle: section | Right: page number
+\fancyhead[L]{\small Connor Switala}
+\fancyhead[C]{\small \nouppercase{\leftmark}}  % current section
+\fancyhead[R]{\small \thepage}
+
+% ── Hyperlinks (always last) ──────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=green!50!black,
+  urlcolor=cyan!60!black,
+  bookmarksnumbered=true,
+  bookmarksopen=true
+}
+
+% \defsym{command name}{label}{symbol}
+\newcommand{\defsym}[3]{%
+  \expandafter\newcommand\csname #1\endcsname{\hyperref[#2]{#3}}%
+}
+\input{symbols}
