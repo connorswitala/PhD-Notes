@@ -2808,11 +2808,21 @@ The solution procedure for the implicit time stepping uses linearization of the 
 The updated equation for the implicit time stepping is:
 
 \begin{multline}
-    \frac{\delta \boldsymbol{U}_i^{n+1}}{\Delta t} \Delta r_i = \bb{\boldsymbol{F_c}_{,i-\frac{1}{2}}^n + \boldsymbol{A}_{i-\frac{1}{2}}^+ \delta \boldsymbol{U}_{i-1} + \boldsymbol{A}_{i-\frac{1}{2}}^- \delta \boldsymbol{U}_{i}} 
-    \\ - \bb{\boldsymbol{F_c}_{,i+\frac{1}{2}}^n + \boldsymbol{A}_{i+\frac{1}{2}}^+ \delta \boldsymbol{U}_{i-1} + \boldsymbol{A}_{i+\frac{1}{2}}^- \delta \boldsymbol{U}_i} + \boldsymbol{S_c}_{,i}^n + \boldsymbol{J}_c^S \delta \boldsymbol{U}_i 
+    \frac{\delta \boldsymbol{U}_i^{n+1}}{\Delta t} \Delta r_i = \bb{\boldsymbol{F_c}_{,i-\frac{1}{2}}^n + \boldsymbol{A}_{i-\frac{1}{2}}^+ \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{A}_{i-\frac{1}{2}}^- \delta \boldsymbol{U}_{i}^{n+1}} 
+    \\ - \bb{\boldsymbol{F_c}_{,i+\frac{1}{2}}^n + \boldsymbol{A}_{i+\frac{1}{2}}^+ \delta \boldsymbol{U}_{i}^{n+1} + \boldsymbol{A}_{i+\frac{1}{2}}^- \delta \boldsymbol{U}_{i+1}^{n+1}} + \boldsymbol{S_c}_{,i}^n + \boldsymbol{J}_c^S \delta \boldsymbol{U}_i^{n+1}
 \end{multline}
 
-Expanding the flux and source terms gives:
+Solving this equation for the update $\delta U$ gives:
+
+\begin{multline}
+    \textcolor{defred}{\bb{\boldsymbol{A}_{i + \frac{1}{2}}^-}} \delta \boldsymbol{U}_{i+1}^{n+1} + \textcolor{defblue}{\bb{\frac{\Delta r_i}{\Delta t} \boldsymbol{I} + \boldsymbol{A}_{i+\frac{1}{2}}^+ - \boldsymbol{A}_{i-\frac{1}{2}}^- - \boldsymbol{J}_c^S}} \delta \boldsymbol{U}_i^{n+1} + \textcolor{deforange}{\bb{-\boldsymbol{A}_{i-\frac{1}{2}}^+}}\delta \boldsymbol{U}_{i-1}^{n+1} = \textcolor{defgreen}{\boldsymbol{F_c}_{,i-\frac{1}{2}}^n - \boldsymbol{F_c}_{,i+\frac{1}{2}}^n + \boldsymbol{S_c}_{,i}^n}
+\end{multline}
+
+Which gives a block tridiagonal system of equations to be solved for:
+
+\begin{equation}
+    \textcolor{defred}{\boldsymbol{A}} \boldsymbol{U}_{i+1}^{n+1} + \textcolor{defblue}{\boldsymbol{B}} \boldsymbol{U}_{i}^{n+1} + \textcolor{deforange}{\boldsymbol{C}} \boldsymbol{U}_{i-1}^{n+1} = \textcolor{defgreen}{\boldsymbol{D}}
+\end{equation}
 
 
 \end{flushleft}
