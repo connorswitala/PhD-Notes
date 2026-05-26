@@ -2552,9 +2552,9 @@ The DRNSE also results in a convective source term ($\boldsymbol{S^c}$) and a di
         2 \rho_s \\ 2 \rho u_r \\ \ 3 \rho u_\theta - 2 \frac{p-p_\infty}{u_r + u_\theta} \\ 2 \rho H \\ 2 \rho e_{ve}   
         \end{bmatrix}
     \hspace{5mm}
-    \boldsymbol{S_d} = -\frac{1}{r}
+    \boldsymbol{S_d} = -\frac{2}{r}
         \begin{bmatrix}
-        2 J_{rs} \\ 2(\tau_{\theta \theta} - \tau_{rr} + \tau_{r \theta}) \\ \tau_{\theta \theta} - 2 \tau_{r \theta} \\ 2(q_r - \tau_{rr} u_r - \tau_{r \theta} u_r - \tau_{\theta \theta} u_\theta) \\ 2 q_r^{ve}   
+        J_{rs} \\ \tau_{\theta \theta} - \tau_{rr} + \tau_{r \theta} \\ \frac{1}{2} (\tau_{\theta \theta} - 3\tau_{r \theta}) \\ q_r - \tau_{rr} u_r - \tau_{r \theta} u_r - \tau_{\theta \theta} u_\theta \\ q_r^{ve}   
         \end{bmatrix}
 \end{equation}
 \begin{equation}
@@ -2586,9 +2586,22 @@ The modified Fickian model for the species diffusion flux is used, which is a co
 
 \subsection{Jacobians}
 
-In this section, we will derive all of the Jacobians that are necessary for the implicit time-stepping of the stagnation line solver. This includes the flux Jacobians, the source term Jacobians, and the Jacobian of the diffusive fluxes.
+In this section, we will derive all of the Jacobians that are necessary for the implicit time-stepping of the stagnation line solver. This includes the flux Jacobians, the source term Jacobians, and the Jacobian of the diffusive fluxes. There are quite a number of Jacobians, so a brief summary is given here:
 
-\subsubsection{Flux Jacobians}
+\begin{itemize}
+    \item $\boldsymbol{A}^\pm$ = Convective flux Jacobian 
+    \item $\boldsymbol{M}_D^F$ = Coefficient matrix that holds transport quantities for the diffusive flux vector. 
+    \item $\boldsymbol{B}_D^F$ = Coefficient vector that holds values not dependant on spatical gradients in the diffusive flux vector.
+    \item $\boldsymbol{M}_D^S$ = Coefficient matrix that holds transport quantities for the diffusive source vector.
+    \item $\boldsymbol{B}_D^S$ = Coefficient vector that holds values not dependant on spatical gradients in the diffusive source vector.
+    \item $\boldsymbol{J}_D$ = Jacobian matrix $\partial \boldsymbol{W} / \partial \boldsymbol{U}$ use for mapping from viscous primitive vector to conserved variable vector.
+    \item $\boldsymbol{J}_B^F$ = Jacobian of $\boldsymbol{B}_D^F$ with respect to $\boldsymbol{U}$.
+    \item $\boldsymbol{J}_B^S$ = Jacobian of $\boldsymbol{B}_D^S$ with respect to $\boldsymbol{U}$.
+    \item $\boldsymbol{J}_D^S$ = Jacobian of $\boldsymbol{S}_d$ with respect to $\boldsymbol{U}$.
+    \item $\boldsymbol{J}_C^S$ = Jacobian of $\boldsymbol{S}_c$ with respect to $\boldsymbol{U}$.
+\end{itemize}
+
+\subsubsection{Convective Flux Jacobians}
 
 In order to find the flux Jacobian $\boldsymbol{A} = \partial{\boldsymbol{F_c}}/\partial{\boldsymbol{U}}$, we need to compute a series of Jacobians. The first is the Jacobian of $\boldsymbol{U}$ with respect to $\boldsymbol{V}$. This is done by putting the conserved variables in terms of the primitive variables and then taking the derivatives. Then for the Jacobians of $\boldsymbol{V}$ with respect to $\boldsymbol{U}$, we do the same. By denoting $\rho_s$ as either $U_s$ or $V_s$, $\rho u_r$ as $U_2$, $u_r$ as $V_2$, etc., we can write the vectors as:
 
@@ -2811,19 +2824,19 @@ Where
 The explicit diffusive flux computed by using a coefficient matrix, a Jacobian matrix, a vector of derivatives, and a vector of fluxes not dependant on gradients:
 
 \begin{equation*}
-    \boldsymbol{F}_d = \boldsymbol{M} \boldsymbol{J}_d^F \pd{\boldsymbol{U}}{r} + \boldsymbol B
+    \boldsymbol{F}_d = \boldsymbol{M}_D^F \boldsymbol{J}_D \pd{\boldsymbol{U}}{r} + \boldsymbol{B}_D^F
 \end{equation*}
 
-For implicit time integration, a Jacobian of the $\boldsymbol{B}$ term is also needed to linearize the flux as:
+For implicit time integration, a Jacobian of the $\boldsymbol{B}_D^F$ term is also needed to linearize the flux as:
 
 \begin{equation*}
-    \boldsymbol{F}_d^{n+1} = \boldsymbol{F}_d^n + \delta \boldsymbol{F}_d = \boldsymbol{M}^n \boldsymbol{J}_d^{F,n} \pd{\boldsymbol{U}^n}{r} + \boldsymbol{B} + \boldsymbol{M}^n \boldsymbol{J}_d^{F,n} \pd{\delta \boldsymbol{U}}{r} + \ub{\pd{\boldsymbol{B}}{\boldsymbol{U}}}{\boldsymbol{J}_B} \delta \boldsymbol{U}
+    \boldsymbol{F}_d^{n+1} = \boldsymbol{F}_d^n + \delta \boldsymbol{F}_d = \boldsymbol{M}_D^F \boldsymbol{J}_D \pd{\boldsymbol{U}^n}{r} + \boldsymbol{B}_D^F + \boldsymbol{M}_D^F \boldsymbol{J}_D \pd{\delta \boldsymbol{U}}{r} + \boldsymbol{J}_B \delta \boldsymbol{U}
 \end{equation*}
 
 We will go through each matrix here. The coefficient matrix $\boldsymbol{M}$ contains the viscous coefficients:
 
 \begin{equation*}
-    \boldsymbol{M} = \begin{bmatrix}
+    \boldsymbol{M}_D^F = \begin{bmatrix}
         D_1(\rho_1-\rho) & \rho_1 D_s & \rho_1 D_\text{NS} & 0 & 0 & 0 & 0 \\
         \rho_s D_1 & D_s(\rho_s - \rho) & \rho_s D_\text{NS} & 0 & 0 & 0 & 0 \\
         \rho_\text{NS} D_1 & \rho_\text{NS} D_s & D_\text{NS}(\rho_\text{NS} - \rho) & 0 & 0 & 0 & 0 \\
@@ -2837,12 +2850,12 @@ We will go through each matrix here. The coefficient matrix $\boldsymbol{M}$ con
 Where we have the following definitions for $a$, $b$, and $c$:
 
 \begin{align*}
-    a &= h_1^m D_1(\rho_1 - \rho) + \sum_{k\neq 1} h_k^m \rho_k D_1 \\
-    b &= h_s^m D_s (\rho_s - \rho) + \sum_{k\neq s} h_k^m \rho_k D_s \\
-    c &= h_\text{NS}^m D_\text{NS} (\rho_\text{NS} - \rho) + \sum_{k\neq \text{NS}} h_k^m \rho_k D_\text{NS}
+    a^m &= h_1^m D_1(\rho_1 - \rho) + \sum_{k\neq 1} h_k^m \rho_k D_1 \\
+    b^m &= h_s^m D_s (\rho_s - \rho) + \sum_{k\neq s} h_k^m \rho_k D_s \\
+    c^m &= h_\text{NS}^m D_\text{NS} (\rho_\text{NS} - \rho) + \sum_{k\neq \text{NS}} h_k^m \rho_k D_\text{NS}
 \end{align*}
 
-Superscript $m$ denotes which enthalpy is being used. For $a^1$, we use the total specific enthalpy. For $a^{ve}$, we use the vibrational-electronic specific enthalpy defined as $h_s^{ve} = e_s^{ve}$. The same applies for $b$ and $c$. These equations are essentially just the contributions from each species towards the diffusive fluxes multiplied by the species enthalpy using the modified Fickian model for mass diffusion. The Jacobians $\boldsymbol{J}_d^F$ maps primitive variable gradients to conserved variable gradients. The following primitive variable vector is used:
+Superscript $m$ denotes which enthalpy is being used. For $a^1$, we use the total specific enthalpy. For $a^{ve}$, we use the vibrational-electronic specific enthalpy defined as $h_s^{ve} = e_s^{ve}$. The same applies for $b$ and $c$. These equations are essentially just the contributions from each species towards the diffusive fluxes multiplied by the species enthalpy using the modified Fickian model for mass diffusion. The Jacobians $\boldsymbol{J}_D$ maps primitive variable gradients to conserved variable gradients. The following primitive variable vector is used:
 
 \begin{equation*}
     \boldsymbol{W} = \begin{bmatrix}
@@ -2850,7 +2863,7 @@ Superscript $m$ denotes which enthalpy is being used. For $a^1$, we use the tota
     \end{bmatrix}^T
 \end{equation*}
 
-Therefore, the Jacobian $\boldsymbol{J}_d^F$ is defined as $ \pd{\boldsymbol{W}}{\boldsymbol{U}}$. As before, we must write the primitive variables in terms of the conserved variables to take the derivatives:
+Therefore, the Jacobian $\boldsymbol{J}_D$ is defined as $ \pd{\boldsymbol{W}}{\boldsymbol{U}}$. As before, we must write the primitive variables in terms of the conserved variables to take the derivatives:
 
 \begin{equation*}
     \boldsymbol{W}(\boldsymbol{U}) = \begin{bmatrix}
@@ -2918,10 +2931,10 @@ This gives the following derivatives of $T_{ve}$ with respect to the conserved v
     \pd{T_{ve}}{\rho u_r} = \pd{T_{ve}}{\rho u_\theta} = \pd{T_{ve}}{\rho E} = 0
 \end{equation}
 
-With these results for the temperature derivatives, we can write the full Jacobian $\boldsymbol{J}_d^F$ as:
+With these results for the temperature derivatives, we can write the full Jacobian $\boldsymbol{J}_D$ as:
 
 \begin{equation*}
-    \boldsymbol{J}_d^F = \pd{\boldsymbol{W}}{\boldsymbol{U}} = \begin{bmatrix}
+    \boldsymbol{J}_D = \pd{\boldsymbol{W}}{\boldsymbol{U}} = \begin{bmatrix}
         \frac{1}{\rho} [1 - Y_1] & -\frac{Y_1}{\rho} & -\frac{Y_1}{\rho} & 0 & 0 & 0 & 0 \\
         -\frac{Y_s}{\rho} & \frac{1}{\rho} [1 - Y_s] & -\frac{Y_s}{\rho} & 0 & 0 & 0 & 0 \\
         -\frac{Y_\text{NS}}{\rho} & -\frac{Y_\text{NS}}{\rho} & \frac{1}{\rho} [1 - Y_\text{NS}] & 0 & 0 & 0 & 0 \\
@@ -2932,42 +2945,40 @@ With these results for the temperature derivatives, we can write the full Jacobi
     \end{bmatrix}
 \end{equation*}
 
-The matrix $\boldsymbol{B}$ that is not dependant on the spatial gradients is:
+The matrix $\boldsymbol{B}_D^F$ that is not dependant on the spatial gradients is:
 
 \begin{equation*}
-    \boldsymbol{B} = \frac{1}{r}
+    \boldsymbol{B}_D^F = \frac{1}{r}
     \begin{bmatrix}
         0 & 0 & 0 & \frac{4}{3} \mu \hat{u} & \mu \hat{u} & \frac{4}{3} \mu u_r \hat{u} & 0
     \end{bmatrix}^T
 \end{equation*}
 
-Again, we must put this in terms of the conserved variables to take the derivative for the Jacobian $\boldsymbol{J}_B$:
+Again, we must put this in terms of the conserved variables to take the derivatives for the Jacobian $\boldsymbol{J}_B^F$:
 
 \begin{equation*}
-    \boldsymbol{B} = \frac{1}{r}
+    \boldsymbol{B}_D^F = \frac{1}{r}
     \begin{bmatrix}
         0 & 0 & 0 & \frac{4}{3} \mu \frac{U_2 + U_3}{\sum_s U_s} & \mu \frac{U_2 + U_3}{\sum_s U_s} & \frac{4}{3} \mu \frac{U_2^2 + U_2 U_3}{(\sum_s U_s)^2} & 0
     \end{bmatrix}^T
 \end{equation*}
 
-The derivatives are straightforward to compute and the Jacobian $\boldsymbol{J}_B$ is:
+The derivatives are straightforward to compute and the Jacobian $\boldsymbol{J}_B^F$ is:
 
 \begin{equation}
-    \boldsymbol{J}_B = \pd{\boldsymbol{B}}{\boldsymbol{U}} = \frac{1}{r}
+    \boldsymbol{J}_B^F = \pd{\boldsymbol{B}}{\boldsymbol{U}} = \frac{1}{r} \frac{\mu}{\rho}
     \begin{bmatrix}
         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        -\frac{4}{3} \frac{\mu}{\rho} \hat{u} & -\frac{4}{3} \frac{\mu}{\rho} \hat{u} & -\frac{4}{3} \frac{\mu}{\rho} \hat{u} & \frac{4}{3} \frac{\mu}{\rho} & \frac{4}{3} \frac{\mu}{\rho} & 0 & 0 \\ 
-        -\frac{\mu}{\rho} \hat{u} & -\frac{\mu}{\rho} \hat{u} & -\frac{\mu}{\rho} \hat{u} & \frac{\mu}{\rho} & \frac{\mu}{\rho} & 0 & 0 \\
-        0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        -\frac{4}{3} \hat{u} & -\frac{4}{3} \hat{u} & -\frac{4}{3} \hat{u} & \frac{4}{3} & \frac{4}{3} & 0 & 0 \\ 
+        -\hat{u} & -\hat{u} & -\hat{u} & 1 & 1 & 0 & 0 \\
+        -\frac{8}{3} u_r \hat{u} & -\frac{8}{3} u_r \hat{u} & -\frac{8}{3} u_r \hat{u} & \frac{4}{3} (\hat{u} + u_r) & \frac{4}{3} u_r & 0 & 0 \\
         0 & 0 & 0 & 0 & 0 & 0 & 0
     \end{bmatrix}
 \end{equation}
 
-
-
-
+Where $\hat{u} = u_r + u_\theta$.
 
 \subsubsection{Source Jacobians}
 
@@ -2979,9 +2990,13 @@ We must first take source terms and write them in terms of the conserved variabl
         -2 U_s \frac{U_2 + U_3}{\sum_s U_s r} \\ -2 U_2 \frac{U_2 + U_3}{\sum_s U_s r} \\ \ 3 U_3 \frac{U_2 + U_3}{\sum_s U_s r} - 2 \frac{p(\boldsymbol{U})-p_\infty}{r} \\ -2 (U_4 + p(\boldsymbol{U})) \frac{U_2 + U_3}{\sum_s U_s r} \\ -2 U_5 \frac{U_2 + U_3}{\sum_s U_s r}
         \end{bmatrix}
     \hspace{5mm}
-    \boldsymbol{S_d} = -\frac{1}{r}
+    \boldsymbol{S_d} = -\frac{2}{r}
         \begin{bmatrix}
-        2 J_{rs} \\ 2(\tau_{\theta \theta} - \tau_{rr} + \tau_{r \theta}) \\ \tau_{\theta \theta} - 2 \tau_{r \theta} \\ 2(q_r - \tau_{rr} u_r - \tau_{r \theta} u_r - \tau_{\theta \theta} u_\theta) \\ 2 q_r^{ve}   
+        J_{rs} \\ -2 \mu \pd{u_r}{r} + \mu \pd{u_\theta}{r} \\ -\frac{1}{3} \mu \pd{u_r}{r} - \frac{3}{2} \mu \pd{u_\theta}{r} \\ q_r + \bb{\frac{2}{3} \mu u_\theta -\frac{4}{3} \mu u_r} \pd{u_r}{r} - \mu u_r \pd{u_\theta}{r} \\ q_r^{ve}   
+        \end{bmatrix}
+        + \frac{\mu}{r} \hat{u}       
+        \begin{bmatrix}
+            0 \\ 1 \\ \frac{11}{6} \\ \frac{7}{3} u_r - \frac{2}{3} u_\theta \\ 0 \\ 0
         \end{bmatrix}
 \end{equation*}
 
@@ -2998,7 +3013,37 @@ First, the convective source term Jacobian is computed as:
     \end{bmatrix}
 \end{equation*}
 
-Where $\hat{u} = u_r + u_\theta$.
+The diffusive flux is against split up as $\boldsymbol{S}_d = - \frac{2}{r} \bb{\boldsymbol{M}_D^S \boldsymbol{J}_D \pd{\boldsymbol{U}}{r} + \boldsymbol{B}_D^S}$, giving the following matrices and vectors:
+
+\begin{equation*}
+    \boldsymbol{M}_D^S = \begin{bmatrix}
+        D_1(\rho_1-\rho) & \rho_1 D_s & \rho_1 D_\text{NS} & 0 & 0 & 0 & 0 \\
+        \rho_s D_1 & D_s(\rho_s - \rho) & \rho_s D_\text{NS} & 0 & 0 & 0 & 0 \\
+        \rho_\text{NS} D_1 & \rho_\text{NS} D_s & D_\text{NS}(\rho_\text{NS} - \rho) & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & -2 \mu & \mu & 0 & 0 \\
+        0 & 0 & 0 & -\frac{1}{3} \mu & -\frac{3}{2} \mu & 0 & 0 \\
+        a^1 & b^1 & c^1 & \frac{2}{3} \mu (u_\theta - 2 u_r) & -\mu u_r & -\kappa^{tr} & -\kappa^{ve} \\
+        a^{ve} & b^{ve} & c^{ve} & 0 & 0 & -\kappa^{ve} & 0 \\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \boldsymbol{B}_D^S = -\frac{\mu}{r} \hat{u} \begin{bmatrix}
+        0 & 0 & 0 & 1 & \frac{11}{6} & \frac{1}{3}(7 u_r + 2 u _\theta) & 0 & 0
+    \end{bmatrix}^T
+\end{equation*}
+
+\begin{equation*}
+    \boldsymbol{J}_B^S = \frac{\mu}{\rho r} \begin{bmatrix}
+        0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        \hat{u} & \hat{u} & \hat{u} & -1, & -1 & 0 & 0 \\
+        \frac{11}{6} \hat{u} & \frac{11}{6} \hat{u} & \frac{11}{6} \hat{u} & -\frac{11}{6} & -\frac{11}{6} & 0 & 0 \\
+        \frac{2}{3} \hat{u} (7 u_r + 2 u_\theta) & \frac{2}{3} \hat{u} (7 u_r + 2 u_\theta) & \frac{2}{3} \hat{u} (7 u_r + 2 u_\theta) & - \frac{1}{3} (14 u_r + 9 u_\theta) & -\frac{1}{3} (9 u_r + 4 u_\theta) & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    \end{bmatrix}
+\end{equation*}
 
 
 \subsection{Solving the system of equations}
