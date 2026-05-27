@@ -2589,7 +2589,15 @@ The modified Fickian model for the species diffusion flux is used, which is a co
 In this section, we will derive all of the Jacobians that are necessary for the implicit time-stepping of the stagnation line solver. This includes the flux Jacobians, the source term Jacobians, and the Jacobian of the diffusive fluxes. There are quite a number of Jacobians, so a brief summary is given here:
 
 \begin{itemize}
-    \item $\boldsymbol{A}^\pm$ = Convective flux Jacobian 
+    \item $ \pd{\boldsymbol{U}}{\boldsymbol{V}}$ = Jacobian of conserved variables with respect to primitive variables.
+    \item $\pd{\boldsymbol{V}}{\boldsymbol{U}}$ = Jacobian of primitive variables with respect to conserved variables.
+    \item $\pd{\boldsymbol{F_c}}{\boldsymbol{V}}$ = Jacobian of convective flux vector with respect to primitive variables.
+    \item $\tilde{\boldsymbol{R}}$ = Matrix of right eigenvectors of the convective flux Jacobian.
+    \item $\tilde{\boldsymbol{L}}$ = Matrix of left eigenvectors of the convective flux Jacobian.
+    \item $\boldsymbol{\Lambda}^\pm$ = Diagonal matrix of positive and negative eigenvalues of the convective flux Jacobian.
+    \item $\boldsymbol{L}$ = Matrix of left eigenvectors of the convective flux Jacobian multiplied by the Jacobian of the primitive variables with respect to the conserved variables.
+    \item $\boldsymbol{R}$ = Matrix of right eigenvectors of the convective flux Jacobian multiplied by the Jacobian of the conserved variables with respect to the primitive variables.
+    \item $\boldsymbol{A}^\pm$ = Convective flux Jacobian $R \Lambda^\pm L$.
     \item $\boldsymbol{M}_D^F$ = Coefficient matrix that holds transport quantities for the diffusive flux vector. 
     \item $\boldsymbol{B}_D^F$ = Coefficient vector that holds values not dependant on spatical gradients in the diffusive flux vector.
     \item $\boldsymbol{M}_D^S$ = Coefficient matrix that holds transport quantities for the diffusive source vector.
@@ -3003,7 +3011,7 @@ We must first take source terms and write them in terms of the conserved variabl
 First, the convective source term Jacobian is computed as:
 
 \begin{equation*}
-    \boldsymbol{J}_c^S = \pd{\boldsymbol{S_c}}{\boldsymbol{U}} = -\frac{2}{r}
+    \boldsymbol{J}_C^S = \pd{\boldsymbol{S_c}}{\boldsymbol{U}} = -\frac{2}{r}
     \begin{bmatrix}
     (\delta_{sj} - Y_s) \hat{u} & Y_s & Y_s & 0 & 0 \\
     -u_r \hat{u} & u_r + \hat{u} & u_r & 0 & 0 \\
@@ -3013,7 +3021,7 @@ First, the convective source term Jacobian is computed as:
     \end{bmatrix}
 \end{equation*}
 
-The diffusive flux is against split up as $\boldsymbol{S}_d = - \frac{2}{r} \bb{\boldsymbol{M}_D^S \boldsymbol{J}_D \pd{\boldsymbol{U}}{r} + \boldsymbol{B}_D^S}$, giving the following matrices and vectors:
+The diffusive source term is again   split up as $\boldsymbol{S}_d = - \frac{2}{r} \bb{\boldsymbol{M}_D^S \boldsymbol{J}_D \pd{\boldsymbol{U}}{r} + \boldsymbol{B}_D^S}$, giving the following matrices and vectors:
 
 \begin{equation*}
     \boldsymbol{M}_D^S = \begin{bmatrix}
@@ -3023,7 +3031,7 @@ The diffusive flux is against split up as $\boldsymbol{S}_d = - \frac{2}{r} \bb{
         0 & 0 & 0 & -2 \mu & \mu & 0 & 0 \\
         0 & 0 & 0 & -\frac{1}{3} \mu & -\frac{3}{2} \mu & 0 & 0 \\
         a^1 & b^1 & c^1 & \frac{2}{3} \mu (u_\theta - 2 u_r) & -\mu u_r & -\kappa^{tr} & -\kappa^{ve} \\
-        a^{ve} & b^{ve} & c^{ve} & 0 & 0 & -\kappa^{ve} & 0 \\
+        a^{ve} & b^{ve} & c^{ve} & 0 & 0 & 0 & -\kappa^{ve} \\
     \end{bmatrix}
 \end{equation*}
 
@@ -3054,14 +3062,22 @@ The diffusive flux is against split up as $\boldsymbol{S}_d = - \frac{2}{r} \bb{
 
 The solution procedure for the implicit time stepping uses linearization of the flux and source terms. The linearized terms are found by using a truncated Taylor series expansion:
 
-\begin{align*}
-    \boldsymbol{F_c}^{n+1} &= \boldsymbol{F_c}^n + \left. \pd{\boldsymbol{F_c}}{\boldsymbol{U}} \right|^{n} \delta \boldsymbol{U} = \boldsymbol{F_c}^n + \boldsymbol{A}^n \delta \boldsymbol{U}
-    \\ \boldsymbol{F_d}^{n+1} &= \boldsymbol{F_d}^n + \left. \pd{\boldsymbol{F_d}}{\boldsymbol{U}} \right|^{n} \delta \boldsymbol{U} = \boldsymbol{F_d}^n + \boldsymbol{J}_d^F \delta \boldsymbol{U}
-    \\ \boldsymbol{S_c}^{n+1} &= \boldsymbol{S_c}^n + \left. \pd{\boldsymbol{S_c}}{\boldsymbol{U}} \right|^{n} \delta \boldsymbol{U} = \boldsymbol{S_c}^n + \boldsymbol{J}_c^S \delta \boldsymbol{U}
-    \\ \boldsymbol{S_d}^{n+1} &= \boldsymbol{S_d}^n + \left. \pd{\boldsymbol{S_d}}{\boldsymbol{U}} \right|^{n} \delta \boldsymbol{U} = \boldsymbol{S_d}^n + \boldsymbol{J}_d^S \delta \boldsymbol{U}
-    \\ \boldsymbol{S_k}^{n+1} &= \boldsymbol{S_k}^n + \left. \pd{\boldsymbol{S_k}}{\boldsymbol{U}} \right|^{n} \delta \boldsymbol{U} = \boldsymbol{S_k}^n + \boldsymbol{J}_k^S \delta \boldsymbol{U}
-    \\ \boldsymbol{S_r}^{n+1} &= \boldsymbol{S_r}^n + \left. \pd{\boldsymbol{S_r}}{\boldsymbol{U}} \right|^{n} \delta \boldsymbol{U} = \boldsymbol{S_r}^n + \boldsymbol{J}_r^S \delta \boldsymbol{U}
-\end{align*}
+\begin{equation*}
+    \boldsymbol{F}_{c, i+\frac{1}{2}}^{n+1} = \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ \boldsymbol{U}_i + \boldsymbol{A}_{i+\frac{1}{2}}^- \boldsymbol{U}_{i+1}}{\boldsymbol{F}_{c, i + \frac{1}{2}}} + \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{A}_{i+\frac{1}{2}}^- \delta \boldsymbol{U}_{i+1}^{n+1}}{\delta \boldsymbol{F}_{c, i + \frac{1}{2}}}
+\end{equation*}
+\begin{equation}
+    \boldsymbol{S_c}^{n+1} = \boldsymbol{S}_{c,i} + \boldsymbol{J}_{c,i}^S \delta \boldsymbol{U}_i^{n+1}
+\end{equation}
+\begin{multline*}
+    \boldsymbol{F}_{d, i + \frac{1}{2}}^{n+1} = \ob{\boldsymbol{M}_{D, i + \frac{1}{2}}^F \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\boldsymbol{U}_{i+1} - \boldsymbol{U}_i}{\Delta r_i} + \boldsymbol{B}_{D, i + \frac{1}{2}}^F}{\boldsymbol{F}_{d, i + \frac{1}{2}}}
+    \\ + \ub{\boldsymbol{M}_{D, i + \frac{1}{2}}^F \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\delta \boldsymbol{U}_{i+1}^{n+1} - \delta \boldsymbol{U}_i^{n+1}}{\Delta r_i} + \frac{1}{2} \bb{\boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{J}_{B, i+1}^F \delta \boldsymbol{U}_{i+1}^{n+1}}}{\delta \boldsymbol{F}_{d, i + \frac{1}{2}}}
+\end{multline*}
+\begin{equation*}
+    \boldsymbol{S}_{d,i}^{n+1} =  \ub{\boldsymbol{M}_{D, i + \frac{1}{2}}^S \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\boldsymbol{U}_{i+1} - \boldsymbol{U}_{i-1}}{2 \Delta r_i} + \boldsymbol{B}_{D, i}^S}{\boldsymbol{S}_{d,i}} + \ub{\boldsymbol{M}_{D, i + \frac{1}{2}}^S \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\delta \boldsymbol{U}_{i+1}^{n+1} - \delta \boldsymbol{U}_{i-1}^{n+1}}{2 \Delta r_i} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1}}{\delta \boldsymbol{S}_{d,i}}
+\end{equation*}
+\begin{equation*}
+    \boldsymbol{S}_{k,i}^{n+1} = \boldsymbol{S}_{k,i} + \pd{\boldsymbol{S}_{k,i}}{\boldsymbol{U}_i} \delta \boldsymbol{U}_i^{n+1}
+\end{equation*}
 
 The updated equation for the implicit time stepping is:
 
