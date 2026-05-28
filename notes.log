@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.27)  27 MAY 2026 22:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.4)  28 MAY 2026 01:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/frodo/Programs/PhD-Notes/notes.tex
-(c:/Users/frodo/Programs/PhD-Notes/notes.tex
+**c:/Users/frodo/programs/PhD_Notes/notes.tex
+(c:/Users/frodo/programs/PhD_Notes/notes.tex
 LaTeX2e <2025-11-01>
-L3 programming layer <2025-11-14>
+L3 programming layer <2025-10-24>
 (c:/texlive/2025/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
 (c:/texlive/2025/texmf-dist/tex/latex/base/size10.clo
@@ -377,11 +377,10 @@ Package caption Info: New subtype `subtable' on input line 238.
 ) (c:/texlive/2025/texmf-dist/tex/latex/adjustbox/adjustbox.sty
 Package: adjustbox 2025/02/26 v1.3c Adjusting TeX boxes (trim, clip, ...)
  (c:/texlive/2025/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2025/11/04 v2.10 package option processing (HA)
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
  (c:/texlive/2025/texmf-dist/tex/generic/xkeyval/xkeyval.tex (c:/texlive/2025/texmf-dist/tex/generic/xkeyval/xkvutils.tex
 \XKV@toks=\toks33
 \XKV@tempa@toks=\toks34
-\XKV@tempb@toks=\toks35
 )
 \XKV@depth=\count338
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
@@ -425,7 +424,7 @@ Package: setspace 2022/12/04 v6.7b set line spacing
 ) (c:/texlive/2025/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count341
 \lst@gtempboxa=\box115
-\lst@token=\toks36
+\lst@token=\toks35
 \lst@length=\count342
 \lst@currlwidth=\dimen292
 \lst@column=\count343
@@ -436,23 +435,18 @@ Package: setspace 2022/12/04 v6.7b set line spacing
 \lst@lineno=\count346
 \lst@maxwidth=\dimen295
  (c:/texlive/2025/texmf-dist/tex/latex/listings/lstpatch.sty
-File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
+File: lstpatch.sty 2024/09/23 1.10c (Carsten Heinz)
 ) (c:/texlive/2025/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
+File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
 \c@lstnumber=\count347
 \lst@skipnumbers=\count348
 \lst@framebox=\box116
 ) (c:/texlive/2025/texmf-dist/tex/latex/listings/listings.cfg
-File: listings.cfg 2025/11/14 1.11b listings configuration
+File: listings.cfg 2024/09/23 1.10c listings configuration
 ))
-Package: listings 2025/11/14 1.11b (Carsten Heinz)
+Package: listings 2024/09/23 1.10c (Carsten Heinz)
 
-==> First Aid for listings.sty no longer applied!
-    Expected:
-        2024/09/23 1.10c (Carsten Heinz)
-    but found:
-        2025/11/14 1.11b (Carsten Heinz)
-    so I'm assuming it got fixed.
+==> First Aid for listings.sty applied!
 (c:/texlive/2025/texmf-dist/tex/latex/mdframed/mdframed.sty
 Package: mdframed 2013/07/01 1.9b: mdframed
  (c:/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty
@@ -460,7 +454,7 @@ Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
  (c:/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 )) (c:/texlive/2025/texmf-dist/tex/latex/l3packages/xparse/xparse.sty (c:/texlive/2025/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2025-11-14 L3 programming layer (loader) 
+Package: expl3 2025-10-24 L3 programming layer (loader) 
  (c:/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count349
@@ -574,7 +568,7 @@ File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
 \c@mdf@zref@counter=\count356
 Package zref Info: New property: mdf@pagevalue on input line 895.
 ) (c:/texlive/2025/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (c:/texlive/2025/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (c:/texlive/2025/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (c:/texlive/2025/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks37
+\pgfutil@everybye=\toks36
 \pgfutil@tempdima=\dimen296
 \pgfutil@tempdimb=\dimen297
 ) (c:/texlive/2025/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
@@ -586,10 +580,10 @@ Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
  (c:/texlive/2025/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (c:/texlive/2025/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (c:/texlive/2025/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
 Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
  (c:/texlive/2025/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks38
-\pgfkeys@temptoks=\toks39
+\pgfkeys@pathtoks=\toks37
+\pgfkeys@temptoks=\toks38
  (c:/texlive/2025/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex
-\pgfkeys@tmptoks=\toks40
+\pgfkeys@tmptoks=\toks39
 ))
 \pgf@x=\dimen298
 \pgf@y=\dimen299
@@ -607,9 +601,9 @@ Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
 \c@pgf@countb=\count358
 \c@pgf@countc=\count359
 \c@pgf@countd=\count360
-\t@pgf@toka=\toks41
-\t@pgf@tokb=\toks42
-\t@pgf@tokc=\toks43
+\t@pgf@toka=\toks40
+\t@pgf@tokb=\toks41
+\t@pgf@tokc=\toks42
 \pgf@sys@id@count=\count361
  (c:/texlive/2025/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
@@ -631,9 +625,9 @@ Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
 \pgfmath@dimen=\dimen308
 \pgfmath@count=\count364
 \pgfmath@box=\box123
-\pgfmath@toks=\toks44
-\pgfmath@stack@operand=\toks45
-\pgfmath@stack@operation=\toks46
+\pgfmath@toks=\toks43
+\pgfmath@stack@operand=\toks44
+\pgfmath@stack@operation=\toks45
 ) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
 \c@pgfmathroundto@lastzeros=\count365
 )) (c:/texlive/2025/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (c:/texlive/2025/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
@@ -716,8 +710,8 @@ Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
 Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
 \pgffor@iter=\dimen335
 \pgffor@skip=\dimen336
-\pgffor@stack=\toks47
-\pgffor@toks=\toks48
+\pgffor@stack=\toks46
+\pgffor@toks=\toks47
 )) (c:/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
  (c:/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
@@ -764,7 +758,7 @@ Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
 \csq@qlevel=\count382
 \csq@maxlvl=\count383
 \csq@tshold=\count384
-\csq@ltx@everypar=\toks49
+\csq@ltx@everypar=\toks48
  (c:/texlive/2025/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2024-04-04 v5.2o csquotes generic definitions (JAW)
 )
@@ -776,7 +770,7 @@ File: csquotes.cfg
 \UL@box=\box133
 \UL@hyphenbox=\box134
 \UL@skip=\skip132
-\UL@hook=\toks50
+\UL@hook=\toks49
 \UL@height=\dimen346
 \UL@pe=\count385
 \UL@pixel=\dimen347
@@ -790,7 +784,7 @@ Package: titlesec 2025/01/04 v2.17 Sectioning titles
 \aftertitleunit=\skip134
 \ttl@plus=\dimen349
 \ttl@minus=\dimen350
-\ttl@toksa=\toks51
+\ttl@toksa=\toks50
 \titlewidth=\dimen351
 \titlewidthlast=\dimen352
 \titlewidthfirst=\dimen353
@@ -862,7 +856,7 @@ Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 \f@nch@widthL=\skip148
 \f@nch@widthC=\skip149
 \f@nch@widthR=\skip150
-\@temptokenb=\toks52
+\@temptokenb=\toks51
 ) (c:/texlive/2025/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2025-07-12 v7.01o Hypertext links for LaTeX
  (c:/texlive/2025/texmf-dist/tex/generic/pdfescape/pdfescape.sty
@@ -1013,12 +1007,12 @@ LaTeX Font Info:    ... okay on input line 4.
 \scratchbox=\box140
 \nofMPsegments=\count404
 \nofMParguments=\count405
-\everyMPshowfont=\toks53
+\everyMPshowfont=\toks52
 \MPscratchCnt=\count406
 \MPscratchDim=\dimen371
 \MPnumerator=\count407
 \makeMPintoPDFobject=\count408
-\everyMPtoPDFconversion=\toks54
+\everyMPtoPDFconversion=\toks53
 ) (c:/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -1451,24 +1445,24 @@ Underfull \hbox (badness 1931) detected at line 2249
 ] [61] [62] [63] [64] [65] [66] [67] [68] [69] [70] (./notes.aux)
  ***********
 LaTeX2e <2025-11-01>
-L3 programming layer <2025-11-14>
+L3 programming layer <2025-10-24>
  ***********
 Package rerunfilecheck Info: File `notes.out' has not changed.
 (rerunfilecheck)             Checksum: E805D12A19437963285E489D3CC03134;17702.
  ) 
 Here is how much of TeX's memory you used:
- 34229 strings out of 469476
- 671412 string characters out of 5469260
- 1142739 words of memory out of 5000000
+ 34228 strings out of 469475
+ 671398 string characters out of 5469240
+ 1138714 words of memory out of 5000000
  61669 multiletter control sequences out of 15000+600000
  652037 words of font info for 107 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 125i,22n,121p,777b,1852s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 125i,22n,121p,777b,1967s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on notes.pdf (71 pages, 528069 bytes).
+Output written on notes.pdf (71 pages, 528533 bytes).
 PDF statistics:
- 1593 PDF objects out of 1728 (max. 8388607)
- 1439 compressed objects within 15 object streams
+ 1595 PDF objects out of 1728 (max. 8388607)
+ 1441 compressed objects within 15 object streams
  654 named destinations out of 1000 (max. 500000)
  669 words of extra memory for PDF output out of 10000 (max. 10000000)
 

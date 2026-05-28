@@ -2768,23 +2768,23 @@ Where $\lambda_1 = u_r$, $\lambda_2 = u_r - a$, and $\lambda_3 = u_r + a$. The l
 
 \begin{equation*}
     \tilde{\boldsymbol{L}} = \begin{bmatrix}
-        1 & 0 & 0 & 0 & 0 & 0 & -\frac{\rho_s}{\rho a^2} \\
-        0 & \ddots & 0 & \vdots & 0 & 0 & \vdots \\
-        0 & 0 & 1 & 0 & 0 & 0 & -\frac{\rho_s}{\rho a^2} \\
-        0 & \dots & 0 & 0 & 1 & 0 & 0 \\
-        0 & \dots & 0 & 0 & 0 & 1 & 0 \\
-        0 & \dots & 0 & - \frac{1}{2 a} & 0 & 0 & \frac{1}{2 \rho a^2} \\
-        0 & \dots & 0 & \frac{1}{2 a} & 0 & 0 & \frac{1}{2 \rho a^2}
+        1 & 0 & 0 & 0 & 0 & -\frac{\rho_1}{\rho a^2} & 0 \\
+        0 & \ddots & 0 & \vdots & \vdots & \vdots & \vdots \\
+        0 & 0 & 1 & 0 & 0 & -\frac{\rho_{N_s}}{\rho a^2} & 0 \\[2mm]
+        0 & \cdots & 0 & -\frac{1}{2a} & 0 & \frac{1}{2\rho a^2} & 0 \\[2mm]
+        0 & \cdots & 0 & \frac{1}{2a} & 0 & \frac{1}{2\rho a^2} & 0 \\[2mm]
+        0 & \cdots & 0 & 0 & 1 & 0 & 0 \\
+        0 & \cdots & 0 & 0 & 0 & 0 & 1
     \end{bmatrix}
     \hspace{3mm}
     \tilde{\boldsymbol{R}} = \begin{bmatrix}
-        1 & 0 & 0 & 0 & 0 & \rho_s & \rho_s \\
-        0 & \ddots & 0 & 0 & 0 & \vdots & \vdots \\
-        0 & \dots & 1 & 0 & 0 & \rho_s & \rho_s \\
-        0 & \dots & 0 & 0 & 0 & -a & a  \\
-        0 & \dots & 0 & 1 & 0 & 0 & 0 \\
-        0 & \dots & 0 & 0 & 1 & 0 & 0 \\
-        0 & \dots & 0 & \rho a & 0 & \rho a^2 & \rho a^2
+        1 & 0 & 0 & \rho_1 & \rho_1 & 0 & 0 \\
+        0 & \ddots & 0 & \vdots & \vdots & 0 & 0 \\
+        0 & \dots & 1 & \rho_\text{NS} & \rho_\text{NS} & 0 & 0 \\
+        0 & \dots & 0 & -a & a & 0 & 0  \\
+        0 & \dots & 0 & 0 & 0 & 1 & 0 \\
+        0 & \dots & 0 & \rho a^2 & \rho a^2 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & 1
     \end{bmatrix}
 \end{equation*}
 
@@ -2792,32 +2792,34 @@ These matrices are subsequently multiplied by the primitive/consvered variable J
 
 \begin{equation*}
     \boldsymbol{L} = \tilde{\boldsymbol{L}} \pd{\boldsymbol{V}}{\boldsymbol{U}} = \begin{bmatrix}
-        1 - \frac{Y_s p_{\rho_s}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
-        - \frac{Y_s p_{\rho_j}}{a^2} & \ddots & - \frac{Y_s p_{\rho_j}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
-        - \frac{Y_s p_{\rho_j}}{a^2} & - \frac{Y_s p_{\rho_j}}{a^2} & 1 - \frac{Y_s p_{\rho_s}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
+        1 - \frac{Y_1 p_{\rho_1}}{a^2} & - \frac{Y_1 p_{\rho_s}}{a^2} & - \frac{Y_1 p_{\rho_\text{NS}}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
+
+        - \frac{Y_s p_{\rho_1}}{a^2} & \ddots & - \frac{Y_s p_{\rho_\text{NS}}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
+
+        - \frac{Y_\text{NS} p_{\rho_1}}{a^2} & - \frac{Y_\text{NS} p_{\rho_s}}{a^2} & 1 - \frac{Y_\text{NS} p_{\rho_\text{NS}}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
+        \frac{1}{2 \rho a} \bb{\frac{p_{\rho_1}}{a} + u_r} & \dots & \frac{1}{2 \rho a} \bb{\frac{p_{\rho_\text{NS}}}{a} + u_r} & -\frac{1}{2 \rho a} \bb{1 + \frac{\bar{R} u_r}{\bar{c}_v a}} & 0 & \frac{\bar{R}}{2 \rho a^2 \bar{c}_v} & -\frac{\bar{R}}{2 \rho a^2 \bar{c}_v} \\
+        \frac{1}{2 \rho a} \bb{\frac{p_{\rho_1}}{a} - u_r} & \dots & \frac{1}{2 \rho a} \bb{\frac{p_{\rho_\text{NS}}}{a} - u_r} & \frac{1}{2 \rho a} \bb{1 - \frac{\bar{R} u_r}{\bar{c}_v a}} & 0 & \frac{\bar{R}}{2 \rho a^2 \bar{c}_v} & -\frac{\bar{R}}{2 \rho a^2 \bar{c}_v} \\
         - \frac{u_\theta}{\rho} & \dots & - \frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0 & 0 \\
-        - \frac{e_v}{\rho} & \dots & - \frac{e_v}{\rho} & 0 & 0 & \frac{1}{\rho} & 0 \\
-        \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} + u_r} & \dots & \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} + u_r} & -\frac{1}{2 \rho a} \bb{1 + \frac{\bar{R} u_r}{\bar{c}_v a}} & 0 & -\frac{\bar{R}}{2 \rho a^2 \bar{c}_v} & \frac{\bar{R}}{2 \rho a^2 \bar{c}_v} \\
-        \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} - u_r} & \dots & \frac{1}{2 \rho a} \bb{\frac{p_{\rho_s}}{a} - u_r} & \frac{1}{2 \rho a} \bb{1 - \frac{\bar{R} u_r}{\bar{c}_v a}} & 0 & -\frac{\bar{R}}{2 \rho a^2 \bar{c}_v} & \frac{\bar{R}}{2 \rho a^2 \bar{c}_v} \\
+        - \frac{e_v}{\rho} & \dots & - \frac{e_v}{\rho} & 0 & 0 & 0 & \frac{1}{\rho} \\
     \end{bmatrix}
 \end{equation*}
 
 \begin{equation*}
     \boldsymbol{R} = \pd{\boldsymbol{U}}{\boldsymbol{V}} \tilde{\boldsymbol{R}} = \begin{bmatrix}
-        1 & 0 & 0 & 0 & 0 & \rho_s & \rho_s \\
-        0 & \ddots & 0 & 0 & 0 & \vdots & \vdots \\
-        0 & \dots & 1 & 0 & 0 & \rho_s & \rho_s \\
-        u_r & \dots & u_r & 0 & 0 & \rho(u_r - a) & \rho(u_r + a)  \\
-        u_\theta & \dots & u_\theta & \rho & 0 & \rho u_\theta & \rho u_\theta \\
-        e_v & \dots & e_v & 0 & \rho & \rho e_v & \rho e_v \\
-        E_{\rho_s} & \dots & E_{\rho_s} & \rho a \frac{\bar{c}_v}{\bar{R}} & \rho & \Psi^- & \Psi^+ 
+        1 & 0 & 0 & \rho_1 & \rho_1 & 0 & 0 \\
+        0 & \ddots & 0 & \vdots & \vdots & 0 & 0 \\
+        0 & \dots & 1 & \rho_\text{NS} & \rho_\text{NS} & 0 & 0 \\
+        u_r & \dots & u_r & \rho(u_r - a) & \rho(u_r + a) & 0 & 0  \\
+        u_\theta & \dots & u_\theta & \rho u_\theta & \rho u_\theta & \rho & 0 \\
+        \rho E_{\rho_1} & \dots & \rho E_{\rho_\text{NS}} & \Psi^- & \Psi^+ & 0 & \rho \\
+        e_v & \dots & e_v & \rho e_v & \rho e_v & 0 & \rho \\
     \end{bmatrix}
 \end{equation*}
 
 Where 
 
 \begin{equation*}
-    \Psi^\pm = \rho E - \rho c_v T \pm \rho u_r a + \frac{\bar{c}_v}{\bar{R}} \rho a^2 
+    \Psi^\pm = \sum_s \rho E_{\rho_s} \rho_s \pm \rho u_r a + \frac{\cvbar}{\Rbar} \rho a^2 =  \rho E - \rho c_v T \pm \rho u_r a + \frac{\bar{c}_v}{\bar{R}} \rho a^2 
 \end{equation*}
 
 \subsubsection{Diffusive Flux Jacobians}
