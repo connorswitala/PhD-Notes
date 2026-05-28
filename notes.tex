@@ -2671,8 +2671,8 @@ The derivates are now straightforward and the Jacobians are as follows:
         0 & 0 & 1 & 0 & 0 & 0 & 0 \\
         u_r & \dots & u_r & \rho & 0 & 0 & 0 \\
         u_\theta & \dots & u_\theta & 0 & \rho & 0 & 0 \\
-        \pd{\rho E}{\rho_s} & \dots & \pd{\rho E}{\rho_s} & \pd{\rho E}{u_r} & \pd{\rho E}{u_\theta} & \pd{\rho E}{p} & \pd{\rho E}{e_v} \\
-        e_v & \dots & e_v & 0 & 0 & \rho & 0 \\
+        \rho E_{\rho_1} & \dots & \rho E_{\rho_\text{NS}} & \rho E_{u_r} & \rho E_{u_\theta} & \rho E_{p} & \rho E_{e_v} \\
+        e_v & \dots & e_v & 0 & 0 & 0 & \rho \\
     \end{bmatrix}
 \end{equation*}
 
@@ -2682,10 +2682,10 @@ The derivates are now straightforward and the Jacobians are as follows:
         1 & 0 & 0 & 0 & 0 & 0 & 0 \\
         0 & \ddots & 0 & 0 & 0 & 0 & 0 \\
         0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-        -\frac{u_r}{\rho} & \dots & -\frac{u_r}{\rho} & \frac{1}{\rho} & 0 & 0 & 0 \\
-        -\frac{u_\theta}{\rho} & \dots & -\frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0 & 0 \\
-        \pd{p}{\rho_s} & \dots & \pd{p}{\rho_s} & \pd{p}{(\rho u_r)} & \pd{p}{(\rho u_\theta)} & \pd{p}{(\rho E)} & \pd{p}{(\rho e_v)}  \\
-        -\frac{e_v}{\rho} & \dots & -\frac{e_v}{\rho} & 0 & 0 & 0 & \frac{1}{\rho} \\
+        -u_r / \rho & \dots & -u_r / \rho  & 1 / \rho & 0 & 0 & 0 \\
+        -u_\theta / \rho & \dots & -u_\theta / \rho & 0 & 1 / \rho & 0 & 0 \\
+        p_{\rho_1} & \dots & p_{\rho_\text{NS}} & p_{\rho u_r} & p_{\rho u_\theta} & p_{\rho E} & p_{\rho e_v}  \\
+        -e_v / \rho & \dots & -e_v / \rho & 0 & 0 & 0 & 1 / \rho \\
     \end{bmatrix}
 \end{equation*}
 
@@ -2694,40 +2694,33 @@ The derivates are now straightforward and the Jacobians are as follows:
         u_r & 0 & 0 & \rho_s & 0 & 0 & 0 \\
         0 & \ddots & 0 & \vdots & 0 & 0 & 0 \\
         0 & 0 & u_r & \rho_s & 0 & 0 & 0 \\
-        u_r^2 & \dots & u_r^2 & 2 \rho u_r & 0 & 0 & 1 \\
+        u_r^2 & \dots & u_r^2 & 2 \rho u_r & 0 & 1 & 0 \\
         u_r u_\theta & \dots & u_r u_\theta & \rho u_\theta & \rho u_r & 0 & 0 \\
-        \pd{\rho E}{\rho_s} u_r & \dots & \pd{\rho E}{\rho_s} u_r & \Phi & \pd{\rho E}{u_\theta} u_r & \Theta & \pd{\rho E}{e_v} u_r \\
+        \rho E_{\rho_1} u_r & \dots & \rho E_{\rho_\text{NS}} u_r & \rho E_{u_r} u_r + \rho H & \rho E_{u_\theta} u_r & (\rho E_p + 1) u_r & \rho E_{e_v} u_r \\
         u_r e_{v} & \dots & u_r e_{v} & \rho e_{v} & 0 & 0 & \rho u_r \\
     \end{bmatrix}
 \end{equation*}
 
-Where we have the following derivatives for pressure and energy as well as the definitions for $\Phi$ and $\Theta$:
+Where we have the following derivatives for pressure and energy:
 
 \begin{multicols}{2}
     \begin{align*}
-    \pd{p}{\rho_s} &= \bb{R_s - \frac{R_\text{mix}}{c_v^\text{mix}} c_{v,s}} T_\text{tr} + \frac{R_\text{mix}}{c_v^\text{mix}} \bb{\frac{u_r^2}{2} - h_s^\circ}
-    \\ \pd{p}{\rho u_r} &= -\frac{R_\text{mix}}{c_v^\text{mix}} u_r
-    \\ \pd{p}{\rho u_\theta} &= 0
-    \\ \pd{p}{\rho E} &= \frac{R_\text{mix}}{c_v^\text{mix}}
-    \\ \pd{p}{\rho e_v} &= -\frac{R_\text{mix}}{c_v^\text{mix}}
+    p_{\rho_s} &= \bb{R_s - \frac{\Rbar}{\cvbar} c_{v,s}} T_\text{tr} + \frac{\Rbar}{\cvbar} \bb{\frac{u_r^2}{2} - h_s^\circ}
+    \\ p_{\rho u_r} &= -\frac{\Rbar}{\cvbar} u_r
+    \\ p_{\rho u_\theta} &= 0
+    \\ p_{\rho E} &= \frac{\Rbar}{\cvbar}
+    \\ p_{\rho e_v} &= -\frac{\Rbar}{\cvbar}
 \end{align*}
 
 \begin{align*}
-    \pd{\rho E}{\rho_s} &= \bb{c_{v,s} - \frac{c_v^\text{mix}}{R_\text{mix}} R_s} T_\text{tr} + \frac{u_r^2}{2} + e_{v,s} + h_s^\circ
-    \\ \pd{\rho E}{u_r} &= \rho u_r
-    \\ \pd{\rho E}{u_\theta} &= 0
-    \\ \pd{\rho E}{p} &= \frac{c_v^\text{mix}}{R_\text{mix}}
-    \\ \pd{\rho E}{e^{ve}} &= \rho
+    \rho E_{\rho_s} &= \bb{c_{v,s} - \frac{\cvbar}{\Rbar} R_s} T_\text{tr} + \frac{u_r^2}{2} + e_v + h_s^\circ
+    \\ \rho E_{u_r} &= \rho u_r
+    \\ \rho E_{u_\theta} &= 0
+    \\ \rho E_{p} &= \frac{\cvbar}{\Rbar}
+    \\ \rho E_{e_v} &= \rho
 \end{align*}
 \end{multicols}
 
-\begin{equation*}
-    \Phi = \pd{(\rho E)}{u_r} u_r + \rho E + p = \rho (H + u_r^2)
-\end{equation*}
-
-\begin{equation*}
-    \Theta = \pd{\rho E}{p} u_r + u_r = u_r \bp{\frac{c_v^\text{mix}}{R_\text{mix}} + 1}
-\end{equation*}
 
 The matrix product of $\partial \boldsymbol{V} / \partial \boldsymbol{U}$ and $\partial \boldsymbol{F_c} / \partial \boldsymbol{V}$ gives the flux Jacobian that needs to be diagonlized for the upwinding:
 
@@ -2736,25 +2729,25 @@ The matrix product of $\partial \boldsymbol{V} / \partial \boldsymbol{U}$ and $\
         u_r & 0 & 0 & \rho_s & 0 & 0 & 0 \\
         0 & \ddots & 0 & \vdots & 0 & 0 & 0 \\
         0 & 0 & u_r & \rho_s & 0 & 0 & 0 \\
-        0 & \dots & 0 & u_r & 0 & 0 & \frac{1}{\rho} \\
+        0 & \dots & 0 & u_r & 0 & 1 / \rho & 0 \\
         0 & \dots & 0 & 0 & u_r & 0 & 0 \\
-        0 & \dots & 0 & 0 & 0 & u_r & 0 \\
-        0 & \dots & 0 & p(1 + \frac{R}{c_v}) & 0 & 0 & u_r
+        0 & \dots & 0 &  \rho a^2 & 0 & u_r & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & u_r
     \end{bmatrix}
+\end{equation*}
+
+Where $\rho a^2$ is found as:
+
+\begin{equation*}
+    \rho a^2 = p \bp{1 + \frac{\Rbar}{\cvbar}}
 \end{equation*}
 
 The eigenvalues of this matrix are:
 
 \begin{equation*}
     \lambda = \begin{bmatrix}
-        u_r, \dots, u_r, u_r - a, u_r + a
+        u_r, \dots, u_r, u_r - a, u_r + a, u_r, u_r
     \end{bmatrix}
-\end{equation*}
-
-Where $a$ is the speed of sound, which is found by using the following formula:
-
-\begin{equation*}
-    a = \sqrt{\frac{p}{\rho}\bp{1 + \frac{R}{c_v}}}
 \end{equation*}
 
 The diagonal matrix of eigenvalues is:
@@ -2764,10 +2757,10 @@ The diagonal matrix of eigenvalues is:
         \lambda_1 & 0 & 0 & 0 & 0 & 0 & 0 \\
         0 & \ddots & 0 & 0 & 0 & 0 & 0 \\
         0 & \dots & \lambda_1 & 0 & 0 & 0 & 0 \\
-        0 & \dots & 0 & \lambda_1 & 0 & 0 & 0  \\
-        0 & \dots & 0 & 0 & \lambda_1 & 0 & 0 \\
-        0 & \dots & 0 & 0 & 0 &\lambda_2 & 0 \\
-        0 & \dots & 0 & 0 & 0 & 0 & \lambda_3
+        0 & \dots & 0 & \lambda_2 & 0 & 0 & 0  \\
+        0 & \dots & 0 & 0 & \lambda_3 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 &\lambda_1 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & \lambda_1
     \end{bmatrix}
 \end{equation*}
 
