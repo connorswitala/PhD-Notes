@@ -80,3 +80,8 @@
 \contentsline {subsection}{\numberline {8.2}Solving the system of equations}{68}{subsection.8.2}%
 \contentsline {subsubsection}{\numberline {8.2.1}Explicit time stepping}{68}{subsubsection.8.2.1}%
 \contentsline {subsubsection}{\numberline {8.2.2}Implicit time stepping}{69}{subsubsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.3}Boundary Conditions}{70}{subsection.8.3}%
+\contentsline {subsubsection}{\numberline {8.3.1}Inviscid Explicit Boundary Conditions}{70}{subsubsection.8.3.1}%
+\contentsline {subsubsection}{\numberline {8.3.2}Viscous Explicit Boundary Conditions}{70}{subsubsection.8.3.2}%
+\contentsline {subsubsection}{\numberline {8.3.3}Inviscid Implicit Boundary Conditions}{71}{subsubsection.8.3.3}%
+\contentsline {subsubsection}{\numberline {8.3.4}Viscous Implicit Boundary Conditions}{71}{subsubsection.8.3.4}%

@@ -3096,6 +3096,127 @@ Where we have the following definitions for the matrices $\boldsymbol{A}$, $\bol
 
 Which gives a block tridiagonal system of equations to be solved for:
 
+\subsection{Boundary Conditions}
+
+Boundary conditions are needed for both the explicit and implicit time stepping. For explicit time stepping, the boundary conditions are applied using ghost cells. For implicit time stepping, the boundary conditions are applied by modifying the update $\delta \boldsymbol{U}$ for the inner cell at the boundaries. We will go through each of these cases for both inviscid and viscous boundary conditions. 
+\\
+\vspace{5mm}
+Each explicit boundary conditions ensures that properties are guaranteed to be satisfied at the boundary face. For an inflow, the ghost cell is set such that the primitive variables at the boundary face are equal to the specified primitive variables. For an outflow, the ghost cell is set such that the primitive variables at the boundary face are equal to the primitive variables at the inner cell such that there are no gradients at the outflow. For a symmetry boundary, the ghost cell is set such that the normal velocity at the boundary face is 0 and the other primitive variables at the boundary face are equal to the primitive variables at the inner cell. 
+\\
+\vspace{5mm}
+For implicit boundary conditions, the update $\delta \boldsymbol{U}$ for the ghost cell is folded back into the update for the inner cell. For inflows, the update $\delta \boldsymbol{U}$ for the inner cell is set to 0 since the primitive variables are specified. For outflows, the update $\delta \boldsymbol{U}$ for the inner cell is modified such that there are no gradients at the boundary face. For symmetry boundaries, the update $\delta \boldsymbol{U}$ for the inner cell is modified such that the normal velocity at the boundary face is 0 and there are no gradients for the other primitive variables at the boundary face. In all cases, the ghost cell update is either all 0s, or the ghost cell update is some linear combination of the inner cell update, therefore the inner cell update can be modified to account for the ghost cell update as:
+
+\begin{equation}
+    \delta \boldsymbol{U}_i = \bb{\boldsymbol{I} \pm \boldsymbol{E}} \delta \boldsymbol{U}_i
+\end{equation}
+
+First-order perturbations are used to generate the $\boldsymbol{E}$ matrix for each boundary condition. These derivations will be shown below.
+
+
+\subsubsection{Inviscid Explicit Boundary Conditions}
+
+\subsubsection{Viscous Explicit Boundary Conditions}
+
+\subsubsection{Inviscid Implicit Boundary Conditions}
+
+For inflows, the primitive variables are specified, therefore the update $\delta \boldsymbol{U}$ is 0, and hence the $\boldsymbol{E}$ matrix is also 0 since it has no dependance on the inner cell's update.
+
+\vspace{5mm}
+
+For symmetry boundaries, the normal velocity at the boundary face is 0. Densities and energies remain the same, as well as $u_\theta$, but the $u_r$ velocity component is flipped across the boundary. These are the only two inviscid matrices that are needed since there are no outflow boundary conditions in a stagnation-line solver. The $\boldsymbol{E}$ matrices are shown below.
+
+\begin{equation*}
+    \boldsymbol{E}_\text{symmetry}^C = \begin{bmatrix}
+        1 & \dots & 0 & 0 & 0 & 0 & 0 \\
+        \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+        0 & \dots & 1 & 0 & 0 & 0 & 0 \\
+        0 & \dots & 0 & -1 & 0 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 1 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 1 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \boldsymbol{E}_\text{inflow}^C = \begin{bmatrix}
+        0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+        \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+        0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+    \end{bmatrix}
+\end{equation*}
+
+\subsubsection{Viscous Implicit Boundary Conditions}
+
+For an inflow, we retain the same matrix of 0s as before. Likewise for a symmetry boundary condition. However, for a no-slip isothermal or adibatic wall, the primitive variables at the face or ghost cell are specified. For temperature, we have:
+
+\begin{equation*}
+    T_g = 2 T_w - T_i
+\end{equation*}
+
+By perturbing this equation, we can find the entry for $\boldsymbol{E}$ for the temperature update:
+
+\begin{align*}
+    \delta T_g &= 2 \delta T_w - \delta T_i \\
+    \delta T_g &= -\delta T_i    
+\end{align*}
+
+The pressure in the ghost cell is set equal to the inner cell, therefore we must update the density in the ghost cell to satisfy the equation of state. Perturbing the equation of state gives:
+
+\begin{align*}
+    \rho_g T_g &= \rho_i T_i \\
+    \rho_g &= \rho_i \frac{T_i}{2 T_w - T_i} \\
+    \rho _g &= \rho _i f \\
+    \delta \rho_g &=  \delta \rho_i f + \rho_i \pd{f}{T_i} \delta T_i \\
+    \delta \rho_g &= \bb{\frac{T_i}{2 T_w - T_i}} \delta \rho_i + \bb{\rho_i \frac{1}{2 T_w - T_i} \bp{1 + \frac{T_i}{2 T_w - T_i}}} \delta T_i
+\end{align*}
+
+Since the velocity at the wall is 0, the momentum in the ghost cell is set equal to the negative of the momentum in the inner cell. Perturbing this gives:
+
+\begin{align*}
+    \delta (\rho u)_g &= -\delta (\rho u)_i \\
+    \delta (\rho u)_g &= -\delta (\rho u)_i \\
+\end{align*}
+
+The final $\boldsymbol{E}$ matrix for a no-slip isothermal wall is shown below:
+
+\begin{equation*}
+    \boldsymbol{E}_\text{isothermal}^V = \begin{bmatrix}
+        T_i / T_g & \dots & 0 & 0 & 0 & \alpha & 0 \\
+        \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+        0 & \dots & T_i / T_g & 0 & 0 & \alpha & 0 \\
+        0 & \dots & 0 & -1 & 0 & 0 & 0 \\
+        0 & \dots & 0 & 0 & -1 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & -1 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & -1 \\
+    \end{bmatrix}
+\end{equation*}
+
+Where:
+
+\begin{eqnarray}
+    \alpha = \frac{\rho_{s,i}}{T_g} \bp{1 + \frac{T_i}{T_g}}, \hspace{5mm} T_g = 2 T_w - T_i
+\end{eqnarray}
+
+
+
+For an adiabatic wall, the temperature in the ghost cell is set equal to the temperature in the inner cell. Because of this, the density in the ghost cell is also set equal to the density in the inner cell to satisfy the equation of state. No-slip is still enfored so the final matrix is:
+
+\begin{equation*}
+    \boldsymbol{E}_\text{isothermal}^V = \begin{bmatrix}
+        1 & \dots & 0 & 0 & 0 & 0 & 0 \\
+        \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+        0 & \dots & 1 & 0 & 0 & 0 & 0 \\
+        0 & \dots & 0 & -1 & 0 & 0 & 0 \\
+        0 & \dots & 0 & 0 & -1 & 0 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 1 & 0 \\
+        0 & \dots & 0 & 0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+\end{equation*}
+
 
 \end{flushleft}
 \end{document}
