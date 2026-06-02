@@ -3042,60 +3042,6 @@ The diffusive source term is again   split up as $\boldsymbol{S}_d = - \frac{2}{
     \end{bmatrix}
 \end{equation*}
 
-
-\subsection{Solving the system of equations}
-
-\subsubsection{Explicit time stepping}
-
-\subsubsection{Implicit time stepping}
-
-The solution procedure for the implicit time stepping uses linearization of the flux and source terms. The linearized terms are found by using a truncated Taylor series expansion:
-
-\begin{equation*}
-    \boldsymbol{F}_{c, i+\frac{1}{2}}^{n+1} = \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ \boldsymbol{U}_i + \boldsymbol{A}_{i+\frac{1}{2}}^- \boldsymbol{U}_{i+1}}{\boldsymbol{F}_{c, i + \frac{1}{2}}} + \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{A}_{i+\frac{1}{2}}^- \delta \boldsymbol{U}_{i+1}^{n+1}}{\delta \boldsymbol{F}_{c, i + \frac{1}{2}}}
-\end{equation*}
-\begin{equation}
-    \boldsymbol{S_c}^{n+1} = \boldsymbol{S}_{c,i} + \boldsymbol{J}_{c,i}^S \delta \boldsymbol{U}_i^{n+1}
-\end{equation}
-\begin{multline*}
-    \boldsymbol{F}_{d, i + \frac{1}{2}}^{n+1} = \ob{\boldsymbol{M}_{D, i + \frac{1}{2}}^F \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\boldsymbol{U}_{i+1} - \boldsymbol{U}_i}{\Delta r_i} + \boldsymbol{B}_{D, i + \frac{1}{2}}^F}{\boldsymbol{F}_{d, i + \frac{1}{2}}}
-    \\ + \ub{\boldsymbol{M}_{D, i + \frac{1}{2}}^F \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\delta \boldsymbol{U}_{i+1}^{n+1} - \delta \boldsymbol{U}_i^{n+1}}{\Delta r_i} + \frac{1}{2} \bb{\boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{J}_{B, i+1}^F \delta \boldsymbol{U}_{i+1}^{n+1}}}{\delta \boldsymbol{F}_{d, i + \frac{1}{2}}}
-\end{multline*}
-\begin{equation*}
-    \boldsymbol{S}_{d,i}^{n+1} =  \ub{\boldsymbol{M}_{D, i + \frac{1}{2}}^S \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\boldsymbol{U}_{i+1} - \boldsymbol{U}_{i-1}}{2 \Delta r_i} + \boldsymbol{B}_{D, i}^S}{\boldsymbol{S}_{d,i}} + \ub{\boldsymbol{M}_{D, i + \frac{1}{2}}^S \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\delta \boldsymbol{U}_{i+1}^{n+1} - \delta \boldsymbol{U}_{i-1}^{n+1}}{2 \Delta r_i} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1}}{\delta \boldsymbol{S}_{d,i}}
-\end{equation*}
-\begin{equation*}
-    \boldsymbol{S}_{k,i}^{n+1} = \boldsymbol{S}_{k,i} + \pd{\boldsymbol{S}_{k,i}}{\boldsymbol{U}_i} \delta \boldsymbol{U}_i^{n+1}
-\end{equation*}
-
-The updated equation for the implicit time stepping is:
-
-\begin{align}
-    \frac{\delta \boldsymbol{U}_i^{n+1}}{\Delta t} \Delta r_i &= \boldsymbol{F}_{c,i-\frac{1}{2}}^n + \boldsymbol{A}_{i-\frac{1}{2}}^+ \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{A}_{i-\frac{1}{2}}^- \delta \boldsymbol{U}_{i}^{n+1} 
-    \\ &+ \boldsymbol{F}_{d,i-\frac{1}{2}}^n + \frac{1}{\Delta r_i} \bp{\boldsymbol{M}\boldsymbol{J}_d^F \delta \boldsymbol{U}_{i}^{n+1} - \boldsymbol{M} \boldsymbol{J}_d^F \delta U_{i-1}^{n+1}}    
-    \\ &- \bb{\boldsymbol{F}_{c,i+\frac{1}{2}}^n + \boldsymbol{A}_{i+\frac{1}{2}}^+ \delta \boldsymbol{U}_{i}^{n+1} + \boldsymbol{A}_{i+\frac{1}{2}}^- \delta \boldsymbol{U}_{i+1}^{n+1}} 
-    \\ &- \bb{\boldsymbol{F}_{d,i-\frac{1}{2}}^n + \frac{1}{\Delta r_i} \bp{\boldsymbol{M}\boldsymbol{J}_d^F \delta \boldsymbol{U}_{i}^{n+1} - \boldsymbol{M} \boldsymbol{J}_d^F \delta U_{i-1}^{n+1}}}
-    \\ &+ \boldsymbol{S}_{c,i}^n + \boldsymbol{J}_c^S \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{S}_{d,i}^n + \boldsymbol{J}_d^S \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{S}_{k,i}^n + \boldsymbol{J}_k^S \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{S}_{r,i}^n + \boldsymbol{J}_r^S \delta \boldsymbol{U}_i^{n+1}
-\end{align}
-
-Solving this equation for the update $\delta U$ gives:
-
-\begin{equation}
-    \textcolor{defred}{\boldsymbol{A}} \delta \boldsymbol{U}_{i+1}^{n+1} + \textcolor{defblue}{\boldsymbol{B}} \delta \boldsymbol{U}_{i}^{n+1} + \textcolor{deforange}{\boldsymbol{C}} \delta \boldsymbol{U}_{i-1}^{n+1} = \textcolor{defgreen}{\boldsymbol{D}}
-\end{equation}
-
-Where we have the following definitions for the matrices $\boldsymbol{A}$, $\boldsymbol{B}$, $\boldsymbol{C}$, and $\boldsymbol{D}$:
-
-\begin{align}
-    \textcolor{defred}{\boldsymbol{A}} &= \textcolor{defred}{ \ub{\boldsymbol{A}_{i + \frac{1}{2}}^-}{\text{Convective}} + \ub{\frac{1}{\Delta r_i} \left.\boldsymbol{M} J_d^F \right|_{i + \frac{1}{2}} }{\text{Diffusive}} }
-    \\ \textcolor{defblue}{\boldsymbol{B}} &= \textcolor{defblue}{\frac{\Delta r_i}{\Delta t} \boldsymbol{I} + \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ - \boldsymbol{A}_{i-\frac{1}{2}}^- - \Delta r_i \boldsymbol{J}_c^S}{\text{Convective}} \ub{- \frac{1}{\Delta r_i} \bp{\left.\boldsymbol{M} J_d^F \right|_{i - \frac{1}{2}} + \left.\boldsymbol{M} J_d^F \right|_{i + \frac{1}{2}}} - \Delta r_i \boldsymbol{J}_d^S}{\text{Diffusive}} }
-    \\ \textcolor{deforange}{\boldsymbol{C}} &= \textcolor{deforange}{\frac{1}{\Delta r_i} \left. \boldsymbol{M} J_d^F \right|_{i-\frac{1}{2}} - \boldsymbol{A}_{i-\frac{1}{2}}^+}
-    \\ \textcolor{defgreen}{\boldsymbol{D}} &= \textcolor{defgreen}{\boldsymbol{F}_{c,i-\frac{1}{2}}^n - \boldsymbol{F}_{c,i+\frac{1}{2}}^n + \boldsymbol{F}_{d,i - \frac{1}{2}}^n - \boldsymbol{F}_{d,i + \frac{1}{2}}^n + \Delta r_i \bp{\boldsymbol{S}_{c,i}^n + \boldsymbol{S}_{d,i}^n + \boldsymbol{S}_{k,i}^n + \boldsymbol{S}_{r,i}^n}}
-\end{align}
-
-
-Which gives a block tridiagonal system of equations to be solved for:
-
 \subsection{Boundary Conditions}
 
 Boundary conditions are needed for both the explicit and implicit time stepping. For explicit time stepping, the boundary conditions are applied using ghost cells. For implicit time stepping, the boundary conditions are applied by modifying the update $\delta \boldsymbol{U}$ for the inner cell at the boundaries. We will go through each of these cases for both inviscid and viscous boundary conditions. 
@@ -3216,6 +3162,64 @@ For an adiabatic wall, the temperature in the ghost cell is set equal to the tem
         0 & \dots & 0 & 0 & 0 & 0 & 1 \\
     \end{bmatrix}
 \end{equation*}
+
+\subsection{Solving the system of equations}
+
+\subsubsection{Explicit time stepping}
+
+\subsubsection{Implicit time stepping}
+
+The solution procedure for the implicit time stepping uses linearization of the flux and source terms. The linearized terms are found by using a truncated Taylor series expansion:
+
+\begin{equation*}
+    \boldsymbol{F}_{c, i+\frac{1}{2}}^{n+1} = \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ \boldsymbol{U}_i + \boldsymbol{A}_{i+\frac{1}{2}}^- \boldsymbol{U}_{i+1}}{\boldsymbol{F}_{c, i + \frac{1}{2}}} + \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{A}_{i+\frac{1}{2}}^- \delta \boldsymbol{U}_{i+1}^{n+1}}{\delta \boldsymbol{F}_{c, i + \frac{1}{2}}}
+\end{equation*}
+\begin{equation}
+    \boldsymbol{S_c}^{n+1} = \boldsymbol{S}_{c,i} + \boldsymbol{J}_{c,i}^S \delta \boldsymbol{U}_i^{n+1}
+\end{equation}
+\begin{multline*}
+    \boldsymbol{F}_{d, i + \frac{1}{2}}^{n+1} = \ob{\boldsymbol{M}_{D, i + \frac{1}{2}}^F \frac{\boldsymbol{W}_{i+1} - \boldsymbol{W}_i}{\Delta r_i} + \boldsymbol{B}_{D, i + \frac{1}{2}}^F}{\boldsymbol{F}_{d, i + \frac{1}{2}}}
+    \\ + \ub{\boldsymbol{M}_{D, i + \frac{1}{2}}^F \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\delta \boldsymbol{U}_{i+1}^{n+1} - \delta \boldsymbol{U}_i^{n+1}}{\Delta r_i} + \frac{1}{2} \bb{\boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{J}_{B, i+1}^F \delta \boldsymbol{U}_{i+1}^{n+1}}}{\delta \boldsymbol{F}_{d, i + \frac{1}{2}}}
+\end{multline*}
+\begin{equation*}
+    \boldsymbol{S}_{d,i}^{n+1} =  \ub{\boldsymbol{M}_{D, i}^S \frac{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}}{2 \Delta r_i} + \boldsymbol{B}_{D, i}^S}{\boldsymbol{S}_{d,i}} + \ub{\boldsymbol{M}_{D, i}^S \boldsymbol{J}_{D, i} \frac{\delta \boldsymbol{U}_{i+1}^{n+1} - \delta \boldsymbol{U}_{i-1}^{n+1}}{2 \Delta r_i} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1}}{\delta \boldsymbol{S}_{d,i}}
+\end{equation*}
+\begin{equation*}
+    \boldsymbol{S}_{k,i}^{n+1} = \boldsymbol{S}_{k,i} + \pd{\boldsymbol{S}_{k,i}}{\boldsymbol{U}_i} \delta \boldsymbol{U}_i^{n+1}
+\end{equation*}
+
+The updated equation for the implicit time stepping is:
+
+\begin{align*}
+    \frac{\delta \boldsymbol{U}_i^{n+1}}{\Delta t} \Delta r_i &= \textcolor{defblue}{\boldsymbol{A}_L^+ \boldsymbol{U}_{i-1} + \boldsymbol{A}_L^- \boldsymbol{U}_i + \boldsymbol{A}_L^- \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{A}_L^- \delta \boldsymbol{U}_i^{n+1}}
+    \\ &\textcolor{defblue}{- \boldsymbol{A}_R^+ \boldsymbol{U}_i - \boldsymbol{A}_R^- \boldsymbol{U}_{i+1} - \boldsymbol{A}_R^+ \delta \boldsymbol{U}_i^{n+1} - \boldsymbol{A}_R^- \delta \boldsymbol{U}_{i+1}^{n+1}}
+    \\ &\textcolor{defred}{+ \boldsymbol{M}_L^F \frac{\boldsymbol{W}_{i+1} - \boldsymbol{W}_i}{\Delta r_i} + \boldsymbol{B}_L^F + \boldsymbol{M}_R^F \frac{\boldsymbol{W}_{i} - \boldsymbol{W}_{i+1}}{\Delta r_i} - \boldsymbol{B}_R^F}
+    \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i-1}^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i-1}^F \delta \boldsymbol{U}_{i-1}^{n+1}}
+    \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i+1}^F \delta \boldsymbol{U}_{i+1}^{n+1}}
+    \\ &\textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{2 \Delta r} \bp{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}} + \boldsymbol{B}_{D,i}^S + \frac{\boldsymbol{M}_i^S}{2 \Delta r} \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{\boldsymbol{M}_i^S}{2 \Delta r} \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+    \\ &\textcolor{red}{+ \bb{ S_{c,i} + \boldsymbol{J}_{c,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+    \\ &\textcolor{blue}{+ \bb{ S_{k,i} + \boldsymbol{J}_{k,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+\end{align*}
+
+Solving this equation for the update $\delta U$ gives:
+
+\begin{equation}
+    \textcolor{defred}{\boldsymbol{A}} \delta \boldsymbol{U}_{i+1}^{n+1} + \textcolor{defblue}{\boldsymbol{B}} \delta \boldsymbol{U}_{i}^{n+1} + \textcolor{deforange}{\boldsymbol{C}} \delta \boldsymbol{U}_{i-1}^{n+1} = \textcolor{defgreen}{\boldsymbol{D}}
+\end{equation}
+
+Where we have the following definitions for the matrices $\boldsymbol{A}$, $\boldsymbol{B}$, $\boldsymbol{C}$, and $\boldsymbol{D}$:
+
+\begin{align}
+    \textcolor{defred}{\boldsymbol{A}} &= \textcolor{defred}{ \ub{\boldsymbol{A}_{i + \frac{1}{2}}^-}{\text{Convective}} + \ub{\frac{1}{\Delta r_i} \left.\boldsymbol{M} J_d^F \right|_{i + \frac{1}{2}} }{\text{Diffusive}} }
+    \\ \textcolor{defblue}{\boldsymbol{B}} &= \textcolor{defblue}{\frac{\Delta r_i}{\Delta t} \boldsymbol{I} + \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ - \boldsymbol{A}_{i-\frac{1}{2}}^- - \Delta r_i \boldsymbol{J}_c^S}{\text{Convective}} \ub{- \frac{1}{\Delta r_i} \bp{\left.\boldsymbol{M} J_d^F \right|_{i - \frac{1}{2}} + \left.\boldsymbol{M} J_d^F \right|_{i + \frac{1}{2}}} - \Delta r_i \boldsymbol{J}_d^S}{\text{Diffusive}} }
+    \\ \textcolor{deforange}{\boldsymbol{C}} &= \textcolor{deforange}{\frac{1}{\Delta r_i} \left. \boldsymbol{M} J_d^F \right|_{i-\frac{1}{2}} - \boldsymbol{A}_{i-\frac{1}{2}}^+}
+    \\ \textcolor{defgreen}{\boldsymbol{D}} &= \textcolor{defgreen}{\boldsymbol{F}_{c,i-\frac{1}{2}}^n - \boldsymbol{F}_{c,i+\frac{1}{2}}^n + \boldsymbol{F}_{d,i - \frac{1}{2}}^n - \boldsymbol{F}_{d,i + \frac{1}{2}}^n + \Delta r_i \bp{\boldsymbol{S}_{c,i}^n + \boldsymbol{S}_{d,i}^n + \boldsymbol{S}_{k,i}^n + \boldsymbol{S}_{r,i}^n}}
+\end{align}
+
+
+Which gives a block tridiagonal system of equations to be solved for:
+
+
 
 
 \end{flushleft}
