@@ -2821,13 +2821,13 @@ These matrices are subsequently multiplied by the primitive/consvered variable J
 The explicit diffusive flux computed by using a coefficient matrix, a Jacobian matrix, a vector of derivatives, and a vector of fluxes not dependant on gradients:
 
 \begin{equation*}
-    \boldsymbol{F}_d = \boldsymbol{M}_D^F \boldsymbol{J}_D \pd{\boldsymbol{U}}{r} + \boldsymbol{B}_D^F
+    \boldsymbol{F}_d = \boldsymbol{M}_D^F \pd{\boldsymbol{W}}{r} + \boldsymbol{B}_D^F
 \end{equation*}
 
 For implicit time integration, a Jacobian of the $\boldsymbol{B}_D^F$ term is also needed to linearize the flux as:
 
 \begin{equation*}
-    \boldsymbol{F}_d^{n+1} = \boldsymbol{F}_d^n + \delta \boldsymbol{F}_d = \boldsymbol{M}_D^F \boldsymbol{J}_D \pd{\boldsymbol{U}^n}{r} + \boldsymbol{B}_D^F + \boldsymbol{M}_D^F \boldsymbol{J}_D \pd{\delta \boldsymbol{U}}{r} + \boldsymbol{J}_B \delta \boldsymbol{U}
+    \boldsymbol{F}_d^{n+1} = \boldsymbol{F}_d^n + \delta \boldsymbol{F}_d = \boldsymbol{M}_D^F \pd{\boldsymbol{W}^n}{r} + \boldsymbol{B}_D^F + \boldsymbol{M}_D^F \boldsymbol{J}_D \pd{\delta \boldsymbol{U}}{r} + \boldsymbol{J}_B \delta \boldsymbol{U}
 \end{equation*}
 
 We will go through each matrix here. The coefficient matrix $\boldsymbol{M}$ contains the viscous coefficients:
@@ -3193,10 +3193,10 @@ The updated equation for the implicit time stepping is:
 \begin{align*}
     \frac{\delta \boldsymbol{U}_i^{n+1}}{\Delta t} \Delta r_i &= \textcolor{defblue}{\boldsymbol{A}_L^+ \boldsymbol{U}_{i-1} + \boldsymbol{A}_L^- \boldsymbol{U}_i + \boldsymbol{A}_L^- \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{A}_L^- \delta \boldsymbol{U}_i^{n+1}}
     \\ &\textcolor{defblue}{- \boldsymbol{A}_R^+ \boldsymbol{U}_i - \boldsymbol{A}_R^- \boldsymbol{U}_{i+1} - \boldsymbol{A}_R^+ \delta \boldsymbol{U}_i^{n+1} - \boldsymbol{A}_R^- \delta \boldsymbol{U}_{i+1}^{n+1}}
-    \\ &\textcolor{defred}{+ \boldsymbol{M}_L^F \frac{\boldsymbol{W}_{i+1} - \boldsymbol{W}_i}{\Delta r_i} + \boldsymbol{B}_L^F + \boldsymbol{M}_R^F \frac{\boldsymbol{W}_{i} - \boldsymbol{W}_{i+1}}{\Delta r_i} - \boldsymbol{B}_R^F}
+    \\ &\textcolor{defred}{+ \boldsymbol{M}_L^F \frac{\boldsymbol{W}_{i} - \boldsymbol{W}_{i-1}}{\Delta r_i} + \boldsymbol{B}_L^F + \boldsymbol{M}_R^F \frac{\boldsymbol{W}_{i} - \boldsymbol{W}_{i+1}}{\Delta r_i} - \boldsymbol{B}_R^F}
     \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i-1}^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i-1}^F \delta \boldsymbol{U}_{i-1}^{n+1}}
     \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i+1}^F \delta \boldsymbol{U}_{i+1}^{n+1}}
-    \\ &\textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{2 \Delta r} \bp{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}} + \boldsymbol{B}_{D,i}^S + \frac{\boldsymbol{M}_i^S}{2 \Delta r} \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{\boldsymbol{M}_i^S}{2 \Delta r} \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+    \\ &\textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{2 \Delta r} \bp{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}} + \boldsymbol{B}_i^S + \frac{\boldsymbol{M}_i^S}{2 \Delta r} \boldsymbol{J}_{D,i}^S \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{\boldsymbol{M}_i^S}{2 \Delta r} \boldsymbol{J}_{D,i}^S \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
     \\ &\textcolor{red}{+ \bb{ S_{c,i} + \boldsymbol{J}_{c,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
     \\ &\textcolor{blue}{+ \bb{ S_{k,i} + \boldsymbol{J}_{k,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
 \end{align*}
@@ -3210,11 +3210,16 @@ Solving this equation for the update $\delta U$ gives:
 Where we have the following definitions for the matrices $\boldsymbol{A}$, $\boldsymbol{B}$, $\boldsymbol{C}$, and $\boldsymbol{D}$:
 
 \begin{align}
-    \textcolor{defred}{\boldsymbol{A}} &= \textcolor{defred}{ \ub{\boldsymbol{A}_{i + \frac{1}{2}}^-}{\text{Convective}} + \ub{\frac{1}{\Delta r_i} \left.\boldsymbol{M} J_d^F \right|_{i + \frac{1}{2}} }{\text{Diffusive}} }
-    \\ \textcolor{defblue}{\boldsymbol{B}} &= \textcolor{defblue}{\frac{\Delta r_i}{\Delta t} \boldsymbol{I} + \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ - \boldsymbol{A}_{i-\frac{1}{2}}^- - \Delta r_i \boldsymbol{J}_c^S}{\text{Convective}} \ub{- \frac{1}{\Delta r_i} \bp{\left.\boldsymbol{M} J_d^F \right|_{i - \frac{1}{2}} + \left.\boldsymbol{M} J_d^F \right|_{i + \frac{1}{2}}} - \Delta r_i \boldsymbol{J}_d^S}{\text{Diffusive}} }
-    \\ \textcolor{deforange}{\boldsymbol{C}} &= \textcolor{deforange}{\frac{1}{\Delta r_i} \left. \boldsymbol{M} J_d^F \right|_{i-\frac{1}{2}} - \boldsymbol{A}_{i-\frac{1}{2}}^+}
-    \\ \textcolor{defgreen}{\boldsymbol{D}} &= \textcolor{defgreen}{\boldsymbol{F}_{c,i-\frac{1}{2}}^n - \boldsymbol{F}_{c,i+\frac{1}{2}}^n + \boldsymbol{F}_{d,i - \frac{1}{2}}^n - \boldsymbol{F}_{d,i + \frac{1}{2}}^n + \Delta r_i \bp{\boldsymbol{S}_{c,i}^n + \boldsymbol{S}_{d,i}^n + \boldsymbol{S}_{k,i}^n + \boldsymbol{S}_{r,i}^n}}
+    \textcolor{defred}{\boldsymbol{A}} &= \textcolor{defred}{\boldsymbol{A}_R^- + \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} \boldsymbol{J}_R^D + \frac{1}{2} \boldsymbol{J}_{B,i+1}^F - \frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} \boldsymbol{J}_{D,i}^S (r_{i + \frac{1}{2}} - r_{i - \frac{1}{2}})}
+    \\ \textcolor{defblue}{\boldsymbol{B}} &= \textcolor{defblue}{\boldsymbol{A}_R^+ - \boldsymbol{A}_L^- - \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} \boldsymbol{J}_L^D - \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} \boldsymbol{J}_R^D - \bp{\boldsymbol{J}_{B,i}^S + \boldsymbol{J}_{c,i}^S + \boldsymbol{J}_{K,i} + \boldsymbol{J}_{R,i}}\bp{r_{i+\frac{1}{2}} - r_{i _ \frac{1}{2}}}}
+    \\ \textcolor{deforange}{\boldsymbol{C}} &= \textcolor{deforange}{-\boldsymbol{A}_L^+ + \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} \boldsymbol{J}_L^D - \frac{1}{2} \boldsymbol{J}_{B,i-1}^F + \frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} \boldsymbol{J}_{D,i}^S (r_{i + \frac{1}{2}} - r_{i - \frac{1}{2}})}
 \end{align}
+
+\begin{multline}
+    \textcolor{defgreen}{\boldsymbol{D}} = \textcolor{defgreen}{ \boldsymbol{A}_L^+ \boldsymbol{U}_{i-1} + \boldsymbol{A}_L^- \boldsymbol{U}_i + \boldsymbol{A}_R^+ \boldsymbol{U}_i + \boldsymbol{A}_R^- \boldsymbol{U}_{i+1}}
+    \\ \textcolor{defgreen}{ + \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} (\boldsymbol{W}_i - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_L^F - \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i}) - \boldsymbol{B}_R^F}
+    \\ \textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_i^S + \boldsymbol{S}_{C,i} + \boldsymbol{S}_{K,i} + \boldsymbol{S}_{R,i}} (r_{i+\frac{1}{2}} - r_{i - \frac{1}{2}})   }
+\end{multline}
 
 
 Which gives a block tridiagonal system of equations to be solved for:
