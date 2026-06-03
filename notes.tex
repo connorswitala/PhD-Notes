@@ -3013,7 +3013,7 @@ First, the convective source term Jacobian is computed as:
 The diffusive source term is again   split up as $\boldsymbol{S}_d = - \frac{2}{r} \bb{\boldsymbol{M}_D^S \boldsymbol{J}_D \pd{\boldsymbol{U}}{r} + \boldsymbol{B}_D^S}$, giving the following matrices and vectors:
 
 \begin{equation*}
-    \boldsymbol{M}_D^S = \begin{bmatrix}
+    \boldsymbol{M}_D^S = -\frac{2}{r}\begin{bmatrix}
         D_1(\rho_1-\rho) & \rho_1 D_s & \rho_1 D_\text{NS} & 0 & 0 & 0 & 0 \\
         \rho_s D_1 & D_s(\rho_s - \rho) & \rho_s D_\text{NS} & 0 & 0 & 0 & 0 \\
         \rho_\text{NS} D_1 & \rho_\text{NS} D_s & D_\text{NS}(\rho_\text{NS} - \rho) & 0 & 0 & 0 & 0 \\
@@ -3025,7 +3025,7 @@ The diffusive source term is again   split up as $\boldsymbol{S}_d = - \frac{2}{
 \end{equation*}
 
 \begin{equation*}
-    \boldsymbol{B}_D^S = -\frac{\mu}{r} \hat{u} \begin{bmatrix}
+    \boldsymbol{B}_D^S = -\frac{2 \mu}{r^2} \hat{u} \begin{bmatrix}
         0 & 0 & 0 & 1 & \frac{11}{6} & \frac{1}{3}(7 u_r + 2 u _\theta) & 0 & 0
     \end{bmatrix}^T
 \end{equation*}
