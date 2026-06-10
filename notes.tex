@@ -2504,13 +2504,13 @@ Where $U$ = $U^{n+1}$ or $U^{k+1}$. We aim to find a $U$ that satisfies $R(U^{n+
 The system of equations for the stagnation line solver is:
 
 \begin{equation}
-    \pd{\boldsymbol{U}}{t} + \pd{\boldsymbol{F_c}}{r} + \pd{\boldsymbol{F_d}}{r} = \boldsymbol{S_c} + \boldsymbol{S_d} + \boldsymbol{S_k} + \boldsymbol{S_r}
+    \pd{\boldsymbol{U}}{t} + \pd{\boldsymbol{F}_c}{r} + \pd{\boldsymbol{F}_d}{r} = \boldsymbol{S}_c + \boldsymbol{S}_d + \boldsymbol{S}_k + \boldsymbol{S}_r
 \end{equation}
 
 
-The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V}), convective flux vector ($\boldsymbol{F_c}$), and diffusive flux vector ($\boldsymbol{F_d}$) for the stagnation line solver are:
+The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V}), viscous primitive variable vector (\textbf{W}) and secondary primitive variables vector (\textbf{Y}) are :
 
-\begin{equation}
+\begin{equation*}
     \boldsymbol{U} = \begin{bmatrix}
         \rho_s \\
         \rho u_r \\
@@ -2527,6 +2527,27 @@ The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V
         e_v 
     \end{bmatrix}
     \hspace{5mm} 
+    \boldsymbol{W} = \begin{bmatrix}
+        Y_s \\
+        u_r \\
+        u_\theta \\
+        T_{tr} \\
+        T_{ve} 
+    \end{bmatrix}
+    \hspace{5mm} 
+    \boldsymbol{Y} = \begin{bmatrix}
+        \rho_s \\
+        u_r \\
+        u_\theta \\
+        T_{tr} \\
+        T_{ve} 
+    \end{bmatrix}
+    \hspace{5mm} 
+\end{equation*}
+
+The convective flux vector ($\boldsymbol{F}_c$) and diffusive flux vector ($\boldsymbol{F}_d$) are:
+
+\begin{equation}
     \boldsymbol{F_c} = \begin{bmatrix}
         \rho_s u_r\\
         \rho u_r^2 + p \\
@@ -2544,26 +2565,26 @@ The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V
     \end{bmatrix}
 \end{equation}
 
-The DRNSE also results in a convective source term ($\boldsymbol{S^c}$) and a diffusive source term ($\boldsymbol{S^d}$), along with the species-mass and vibrational-electronic energy source vector ($\boldsymbol{S^k}$), and the radiative source term ($\boldsymbol{S^r}$):
+The DRNSE also results in a convective source term ($\boldsymbol{S}_c$) and a diffusive source term ($\boldsymbol{S}_d$), along with the species-mass and vibrational-electronic energy source vector ($\boldsymbol{S}_k$), and the radiative source term ($\boldsymbol{S}_r$):
 
 \begin{equation}
-    \boldsymbol{S_c} = -\frac{u_r + u_\theta}{r}
+    \boldsymbol{S}_c = -\frac{u_r + u_\theta}{r}
         \begin{bmatrix}
         2 \rho_s \\ 2 \rho u_r \\ \ 3 \rho u_\theta - 2 \frac{p-p_\infty}{u_r + u_\theta} \\ 2 \rho H \\ 2 \rho e_{ve}   
         \end{bmatrix}
     \hspace{5mm}
-    \boldsymbol{S_d} = -\frac{2}{r}
+    \boldsymbol{S}_d = -\frac{2}{r}
         \begin{bmatrix}
-        J_{rs} \\ \tau_{\theta \theta} - \tau_{rr} + \tau_{r \theta} \\ \frac{1}{2} (\tau_{\theta \theta} - 3\tau_{r \theta}) \\ q_r - \tau_{rr} u_r - \tau_{r \theta} u_r - \tau_{\theta \theta} u_\theta \\ q_r^{ve}   
+        J_{rs} \\ \tau_{\theta \theta} - \tau_{rr} - \tau_{r \theta} \\ \frac{1}{2} (\tau_{\theta \theta} - 3\tau_{r \theta}) \\ q_r - \tau_{rr} u_r - \tau_{r \theta} u_r - \tau_{\theta \theta} u_\theta \\ q_r^{ve}   
         \end{bmatrix}
 \end{equation}
 \begin{equation}
-    \boldsymbol{S_k} =
+    \boldsymbol{S}_k =
         \begin{bmatrix}
         \dot{\omega}_s \\ 0 \\ 0 \\ 0 \\ \Omega_{ve}
         \end{bmatrix}
     \hspace{5mm}
-    \boldsymbol{S_r} =
+    \boldsymbol{S}_r =
         \begin{bmatrix}
         \dot{\phi}_s \\ 0 \\ 0 \\ \mathcal{P} \\ \mathcal{P}_{ve}
         \end{bmatrix}
@@ -2591,18 +2612,20 @@ In this section, we will derive all of the Jacobians that are necessary for the 
 \begin{itemize}
     \item $ \pd{\boldsymbol{U}}{\boldsymbol{V}}$ = Jacobian of conserved variables with respect to primitive variables.
     \item $\pd{\boldsymbol{V}}{\boldsymbol{U}}$ = Jacobian of primitive variables with respect to conserved variables.
-    \item $\pd{\boldsymbol{F_c}}{\boldsymbol{V}}$ = Jacobian of convective flux vector with respect to primitive variables.
+    \item $\boldsymbol{N}$ = $\pd{\boldsymbol{U}}{\boldsymbol{Y}}$ = Jacobian of conserved variables with respect to secondary visous primitive variables.
+    \item $\boldsymbol{N}^{-1}$ = $\pd{\boldsymbol{Y}}{\boldsymbol{U}}$ = Jacobian of secondary viscous primitive variables with respect to conserved variables.
+    \item $\pd{\boldsymbol{F}_c}{\boldsymbol{V}}$ = Jacobian of convective flux vector with respect to primitive variables.
     \item $\tilde{\boldsymbol{R}}$ = Matrix of right eigenvectors of the convective flux Jacobian.
     \item $\tilde{\boldsymbol{L}}$ = Matrix of left eigenvectors of the convective flux Jacobian.
     \item $\boldsymbol{\Lambda}^\pm$ = Diagonal matrix of positive and negative eigenvalues of the convective flux Jacobian.
     \item $\boldsymbol{L}$ = Matrix of left eigenvectors of the convective flux Jacobian multiplied by the Jacobian of the primitive variables with respect to the conserved variables.
     \item $\boldsymbol{R}$ = Matrix of right eigenvectors of the convective flux Jacobian multiplied by the Jacobian of the conserved variables with respect to the primitive variables.
-    \item $\boldsymbol{A}^\pm$ = Convective flux Jacobian $R \Lambda^\pm L$.
+    \item $\boldsymbol{A}^\pm$ = Convective flux Jacobian $\boldsymbol{R} \boldsymbol{\Lambda}^\pm \boldsymbol{L}$.
     \item $\boldsymbol{M}_D^F$ = Coefficient matrix that holds transport quantities for the diffusive flux vector. 
     \item $\boldsymbol{B}_D^F$ = Coefficient vector that holds values not dependant on spatical gradients in the diffusive flux vector.
     \item $\boldsymbol{M}_D^S$ = Coefficient matrix that holds transport quantities for the diffusive source vector.
     \item $\boldsymbol{B}_D^S$ = Coefficient vector that holds values not dependant on spatical gradients in the diffusive source vector.
-    \item $\boldsymbol{J}_D$ = Jacobian matrix $\partial \boldsymbol{W} / \partial \boldsymbol{U}$ use for mapping from viscous primitive vector to conserved variable vector.
+    \item $\boldsymbol{J}_D = $\pd{\boldsymbol{W}}{\boldsymbol{U}}$ = Jacobian matrix  use for mapping from viscous primitive vector to conserved variable vector.
     \item $\boldsymbol{J}_B^F$ = Jacobian of $\boldsymbol{B}_D^F$ with respect to $\boldsymbol{U}$.
     \item $\boldsymbol{J}_B^S$ = Jacobian of $\boldsymbol{B}_D^S$ with respect to $\boldsymbol{U}$.
     \item $\boldsymbol{J}_D^S$ = Jacobian of $\boldsymbol{S}_d$ with respect to $\boldsymbol{U}$.
@@ -3020,7 +3043,7 @@ The diffusive source term is again   split up as $\boldsymbol{S}_d = \boldsymbol
         D_1(\rho_1-\rho) & \rho_1 D_s & \rho_1 D_\text{NS} & 0 & 0 & 0 & 0 \\
         \rho_s D_1 & D_s(\rho_s - \rho) & \rho_s D_\text{NS} & 0 & 0 & 0 & 0 \\
         \rho_\text{NS} D_1 & \rho_\text{NS} D_s & D_\text{NS}(\rho_\text{NS} - \rho) & 0 & 0 & 0 & 0 \\
-        0 & 0 & 0 & -2 \mu & \mu & 0 & 0 \\
+        0 & 0 & 0 & -2 \mu & -\mu & 0 & 0 \\
         0 & 0 & 0 & -\frac{1}{3} \mu & -\frac{3}{2} \mu & 0 & 0 \\
         a^1 & b^1 & c^1 & \frac{2}{3} \mu (u_\theta - 2 u_r) & -\mu u_r & -\kappa^{tr} & -\kappa^{ve} \\
         a^{ve} & b^{ve} & c^{ve} & 0 & 0 & 0 & -\kappa^{ve} \\
@@ -3029,7 +3052,7 @@ The diffusive source term is again   split up as $\boldsymbol{S}_d = \boldsymbol
 
 \begin{equation*}
     \boldsymbol{B}_D^S = -\frac{2 \mu \hat{u}}{r^2} \begin{bmatrix}
-        0 & 0 & 0 & 1 & \frac{11}{6} & \frac{1}{3}(7 u_r - 2 u _\theta) & 0
+        0 & 0 & 0 & 3 & \frac{11}{6} & \frac{1}{3}(7 u_r - 2 u _\theta) & 0
     \end{bmatrix}^T
 \end{equation*}
 
@@ -3038,7 +3061,7 @@ The diffusive source term is again   split up as $\boldsymbol{S}_d = \boldsymbol
         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        -\hat{u} & -\hat{u} & -\hat{u} & 1, & 1 & 0 & 0 \\
+        -3\hat{u} & -3\hat{u} & -3\hat{u} & 3 & 3 & 0 & 0 \\
         -\frac{11}{6} \hat{u} & -\frac{11}{6} \hat{u} & -\frac{11}{6} \hat{u} & \frac{11}{6} & \frac{11}{6} & 0 & 0 \\
         -\frac{2}{3} \hat{u} (7 u_r - 2 u_\theta) & -\frac{2}{3} \hat{u} (7 u_r - 2 u_\theta) & -\frac{2}{3} \hat{u} (7 u_r - 2 u_\theta) & \frac{1}{3} (14 u_r + 5 u_\theta) & \frac{1}{3} (5 u_r - 4 u_\theta) & 0 & 0 \\
         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -3227,6 +3250,38 @@ Where we have the following definitions for the matrices $\boldsymbol{A}$, $\bol
 
 Which gives a block tridiagonal system of equations to be solved for:
 
+
+
+\begin{align*}
+    \frac{\delta \boldsymbol{U}_i^{n+1}}{\Delta t} \Delta r_i &= \textcolor{defblue}{\boldsymbol{A}_L^+ \boldsymbol{U}_{i-1} + \boldsymbol{A}_L^- \boldsymbol{U}_i + \boldsymbol{A}_L^- \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{A}_L^- \delta \boldsymbol{U}_i^{n+1}}
+    \\ &\textcolor{defblue}{- \boldsymbol{A}_R^+ \boldsymbol{U}_i - \boldsymbol{A}_R^- \boldsymbol{U}_{i+1} - \boldsymbol{A}_R^+ \delta \boldsymbol{U}_i^{n+1} - \boldsymbol{A}_R^- \delta \boldsymbol{U}_{i+1}^{n+1}}
+    \\ &\textcolor{defred}{+ \boldsymbol{M}_L^F \frac{\boldsymbol{W}_{i} - \boldsymbol{W}_{i-1}}{\Delta r_i} + \boldsymbol{B}_L^F - \boldsymbol{M}_R^F \frac{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i}}{\Delta r_i} - \boldsymbol{B}_R^F}
+    \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i-1}^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i-1}^F \delta \boldsymbol{U}_{i-1}^{n+1}}
+    \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i+1}^F \delta \boldsymbol{U}_{i+1}^{n+1}}
+    \\ &\textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{2 \Delta r} \bp{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}} + \boldsymbol{B}_i^S + \frac{\boldsymbol{M}_i^S}{2 \Delta r} \boldsymbol{J}_i^D \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{\boldsymbol{M}_i^S}{2 \Delta r} \boldsymbol{J}_i^D \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+    \\ &\textcolor{red}{+ \bb{ S_{c,i} + \boldsymbol{J}_{c,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+    \\ &\textcolor{blue}{+ \bb{ S_{k,i} + \boldsymbol{J}_{k,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+\end{align*}
+
+Solving this equation for the update $\delta U$ gives:
+
+\begin{equation}
+    \textcolor{defred}{\boldsymbol{A}} \delta \boldsymbol{U}_{i+1}^{n+1} + \textcolor{defblue}{\boldsymbol{B}} \delta \boldsymbol{U}_{i}^{n+1} + \textcolor{deforange}{\boldsymbol{C}} \delta \boldsymbol{U}_{i-1}^{n+1} = \textcolor{defgreen}{\boldsymbol{D}}
+\end{equation}
+
+Where we have the following definitions for the matrices $\boldsymbol{A}$, $\boldsymbol{B}$, $\boldsymbol{C}$, and $\boldsymbol{D}$:
+
+\begin{align}
+    \textcolor{defred}{\boldsymbol{A}} &= \textcolor{defred}{\boldsymbol{A}_R^- + \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} \boldsymbol{J}_R^D + \frac{1}{2} \boldsymbol{J}_{B,i+1}^F - \frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} \boldsymbol{J}_i^D (r_{i + \frac{1}{2}} - r_{i - \frac{1}{2}})}
+    \\ \textcolor{defblue}{\boldsymbol{B}} &= \textcolor{defblue}{ \frac{r_{i+\frac{1}{2}} - r_{i-\frac{1}{2}}}{\Delta t} \boldsymbol{I} + \boldsymbol{A}_R^+ - \boldsymbol{A}_L^- - \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} \boldsymbol{J}_L^D - \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} \boldsymbol{J}_R^D - \bp{\boldsymbol{J}_{B,i}^S + \boldsymbol{J}_{c,i}^S + \boldsymbol{J}_{K,i} + \boldsymbol{J}_{R,i}}\bp{r_{i+\frac{1}{2}} - r_{i _ \frac{1}{2}}}}
+    \\ \textcolor{deforange}{\boldsymbol{C}} &= \textcolor{deforange}{-\boldsymbol{A}_L^+ + \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} \boldsymbol{J}_L^D - \frac{1}{2} \boldsymbol{J}_{B,i-1}^F + \frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} \boldsymbol{J}_i^D (r_{i + \frac{1}{2}} - r_{i - \frac{1}{2}})}
+\end{align}
+
+\begin{multline}
+    \textcolor{defgreen}{\boldsymbol{D}} = \textcolor{defgreen}{ \boldsymbol{A}_L^+ \boldsymbol{U}_{i-1} + \boldsymbol{A}_L^- \boldsymbol{U}_i - \boldsymbol{A}_R^+ \boldsymbol{U}_i - \boldsymbol{A}_R^- \boldsymbol{U}_{i+1}}
+    \\ \textcolor{defgreen}{ + \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} (\boldsymbol{W}_i - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_L^F - \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i}) - \boldsymbol{B}_R^F}
+    \\ \textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_i^S + \boldsymbol{S}_{C,i} + \boldsymbol{S}_{K,i} + \boldsymbol{S}_{R,i}} (r_{i+\frac{1}{2}} - r_{i - \frac{1}{2}})   }
+\end{multline}
 
 
 
