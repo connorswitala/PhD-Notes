@@ -2558,9 +2558,9 @@ The convective flux vector ($\boldsymbol{F}_c$) and diffusive flux vector ($\bol
         \hspace{5mm} 
     \boldsymbol{F_d} = \begin{bmatrix}
         J_{rs} \\ 
-        - \tau_{rr} \\ 
-        - \tau_{r\theta} \\ 
-        q_r - \tau_{rr} u_r \\ 
+        \tau_{rr} \\ 
+        \tau_{r\theta} \\ 
+        q_r + \tau_{rr} u_r \\ 
         q_r^{ve}
     \end{bmatrix}
 \end{equation}
@@ -2575,7 +2575,7 @@ The DRNSE also results in a convective source term ($\boldsymbol{S}_c$) and a di
     \hspace{5mm}
     \boldsymbol{S}_d = -\frac{2}{r}
         \begin{bmatrix}
-        J_{rs} \\ \tau_{\theta \theta} - \tau_{rr} - \tau_{r \theta} \\ \frac{1}{2} (\tau_{\theta \theta} - 3\tau_{r \theta}) \\ q_r - \tau_{rr} u_r - \tau_{r \theta} u_r - \tau_{\theta \theta} u_\theta \\ q_r^{ve}   
+        J_{rs} \\ \tau_{rr} - \tau_{\theta \theta} + \tau_{r \theta} \\ \frac{1}{2} (3\tau_{r \theta} - \tau_{\theta \theta}) \\ q_r + \tau_{rr} u_r + \tau_{r \theta} u_r + \tau_{\theta \theta} u_\theta \\ q_r^{ve}   
         \end{bmatrix}
 \end{equation}
 \begin{equation}
@@ -2593,8 +2593,8 @@ The DRNSE also results in a convective source term ($\boldsymbol{S}_c$) and a di
 The terms in the diffusive flux and source vectors are as follows:
 
 \begin{align*}
-    \tau_{rr} &= \frac{4}{3}\mu \bp{\pd{u_r}{r} - \frac{u_r + u_\theta}{r}}
-    \\ \tau_{r\theta} &= \mu \bp{\pd{u_\theta}{r} - \frac{u_r + u_\theta}{r}}
+    \tau_{rr} &= -\frac{4}{3}\mu \bp{\pd{u_r}{r} - \frac{u_r + u_\theta}{r}}
+    \\ \tau_{r\theta} &= -\mu \bp{\pd{u_\theta}{r} - \frac{u_r + u_\theta}{r}}
     \\ \tau_{\theta\theta} &= -\frac{1}{2} \tau_{rr}
     \\ q_r &= \sum_s J_{rs} h_s - \kappa^{tr}\pd{T_{tr}}{r} - \kappa^{ve} \pd{T_{ve}}{r}
     \\ q_r^{ve} &= \sum_s J_{rs} h_s^{ve} - \kappa^{ve} \pd{T_{ve}}{r}
@@ -2625,7 +2625,7 @@ In this section, we will derive all of the Jacobians that are necessary for the 
     \item $\boldsymbol{B}_D^F$ = Coefficient vector that holds values not dependant on spatical gradients in the diffusive flux vector.
     \item $\boldsymbol{M}_D^S$ = Coefficient matrix that holds transport quantities for the diffusive source vector.
     \item $\boldsymbol{B}_D^S$ = Coefficient vector that holds values not dependant on spatical gradients in the diffusive source vector.
-    \item $\boldsymbol{J}_D = $\pd{\boldsymbol{W}}{\boldsymbol{U}}$ = Jacobian matrix  use for mapping from viscous primitive vector to conserved variable vector.
+    \item $\boldsymbol{J}_D = \pd{\boldsymbol{W}}{\boldsymbol{U}}$ = Jacobian matrix  use for mapping from viscous primitive vector to conserved variable vector.
     \item $\boldsymbol{J}_B^F$ = Jacobian of $\boldsymbol{B}_D^F$ with respect to $\boldsymbol{U}$.
     \item $\boldsymbol{J}_B^S$ = Jacobian of $\boldsymbol{B}_D^S$ with respect to $\boldsymbol{U}$.
     \item $\boldsymbol{J}_D^S$ = Jacobian of $\boldsymbol{S}_d$ with respect to $\boldsymbol{U}$.
