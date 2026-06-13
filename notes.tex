@@ -2839,6 +2839,33 @@ These matrices are subsequently multiplied by the primitive/consvered variable J
     \end{bmatrix}
 \end{equation*}
 
+The final flux Jacobian $\boldsymbol{A}^\pm$ can be reduced to the following form:
+
+\begin{equation}
+\boldsymbol{A}^\pm = \boldsymbol{R} \boldsymbol{\Lambda}^\pm \boldsymbol{L} = \lambda_1^\pm \boldsymbol{I} + (\lambda_2^\pm - \lambda_1^\pm) \boldsymbol{r}^{(2)} \otimes \boldsymbol{l}^{(2)} + (\lambda_3^\pm - \lambda_1^\pm) \boldsymbol{r}^{(3)} \otimes  \boldsymbol{l}^{(3)}
+\end{equation}
+
+With the following vector definitions:
+
+\begin{equation}
+\begin{aligned}
+ \boldsymbol{r}^{(2)} &= \begin{bmatrix} \rho_1 & \dots & \rho_\text{NS} & \rho (u_r - a) & \rho u_\theta & \rho (H - u_r a) & \rho e_{ve} \end{bmatrix} ^T \\
+ \boldsymbol{r}^{(3)} &= \begin{bmatrix} \rho_1 & \dots & \rho_\text{NS} & \rho (u_r + a) & \rho u_\theta & \rho (H + u_r a) & \rho e_{ve} \end{bmatrix} ^T \\
+ \boldsymbol{l}^{(2)} &= \frac{1}{2 \rho a} \begin{bmatrix} \frac{1}{a} \pd{p}{\rho_1} + u_r & \dots & \frac{1}{a} \pd{p}{\rho_\text{NS}} + u_r & -\bp{1 + \frac{\Rbar u_r }{\cvbar a}} & 0 & \frac{\Rbar}{\cvbar a} & - \frac{\Rbar}{\cvbar a} \end{bmatrix} \\
+ \boldsymbol{l}^{(3)} &= \frac{1}{2 \rho a} \begin{bmatrix} \frac{1}{a} \pd{p}{\rho_1} - u_r & \dots & \frac{1}{a} \pd{p}{\rho_\text{NS}} - u_r & 1 - \frac{\Rbar u_r}{\cvbar a} & 0 & \frac{\Rbar}{\cvbar a} & - \frac{\Rbar}{\cvbar a} \end{bmatrix}
+\end{aligned}
+\end{equation}
+
+And eigenvalues split by their signs as:
+
+\begin{equation}
+\begin{aligned}
+\lambda_1^\pm &= \frac{1}{2} \bp{u_r \pm |u_r|} \\
+\lambda_2^\pm &= \frac{1}{2} \bp{u_r - a \pm |u_r - a|} \\
+\lambda_3^\pm &= \frac{1}{2} \bp{u_r + a \pm |u_r + a|}
+\end{aligned}
+\end{equation}
+
 \subsubsection{Diffusive Flux Jacobians}
 
 The explicit diffusive flux computed by using a coefficient matrix, a Jacobian matrix, a vector of derivatives, and a vector of fluxes not dependant on gradients:
