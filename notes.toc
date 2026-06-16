@@ -72,7 +72,7 @@
 \contentsline {subsubsection}{\numberline {7.9.4}Source term Jacobians - Vibrational relaxation}{54}{subsubsection.7.9.4}%
 \contentsline {subsubsection}{\numberline {7.9.5}Explicit 0D Reactor}{58}{subsubsection.7.9.5}%
 \contentsline {subsubsection}{\numberline {7.9.6}Implicit 0D Reactor}{58}{subsubsection.7.9.6}%
-\contentsline {section}{\numberline {8}Stagnation line solver}{60}{section.8}%
+\contentsline {section}{\numberline {8}Stagnation Line Solver for Nonequilibirum Flow}{60}{section.8}%
 \contentsline {subsection}{\numberline {8.1}Jacobians}{61}{subsection.8.1}%
 \contentsline {subsubsection}{\numberline {8.1.1}Convective Flux Jacobians}{62}{subsubsection.8.1.1}%
 \contentsline {subsubsection}{\numberline {8.1.2}Diffusive Flux Jacobians}{65}{subsubsection.8.1.2}%
@@ -85,3 +85,4 @@
 \contentsline {subsection}{\numberline {8.3}Solving the system of equations}{72}{subsection.8.3}%
 \contentsline {subsubsection}{\numberline {8.3.1}Explicit time stepping}{72}{subsubsection.8.3.1}%
 \contentsline {subsubsection}{\numberline {8.3.2}Implicit time stepping}{72}{subsubsection.8.3.2}%
+\contentsline {section}{\numberline {9}Stagnation Line Solver for Chemical Equilibrium Flow}{74}{section.9}%

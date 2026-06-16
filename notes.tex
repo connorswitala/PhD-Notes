@@ -2499,7 +2499,7 @@ The nonlinear residual is:
 Where $U$ = $U^{n+1}$ or $U^{k+1}$. We aim to find a $U$ that satisfies $R(U^{n+1})$ = 0. Therefore, we use Newton steps to find this value. First, take your current $U_n$, and set it as $U_k$. 
 
 \clearpage
-\section{Stagnation line solver}
+\section{Stagnation Line Solver for Nonequilibirum Flow}
 
 The system of equations for the stagnation line solver is:
 
@@ -3310,6 +3310,90 @@ Where we have the following definitions for the matrices $\boldsymbol{A}$, $\bol
     \\ \textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_i^S + \boldsymbol{S}_{C,i} + \boldsymbol{S}_{K,i} + \boldsymbol{S}_{R,i}} (r_{i+\frac{1}{2}} - r_{i - \frac{1}{2}})   }
 \end{multline}
 
+
+\section{Stagnation Line Solver for Chemical Equilibrium Flow}
+
+The new vectors are:
+
+\begin{equation*}
+    \boldsymbol{U} = \begin{bmatrix} 
+    \rho \\ \rho u_r \\ \rho u_\theta \\ \rho E
+    \end{bmatrix}
+    \hspace{5mm}
+    \boldsymbol{V} = \begin{bmatrix}
+    \rho \\ u_r \\ u_\theta \\ p
+    \end{bmatrix}
+    \hspace{5mm}
+    \boldsymbol{W} = \boldsymbol{V} = 
+\end{equation*}
+
+
+Matrices:
+
+\begin{equation*}
+    \pd{\boldsymbol{V}}{\boldsymbol{U}} = \begin{bmatrix} 
+        1 & 0 & 0 & 0 \\
+        -u_r / \rho & 1 / \rho & 0 & 0 \\
+        -u_\theta / \rho & 0 & 1 / \rho & 0 \\
+        p_\rho & p_{\rho u_r} & p_{\rho u_\theta} & p_{\rho E}
+    \end{bmatrix}, \hspace{5mm} \pd{\boldsymbol{U}}{\boldsymbol{V}} = \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        u_r  & \rho & 0 & 0 \\
+        u_\theta & 0 & \rho & 0 \\
+        \rho E_\rho & \rho E_{u_r} & \rho E_{u_\theta} & \rho E_p
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \pd{\boldsymbol{F}}{\boldsymbol{V}} = \begin{bmatrix}
+        u_r & \rho & 0 & 0 \\
+        u_r^2 & 2 \rho u_r & 0 & 1 \\
+        u_r u_\theta & \rho u_\theta & \rho u_r & 0 \\
+        u_r [\rho E_{\rho}] & \rho H + u_r [\rho E_{u_r}] & 0 & u_r ([\rho E_p] + 1)
+    \end{bmatrix}
+\end{equation*}
+
+Using the following:
+
+\begin{equation*}
+    p(\rho, e), \hspace{5mm} e(p, \rho) \hspace{5mm} \text{and} \hspace{5mm}   p_e^\rho = \left. \pd{p}{e} \right|_\rho, \hspace{5mm}  p_\rho^e = \left. \pd{p}{\rho} \right|_e
+\end{equation*}
+
+We have:
+
+\begin{multicols}{2}
+    \begin{align*}
+    p_{\rho} &= p_\rho^e + p_e^\rho \bb{\frac{u_r^2}{2 \rho} - \frac{e}{\rho}}
+    \\ p_{\rho u_r} &= -\frac{u_r}{\rho} p_e^\rho
+    \\ p_{\rho u_\theta} &= 0
+    \\ p_{\rho E} &= \frac{1}{\rho} p_e^\rho
+\end{align*}
+
+\begin{align*}
+    \rho E_{\rho_s} &= e - \rho \frac{p_\rho^e}{p_e^\rho} + \frac{u_r^2}{2}
+    \\ \rho E_{u_r} &= \rho u_r
+    \\ \rho E_{u_\theta} &= 0
+    \\ \rho E_{p} &= \frac{\rho}{p_e^\rho}
+\end{align*}
+\end{multicols}
+
+
+The non-diagonalized Jacobian is then:
+
+\begin{equation*}
+    \boldsymbol{A} = \pd{\boldsymbol{V}}{\boldsymbol{U}} \pd{\boldsymbol{F}_c}{\boldsymbol{V}} = \begin{bmatrix}
+        u_r & \rho & 0 & 0 \\
+        0 & u_r & 0 & 1/\rho \\
+        0 & 0 & u_r & 0 \\
+        0 & \rho a^2 & 0 & u_r
+    \end{bmatrix}
+\end{equation*}
+
+Where:
+
+\begin{equation*}
+    \rho a^2 = \rho p_\rho^e + \frac{p}{\rho} p_e^\rho
+\end{equation*}
 
 
 \end{flushleft}
