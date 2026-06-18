@@ -3166,11 +3166,10 @@ By perturbing this equation, we can find the entry for $\boldsymbol{E}$ for the 
 The pressure in the ghost cell is set equal to the inner cell, therefore we must update the density in the ghost cell to satisfy the equation of state. Perturbing the equation of state gives:
 
 \begin{align*}
-    \rho_g T_g &= \rho_i T_i \\
-    \rho_g &= \rho_i \frac{T_i}{2 T_w - T_i} \\
-    \rho _g &= \rho _i f \\
-    \delta \rho_g &=  \delta \rho_i f + \rho_i \pd{f}{T_i} \delta T_i \\
-    \delta \rho_g &= \bb{\frac{T_i}{2 T_w - T_i}} \delta \rho_i + \bb{\rho_i \frac{1}{2 T_w - T_i} \bp{1 + \frac{T_i}{2 T_w - T_i}}} \delta T_i
+    \rho_g &= 2 \rho_w - \rho_i\\
+    \rho_g &= 2 \frac{\rho_i T_i}{T_w} - \rho _i\\
+    \delta \rho_g &=  \bb{2 \frac{T_i}{T_w} - 1} \delta \rho_i + 2  \frac{\rho_i}{T_w} \delta T_i \\
+    \delta \rho_g &=  \alpha \delta \rho_i + \beta \delta T_i 
 \end{align*}
 
 Since the velocity at the wall is 0, the momentum in the ghost cell is set equal to the negative of the momentum in the inner cell. Perturbing this gives:
@@ -3184,23 +3183,15 @@ The final $\boldsymbol{E}$ matrix for a no-slip isothermal wall is shown below:
 
 \begin{equation*}
     \boldsymbol{E}_\text{isothermal}^V = \begin{bmatrix}
-        T_i / T_g & \dots & 0 & 0 & 0 & \alpha & 0 \\
+        \alpha & \dots & 0 & 0 & 0 & \beta & 0 \\
         \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-        0 & \dots & T_i / T_g & 0 & 0 & \alpha & 0 \\
+        0 & \dots & \alpha & 0 & 0 & \beta & 0 \\
         0 & \dots & 0 & -1 & 0 & 0 & 0 \\
         0 & \dots & 0 & 0 & -1 & 0 & 0 \\
         0 & \dots & 0 & 0 & 0 & -1 & 0 \\
         0 & \dots & 0 & 0 & 0 & 0 & -1 \\
     \end{bmatrix}
 \end{equation*}
-
-Where:
-
-\begin{eqnarray}
-    \alpha = \frac{\rho_{s,i}}{T_g} \bp{1 + \frac{T_i}{T_g}}, \hspace{5mm} T_g = 2 T_w - T_i
-\end{eqnarray}
-
-
 
 For an adiabatic wall, the temperature in the ghost cell is set equal to the temperature in the inner cell. Because of this, the density in the ghost cell is also set equal to the density in the inner cell to satisfy the equation of state. No-slip is still enfored so the final matrix is:
 
@@ -3394,6 +3385,33 @@ Where:
 \begin{equation*}
     \rho a^2 = \rho p_\rho^e + \frac{p}{\rho} p_e^\rho
 \end{equation*}
+
+The left and right eigenvectors along with the classic diagonal matrix of eigenvalues are:
+
+\begin{equation*}
+\boldsymbol{\tilde{L}} = \begin{bmatrix}
+    1 & 0 & 0 & -1 / a^2 \\
+    0 & 1/2 & 0 & -1/(2 \rho a) \\
+    0 & 1/2 & 0 & 1/(2 \rho a) \\
+    0 & 0 & 1 & 0
+\end{bmatrix}
+\hspace{5mm}
+\boldsymbol{\tilde{R}} = \begin{bmatrix}
+    1 & -\rho/a & \rho/a & 0 \\
+    0 & 1 & 1 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & -\rho a & \rho a & 0
+\end{bmatrix}
+\hspace{5mm}
+\boldsymbol{\Lambda} = \begin{bmatrix}
+    \lambda_1^\pm & 0 & 0 & 0 \\
+    0 & \lambda_2^\pm & 0 & 0 \\
+    0 & 0 & \lambda_3^\pm & 0 \\
+    0 & 0 & 0 & \lambda_1^\pm
+\end{bmatrix}
+\end{equation*}
+
+With the same eigenvalues as before.
 
 
 \end{flushleft}
