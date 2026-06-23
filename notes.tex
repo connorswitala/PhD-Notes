@@ -3411,8 +3411,36 @@ The left and right eigenvectors along with the classic diagonal matrix of eigenv
 \end{bmatrix}
 \end{equation*}
 
-With the same eigenvalues as before.
+With the same eigenvalues as before. We then have:
 
+\begin{equation*}
+    \boldsymbol{L} = \boldsymbol{\tilde{L}} \pd{\boldsymbol{V}}{\boldsymbol{U}} = \begin{bmatrix}
+        -\frac{p_\rho}{a^2} & -\frac{1}{a^2} p_{\rho u_r} & 0 & -\frac{1}{a^2} p_{\rho E}\\
+        -\frac{1}{2 \rho} \bb{\frac{p_\rho}{a} + u_r} & \frac{1}{2 \rho} \bb{1 - \frac{p_{\rho u_r}}{a}} & 0 & -\frac{1}{2 \rho a} p_{\rho E} \\
+        \frac{1}{2 \rho} \bb{\frac{p_\rho}{a} - u_r} & -\frac{1}{2 \rho} \bb{1 + \frac{p_{\rho u_r}}{a}} & 0 & \frac{1}{2 \rho a} p_{\rho E} \\
+        -\frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0
+        \end{bmatrix} \hspace{5mm}
+    \boldsymbol{R} = \pd{\boldsymbol{U}}{\boldsymbol{V}} \boldsymbol{\tilde{R}} = \begin{bmatrix}
+        1 & -\frac{\rho}{a} & \frac{\rho}{a} & 0 \\
+        u_r & -\frac{\rho u_r}{a} + \rho & \frac{\rho u_r}{a} + \rho & 0 \\
+        u_\theta & -\frac{\rho u_\theta}{a} & \frac{\rho u_\theta}{a} & 0 \\
+        \rho E_\rho & \phi^- & \phi^+ & 0
+    \end{bmatrix}
+\end{equation*}
+
+\begin{align*}
+    \phi^- &= -\frac{\rho}{a} (\rho E)_\rho + (\rho E)_{u_r} - \rho a (\rho E)_p \\
+    \phi^+ &= \frac{\rho}{a} (\rho E)_\rho + (\rho E)_{u_r} + \rho a (\rho E)_p
+\end{align*}
+
+\begin{equation*}
+        \boldsymbol{R} \boldsymbol{\Lambda} = \begin{bmatrix}
+        \lambda_1           & -\frac{\rho}{a} \lambda_2                 & \frac{\rho}{a} \lambda_3 & 0 \\
+        u_r \lambda_1         & \bb{-\frac{\rho u_r}{a} + \rho} \lambda_2 & \bb{\frac{\rho u_r}{a} + \rho} \lambda_3 & 0 \\
+        u_\theta \lambda_1    & -\frac{\rho u_\theta}{a} \lambda_2        & \frac{\rho u_\theta}{a} \lambda_3 & 0 \\
+        \rho E_\rho \lambda_1 & \phi^- \lambda_2                          & \phi^+ \lambda_3 & 0
+    \end{bmatrix}
+\end{equation*}
 
 \end{flushleft}
 \end{document}
