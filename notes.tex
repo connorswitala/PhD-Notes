@@ -1649,13 +1649,13 @@ Solving this system of equations is again, a non-iterative procedure, and we can
 And then the final fundemental derivative is also found from Eq. [\ref{dlvdlp}].
 
 \subsubsection{CFD derivatives}
-The two necessary derivatives for CFD are:
+There are four necessary derivatives needed in a CFD solver. Two are unique to the convective terms, and two are unique to the viscous terms. These derivatives are:
 
 \begin{equation}
-    \left.\frac{\partial p}{\partial \rho}\right|_e \hspace{5mm} \left.\frac{\partial p}{\partial e}\right|_\rho
+    \left.\frac{\partial p}{\partial \rho}\right|_e \hspace{5mm} \left.\frac{\partial p}{\partial e}\right|_\rho \hspace{5mm} \pd{T}{\rho}\bigg|_e \hspace{5mm} \pd{T}{e}\bigg|_\rho
 \end{equation}
 
-This can be found with the Bridggman tables. First, we focus on the derivative wrt density. Let us express it with specific volume so that we can use Bridggman tables:
+This can be found with the Bridggman tables. First, we focus on the derivatives of pressure. Let us express it with specific volume so that we can use Bridggman tables:
 
 \begin{equation}
     \left.\frac{\partial p}{\partial \rho}\right|_e  = \left.\frac{\partial p}{\partial V}\right|_e \left.\frac{\partial V}{\partial \rho}\right|_e =  - \frac{1}{\rho^2} \left.\frac{\partial p}{\partial V}\right|_e = -V^2 \left.\frac{\partial p}{\partial V}\right|_e 
@@ -1690,7 +1690,24 @@ Tables yield:
     \boxed{\left.\frac{\partial p}{\partial e}\right|_\rho = \frac{-\rho \left[ \frac{\partial \ln V}{\partial \ln T} \right]_p}{\left[ \frac{\partial \ln V}{\partial \ln T}\right]_p^2 + \frac{c_p}{R} \left[ \frac{\partial \ln V}{\partial \ln p} \right]_T}}
 \end{equation}
 
-Note the common denominators in each equation.
+Note the common denominators in each equation. Now, for the temperature derivatives, we can use the following relationships:
+
+\begin{align*}
+    \pd{T}{V}\bigg|_e &= \frac{T \pd{V}{T}\big|_p + p \pd{V}{p}\big|_T}{c_p \pd{V}{p}\big|_T + T \pd{V}{T}\big|_p^2} \\
+    \pd{T}{\rho}\bigg|_e &= \pd{T}{V}\bigg|_e \pd{V}{\rho}\bigg|_e = -\frac{1}{\rho^2} \pd{T}{V}\bigg|_e
+\end{align*}
+
+\begin{equation*}
+    \boxed{\pd{T}{\rho}\bigg|_e = -\frac{T}{\rho} \frac{\bb{\pd{\ln V}{\ln T}}_p + \bb{\pd{\ln V}{\ln p}}_T }{\frac{c_p}{R} \bb{\pd{\ln V}{\ln p}}_T + \bb{\pd{\ln V}{\ln T}}_p^2}}
+\end{equation*}
+
+We then also have:
+
+\begin{equation*}
+    \boxed{\pd{T}{e}\bigg|_\rho \equiv \frac{1}{c_v} = \frac{1}{R} \frac{\bb{\pd{\ln V}{\ln p}}_T}{\frac{c_p}{R} \bb{\pd{\ln V}{\ln p}}_T + \bb{\pd{\ln V}{\ln T}}_p^2}}
+\end{equation*}
+
+Notice, again, the common denominator. 
 
 
 \subsection{Standard State Chemical Potential Derivatives}
@@ -2995,9 +3012,9 @@ With these results for the temperature derivatives, we can write the full Jacobi
 The matrix $\boldsymbol{B}_D^F$ that is not dependant on the spatial gradients is:
 
 \begin{equation*}
-    \boldsymbol{B}_D^F = \frac{1}{r}
+    \boldsymbol{B}_D^F = \frac{\mu \hat{u}}{r}
     \begin{bmatrix}
-        0 & 0 & 0 & \frac{4}{3} \mu \hat{u} & \mu \hat{u} & \frac{4}{3} \mu u_r \hat{u} & 0
+        0 & 0 & 0 & \frac{4}{3} & 1 & \frac{4}{3} u_r & 0
     \end{bmatrix}^T
 \end{equation*}
 
@@ -3304,7 +3321,9 @@ Where we have the following definitions for the matrices $\boldsymbol{A}$, $\bol
 
 \section{Stagnation Line Solver for Chemical Equilibrium Flow}
 
-The new vectors are:
+\subsection{Governing Equations}
+
+The new vectors of conserved, primitive, and viscous primitive variables are:
 
 \begin{equation*}
     \boldsymbol{U} = \begin{bmatrix} 
@@ -3315,11 +3334,44 @@ The new vectors are:
     \rho \\ u_r \\ u_\theta \\ p
     \end{bmatrix}
     \hspace{5mm}
-    \boldsymbol{W} = \boldsymbol{V} = 
+    \boldsymbol{W} = \begin{bmatrix}
+    \rho \\ u_r \\ u_\theta \\ Tv  
+    \end{bmatrix}
 \end{equation*}
 
+The fluxes are:
 
-Matrices:
+\begin{equation}
+    \boldsymbol{F_c} = \begin{bmatrix}
+        \rho u_r\\
+        \rho u_r^2 + p \\
+        \rho u_r u_\theta \\
+        \rho u_r H \\
+    \end{bmatrix}
+        \hspace{5mm} 
+    \boldsymbol{F_d} = \begin{bmatrix}
+        0 \\ 
+        \tau_{rr} \\ 
+        \tau_{r\theta} \\ 
+        q_r + \tau_{rr} u_r \\ 
+    \end{bmatrix}
+\end{equation}
+
+The source terms are:
+
+\begin{equation}
+    \boldsymbol{S}_c = -\frac{u_r + u_\theta}{r}
+        \begin{bmatrix}
+        2 \rho \\ 2 \rho u_r \\ \ 3 \rho u_\theta - 2 \frac{p-p_\infty}{u_r + u_\theta} \\ 2 \rho H 
+        \end{bmatrix}
+    \hspace{5mm}
+    \boldsymbol{S}_d = -\frac{2}{r}
+        \begin{bmatrix}
+        0 \\ \tau_{rr} - \tau_{\theta \theta} + \tau_{r \theta} \\ \frac{1}{2} (3\tau_{r \theta} - \tau_{\theta \theta}) \\ q_r + \tau_{rr} u_r + \tau_{r \theta} u_r + \tau_{\theta \theta} u_\theta 
+        \end{bmatrix}
+\end{equation}
+
+The Jacobian matrices for the transformation between the conserved and primitive variables are:
 
 \begin{equation*}
     \pd{\boldsymbol{V}}{\boldsymbol{U}} = \begin{bmatrix} 
@@ -3327,7 +3379,7 @@ Matrices:
         -u_r / \rho & 1 / \rho & 0 & 0 \\
         -u_\theta / \rho & 0 & 1 / \rho & 0 \\
         p_\rho & p_{\rho u_r} & p_{\rho u_\theta} & p_{\rho E}
-    \end{bmatrix}, \hspace{5mm} \pd{\boldsymbol{U}}{\boldsymbol{V}} = \begin{bmatrix}
+    \end{bmatrix} \hspace{5mm} \pd{\boldsymbol{U}}{\boldsymbol{V}} = \begin{bmatrix}
         1 & 0 & 0 & 0 \\
         u_r  & \rho & 0 & 0 \\
         u_\theta & 0 & \rho & 0 \\
@@ -3344,32 +3396,71 @@ Matrices:
     \end{bmatrix}
 \end{equation*}
 
+\begin{equation*}
+    \boldsymbol{J}_D = \pd{\boldsymbol{W}}{\boldsymbol{U}} = \begin{bmatrix} 
+        1 & 0 & 0 & 0 \\
+        -u_r / \rho & 1 / \rho & 0 & 0 \\
+        -u_\theta / \rho & 0 & 1 / \rho & 0 \\
+        T_\rho & T_{\rho u_r} & T_{\rho u_\theta} & T_{\rho E}
+    \end{bmatrix} \hspace{5mm} \pd{\boldsymbol{U}}{\boldsymbol{W}} = \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        u_r  & \rho & 0 & 0 \\
+        u_\theta & 0 & \rho & 0 \\
+        \rho E_\rho & \rho E_{u_r} & \rho E_{u_\theta} & \rho E_T
+    \end{bmatrix}
+\end{equation*}
+
+
 Using the following:
 
 \begin{equation*}
-    p(\rho, e), \hspace{5mm} e(p, \rho) \hspace{5mm} \text{and} \hspace{5mm}   p_e^\rho = \left. \pd{p}{e} \right|_\rho, \hspace{5mm}  p_\rho^e = \left. \pd{p}{\rho} \right|_e
+    p(\rho, e), \hspace{3mm} e(p, \rho), \hspace{3mm} T(\rho, e) \hspace{3mm} \text{and} \hspace{3mm} p_e^\rho = \left. \pd{p}{e} \right|_\rho, \hspace{3mm}  p_\rho^e = \left. \pd{p}{\rho} \right|_e \hspace{3mm} T_e^\rho = \left. \pd{T}{e} \right|_\rho, \hspace{3mm}  T_\rho^e = \left. \pd{T}{\rho} \right|_e
 \end{equation*}
 
-We have:
+We can compute derivatives of these with respect to the conserved or primitive variables. For example, the energy derivative with respect to density is expanded as:
 
-\begin{multicols}{2}
-    \begin{align*}
-    p_{\rho} &= p_\rho^e + p_e^\rho \bb{\frac{u_r^2}{2 \rho} - \frac{e}{\rho}}
-    \\ p_{\rho u_r} &= -\frac{u_r}{\rho} p_e^\rho
-    \\ p_{\rho u_\theta} &= 0
-    \\ p_{\rho E} &= \frac{1}{\rho} p_e^\rho
-\end{align*}
+\begin{equation*}
+    e_\rho^p = \left. \pd{e}{\rho} \right|_p + \left. \pd{e}{p} \right|_\rho \left. \pd{p}{\rho} \right|_e = -\frac{p_\rho^e}{p_e^\rho}
+\end{equation*}
 
-\begin{align*}
-    \rho E_{\rho_s} &= e - \rho \frac{p_\rho^e}{p_e^\rho} + \frac{u_r^2}{2}
-    \\ \rho E_{u_r} &= \rho u_r
-    \\ \rho E_{u_\theta} &= 0
-    \\ \rho E_{p} &= \frac{\rho}{p_e^\rho}
-\end{align*}
-\end{multicols}
+This can be done on all functions. We use the following expansion for internal energy to compute derivatives of internal energy with respect to the conserved variables:
 
+\begin{equation*}
+    e = \frac{\rho E - \frac{1}{2} \rho u_r^2}{\rho}
+\end{equation*}
 
-The non-diagonalized Jacobian is then:
+The derivatives are then:
+
+\begin{equation*}
+\begin{array}{l@{\hspace{2cm}}l@{\hspace{2cm}}l} 
+p_{\rho} = p_\rho^e + p_e^\rho \left[\dfrac{u_r^2}{2\rho} - \dfrac{e}{\rho}\right]
+&
+\rho E_{\rho} = e - \rho\dfrac{p_\rho^e}{p_e^\rho} + \dfrac{u_r^2}{2}
+&
+T_{\rho} = T_\rho^e + T_e^\rho \left[\dfrac{u_r^2}{2\rho} - \dfrac{e}{\rho}\right]
+\\[10pt]
+p_{\rho u_r} = -\dfrac{u_r}{\rho} p_e^\rho
+&
+\rho E_{u_r} = \rho u_r
+&
+T_{\rho u_r} = -\dfrac{u_r}{\rho} T_e^\rho
+\\[10pt]
+p_{\rho u_\theta} = 0
+&
+\rho E_{u_\theta} = 0
+&
+T_{\rho u_\theta} = 0
+\\[10pt]
+p_{\rho E} = \dfrac{1}{\rho} p_e^\rho
+&
+\rho E_{p} = \dfrac{\rho}{p_e^\rho}
+&
+T_{\rho E} = \dfrac{1}{\rho} T_e^\rho
+\end{array}
+\end{equation*}
+
+\subsection{Convective Jacobian}
+The non-diagonalized Jacobian is found as:
 
 \begin{equation*}
     \boldsymbol{A} = \pd{\boldsymbol{V}}{\boldsymbol{U}} \pd{\boldsymbol{F}_c}{\boldsymbol{V}} = \begin{bmatrix}
@@ -3417,28 +3508,86 @@ With the same eigenvalues as before. We then have:
     \boldsymbol{L} = \boldsymbol{\tilde{L}} \pd{\boldsymbol{V}}{\boldsymbol{U}} = \begin{bmatrix}
         1 -\frac{p_\rho}{a^2} & -\frac{1}{a^2} p_{\rho u_r} & 0 & -\frac{1}{a^2} p_{\rho E}\\
         -\frac{1}{2 \rho} \bb{\frac{p_\rho}{a} + u_r} & \frac{1}{2 \rho} \bb{1 - \frac{p_{\rho u_r}}{a}} & 0 & -\frac{1}{2 \rho a} p_{\rho E} \\
-        \frac{1}{2 \rho} \bb{\frac{p_\rho}{a} - u_r} & -\frac{1}{2 \rho} \bb{1 + \frac{p_{\rho u_r}}{a}} & 0 & \frac{1}{2 \rho a} p_{\rho E} \\
+        \frac{1}{2 \rho} \bb{\frac{p_\rho}{a} - u_r} & \frac{1}{2 \rho} \bb{1 + \frac{p_{\rho u_r}}{a}} & 0 & \frac{1}{2 \rho a} p_{\rho E} \\
         -\frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0
-        \end{bmatrix} \hspace{5mm}
+        \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
     \boldsymbol{R} = \pd{\boldsymbol{U}}{\boldsymbol{V}} \boldsymbol{\tilde{R}} = \begin{bmatrix}
-        1 & -\frac{\rho}{a} & \frac{\rho}{a} & 0 \\
-        u_r & -\frac{\rho u_r}{a} + \rho & \frac{\rho u_r}{a} + \rho & 0 \\
+        1 & - \rho / a & \rho / a & 0 \\
+        u_r & \rho \bb{1-\frac{\rho u_r}{a}} & \rho \bb{1+\frac{\rho u_r}{a}} + \rho & 0 \\
         u_\theta & -\frac{\rho u_\theta}{a} & \frac{\rho u_\theta}{a} & \rho \\
         \rho E_\rho & \phi^- & \phi^+ & 0
     \end{bmatrix}
 \end{equation*}
+
+Where:
 
 \begin{align*}
     \phi^- &= -\frac{\rho}{a} (\rho E)_\rho + (\rho E)_{u_r} - \rho a (\rho E)_p \\
     \phi^+ &= \frac{\rho}{a} (\rho E)_\rho + (\rho E)_{u_r} + \rho a (\rho E)_p
 \end{align*}
 
+
+\subsection{Viscous Fluxes}
+
+The matrix $\boldsymbol{M}_D^F$, the vector $\boldsymbol{B}_D^F$, and the Jacobian $\boldsymbol{J}_B^F$ are defined as:
+
 \begin{equation*}
-        \boldsymbol{R} \boldsymbol{\Lambda} = \begin{bmatrix}
-        \lambda_1           & -\frac{\rho}{a} \lambda_2                 & \frac{\rho}{a} \lambda_3 & 0 \\
-        u_r \lambda_1         & \bb{-\frac{\rho u_r}{a} + \rho} \lambda_2 & \bb{\frac{\rho u_r}{a} + \rho} \lambda_3 & 0 \\
-        u_\theta \lambda_1    & -\frac{\rho u_\theta}{a} \lambda_2        & \frac{\rho u_\theta}{a} \lambda_3 & \rho \lambda_1 \\
-        \rho E_\rho \lambda_1 & \phi^- \lambda_2                          & \phi^+ \lambda_3 & 0
+\boldsymbol{M}_D^F = \begin{bmatrix}
+    0 & 0 & 0 & 0 \\
+    0 & -\frac{4}{3} \mu & 0 & 0 \\
+    0 & 0 & -\mu & 0 \\
+    0 & -\frac{4}{3} \mu u_r & 0 & -k
+\end{bmatrix}
+\hspace{5mm}
+\boldsymbol{B}_D^F = \frac{\mu \hat{u}}{r}\begin{bmatrix}
+    0 \\
+    \frac{4}{3} \\
+    1 \\
+    \frac{4}{3} u_r
+\end{bmatrix}
+\hspace{5mm}
+\boldsymbol{J}_B^F = \frac{\mu}{r \rho} \begin{bmatrix}
+    0 & 0 & 0 & 0 \\
+    - \frac{4}{3} \hat{u} & \frac{4}{3} & \frac{4}{3} & 0 \\
+    - \hat{u} & 1 & 1 & 0 \\
+    -\frac{8}{3} \hat{u} u_r & \frac{4}{3} (\hat{u} + u_r) & \frac{4}{3} u_r & 0
+\end{bmatrix}
+\end{equation*}
+
+\subsection{Source Terms}
+
+\begin{equation*}
+    \boldsymbol{J}_C^S = -\frac{2}{r} \begin{bmatrix}
+        0 & 1 & 1 & 0 \\
+        -\hat{u} u_r & \hat{u} + u_r & u_r & 0 \\
+        -\frac{3}{2} \hat{u} u_\theta - p_\rho & \frac{3}{2} u_\theta - p_{\rho u_r} & \frac{3}{2} (\hat{u} + u_\theta) & -p_{\rho E} \\
+        (p_\rho - H) \hat{u} & p_{\rho u_r} + H & H & (1 + p_{\rho E}) \hat{u}
+    \end{bmatrix}
+\end{equation*}
+
+
+\begin{equation*}
+    \boldsymbol{M}_D^S = -\frac{2}{r}\begin{bmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & -2 \mu & -\mu & 0 \\
+        0 &-\frac{1}{3} \mu & -\frac{3}{2} \mu & 0 \\
+        0 & \frac{2}{3} \mu (u_\theta - 2 u_r) & -\mu u_r & -\kappa^{tr} \\
+    \end{bmatrix}
+    \hspace{5mm}
+    \boldsymbol{B}_D^S = -\frac{2 \mu \hat{u}}{r^2} \begin{bmatrix}
+        0 \\ 3 \\ \frac{11}{6} \\ \frac{1}{3}(7 u_r - 2 u _\theta)
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \boldsymbol{J}_B^S = - \frac{2 \mu}{ \rho r^2} \begin{bmatrix}
+        0 & 0 & 0 & 0 \\
+        -3\hat{u} & 3 & 3 & 0 \\
+        -\frac{11}{6} \hat{u} & \frac{11}{6} & \frac{11}{6} & 0 \\
+        -\frac{2}{3} \hat{u} (7 u_r - 2 u_\theta) & \frac{1}{3} (14 u_r + 5 u_\theta) & \frac{1}{3} (5 u_r - 4 u_\theta) & 0 \\
     \end{bmatrix}
 \end{equation*}
 

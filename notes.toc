@@ -47,9 +47,9 @@
 \contentsline {subsubsection}{\numberline {6.2.3}Temperature derivatives and $c_p$}{37}{subsubsection.6.2.3}%
 \contentsline {subsubsection}{\numberline {6.2.4}Pressure derivatives}{39}{subsubsection.6.2.4}%
 \contentsline {subsubsection}{\numberline {6.2.5}CFD derivatives}{40}{subsubsection.6.2.5}%
-\contentsline {subsection}{\numberline {6.3}Standard State Chemical Potential Derivatives}{40}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.3}Standard State Chemical Potential Derivatives}{41}{subsection.6.3}%
 \contentsline {subsubsection}{\numberline {6.3.1}Useful Relationships}{41}{subsubsection.6.3.1}%
-\contentsline {subsubsection}{\numberline {6.3.2}Gibbs Derivative}{41}{subsubsection.6.3.2}%
+\contentsline {subsubsection}{\numberline {6.3.2}Gibbs Derivative}{42}{subsubsection.6.3.2}%
 \contentsline {subsection}{\numberline {6.4}Helmholtz Derivative}{42}{subsection.6.4}%
 \contentsline {section}{\numberline {7}Thermochemical Nonequilibrium CFD}{43}{section.7}%
 \contentsline {subsection}{\numberline {7.1}Species conservation equation}{43}{subsection.7.1}%
@@ -86,3 +86,7 @@
 \contentsline {subsubsection}{\numberline {8.3.1}Explicit time stepping}{72}{subsubsection.8.3.1}%
 \contentsline {subsubsection}{\numberline {8.3.2}Implicit time stepping}{72}{subsubsection.8.3.2}%
 \contentsline {section}{\numberline {9}Stagnation Line Solver for Chemical Equilibrium Flow}{74}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Governing Equations}{74}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Convective Jacobian}{76}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Viscous Fluxes}{77}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Source Terms}{77}{subsection.9.4}%
