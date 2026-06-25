@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.4)  23 JUN 2026 21:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.11.4)  24 JUN 2026 23:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/frodo/programs/PhD_Notes/notes.tex
+**c:/Users/frodo/programs/PhD_Notes/notes
 (c:/Users/frodo/programs/PhD_Notes/notes.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-10-24>
@@ -937,14 +937,20 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 Package hyperref Info: Option `colorlinks' set `true' on input line 150.
 Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 150.
 Package hyperref Info: Option `bookmarksopen' set `true' on input line 150.
- (./symbols.tex))
+ (./symbols.tex)) (c:/texlive/2025/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip152
+\bibsep=\skip153
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count403
+)
 Package translations Info: No language package found. I am going to use `english' as default language. on input line 4.
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... none found.
 LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 4.
  (c:/texlive/2025/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
-) (./notes.aux)
+) (build/notes.aux)
 \openout1 = `notes.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
@@ -1002,16 +1008,16 @@ LaTeX Font Info:    ... okay on input line 4.
 
 (c:/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count403
+\scratchcounter=\count404
 \scratchdimen=\dimen370
 \scratchbox=\box140
-\nofMPsegments=\count404
-\nofMParguments=\count405
+\nofMPsegments=\count405
+\nofMParguments=\count406
 \everyMPshowfont=\toks52
-\MPscratchCnt=\count406
+\MPscratchCnt=\count407
 \MPscratchDim=\dimen371
-\MPnumerator=\count407
-\makeMPintoPDFobject=\count408
+\MPnumerator=\count408
+\makeMPintoPDFobject=\count409
 \everyMPtoPDFconversion=\toks53
 ) (c:/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1026,17 +1032,17 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count409
+\c@lstlisting=\count410
 Package tocbasic Info: omitting babel extension for `lol'
 (tocbasic)             because of missing \bbl@set@language on input line 4.
 Package hyperref Info: Link coloring ON on input line 4.
- (./notes.out) (./notes.out)
+ (build/notes.out) (build/notes.out)
 \@outlinefile=\write5
 \openout5 = `notes.out'.
 
  [1
 
-{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}] (./notes.toc
+{c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}] (build/notes.toc
 LaTeX Font Info:    Trying to load font information for U+msa on input line 3.
  (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -1055,7 +1061,7 @@ Package marginnote Info: Using workaround for absolute page number on input line
 \tf@toc=\write6
 \openout6 = `notes.toc'.
 
- [3] (./nomenclature.tex) (./notes.nls) [4]
+ [3] (./nomenclature.tex) (build/notes.nls) [4]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
 (mdframed)              on input line 43.
@@ -1374,90 +1380,94 @@ Underfull \hbox (badness 10000) detected at line 1592
  []$[]   [] [] [][] [][] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@ [] N[][]$ [][]  
  []
 
-[38] [39] [40] [41] [42] [43] [44] [45] [46]
+[38] [39] [40] [41] [42]
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 1849.
+ [43] [44] [45] [46]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2000.
+(hyperref)                removing `math shift' on input line 2015.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2000.
+(hyperref)                removing `math shift' on input line 2015.
 
 [47]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2013.
+(hyperref)                removing `math shift' on input line 2028.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2013.
+(hyperref)                removing `math shift' on input line 2028.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2027.
+(hyperref)                removing `math shift' on input line 2042.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2027.
+(hyperref)                removing `math shift' on input line 2042.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2041.
+(hyperref)                removing `math shift' on input line 2056.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 2041.
+(hyperref)                removing `subscript' on input line 2056.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2041.
+(hyperref)                removing `math shift' on input line 2056.
 
 [48]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2054.
+(hyperref)                removing `math shift' on input line 2069.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 2054.
+(hyperref)                removing `subscript' on input line 2069.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2054.
+(hyperref)                removing `math shift' on input line 2069.
 
 [49] [50] [51]
-Underfull \hbox (badness 10000) detected at line 2220
+Underfull \hbox (badness 10000) detected at line 2235
  []$[]   \OT1/cmr/m/n/10 = [] [][] [][]$ [][]  
  []
 
-
-Underfull \hbox (badness 10000) detected at line 2233
+[52]
+Underfull \hbox (badness 10000) detected at line 2248
  []$[]  []$ [][]  
  []
 
-[52]
-Underfull \hbox (badness 1931) detected at line 2266
+
+Underfull \hbox (badness 1931) detected at line 2281
  []$[]  [] \OT1/cmr/m/n/10 = [] [] [][] [][]$ [][]  
  []
 
 [53] [54] [55] [56] [57] [58] [59] [60
 
 ] [61] [62] [63] [64] [65] [66] [67] [68]
-Overfull \hbox (11.64589pt too wide) detected at line 3113
+Overfull \hbox (11.64589pt too wide) detected at line 3128
 [][] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@[] []
  []
 
 [69] [70] [71] [72]
-Overfull \hbox (12.97365pt too wide) detected at line 3277
+Overfull \hbox (12.97365pt too wide) detected at line 3292
 []
  []
 
 [73]
-Overfull \hbox (12.97365pt too wide) detected at line 3313
+Overfull \hbox (12.97365pt too wide) detected at line 3328
 []
  []
 
-[74] [75] [76] [77] (./notes.aux)
+[74] [75] [76] [77] (build/notes.bbl) [78] (build/notes.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-10-24>
@@ -1466,18 +1476,18 @@ Package rerunfilecheck Info: File `notes.out' has not changed.
 (rerunfilecheck)             Checksum: AEF943D206C7B5E7578951BFA24E7A2A;20161.
  ) 
 Here is how much of TeX's memory you used:
- 34265 strings out of 469475
- 671965 string characters out of 5469240
- 1135715 words of memory out of 5000000
- 61683 multiletter control sequences out of 15000+600000
+ 34619 strings out of 469475
+ 676524 string characters out of 5469240
+ 1141965 words of memory out of 5000000
+ 62023 multiletter control sequences out of 15000+600000
  652037 words of font info for 107 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 125i,20n,121p,939b,1885s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 125i,20n,121p,935b,1889s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplbi8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on notes.pdf (78 pages, 548449 bytes).
+Output written on build/notes.pdf (79 pages, 551493 bytes).
 PDF statistics:
- 1691 PDF objects out of 1728 (max. 8388607)
- 1531 compressed objects within 16 object streams
- 677 named destinations out of 1000 (max. 500000)
+ 1718 PDF objects out of 1728 (max. 8388607)
+ 1545 compressed objects within 16 object streams
+ 683 named destinations out of 1000 (max. 500000)
  749 words of extra memory for PDF output out of 10000 (max. 10000000)
 

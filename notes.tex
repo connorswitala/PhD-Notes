@@ -1814,33 +1814,43 @@ The final derivative is:
 
 
 \newpage
-
 \section{Thermochemical Nonequilibrium CFD}
 
+In the following sections, we derive the governing equations for a chemically reacting flow. In each section, we show a conservation equation with alternate forms as well as the physical meaning of each term. Included at the end of eqach equation is the reference it was taken from.
 
 \subsection{Species conservation equation}
 
-    \begin{equation}
-    \underbracket{ \pd{}{t} \rho_s}_1 + \underbracket{\pd{}{x_j} \rho_s u_j}_2 = \underbracket{\pd{}{x_j} (\rho D_s \pd{}{x_j} y_s)}_3 + \underbracket{\dot{\omega}_s}_4
-    \end{equation}
+\begin{equation}
+\underbracket{ \pd{}{t} \rho_s}_1 + \underbracket{\pd{}{x_j} \rho_s u_j}_2 = \underbracket{\pd{}{x_j} (\rho D_s \pd{}{x_j} y_s)}_3 + \underbracket{\dot{\omega}_s}_4  \hspace{5mm}  \text{Ref. \cite{gnoffo1989}}
+\end{equation}
 
-    The terms are:
+\begin{equation} \pd{}{t} \rho_s + \nabla \cdot (\rho_s \textbf{u}) + \nabla \cdot (\rho_s \boldsymbol{V}_s) = \dot{\omega}_s \hspace{5mm} \text{Ref. \cite{scogginsthesis}}
+\end{equation}
 
-    \begin{enumerate}
-        \item Rate of change of mass of species $s$.
-        \item Flux of mass due to convection.
-        \item Molecular diffusion flux of mass.
-        \item Chemical production rate.
-    \end{enumerate}
+The terms are:
 
-    The variables are:
-    \begin{itemize}
-        \item $\rho_s$ is the density of species s
-        \item $u_j$ is the mass-averaged velocity in the $j$-direction
-        \item $D_s$ is the effective diffusion coefficient of species s
-        \item $y_s$ is the molar fraction of species s
-        \item $\dot{\omega}_s$ is the chemical production rate of species s
-    \end{itemize}
+\begin{enumerate}
+    \item Time rate of change of $s$-species mass.
+    \item Flux of mass due to convection.
+    \item Molecular diffusion flux.
+    \item Chemical production rate due to reactions.
+\end{enumerate}
+
+The variables are:
+\begin{itemize}
+    \item $\rho_s$ is the density of species s
+    \item $u_j$ is the mass-averaged velocity in the $j$-direction
+    \item $D_s$ is the effective diffusion coefficient of species s
+    \item $y_s$ is the molar fraction of species s
+    \item $\dot{\omega}_s$ is the chemical production rate of species s
+    \item $\boldsymbol{V}_s$ is the diffusion velocity of species $s$.
+\end{itemize}
+
+\begin{definition}[Molecular Diffusion Flux]
+    There are a number of ways to express the molecular diffusion flux. Sometimes if it gives as $J_s$ = $\rho_s \boldsymbol{V}_s$. From the above equation, we can see that $J_s$ is also equivalent to $\rho D_s \nabla y_s$. There are many different methods to compute the diffusion flux. Some examples are Fick's law, the modified Fick's law, and the Stefan-Maxwell equations. 
+\end{definition}
+
+
 
 \subsection{Total continuity equation}
     For chemically reacting flows, the total continuity equation is unaffected. It is:
@@ -1858,8 +1868,12 @@ The final derivative is:
 \subsection{Mixture momentum conservation}
 
     \begin{equation}
-        \underbracket{\pd{}{t} \rho u_i}_{1} + \underbracket{\pd{}{x_j} \rho u_i u_j}_{2} = \underbracket{-\pd{p}{x_i}}_{3} + \underbracket{\pd{}{x_j} \left[ \mu \left( \pd{u_i}{x_j} + \pd{u_j}{x_i} \right) - \frac{2}{3} \mu \pd{u_k}{x_k} \delta_{ij} \right]}_4
+        \underbracket{\pd{}{t} \rho u_i}_{1} + \underbracket{\pd{}{x_j} \rho u_i u_j}_{2} = \underbracket{-\pd{p}{x_i}}_{3} + \underbracket{\pd{}{x_j} \left[ \mu \left( \pd{u_i}{x_j} + \pd{u_j}{x_i} \right) - \frac{2}{3} \mu \pd{u_k}{x_k} \delta_{ij} \right]}_4 \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
     \end{equation}
+
+    \begin{equation*}
+        \pd{}{t} \rho \boldsymbol{u} + \nabla \cdot (\rho \textbf{u} \otimes \textbf{u}) = -\nabla p + \nabla \cdot \boldsymbol{\bar{\Pi}} + \ub{nq\boldsymbol{E}' + \boldsymbol{j} \times \boldsymbol{B}}{5} \hspace{5mm} \text{Ref. \cite{scogginsthesis}}
+    \end{equation*}
 
     The terms are:
 
@@ -1868,6 +1882,7 @@ The final derivative is:
         \item Flux of $i$th component of momentum due to convection.
         \item Pressure forces in $i$th direction.
         \item Viscous terms acting in $i$th direction.
+        \item Electric field forces acting on the mixture.
     \end{enumerate}
 
     Here, the mixture pressure is defined with Dalton's law of partial pressures, and the pressure of an individual heavy species is:
@@ -3516,7 +3531,7 @@ With the same eigenvalues as before. We then have:
 \begin{equation*}
     \boldsymbol{R} = \pd{\boldsymbol{U}}{\boldsymbol{V}} \boldsymbol{\tilde{R}} = \begin{bmatrix}
         1 & - \rho / a & \rho / a & 0 \\
-        u_r & \rho \bb{1-\frac{\rho u_r}{a}} & \rho \bb{1+\frac{\rho u_r}{a}} + \rho & 0 \\
+        u_r & \rho \bb{1-\frac{\rho u_r}{a}} & \rho \bb{1+\frac{\rho u_r}{a}} & 0 \\
         u_\theta & -\frac{\rho u_\theta}{a} & \frac{\rho u_\theta}{a} & \rho \\
         \rho E_\rho & \phi^- & \phi^+ & 0
     \end{bmatrix}
@@ -3591,5 +3606,9 @@ The matrix $\boldsymbol{M}_D^F$, the vector $\boldsymbol{B}_D^F$, and the Jacobi
     \end{bmatrix}
 \end{equation*}
 
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{bibliography}
 \end{flushleft}
 \end{document}
