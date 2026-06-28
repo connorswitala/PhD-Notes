@@ -44,6 +44,7 @@
 \usepackage{titlesec}
 \usepackage{etoolbox}
 \usepackage{empheq}
+\usepackage{siunitx}
 
 % ── Spacing ───────────────────────────────────────────────────────────────────
 \setstretch{1.1}
@@ -122,6 +123,44 @@
   \begin{definitioninner}[#1]%
 }{%
   \end{definitioninner}%
+  \end{mdframed}%
+}
+
+
+% ── Remark environment (numbered) ────────────────────────────────────────────
+\definecolor{remarkpurple}{RGB}{88,50,168}
+\definecolor{remarkbg}{RGB}{248,248,248}
+
+\newtheoremstyle{remarkstyle}
+  {3pt}{3pt}
+  {\normalfont}
+  {}
+  {\bfseries\color{remarkpurple}}
+  {:}
+  {0.5em}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ \textit{(#3)}}}
+
+\theoremstyle{remarkstyle}
+\newtheorem{remarkinner}{Remark}[section]
+
+\newenvironment{remark}[1][]{%
+  \begin{mdframed}[
+    linecolor=remarkpurple,
+    backgroundcolor=remarkbg,
+    linewidth=1pt,
+    topline=false,
+    rightline=false,
+    bottomline=false,
+    leftline=true,
+    nobreak=false,
+    innerleftmargin=8pt,
+    innerrightmargin=8pt,
+    innertopmargin=4pt,
+    innerbottommargin=4pt
+  ]%
+  \begin{remarkinner}[#1]%
+}{%
+  \end{remarkinner}%
   \end{mdframed}%
 }
 

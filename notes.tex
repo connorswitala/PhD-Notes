@@ -36,50 +36,64 @@
 
 
 \newpage
-\section{Thermodynamics}
+\section{Basic Thermodynamics and Universal Constants}
 
 \subsection{Definitions}
 
 \begin{definition}[Moles / molecular weight]
-One mole of a substance contains Avogadro's number of particles. The molecular weight of a substance is the mass of one mole of that substance. In this text it is denoted as $\mathcal{M}$ and is typically given in units of kg / kg-mole or g / gm-mole. For example, the molecular weight of $O_2$ is 32 kg / kg-mole, and the molecular weight of $N_2$ is 28 kg / kg-mole.
+One mole of a substance contains an Avogadro's number of particles. The molecular weight of a substance is the mass of one mole of that substance. In this text it is denoted as $\mathcal{M}$ and is typically given in units of \unit{\kilo\gram\per\kilo\mole} or \unit{\gram\per\mole}. For example, the molecular weight of $O_2$ is $\qty{32}{\kilo\gram\per\kilo\mole}$.
+\vspace{5mm}
+\\ The molecular weight and number of moles of a single species is denoted as $\mathcal{M}_s$ and $\mathcal{N}_s$, respectively. Mixture properties are given an overbar: $\bar{\mathcal{M}}, \bar{\mathcal{N}}$
 \label{def:MW}
 \end{definition}
 
-\begin{definition}[Avagadro's constant]
-Avogradro's constant is the number of particles in one mole of that substance. It is denoted as '$\text{N}_\text{A}$' and is equal to $6.02 \cdot 10^{26}$ particles per kg-mole.    
+\begin{definition}[Avogadro's constant]
+Avogradro's constant is the number of particles in one mole of that substance. It is denoted as '$\text{N}_\text{A}$' and is equal to $6.02 \cdot 10^{26}$ particles per \unit{\kilo\mole}.    
 \label{def:NA}
 \end{definition}
 
+\begin{definition}[Boltzmann constant]
+The Boltzmann constant is denoted by $k_B$ and is equal to $\qty{1.381e-23}{\joule\per\kelvin}$. It is the increment in energy of a particle per increase in temperature.
+\label{def:kB}
+\end{definition}
+
 \begin{definition}[Universal gas constant]
-The universal gas constant is denoted by $\hat{R}$ and is equal to 8.314 J/mol-K. Its units are `energy per amount of substance per temperature increment` as it is a proportionality constant that relates energy to temperature and amount of substance. 
+The universal gas constant is denoted by $\hat{R}$ and is equal to $\qty{8.314}{\joule\per\mole\per\kelvin}$. It is the molar equivalent of $\kB$ and is actually computed as $\hat{R} = \kB \NA$. It is the increment in energy of a mole of substance per increase in temperature.
 \label{def:Rhat}
 \end{definition}
 
-\begin{definition}[Boltzmann constant]
-The Boltzmann constant is denoted by $k_B$ and is equal to $1.381 \cdot 10^{-23}$ J/K. It is the equivalent of the universal gas constant but on a \textit{per particle} basis. 
-\label{def:kB}
+\begin{definition}[Permittivity of free space]
+The permitivity of free space is denoted by $\varepsilon_0$ is a measurement of how dense of an electric field is allowed to be greated in reponse to an electric charge. It has a value of $\qty{8.854}{\farad\per\meter}$.
+\label{def:eps0}
+\end{definition}
+
+\begin{definition}[Elementary charge]
+The elementary charge is the electric charge a single electron has. It is denoted as $e$ and has a vale of $\qty{1.602}{\coulomb}$ in SI units.
+\label{def:electronCharge}    
 \end{definition}
 
 \begin{definition}[Dalton's law of partial pressures]
 The pressure of a system can be found my summing up the partial pressures of each individual species:
 \begin{equation}
-    p = \sum_j p_j
+    p = \sum_j^\text{NS} p_j
 \end{equation}
+Where $p_j$ is the pressure of species $j$ and NS is the number of species in the mixture.
 \end{definition}
 
 \begin{definition}[Mass fractions]
-The mass fraction of species $j$ ($Y_j$) is defined as the ratio of the density of species $j$ to the density of the mixture:
+The mass fraction of species $s$ ($Y_s$) is defined as the ratio of the density of species $s$ to the density of the mixture:
 \begin{equation}
-    Y_j = \frac{\rho_j}{\rho}
+    Y_j = \frac{\rho_s}{\rho}
 \end{equation}
 \label{def:Ymass}
 \end{definition}
 
 \begin{definition}[Molar fractions]
-The molar fraction of species $j$ ($X_j$) can be taken as the ratio of the partial pressure of species $j$ to the pressure of the mixture, or the ratio of the number of moles of species $j$ to the total number of moles in the system:
+The molar fraction of species $s$ can be taken as the ratio of the partial pressure of species $s$ to the pressure of the mixture, or the ratio of the number of moles of species $s$ to the total number of moles in the system:
 \begin{equation}
-    \frac{p_j}{p} = \frac{\mathcal{N}_j}{\mathcal{N}} = X_j
+    X_s = \frac{p_s}{p} = \frac{\mathcal{N}_s}{\mathcal{N}}
 \end{equation}
+\label{def:Xmol}
 \end{definition}
 
 \begin{definition}[Mixture moleular weight]
@@ -88,13 +102,13 @@ The mixture molecular weight, $\bar{\mathcal{M}}$ can be defined as:
     \bar{\mathcal{M}} = \frac{1}{\sum_j Y_j / \mathcal{M}_j} = \sum_j X_j \mathcal{M}_j
 \end{equation}
 Where $\mathcal{M}_j$ is the molecular weight of species $j$.
-\label{def:Mbar}
+\label{def:MWmix}
 \end{definition}
 
 \begin{definition}[Molar fractions to mass fractions] 
 The mass fraction of species $j$ can be obtained from the molar fraction by using:
 \begin{equation}
-    Y_j = X_j \frac{\mathcal{M}_j}{\mathcal{M}}
+    Y_j = X_j \frac{\mathcal{M}_j}{\MWmix}
 \end{equation}
 The sum of the mass fractions
 \end{definition}
@@ -121,17 +135,17 @@ The sum of the mass fractions
 A calorically perfect gas is a gas where the specific heats $c_p$ and $c_v$ are taken to be constant. The enthalpy is then $h = c_p T$, and the internal energy is $e = c_v T$.
 \end{definition}
 
-\begin{definition}{Thermally perfect gas}
-A thermally perfect gas is one there $c_p$ and $c_v$ are variables are are functions of $T$ only. Differential changes in enthalpy and internal energy is then d$h = c_p$d$T$, and d$e$ = $c_v$d$T$
+\begin{definition}[Thermally perfect gas]
+A thermally perfect gas is one there $c_p$ and $c_v$ are functions of $T$ only. Differential changes in enthalpy and internal energy is then d$h = c_p$d$T$, and d$e$ = $c_v$d$T$
 \end{definition}
 
+\subsection{Equations of state}
 
-\subsection{Equations}
+Shown below are the various expression for the equation of state (EOS) of an ideal gas.
 
-\subsubsection{Equations of state}
-
+\begin{subequations}
 \begin{align}
-    PV &= mRT  
+    pV &= mRT  
     \\ pv &= RT
     \\ pV &= \mathcal{N} \hat{R} T
     \\ p &= \rho R T
@@ -142,11 +156,12 @@ A thermally perfect gas is one there $c_p$ and $c_v$ are variables are are funct
     \\ pV &= NkT
     \\ p &= nkT
 \end{align}
+\end{subequations}
 
-Where
+The definitions for each variable are:
 
 \begin{itemize}
-    \item $P$ is the pressure
+    \item $p$ is the pressure
     \item $V$ is the volume
     \item $v$ is the specific gas constant
     \item $m$ is the mass
@@ -158,10 +173,13 @@ Where
     \item $n$ is the number density, or number of particles per unit volume.
 \end{itemize}
 
-\section{Statistical thermodynamics}
+
+
+\newpage
+\section{Statistical Thermodynamics}
 
 \begin{definition}[Bose-Einstein (BE) statistics]
-    For atoms and molecults made up of an \textit{even} number of elementary particles such as electrons, protons, and neutrons, there is no limit to the number particles that can be in any energy state at a given instant.
+    For atoms and molecules made up of an \textit{even} number of elementary particles such as electrons, protons, and neutrons, there is no limit to the number of particles that can be in any energy state at a given instant.
 \end{definition}
 
 \begin{definition}[Fermi-Dirac (FD) statistics]
@@ -377,538 +395,6 @@ Since monoatomic molecules do not have rotational or vibrational energies, the o
 
 
 \newpage
-
-\section{High Temperature Transport Models}
-
-\textit{References for this section}
-
-\begin{enumerate}
-    \item \textit{A Review of Reaction Rates and Thermodynamic and Transport Properties for an 11-Species Air Model for Chemical and Thermal Nonequilibrium Calculations to 30,000 K}, Gupta, Yos, Thompson, Lee, 1990 NASA RP 1232.
-    \item \textit{An assessment of Transport Property Methodologies for Hypersonic Flows}, Palmer, 1971, AIAA.
-\end{enumerate}
-
-
-\subsection{Collision integral definitions}
-
-\begin{definition}[Collision cross sections]
-    The collision cross section has infinitely many values. Four of them are used for fluid dynamics to determine transport properties. The collision cross sections are, in general, the weighted averages of the cross sections for collisions between species $i$ and $j$ (sometimes denoted $s$ and $r$). They are defined as:
-    
-    \begin{equation}
-        \pi \bar{\Omega}_{ij}^{(l,s)} = \frac{\int_{0}^{\infty} \int_{0}^{\pi} \exp(-\gamma^2) \gamma^{2s+3}(1 - \cos^l \chi) 4 \pi \sigma_{ij} \sin\chi d \chi d\gamma}{\int_{0}^{\infty} \int_{0}^{\pi} \exp(-\gamma^2) \gamma^{2s + 3} (1 - \cos^l{\chi}) \sin{\chi} d\chi d \gamma }
-    \end{equation}
-
-    Variables are:
-
-    \begin{itemize}
-        \item $\sigma_{ij} = \sigma_{ij}(\chi, g)$ is the differential-scattering cross section for the pair ($i,j$).
-        \item $\chi$ is the scattering angle in the center of mass system.
-        \item $g$ is the relative velocity of the colliding particles.
-        \item $\gamma$ is the reduced velocity equal to $\displaystyle \bp{ \bb{\frac{m_i m_j}{2(m_i + m_j)kT}}^\frac{1}{2} }g$
-    \end{itemize}
-
-    In the collision integral symbol, $l$ controls how strong the contribution of the differential-scattering angle ($\chi$) is. $s$ is a weighting on the reduced velocity $(\gamma)$ of the particles. Of course, the subscript $(ii)$ refers to the collision integral for similar particles. Here is a list of where certain collision integrals show up:
-
-    \begin{itemize}
-        \item Viscosity ($\mu$) is a function of $\pi \bar{\Omega}_{ij}^{(2,2)}$ only.
-        \item Translational component of thermal conductivity ($\kappa_\text{tr}$) is a function of $\pi \bar{\Omega}_{ij}^{(2,2)}$ only.
-        \item The internal component of thermal conductivity ($\kappa_\text{int}$) is a function of $\pi \bar{\Omega}_{ij}^{(1,1)}$ only or a function of $\pi \bar{\Omega}_{ij}^{(1,1)}$ and $\pi \bar{\Omega}_{ij}^{(2,2)}$, depending on the expression used.
-        \item The diffusion coefficient $D_{ij}$ is a function of $\pi \bar{\Omega}_{ij}^{(1,1)}$ only.
-    \end{itemize}
-\end{definition}
-
-
-\begin{definition}[Gupta's curve fits for collision integrals]
-    Gupta utilizes curve fits for the collision integrals. They have the following form:
-
-    \begin{equation}
-        \pi \bar{\Omega}_{ij}^{(l,s)} = \bb{\exp{D}} T^{\bb{A (\ln T)^2 + B \ln T + C}}
-    \end{equation}
-
-    \begin{equation}
-        B_{i,j}^{*(2,2)} = \bb{\exp{C}} T^{\bb{A (\ln T)^2 + B \ln T}}
-    \end{equation}
-
-
-\end{definition}
-
-
-\begin{definition}[Chapman-Enskog procedure]
-    
-\end{definition}
-
-\subsection{Transport properties of a single species}
-
-\begin{definition}[Viscosity of a single species]
-
-    The viscosity of a gas containing a single species is:  
-
-    \begin{equation}
-        \mu_i = \frac{5}{16} \frac{\sqrt{\pi m_i k T}}{\pi \bar{\Omega}_{ii}^{(2,2)}} = 8.3861 \cdot 10^{-6} \frac{\sqrt{\mathcal{M}_i T}}{\pi \bar{\Omega}_{ij}^{(2,2)}} \hspace{5mm} \text{units = } \frac{\text{N - s}}{\text{m}^2}
-    \end{equation}
-
-    Where $\mathcal{M}_i$ is the molecular weight of species $i$, and $T$ is the temperature in Kelvin. 
-
-\end{definition}
-
-\begin{definition}[Thermal conductivity of a single species]
-    
-    
-    For the thermal conductivity of a single species, we have a number of contributions. The total $\kappa$ of the species is the sum of its internal energy specific contributions, i.e.:
-    
-    \begin{equation}
-        \kappa = \kappa_\text{tr} + \kappa_\text{rot} + \kappa_\text{vib} + \kappa_\text{el} = \kappa_\text{tr} + \kappa_\text{int}
-    \end{equation}
-
-    Where the internal energies that are not translational have been grouped into $\kappa_\text{int}$. 
-
-    \begin{equation}
-        \kappa_{\text{tr}, i} = \frac{5}{2} \frac{\mu_i}{\mathcal{M}_i} (c_{v,i})_\text{tr} = \frac{15}{4} \frac{\hat{R}}{\mathcal{M}_i}\mu_i \hspace{5mm} \text{units = } \frac{\text{J}}{\text{m-s-K}}
-    \end{equation}
-
-    \begin{equation}
-        \kappa_{\text{int}, i} = \frac{6}{5}\frac{c_{p_{\text{int},i}}}{\hat{R}} \frac{\hat{R}}{\mathcal{M}_i} \mu_i \frac{\pi \bar{\Omega}_{ii}^{(2,2)}}{\pi \bar{\Omega}_{ii}^{(1,1)}}
-    \end{equation}
-
-    Here, $c_{p_{\text{int},i}}$ is the total specific heat with the translation specific heat subtracted.
-
-\end{definition}
-
-
-\subsection{Transport properties of a mixture}
-
-For species summation and Wilke's mixing rule, $mu_j$ and $\kappa_j$ are calculated using the above equations for single species viscosity and conductivity.
-
-
-\begin{definition}[Species summation]
-
-    The concept of the species summation version of finding mixture transport properties is quite simple. It assumes no interaction between species and is expressed as:
-
-    \begin{equation}
-        \mu = \sum_{j=1}^\text{NS} X_j \mu_j \hspace{7.5mm} \kappa = \sum_{j=1}^\text{NS} X_j \kappa_j
-    \end{equation}
-    
-\end{definition}
-
-
-
-\begin{definition}[Wilke's mixing rule]
-
-    Both viscosity and thermal conductivity can be approximated using Wilke's mixing rule. It uses a quantity, $\phi_i$, which is expressed as:
-
-    \begin{equation}
-        \phi_i = \sum_{j=1}^\text{NS} \frac{X_j \bb{1 + \sqrt{\frac{\mu_i}{\mu_j}} \bp{\frac{\mathcal{M}_j}{\mathcal{M}_i}}^\frac{1}{4}}^2}{\sqrt{8 \bp{1 + \frac{\mathcal{M}_i}{\mathcal{M}_j}}}} = \sum_{j=1}^\text{NS} \frac{X_j \bb{1 + \sqrt{\frac{\pi \bar{\Omega}_{jj}^{(2,2)}}{\pi \bar{\Omega}_{ii}^{(2,2)}}}}^2}{\sqrt{8 \bp{1 + \frac{\mathcal{M}_i}{\mathcal{M}_j}}}}
-    \end{equation}
-
-    Then the viscosity and thermal conductivity is found as:
-
-    \begin{equation}
-        \mu = \sum_{j=1}^\text{NS} \frac{X_j \mu_j}{\phi_j} \hspace{5mm} \kappa = \sum_{j=1}^\text{NS} \frac{X_j \kappa_j}{\phi_j}
-    \end{equation}    
-\end{definition}
-
-
-\begin{definition}[Chapman-Enskog approximation method]
-    For obtaining mixture transport quantities using Chapman-Enskog approximations, a number of new variables are used. This is the most rigorous method for finding the properties. The units of $\Delta$ is in centimeters-second, while $\alpha_{ij}$ is unitless.
-
-    \begin{equation}
-        \Delta_{ij}^{(1)} = \frac{8}{3} (1.5460 \cdot 10^{-20}) \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2} \pi \bar{\Omega}_{ij}^{(1,1)}
-    \end{equation}
-
-    \begin{equation}
-        \Delta_{ij}^{(2)} = \frac{16}{5} (1.5460 \cdot 10^{-20}) \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2}  \pi \bar{\Omega}_{ij}^{(2,2)}
-    \end{equation}
-
-    For electron-electron collisions, we have:
-
-    \begin{equation}
-        \pi \bar{\Omega}_{ee}^{(2,2)} = 1.29 Q_e \cdot 10^{16}
-    \end{equation}
-
-    For ion-ion collisions, we have:
-
-    \begin{equation}
-        \pi \bar{\Omega}_{II}^{(2,2)} = 1.36 Z^4 Q_e \cdot 10^{16}
-    \end{equation}
-
-    Then for both:
-
-    \begin{equation}
-        \pi \bar{\Omega}_{ee}^{(1,1)} = \pi \bar{\Omega}_{II}^{(1,1)} = 0.795 Z^4 Q_e \cdot 10^{16}
-    \end{equation}
-
-    Here, $Z=1$ for singly ionized species (for aerospace applications this is fine), and:
-
-    \begin{equation}
-        Q_e = \frac{e^4}{(kT)^2} \ln \Lambda \hspace{5mm} \text{cm}^2
-    \end{equation}
-
-    \begin{align}
-        \Lambda &= \bb{\frac{9 (kT)^3}{4 \pi e^6 n_e} + \frac{16 (kT)^2}{e^4 n_e^{2/3}}}^{1/2}
-        \\ &= \bb{2.09 \cdot 10^{-2} \bp{\frac{T^4}{10^{12} p_e}} + 1.52 \bp{\frac{T^4}{10^{12}p_e}}^{2/3}}^{1/2}
-    \end{align}
-
-    Here, $p_e$ is the electron pressure in atmospheres, $n_e$ is the number density of electrons, and $e = 4.8 \cdot 10^{-10}$  esu. These equations are only useful unter for $p_e < $ some limiting value, which should be true in aerospace applications:
-
-    \begin{equation}
-        p_{em} = 0.0975 \bp{\frac{T}{10^3}}^4
-    \end{equation}
-
-    Depending on the data given, the Coulomb cross section may need to be altered. Gupta and Yos give collision cross sections at the above limiting electron pressure, so at any other pressure the cross section needs to be changed:
-
-    \begin{align}
-        \frac{\pi \bar{\Omega}_{ij}^{(l,s)}(p_e)}{\pi \bar{\Omega}_{ij}^{(l,s)}(p_{em})} &= \ln \Lambda (p_e)
-        \\ &= \frac{1}{2} \ln \bb{2.09 \cdot 10^{-2} \bp{\frac{T}{1000 p_e^{1/4}}}^4 + 1.52 \bp{\frac{T}{1000 p_e^{1/4}}}^{8/3}}
-    \end{align}
-
-    Finally, $\alpha_{ij}$ is needed for the heavy-particle translational component of thermal conductivity:
-
-    \begin{equation}
-        \alpha_{ij} = 1 + \frac{[1 - (\mathcal{M}_i / \mathcal{M}_j)][0.45 - 2.54(\mathcal{M}_i / \mathcal{M}_j)]}{[1 + (\mathcal{M}_i / \mathcal{M}_j)]^2}
-    \end{equation}
-
-    Assuming thermochemical nonequilibrium, the mixture viscosity \textit{appears} to not be a function of vibrational or rotation energy, and is thus found with:
-
-    \begin{equation}
-        \mu = \sum_{i=1}^{\text{NS} - 1} \bb{\frac{\frac{\mathcal{M}_i}{N_A}X_i}{\sum_{j=1}^\text{NS - 1} X_j \Delta_{ij}^{(2)}(T) + X_e \Delta_{ie}^{(2)}(T_e) }} + \frac{\frac{\mathcal{M}_e}{N_A} X_e }{\sum_{j=1}^\text{NS} X_j \Delta_{ej}^{(2)}(T_e)}
-    \end{equation}
-
-    Where $X_j$ is the molar fraction, $T$ is the Temperature, and $T_e$ is the electron temperature. In constrast to viscosity, the thermal conductivity is dependant on all energy modes, and therefore has contributions from each mode. They are:
-    \vspace{5mm}
-
-    Translational component without electron-heavy-particle and electron-electron collision:
-
-    \begin{equation}
-        K_\text{tr}^* = (2.3901 \cdot 10^{-8}) \frac{15}{4} k \sum_{i=1}^\text{NS-1} \bb{\frac{X_i}{\sum_{j=1} \alpha_{ij} \Delta_{ij}^{(2)}(T) + 3.54 X_e \Delta_{ie}^{(2)}(T_e) }}
-    \end{equation}
-
-    Rotational component. "p.e." means  "partial excitation" while "f.e." mean "full excitation". If it is in equilibrium with translational temperature, $T_\text{rot} = T$:
-
-    \begin{equation}
-        (K_\text{rot})_\text{p.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{\bb{\frac{c_{p,i}(T_\text{rot})}{\hat{R}} - \frac{5}{2}} X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
-    \end{equation}
-
-    \begin{equation}
-        (K_\text{rot})_\text{f.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
-    \end{equation}
-
-
-    Vibrational component:
-
-    \begin{equation}
-        (K_\text{vib})_\text{p.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{\bb{\frac{c_{p,i}(T_\text{vib})}{\hat{R}} - \frac{7}{2}} X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
-    \end{equation}
-
-    \begin{equation}
-        (K_\text{vib})_\text{f.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
-    \end{equation}
-
-    Electronic component:
-
-    \begin{equation}
-        K_\text{el} = (2.3901 \cdot 10^{-8})k \sum_\text{i=1}^\text{NS-1} \bb{\frac{\bb{\frac{c_{p,i}(T_\text{el})}{\hat{R}} - \frac{9}{2}} X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
-    \end{equation}
-
-    Free electron component:
-
-    \begin{equation}
-        K_\text{e} = (2.3901 \cdot 10^{-8})k \frac{X_e}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ej}^{(2)}(T_e) + X_e \Delta_{ee}^{(2)}(T_e)}
-    \end{equation}
-
-
-
-
-\end{definition}
-
-
-\newpage
-
-\section{Chemical Rate Kinetics}
-
-\subsection{Rate equations}
-
-\begin{definition}[Reactions]
-    For multicomponent gas with NS reacting species and NR different reactions, the stoichiometric relations for the change in reactants and products are:
-
-    \begin{equation}
-        \sum_{i=1}^\text{NS} \nu_i' X_i \leftrightarrows \sum_{i=1}^\text{NS} \nu_i'' X_i, 
-        \hspace{5mm} r=1, \dots , NR
-    \end{equation}
-
-    $\nu_i'$ and $\nu_i''$ are the stoichiometric coefficients for reactants and products respectively. $k_{f,r}$ governs the forward reaction (right arrow), and $k_{b,r}$ governs the backward reaction (left arrow). 
-    
-\end{definition}
-
-\begin{definition}[Mass production]
-    The net rate of MASS production of a species per unit volume has a number of different expressions. Consider the reaction:
-
-    \begin{equation}
-        O_2 + M \longrightarrow 2O + M
-        \label{ReactionExample1}
-    \end{equation} 
-
-    Here, M is an arbitrary collision partner, deemed a \textit{third-body}. Concentration of species $j$ is the moles of $j$ per unit volume. $[O_2]$ is the concentration of $O_2$. The time rate of change of the concentration of $O$ is then:
-
-    \begin{equation}
-        \frac{d [O]}{dt} = 2k [O_2][M]
-    \end{equation}
-
-    Where $k$ is the reaction rate. This equation gives the rate at which Eq. [\ref{ReactionExample1}] goes from left to right. Therefore, $k$ is actually the \textit{forward} reaction rate, $k_f$. The two previous equations should then be:
-
-    \begin{equation}    
-        O_2 + M \overset{k_f}{\longrightarrow} 2O + M
-    \end{equation} 
-
-    \begin{equation}
-        \frac{d [O]}{dt} = 2k_f [O_2][M]
-    \end{equation}
-
-    Of course, the right to left reaction is the \textit{backwards} reaction and is governed by the backwards rate coefficient:
-
-    \begin{equation}
-        O_2 + M \underset{k_b}{\longleftarrow} 2O + M
-    \end{equation}
-
-    \begin{equation}
-        \frac{d [O]}{dt} = -2 k_b [O]^2[M]
-    \end{equation}
-
-    You must combine these forward and backwards equations because both reactions happen. This gives:
-
-    \begin{equation}
-        O_2 + M \overset{k_f}{\underset{k_b}{\longleftrightarrow}} 2O + M
-    \end{equation}
-
-    \begin{equation}
-        \frac{d [O]}{dt} = 2 \bp{k_f [O_2][M] - k_b [O]^2[M]}
-    \end{equation}
-
-    The net rate equation for an arbitrary reaction is then:
-
-    \begin{equation}
-        \frac{d [X_i]}{dt} = (\nu_i'' - \nu_i') \left \{ k_f \prod_i [X_i]^{\nu_i'} - k_b \prod_i [X_i]^{\nu_i''} \right \}
-    \end{equation}
-
-    Where $\nu'$ is the stoichiometric for a reactant species, and $\nu''$ is for product species.
-
-\end{definition}
-
-\begin{definition}[Reaction rate relations]
-
-    The equilibrium constant is very useful to find one reaction rate from the other. There are two equilibrium constants: $K_c$ is the equilibrium constant based on concentrations, and $K_p$ is the equilibrium constant based on partial pressures. They are related through:
-
-    \begin{equation}
-        K_{c,r} = \bp{\frac{p_\circ}{\hat{R}T}}^{\nu_m} \exp{\bb{- \sum_s (\nu_s'' - \nu_s') \bp{\frac{H_s^\circ}{\hat{R}T} - \frac{S_s^\circ}{\hat{R}}}}}
-    \end{equation}
-
-    Where it is raised to a sum due to the complicated nature of the equilibrium constant. Typically, the rate coefficient has variable units, since it depends on the number of molecules in the reaction, which gives rise to a key concept:
-    
-    \vspace{5mm} 
-    \textit{For most chemical kinetic models, the reaction's reactants always consist of 2 species, while the reaction's products may contain two or three species. Therefore, the forwards rate coefficients $k_f$ should always have the same units. Since the equilibrium constant is used to find $k_b$, no unit conversions are necessary besides perhaps from cgs to mks units.}
-
-    With the equilibrium constant of a reaction known, you can find the forward/backward reaction rates as stated above with:
-
-    \begin{equation}
-        \frac{k_{f,r}(T)}{k_{b,r}(T)} = K_\text{c,r}
-    \end{equation}
-
-\end{definition}
-
-\begin{definition}[Arrhenius equations]
-
-    Both forward and backward rate coefficients can be found using the Arrhenius or modified Arrhenius equations, though usually the forward rate is computed and the backward rate is found with the equilibrium constant. The Arrhenius equation has the form:
-
-    \begin{equation}
-        k_{f,r} = C e^{-E_a/kT}
-    \end{equation}
-
-    Where C is a constant, $E_a$ is the activation energy, $k$ is the Boltzmann constant, and $T$ is the temperature. The modified Arrhenius form (more widely used) is:
-
-    \begin{equation}
-        k_{f,r} = C T^\eta e^{-E_0/kT}
-    \end{equation}
-
-    Here, $\eta$ is a reaction specific exponent, and $E_0$ depends on the reaction (could be a dissociation energy, could be 0 for recombination, etc.)
-    
-\end{definition}
-
-\subsection{Reaction Types}
-
-\begin{definition}[Dissociation Reaction]
-
-    A dissociation reaction occurs when a molucule collides with some other species and one or more atoms "detatch" from the molecule. Examples are:
-
-    \begin{align}
-        O_2 + M &\leftrightarrows 2O + M
-        \\ N_2 + M &\leftrightarrows 2N + M
-        \\ NO + M &\leftrightarrows N + O + M
-        \\ O_2 + N &\leftrightarrows NO + O 
-        \label{shuffle}
-        \\ N_2 + O &\leftrightarrows NO + N
-        \\ N_2 + O_2 &\leftrightarrows 2NO
-        \\ N + O &\leftrightarrows NO^+ + e^- 
-        \label{dissrecomb}
-    \end{align}
-
-    Eq. [\ref{shuffle}] is an example of a \textit{bimolecular exchange} reaction. Eq. [\ref{dissrecomb}] is called a \textit{dissociative-recombination}  reaction since the recombination of the $NO^+$ ion with an electron produces a dissociated product.
-
-    \vspace{5mm} To be continued...
-    
-\end{definition}
-
-\begin{definition}[Efficiencies]
-    For certain reactions like dissociation, the outcome of the reaction is the same regardless of the other reactant. These are called \textit{third-body reactions}, since the secondary reactant does not change chemically. The third-body is usually represented with an $M$ as we have already discussed:
-
-    \begin{equation}
-        N_2 + M \rightleftarrows N + N + M \label{thirdbody}
-    \end{equation}
-
-    This $M$ can be any species, and the Arrhenius equation is nearly identical for any $M$, with only a slight change in the leading ceofficient $C$. This coefficient change is called an \textit{efficiency} (denoted here as $\epsilon$), and the algebra will be shown as to how this is beneficial to use. A list of efficiencies in certain reactions are shown in Table \ref{efficiencies}.
-
-    \begin{center}
-    \captionof{table}{Change in modified Ahhrenius constant $C$ for some third-bodies in $N_2$ dissociation.}
-    \label{efficiencies}
-    \begin{tabular}{p{25mm} p{15mm} p{15mm}}
-    \hline
-    Third body & C & $\epsilon$ \\
-    \hline
-    $M = N_2$ & 7.0e21 & 1.0 \\
-    $M = O_2$ & 7.0e21 & 1.0 \\
-    $M = NO$  & 7.0e21 & 1.0 \\
-    $M = N$   & 3.0e22 & 4.2857 \\
-    $M = O$   & 3.0e22 & 4.2857 \\
-    \hline
-    \end{tabular}
-    \end{center}
-
-    Since $7.0e21$ is the smallest value, this is given an efficiency of 1.0, and then any other reaction's efficiency is given as some multiplier of this base value. The physical meaning of efficiencies is how "efficient" that third body is at making that reaction happen. $\epsilon$ is larger for atoms, since they are more efficient in sending their energy into dissociation of a molecule. We can now do some algebra on the Arrhenius equation by letting:
-    
-    \begin{equation}
-        C = \epsilon C_c
-    \end{equation}
-
-    \begin{equation}
-        \gamma = C_c T^\eta e^{E_0/kT}
-    \end{equation}
-    
-    The forward and backwards reaction constants are then:
-
-    \begin{equation}
-        k_f = \epsilon \gamma, \hspace{5mm} k_b = \frac{\epsilon \gamma}{K_{eq}}
-    \end{equation}
-
-    For a third body reaction, the change in the concentration of $N_2$ due to a single third-body $M$ is then:
-
-    \begin{align*}
-        \frac{d[N_2]}{dt} &= (\nu'' - \nu') \left\{ \epsilon \gamma [N_2][M] - \frac{\epsilon \gamma}{K_{eq}}[N]^2[M] \right\} 
-        \\ &= (\nu'' - \nu') \cdot \epsilon \cdot [M] \underbracket{ \left\{ \gamma [N_2] - \frac{\gamma}{K_{eq}}[N]^2 \right\}}_{R}
-    \end{align*}
-
-    $R$ is independant of the third-body, so it is a constant and only needs to be computed once. Summing over contributions from all independant reactions gives:
-
-    \begin{align*}
-        \frac{d[N_2]}{dt} &= \underbracket{(0 - 1)}_{\nu_{N_2}'' - \nu_{N_2}'} \bcb{\sum_{i} \epsilon_i \cdot [M_i]} R
-    \end{align*}
-
-    Where:
-
-    \begin{equation}
-        \sum_i \epsilon_i [M_i] = \epsilon_{N_2} [N_2] + \epsilon_{O_2} [O_2] + \epsilon_{NO} [NO] + \epsilon_{N} [N] + \epsilon_{O} [O] + \dots
-    \end{equation}
-
-    $R$ is retained for the production of $N$ atoms as well, you only need to change the coefficient from the $\nu_i'' - \nu_i''$ term:
-
-    \begin{align*}
-        \frac{d[N]}{dt} = \ub{(2 - 0)}{\nu_{N}'' - \nu_N'} \bcb{\sum_i \epsilon_i \cdot [M_i]} R
-    \end{align*}
-
-\end{definition}
-
-
-\subsection{Example rate equation solution}
-
-    Here, and example is done to find the rate of production of $NO$. Consider the following reactions that all contain $NO$:
-
-    \begin{subequations}
-        \begin{align}
-            NO + O_2 &\leftrightarrows N + O + O_2
-            \\ NO + N_2 &\leftrightarrows N + O + N_2
-            \\ NO + NO &\leftrightarrows N + O + NO
-            \\ NO + O &\leftrightarrows N + O + O
-            \\ NO + N &\leftrightarrows N + O + N
-            \\ O_2 + N &\leftrightarrows NO + O
-            \\ N_2 + O &\leftrightarrows NO + N
-        \end{align}
-    \end{subequations}
-
-    The forward and backward rate coefficients for the reactions are $k_{f,a}$ and $k_{b,a}$ for the first reaction, all the way down with consistent lettering with the equation number. The entire equation is then:
-    
-    \begin{align*}
-        \frac{d[NO]}{dt} &= -\bcb{\gamma [NO] - \frac{\gamma}{K_{eq}} [N][O]} \sum_i \epsilon_i [M]
-        \\ &+ \bcb{k_{f,f} [O_2][N] - k_{b,f} [NO][O]}
-        \\ &+ \bcb{k_{f,g} [N_2][O] - k_{b,g} [NO][N] }
-    \end{align*}
-    
-
-\newpage
-
-\section{Internal energy relaxation}
-
-\subsection{Translational-Vibrational relaxation}
-
-The source term for vibrational energy due to transfer of energy between translational and vibrational energy modes from the Landau-Teller model is:
-
-\begin{equation}
-    Q_{t-v}^{\text{LT}} = \sum_s Q_{t-v,s}^\text{LT}
-\end{equation}
-
-Where 
-
-\begin{equation}
-    Q_{t-v,s}^\text{LT} = \rho_s \frac{e_{vs}^* - e_{vs}}{<\tau_s>}
-\end{equation}
-
-$e_{vs}^*$ is the equilibrium vibrational energy, which is evaluated at the tran-rotational tempertature, $T_{tr}$, while $e_{vs}$ is the actual vibrational energy evaluated with $T_v$. The molar-averaged relaxation time, $<\tau_s>$ is defined by:
-
-\begin{equation}    
-    <\tau_s> = \frac{\sum_r X_r}{\sum_r X_r / \tau_{sr}}
-\end{equation}
-
-This sum happens for all particles $r$, and molecules $s$. The term $\tau_sr$ is the relaxation time between species and has two parts - the Millikan-White part, as well as the high-temperature Park correction. The Millikan-White part uses the equations:
-
-\begin{equation}
-    \tau_{sr}^\text{MW} = \frac{101325}{p} \exp{[A_{sr} (T^{-1/3} - B_{sr}) - 18.42]}
-\end{equation}
-
-Where $A_sr$ and $B_{sr}$ are either set constants or computed from:
-
-\begin{align}
-    \mu_{sr} &= \frac{\mathcal{M}_s \mathcal{M}_r}{\mathcal{M}_s + \mathcal{M}_r}
-    \\ A_{sr} &= 1.16 \times 10^{-3} \mu_{sr}^{1/2} \theta_{vs}^{4/3}
-    \\ B_{sr} &= 0.015 \mu_{sr}^{1/4}
-\end{align}
-
-The Park correction is:
-
-\begin{align}
-    \tau_{s}^\text{P} &= \frac{1}{\bar{c}_s \sigma_s n}
-    \\ \bar{c}_s &= \sqrt{\frac{8 \hat{R} T_{tr}}{ \mathcal{M}_s \pi}}
-    \\ \sigma_s &=  \sigma_{v,s} \bp{\frac{50000}{T_{tr}}}^2
-    \\ n &= \frac{p}{k_b T_{tr}}
-\end{align}
-
-
-
-
-\subsection{Chemical-Vibrational relaxation}
-
-\begin{equation}
-    Q_{c-v,s} = \dot{w}_s e_{v,s}
-\end{equation}
-
-
-
-\newpage
-
 \section{Chemical Equilibrium CFD}
 
 \subsection{Minimization Procedures}
@@ -1814,9 +1300,725 @@ The final derivative is:
 
 
 \newpage
-\section{Thermochemical Nonequilibrium CFD}
+\section{Nonequilibrium Transport Models}
 
-In the following sections, we derive the governing equations for a chemically reacting flow. In each section, we show a conservation equation with alternate forms as well as the physical meaning of each term. Included at the end of eqach equation is the reference it was taken from.
+High-enthalpy flows dissociate and ionize molecules and atoms. The mixture can no longer use a simple Sutherland's law for viscosity, or a constant Prandtl number for heat conductivity. Here, we go over different methods for computing the transport coefficients used in diffusive flux terms.
+
+\subsection{Collision integral definitions}
+
+\begin{definition}[Collision cross sections]
+    The collision cross section has infinitely many values. Four of them are used for fluid dynamics to determine transport properties. The collision cross sections are, in general, the weighted averages of the cross sections for collisions between species $i$ and $j$ (sometimes denoted $s$ and $r$). They are defined as:
+    
+    \begin{equation}
+        \pi \bar{\Omega}_{ij}^{(l,s)} = \frac{\int_{0}^{\infty} \int_{0}^{\pi} \exp(-\gamma^2) \gamma^{2s+3}(1 - \cos^l \chi) 4 \pi \sigma_{ij} \sin\chi d \chi d\gamma}{\int_{0}^{\infty} \int_{0}^{\pi} \exp(-\gamma^2) \gamma^{2s + 3} (1 - \cos^l{\chi}) \sin{\chi} d\chi d \gamma }
+    \end{equation}
+
+    Variables are:
+
+    \begin{itemize}
+        \item $\sigma_{ij} = \sigma_{ij}(\chi, g)$ is the differential-scattering cross section for the pair ($i,j$).
+        \item $\chi$ is the scattering angle in the center of mass system.
+        \item $g$ is the relative velocity of the colliding particles.
+        \item $\gamma$ is the reduced velocity equal to $\displaystyle \bp{ \bb{\frac{m_i m_j}{2(m_i + m_j)kT}}^\frac{1}{2} }g$
+    \end{itemize}
+
+    In the collision integral symbol, $l$ controls how strong the contribution of the differential-scattering angle ($\chi$) is. $s$ is a weighting on the reduced velocity $(\gamma)$ of the particles. Of course, the subscript $(ii)$ refers to the collision integral for similar particles. Here is a list of where certain collision integrals show up:
+
+    \begin{itemize}
+        \item Viscosity ($\mu$) is a function of $\pi \bar{\Omega}_{ij}^{(2,2)}$ only.
+        \item Translational component of thermal conductivity ($\kappa_\text{tr}$) is a function of $\pi \bar{\Omega}_{ij}^{(2,2)}$ only.
+        \item The internal component of thermal conductivity ($\kappa_\text{int}$) is a function of $\pi \bar{\Omega}_{ij}^{(1,1)}$ only or a function of $\pi \bar{\Omega}_{ij}^{(1,1)}$ and $\pi \bar{\Omega}_{ij}^{(2,2)}$, depending on the expression used.
+        \item The binary diffusion coefficient $D_{ij}$ is a function of $\pi \bar{\Omega}_{ij}^{(1,1)}$ only.
+    \end{itemize}
+\end{definition}
+
+
+\begin{definition}[Gupta's curve fits for collision integrals]
+    Gupta utilizes curve fits for the collision integrals. They have the following form:
+
+    \begin{equation}
+        \pi \bar{\Omega}_{ij}^{(l,s)} = \bb{\exp{D}} T^{\bb{A (\ln T)^2 + B \ln T + C}}
+    \end{equation}
+
+    \begin{equation}
+        B_{i,j}^{*(2,2)} = \bb{\exp{C}} T^{\bb{A (\ln T)^2 + B \ln T}}
+    \end{equation}
+
+
+\end{definition}
+
+\subsection{Transport properties of a single species}
+
+\begin{definition}[Viscosity of a single species]
+
+    The viscosity of a gas containing a single species is:  
+
+    \begin{equation}
+        \mu_i = \frac{5}{16} \frac{\sqrt{\pi m_i k T}}{\pi \bar{\Omega}_{ii}^{(2,2)}} = 8.3861 \cdot 10^{-6} \frac{\sqrt{\mathcal{M}_i T}}{\pi \bar{\Omega}_{ij}^{(2,2)}} \hspace{5mm} \text{units = } \frac{\text{N - s}}{\text{m}^2}
+    \end{equation}
+
+    Where $\mathcal{M}_i$ is the molecular weight of species $i$, and $T$ is the temperature in Kelvin. 
+
+\end{definition}
+
+\begin{definition}[Thermal conductivity of a single species]
+    
+    
+    For the thermal conductivity of a single species, we have a number of contributions. The total $\kappa$ of the species is the sum of its internal energy specific contributions, i.e.:
+    
+    \begin{equation}
+        \kappa = \kappa_\text{tr} + \kappa_\text{rot} + \kappa_\text{vib} + \kappa_\text{el} = \kappa_\text{tr} + \kappa_\text{int}
+    \end{equation}
+
+    Where the internal energies that are not translational have been grouped into $\kappa_\text{int}$. 
+
+    \begin{equation}
+        \kappa_{\text{tr}, i} = \frac{5}{2} \frac{\mu_i}{\mathcal{M}_i} (c_{v,i})_\text{tr} = \frac{15}{4} \frac{\hat{R}}{\mathcal{M}_i}\mu_i \hspace{5mm} \text{units = } \frac{\text{J}}{\text{m-s-K}}
+    \end{equation}
+
+    \begin{equation}
+        \kappa_{\text{int}, i} = \frac{6}{5}\frac{c_{p_{\text{int},i}}}{\hat{R}} \frac{\hat{R}}{\mathcal{M}_i} \mu_i \frac{\pi \bar{\Omega}_{ii}^{(2,2)}}{\pi \bar{\Omega}_{ii}^{(1,1)}}
+    \end{equation}
+
+    Here, $c_{p_{\text{int},i}}$ is the total specific heat with the translation specific heat subtracted.
+
+\end{definition}
+
+
+\subsection{Transport properties of a mixture}
+
+For species summation and Wilke's mixing rule, $\mu_j$ and $\kappa_j$ are calculated using the above equations for single species viscosity and conductivity.
+
+
+\begin{definition}[Species summation]
+
+    The concept of the species summation version of finding mixture transport properties is quite simple. It assumes no interaction between species and is expressed as:
+
+    \begin{equation}
+        \mu = \sum_{j=1}^\text{NS} X_j \mu_j \hspace{7.5mm} \kappa = \sum_{j=1}^\text{NS} X_j \kappa_j
+    \end{equation}
+    
+\end{definition}
+
+
+
+\begin{definition}[Wilke's mixing rule]
+
+    Both viscosity and thermal conductivity can be approximated using Wilke's mixing rule. It uses a quantity, $\phi_i$, which is expressed as:
+
+    \begin{equation}
+        \phi_i = \sum_{j=1}^\text{NS} \frac{X_j \bb{1 + \sqrt{\frac{\mu_i}{\mu_j}} \bp{\frac{\mathcal{M}_j}{\mathcal{M}_i}}^\frac{1}{4}}^2}{\sqrt{8 \bp{1 + \frac{\mathcal{M}_i}{\mathcal{M}_j}}}} = \sum_{j=1}^\text{NS} \frac{X_j \bb{1 + \sqrt{\frac{\pi \bar{\Omega}_{jj}^{(2,2)}}{\pi \bar{\Omega}_{ii}^{(2,2)}}}}^2}{\sqrt{8 \bp{1 + \frac{\mathcal{M}_i}{\mathcal{M}_j}}}}
+    \end{equation}
+
+    Then the viscosity and thermal conductivity is found as:
+
+    \begin{equation}
+        \mu = \sum_{j=1}^\text{NS} \frac{X_j \mu_j}{\phi_j} \hspace{5mm} \kappa = \sum_{j=1}^\text{NS} \frac{X_j \kappa_j}{\phi_j}
+    \end{equation}    
+\end{definition}
+
+
+\begin{definition}[Chapman-Enskog approximation method]
+    For obtaining mixture transport quantities using Chapman-Enskog approximations, a number of new variables are used. This is the most rigorous method for finding the properties. The units of $\Delta$ is in centimeters-second, while $\alpha_{ij}$ is unitless.
+
+    \begin{equation}
+        \Delta_{ij}^{(1)} = \frac{8}{3} (1.5460 \cdot 10^{-20}) \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2} \pi \bar{\Omega}_{ij}^{(1,1)}
+    \end{equation}
+
+    \begin{equation}
+        \Delta_{ij}^{(2)} = \frac{16}{5} (1.5460 \cdot 10^{-20}) \bb{\frac{2 \mathcal{M}_i \mathcal{M}_j}{\pi N_A k T (\mathcal{M}_i + \mathcal{M}_j)}}^\frac{1}{2}  \pi \bar{\Omega}_{ij}^{(2,2)}
+    \end{equation}
+
+    For electron-electron collisions, we have:
+
+    \begin{equation}
+        \pi \bar{\Omega}_{ee}^{(2,2)} = 1.29 Q_e \cdot 10^{16}
+    \end{equation}
+
+    For ion-ion collisions, we have:
+
+    \begin{equation}
+        \pi \bar{\Omega}_{II}^{(2,2)} = 1.36 Z^4 Q_e \cdot 10^{16}
+    \end{equation}
+
+    Then for both:
+
+    \begin{equation}
+        \pi \bar{\Omega}_{ee}^{(1,1)} = \pi \bar{\Omega}_{II}^{(1,1)} = 0.795 Z^4 Q_e \cdot 10^{16}
+    \end{equation}
+
+    Here, $Z=1$ for singly ionized species (for aerospace applications this is fine), and:
+
+    \begin{equation}
+        Q_e = \frac{e^4}{(kT)^2} \ln \Lambda \hspace{5mm} \text{cm}^2
+    \end{equation}
+
+    \begin{align}
+        \Lambda &= \bb{\frac{9 (kT)^3}{4 \pi e^6 n_e} + \frac{16 (kT)^2}{e^4 n_e^{2/3}}}^{1/2}
+        \\ &= \bb{2.09 \cdot 10^{-2} \bp{\frac{T^4}{10^{12} p_e}} + 1.52 \bp{\frac{T^4}{10^{12}p_e}}^{2/3}}^{1/2}
+    \end{align}
+
+    Here, $p_e$ is the electron pressure in atmospheres, $n_e$ is the number density of electrons, and $e = 4.8 \cdot 10^{-10}$  esu. These equations are only useful unter for $p_e < $ some limiting value, which should be true in aerospace applications:
+
+    \begin{equation}
+        p_{em} = 0.0975 \bp{\frac{T}{10^3}}^4
+    \end{equation}
+
+    Depending on the data given, the Coulomb cross section may need to be altered. Gupta and Yos give collision cross sections at the above limiting electron pressure, so at any other pressure the cross section needs to be changed:
+
+    \begin{align}
+        \frac{\pi \bar{\Omega}_{ij}^{(l,s)}(p_e)}{\pi \bar{\Omega}_{ij}^{(l,s)}(p_{em})} &= \ln \Lambda (p_e)
+        \\ &= \frac{1}{2} \ln \bb{2.09 \cdot 10^{-2} \bp{\frac{T}{1000 p_e^{1/4}}}^4 + 1.52 \bp{\frac{T}{1000 p_e^{1/4}}}^{8/3}}
+    \end{align}
+
+    Finally, $\alpha_{ij}$ is needed for the heavy-particle translational component of thermal conductivity:
+
+    \begin{equation}
+        \alpha_{ij} = 1 + \frac{[1 - (\mathcal{M}_i / \mathcal{M}_j)][0.45 - 2.54(\mathcal{M}_i / \mathcal{M}_j)]}{[1 + (\mathcal{M}_i / \mathcal{M}_j)]^2}
+    \end{equation}
+
+    Assuming thermochemical nonequilibrium, the mixture viscosity \textit{appears} to not be a function of vibrational or rotation energy, and is thus found with:
+
+    \begin{equation}
+        \mu = \sum_{i=1}^{\text{NS} - 1} \bb{\frac{\frac{\mathcal{M}_i}{N_A}X_i}{\sum_{j=1}^\text{NS - 1} X_j \Delta_{ij}^{(2)}(T) + X_e \Delta_{ie}^{(2)}(T_e) }} + \frac{\frac{\mathcal{M}_e}{N_A} X_e }{\sum_{j=1}^\text{NS} X_j \Delta_{ej}^{(2)}(T_e)}
+    \end{equation}
+
+    Where $X_j$ is the molar fraction, $T$ is the Temperature, and $T_e$ is the electron temperature. In constrast to viscosity, the thermal conductivity is dependant on all energy modes, and therefore has contributions from each mode. They are:
+    \vspace{5mm}
+
+    Translational component without electron-heavy-particle and electron-electron collision:
+
+    \begin{equation}
+        K_\text{tr}^* = (2.3901 \cdot 10^{-8}) \frac{15}{4} k \sum_{i=1}^\text{NS-1} \bb{\frac{X_i}{\sum_{j=1} \alpha_{ij} \Delta_{ij}^{(2)}(T) + 3.54 X_e \Delta_{ie}^{(2)}(T_e) }}
+    \end{equation}
+
+    Rotational component. "p.e." means  "partial excitation" while "f.e." mean "full excitation". If it is in equilibrium with translational temperature, $T_\text{rot} = T$:
+
+    \begin{equation}
+        (K_\text{rot})_\text{p.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{\bb{\frac{c_{p,i}(T_\text{rot})}{\hat{R}} - \frac{5}{2}} X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+    \begin{equation}
+        (K_\text{rot})_\text{f.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+
+    Vibrational component:
+
+    \begin{equation}
+        (K_\text{vib})_\text{p.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{\bb{\frac{c_{p,i}(T_\text{vib})}{\hat{R}} - \frac{7}{2}} X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+    \begin{equation}
+        (K_\text{vib})_\text{f.e.} = (2.3901 \cdot 10^{-8})k \sum_\text{i=mol.} \bb{\frac{X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+    Electronic component:
+
+    \begin{equation}
+        K_\text{el} = (2.3901 \cdot 10^{-8})k \sum_\text{i=1}^\text{NS-1} \bb{\frac{\bb{\frac{c_{p,i}(T_\text{el})}{\hat{R}} - \frac{9}{2}} X_i}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ij}^{(1)}(T) + X_e \Delta_{ie}^{(1)}(T_e)}}
+    \end{equation}
+
+    Free electron component:
+
+    \begin{equation}
+        K_\text{e} = (2.3901 \cdot 10^{-8})k \frac{X_e}{\sum_{j=1}^\text{NS-1}X_j \Delta_{ej}^{(2)}(T_e) + X_e \Delta_{ee}^{(2)}(T_e)}
+    \end{equation}
+
+
+
+
+\end{definition}
+
+
+
+\newpage
+\section{Nonequilibrium Source Terms}
+
+\subsection{Species Mass Source Term}
+\label{sec:chem_source}
+
+
+For a multicomponent gas with NS reacting species and NR different chemical reactions, the stoichiometric relations for the change in reactants and products are:
+
+\begin{equation}
+    \sum_{i=1}^\text{NS} \nu_i' X_i \leftrightarrows \sum_{i=1}^\text{NS} \nu_i'' X_i, 
+    \hspace{5mm} r=1, \dots , \text{NR}
+\end{equation}
+
+Where $\nu_i'$ and $\nu_i''$ are the stoichiometric coefficients for reactants and products respectively. $k_{f,r}$ is the rate coefficient that governs the forward reaction (right arrow), while $k_{b,r}$ governs the backward reaction (left arrow). The net rate of mass production of a species per unit volume has a number of different expressions. Consider the reaction:
+
+\begin{equation}
+    O_2 + M \longrightarrow 2O + M
+    \label{eq:reaction-example-1}
+\end{equation} 
+
+Here, M is an arbitrary collision partner, deemed a \textit{third-body}. Concentration of species $j$ is the moles of $j$ per unit volume and is denoted using brackets, hence $[O_2]$ is the molar concentration of $O_2$. The time rate of change of the concentration of $O$ in Eq.[\ref{eq:reaction-example-1}] is then:
+
+\begin{equation}
+    \frac{d [O]}{dt} = 2k [O_2][M]
+\end{equation}
+
+Where $k$ is the reaction rate. This equation gives the rate at which Eq. [\ref{eq:reaction-example-1}] goes from left to right. Therefore, $k$ is actually the \textit{forward} reaction rate, $k_f$. The two previous equations should then be written as:
+
+\begin{equation}    
+    O_2 + M \overset{k_f}{\longrightarrow} 2O + M
+\end{equation} 
+
+\begin{equation}
+    \frac{d [O]}{dt} = 2k_f [O_2][M]
+\end{equation}
+
+Of course, the right to left reaction is the \textit{backwards} reaction and is governed by the backwards rate coefficient:
+
+\begin{equation}
+    O_2 + M \underset{k_b}{\longleftarrow} 2O + M
+\end{equation}
+
+\begin{equation}
+    \frac{d [O]}{dt} = -2 k_b [O]^2[M]
+\end{equation}
+
+You must combine these forward and backwards equations because both reactions happen simultaneously. This gives the following governing equations for mass production in this reaction:
+
+\begin{equation}
+    O_2 + M \overset{k_f}{\underset{k_b}{\longleftrightarrow}} 2O + M
+\end{equation}
+
+\begin{equation}
+    \frac{d [O]}{dt} = 2 \bp{k_f [O_2][M] - k_b [O]^2[M]}
+\end{equation}
+
+The net rate equation for an arbitrary reaction is then:
+
+\begin{equation}
+    \frac{d [X_i]}{dt} = (\nu_i'' - \nu_i') \left \{ k_f \prod_i [X_i]^{\nu_i'} - k_b \prod_i [X_i]^{\nu_i''} \right \}
+\end{equation}
+
+Where $\nu'$ is the stoichiometric for a reactant species, and $\nu''$ is for product species. The equilibrium constant is very useful to find one reaction rate from the other. There are two equilibrium constants: $K_c$ is the equilibrium constant based on concentrations, and $K_p$ is the equilibrium constant based on partial pressures. They are related through:
+
+\begin{equation}
+    K_{c,r} = \bp{\frac{p_\circ}{\hat{R}T}}^{\nu_{m,r}} \exp{\bb{- \sum_s (\nu_{s,r}'' - \nu_{s,r}') \bp{\frac{H_s^\circ}{\hat{R}T} - \frac{S_s^\circ}{\hat{R}}}}}
+\end{equation}
+
+Where it is raised to a sum due to the complicated nature of the equilibrium constant. Typically, the rate coefficient has variable units, since it depends on the number of molecules in the reaction, which gives rise to a key concept:
+
+\begin{remark}
+For most chemical kinetic models used for modelling air, the reactants usually consist of two species, while the products may contain two or three species. Therefore, the forward rate coefficients $k_f$ should always have the same units. Since the equilibrium constant is used to find $k_b$, no unit conversions are necessary besides perhaps from cgs to SI units.
+\end{remark}
+
+With the equilibrium constant of a reaction known, the forward/backward reaction rates can be found via the following relation:
+
+\begin{equation}
+    \frac{k_{f,r}(T)}{k_{b,r}(T)} = K_\text{c,r}
+    \label{eq:rate-relationship}
+\end{equation}
+
+Both forward and backward rate coefficients can be found using the Arrhenius or modified Arrhenius equations, though usually only the forward rate is computed and the backward rate is found from Eq. [\ref{eq:rate-relationship}]. The Arrhenius equation has the form:
+
+\begin{equation}
+    k_{f,r} = C e^{-E_a/\kB T}
+\end{equation}
+
+Where C is a constant, $E_a$ is the activation energy, and $T$ is the temperature. The modified Arrhenius form (more widely used) is:
+
+\begin{equation}
+    k_{f,r} = C T^\eta e^{-E_a/ \kB T}
+\end{equation}
+
+Here, $\eta$ is a reaction specific exponent, and $E_a$ depends on the reaction (could be a dissociation energy, could be 0 for recombination, etc.)
+
+
+\subsection{Reaction Types}
+
+\begin{definition}[Dissociation and recombination]
+
+    A dissociation reaction occurs when a molecule collides with a particle and the collision energy is large enough to break the molecular bonds between one or more atoms in the molecule. This causes the molecule to dissociate. Recombination is just the reverse of dissociation. Examples of these reactions are:
+
+    \begin{subequations}
+    \begin{align}
+        O_2 + M &\leftrightarrows 2O + M
+        \\ N_2 + M &\leftrightarrows 2N + M
+        \\ NO + M &\leftrightarrows N + O + M
+        \\ O_2 + N &\leftrightarrows NO + O 
+        \label{shuffle}
+        \\ N_2 + O &\leftrightarrows NO + N
+        \\ N_2 + O_2 &\leftrightarrows 2NO
+        \\ N + O &\leftrightarrows NO^+ + e^- 
+        \label{dissrecomb}
+    \end{align}
+    \end{subequations}
+
+    Eq. [\ref{shuffle}] is an example of a \textit{bimolecular exchange} reaction. Eq. [\ref{dissrecomb}] is called a \textit{dissociative-recombination}  reaction since the recombination of the $NO^+$ ion with an electron produces a dissociated product.
+    
+\end{definition}
+
+\begin{definition}[Associative ionization]
+    An associate ionization reaction is a reaction where two neutral atoms combine into an ionic molecule, releasing an electron in the process. Examples are:
+
+    \begin{subequations}
+    \begin{align}
+        N + O &\leftrightarrows NO^+ + e^- \\
+        O + O &\leftrightarrows O_2^+ + e^- \\
+        N + N &\leftrightarrows N_2^+ + e^- 
+    \end{align}
+    \end{subequations}
+\end{definition}
+
+\begin{definition}[Charge exchange] 
+    A charge exchange reaction occurs when particles exchange an electron during a collision. An example of this is:
+
+    \begin{equation}
+        O^+ + N_2 \leftrightarrows N_2^+ + O
+    \end{equation}
+\end{definition}
+
+\begin{definition}[Electron-impact ionization]
+    An electron-impact ionization reaction happens when a neutral particle is ionized by an electron. Examples are:
+
+    \begin{equation}
+        \begin{aligned}
+        N + e^- &= N^+ + e^- + e^- \\
+        O + e^- &= O^+ + e^- + e^-
+        \end{aligned}
+        \label{def:el-imp-ion-reac}
+    \end{equation}    
+\end{definition}
+
+\begin{definition}[Radiative recombination]
+    Needs addition
+\end{definition}
+
+\subsection{Efficiencies in Third-Body Reactions}
+For certain reactions like dissociation, the outcome of the reaction is the same regardless of the other reactant. These are called \textit{third-body reactions}, since the secondary reactant does not change chemically. The third-body is usually represented with an $M$ as we have already discussed:
+
+\begin{equation}
+    N_2 + M \rightleftarrows N + N + M \label{thirdbody}
+\end{equation}
+
+This $M$ can be any species, and the Arrhenius equation is nearly identical for any $M$, with only a slight change in the leading ceofficient $C$. This coefficient change is called an \textit{efficiency} (denoted here as $\epsilon$), and the algebra will be shown as to how this is beneficial to use. A list of efficiencies in certain reactions are shown in Table \ref{efficiencies}.
+
+\begin{center}
+\captionof{table}{Change in modified Ahhrenius constant $C$ for some third-bodies in $N_2$ dissociation.}
+\label{efficiencies}
+\begin{tabular}{p{25mm} p{15mm} p{15mm}}
+\hline
+Third body & C & $\epsilon$ \\
+\hline
+$M = N_2$ & 7.0e21 & 1.0 \\
+$M = O_2$ & 7.0e21 & 1.0 \\
+$M = NO$  & 7.0e21 & 1.0 \\
+$M = N$   & 3.0e22 & 4.2857 \\
+$M = O$   & 3.0e22 & 4.2857 \\
+\hline
+\end{tabular}
+\end{center}
+
+Since $7.0e21$ is the smallest value, this is given an efficiency of 1.0, and then any other reaction's efficiency is given as some multiplier of this base value. The physical meaning of efficiencies is how "efficient" that third body is at making that reaction happen. $\epsilon$ is larger for atoms, since they are more efficient in sending their energy into dissociation of a molecule. We can now do some algebra on the Arrhenius equation by letting:
+
+\begin{equation}
+    C = \epsilon C_c
+\end{equation}
+
+\begin{equation}
+    \gamma = C_c T^\eta e^{E_0/kT}
+\end{equation}
+
+The forward and backwards reaction constants are then:
+
+\begin{equation}
+    k_f = \epsilon \gamma, \hspace{5mm} k_b = \frac{\epsilon \gamma}{K_{eq}}
+\end{equation}
+
+For a third body reaction, the change in the concentration of $N_2$ due to a single third-body $M$ is then:
+
+\begin{align*}
+    \frac{d[N_2]}{dt} &= (\nu'' - \nu') \left\{ \epsilon \gamma [N_2][M] - \frac{\epsilon \gamma}{K_{eq}}[N]^2[M] \right\} 
+    \\ &= (\nu'' - \nu') \cdot \epsilon \cdot [M] \underbracket{ \left\{ \gamma [N_2] - \frac{\gamma}{K_{eq}}[N]^2 \right\}}_{R}
+\end{align*}
+
+$R$ is independant of the third-body, so it is a constant and only needs to be computed once. Summing over contributions from all independant reactions gives:
+
+\begin{align*}
+    \frac{d[N_2]}{dt} &= \underbracket{(0 - 1)}_{\nu_{N_2}'' - \nu_{N_2}'} \bcb{\sum_{i} \epsilon_i \cdot [M_i]} R
+\end{align*}
+
+Where:
+
+\begin{equation}
+    \sum_i \epsilon_i [M_i] = \epsilon_{N_2} [N_2] + \epsilon_{O_2} [O_2] + \epsilon_{NO} [NO] + \epsilon_{N} [N] + \epsilon_{O} [O] + \dots
+\end{equation}
+
+$R$ is retained for the production of $N$ atoms as well, you only need to change the coefficient from the $\nu_i'' - \nu_i''$ term:
+
+\begin{align*}
+    \frac{d[N]}{dt} = \ub{(2 - 0)}{\nu_{N}'' - \nu_N'} \bcb{\sum_i \epsilon_i \cdot [M_i]} R
+\end{align*}
+
+
+
+\subsection{Example rate equation solution}
+
+    Here, and example is done to find the rate of production of $NO$. Consider the following reactions that all contain $NO$:
+
+    \begin{subequations}
+        \begin{align}
+            NO + O_2 &\leftrightarrows N + O + O_2
+            \\ NO + N_2 &\leftrightarrows N + O + N_2
+            \\ NO + NO &\leftrightarrows N + O + NO
+            \\ NO + O &\leftrightarrows N + O + O
+            \\ NO + N &\leftrightarrows N + O + N
+            \\ O_2 + N &\leftrightarrows NO + O
+            \\ N_2 + O &\leftrightarrows NO + N
+        \end{align}
+    \end{subequations}
+
+    The forward and backward rate coefficients for the reactions are $k_{f,a}$ and $k_{b,a}$ for the first reaction, all the way down with consistent lettering with the equation number. The entire equation is then:
+    
+    \begin{align*}
+        \frac{d[NO]}{dt} &= -\bcb{\gamma [NO] - \frac{\gamma}{K_{eq}} [N][O]} \sum_i \epsilon_i [M]
+        \\ &+ \bcb{k_{f,f} [O_2][N] - k_{b,f} [NO][O]}
+        \\ &+ \bcb{k_{f,g} [N_2][O] - k_{b,g} [NO][N] }
+    \end{align*}
+    
+
+\newpage
+
+\subsection{Translational-Vibrational Energy Relaxation}
+\label{sec:vib-trans-relax}
+
+The energy exchange between the vibrational and translational energy modes is a source term that needs to be modelled in both two- or three-temperature systems of conservation equations. It is expressed as the sum of the energy exchange between each species containing a vibrational energy mode:
+
+\begin{equation}
+    \mathcal{S}_{t-v}^v = \sum_s^\text{ND} \mathcal{S}_{t-v,s} = \sum_s^\text{ND} \rho_s \frac{e_{vs}(T_{tr}) - e_{vs}(T_v)}{<\tau_s>}
+    \label{eq:vib-relax}
+\end{equation}
+
+In Eq. [\ref{eq:vib-relax}], $e_{vs}(T_{tr})$ is the equilibrium vibrational energy evaluated at the trans-rotational tempertature, $T_{tr}$, while $e_{vs}(T_v)$ is the actual vibrational energy evaluated with $T_v$. The molar-averaged relaxation time, $<\tau_s>$ is defined by:
+
+\begin{equation*}    
+    <\tau_s> = \frac{\sum_r \Xmol_r}{\sum_r \Xmol_r / \tau_{sr}^\text{MW}}
+\end{equation*}
+
+This sum takes placeover all particles $r$ (atomic or polyatomic), and molecules $s$. The term $\tau_{sr}$ is the relaxation time between the molecule $s$ and particle $r$ and is often computed using the Millikan-White curve-fits:
+
+\begin{equation*}
+    \tau_{sr}^\text{MW} = \frac{101325}{p} \exp{[A_{sr} (T_{tr}^{-\frac{1}{3}} - B_{sr}) - 18.42]}
+\end{equation*}
+
+Where $A_{sr}$ and $B_{sr}$ are either set constants or computed from the following definitions:
+
+\begin{align*}
+    \mu_{sr} &= \frac{\MW_s \MW_r}{\MW_s + \MW_r}
+    \\ A_{sr} &= 1.16 \times 10^{-3} \mu_{sr}^{1/2} \theta_{vs}^{4/3}
+    \\ B_{sr} &= 0.015 \mu_{sr}^{1/4}
+\end{align*}
+
+The Park high temperature correction is added to the molar averaged Millikan-White time:
+
+\begin{equation*}
+    \tau_s = <\tau_s> + \tau_s^P
+\end{equation*}
+
+Where $\tau_s^P$ is defined as:
+
+\begin{align*}
+    \tau_{s}^\text{P} &= \frac{1}{\bar{c}_s \sigma_s n}
+    \\ \bar{c}_s &= \sqrt{\frac{8 \Rhat T_{tr}}{ \MW_s \pi}}
+    \\ \sigma_s &=  \sigma_{v,s} \bp{\frac{50000}{T_{tr}}}^2
+    \\ n &= \frac{p}{\kB T_{tr}}
+\end{align*}
+
+Here, $\sigma_{v,s}$ is a constant for each species.
+
+\subsection{Electron-Translational Energy Relaxation}
+\label{sec:el-trans-relax}
+The transfer of energy between electron and translational energy modes is a source term that needs to be modelled in either a two-temperature vibration-electronic-electron or a three-temperature electronic-electron conservation equation. This source term is given by:
+
+\begin{equation*}
+    \mathcal{S}_{t-e}^e = 2 \rho_e \frac{3}{2} \Rhat (T_{tr} - T_e) \sum_{s \neq e}^\text{NS} \frac{\nu_{es}}{\MW_s} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
+\end{equation*}
+
+Note that this is a Landau-Teller like form for energy relaxation:
+
+\begin{equation*}
+    \mathcal{S}_{t-e}^e = \frac{e_e(T_{tr}) - e_e(T_e)}{<\tau_{es}>} \hspace{5mm} \text{with} \hspace{5mm} \frac{1}{<\tau_{es}>} = \sum_{s \neq e} ^\text{NS} \frac{\nu_{es}}{\MW_s}
+\end{equation*}
+
+The frequency $\nu_{es}$ for electron-ion collisions is computed as:
+
+\begin{equation*}
+    \nu_{es} = \frac{8}{3} \sqrt{\frac{\pi}{m_e}} n_s \frac{q^2}{(2 \kB T_e)^\frac{3}{2}} \ln \bb{\frac{(\kB T_e)^3}{\pi n_e q^3}}
+\end{equation*}
+
+Where we have the following equation for $q$, with $\elq$ measured in Coulombs. Note that many other equations are given in CGS units. As such, in those representations, $\elq$ is measured in esu and the denominator is set to one. As stated, we use $\elq$ as measured in Coulumbs, and all other variables in SI units.
+
+\begin{equation*}
+    q = \frac{\elq^2}{4 \pi \epso}
+\end{equation*}
+
+The collision frequency for electron-neutral combinations is:
+
+\begin{equation*}
+    \nu_{es} = n_s \sigma_{es} \sqrt{\frac{8 \kB T_e}{\pi m_e}}
+\end{equation*}
+
+Where the cross section $\sigma_{es}$ is taken from curve fits:
+
+\begin{equation*}
+    \sigma_{es} = a_s + b_s T_e + c_s T_e^2 \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
+\end{equation*}
+
+The constants for curve fits for the neutral species is found in Table [\ref{tab:el-neut-x-sec}].
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{cccc}
+\hline
+$s$ & $a_s$ & $b_s$ & $c_s$ \\
+\hline
+$N_2$ & $7.5\times10^{-20}$ & $5.5\times10^{-24}$ & $-1.0\times10^{-28}$ \\
+$O_2$ & $2.0\times10^{-20}$ & $6.0\times10^{-24}$ & $0.0$ \\
+$NO$ & $1.0\times10^{-19}$ & $0.0$ & $0.0$ \\
+$N$ & $5.0\times10^{-20}$ & $0.0$ & $0.0$ \\
+$O$ & $1.2\times10^{-20}$ & $1.7\times10^{-24}$ & $-2.0\times10^{-29}$ \\
+\hline
+\end{tabular}
+\caption{Curve fit constants for electron-neutral energy exchange cross sections $\sigma_{es}$. Ref. \cite{gnoffo1989}}
+\label{tab:el-neut-x-sec}
+\end{table}
+
+\subsection{Vibrational-Electron Energy Relaxation}
+\label{sec:vib-el-relax}
+
+Energy exchange between free electrons and vibrational modes is either neglected, or only modelled for Nitrogen, as there is a strong resonance seen in Nitrogen's electronic ground state $X^1 \Sigma_g$. This reaction is described as:
+
+\begin{equation*}
+    e^- + N_2(X^1 \Sigma_g^+;v) \rightarrow N_2^-(^2 \Pi_g) \rightarrow e^- + N_2(X^1 \Sigma_g^+; w)
+\end{equation*}
+
+Here, a free electron collides with an $N_2$ molecule and briefly attaches and detaches. However, this inelastic collision increases the vibrational level of $N_2$ from $v$ to $w$. A number of curve fits exist to compute this energy source term where a Landau-Teller form is used:
+
+\begin{equation*}
+    \mathcal{S}_{v-e}^{ve} = \frac{e_v^{N_2}(T_e) - e_v^{N_2}(T_v)}{\tau_{ve}}
+\end{equation*}
+
+The above equation implies that the source term is only accounting for this specific resonance in $N_2$, and so there is no sum of all diatomic species. One model for the relaxation time is proposed by Ref. \cite{candler1988}:
+
+\begin{equation}
+\log\!\left(p_e \tau_e\right)=
+\begin{cases}
+7.50(\log T_e)^2 - 57.0\log T_e + 98.70,
+& T_e < 7000~\si{\kelvin}, \\[0.5em]
+2.36(\log T_e)^2 - 17.9\log T_e + 24.35,
+& T_e > 7000~\si{\kelvin}.
+\end{cases}
+\end{equation}
+
+Where $\log$ is in base 10, and the electron pressure is in atmospheres. A more recent model from Ref. \cite{laporta2013} proposes the following curve fit:
+
+\begin{equation*}
+    p_e \tau_e = p_e \tau_e^\text{min} + \sum_{i=1}^3 c_i (T_e - T_e^\text{min})^i, \hspace{5mm} T_e \geq T_e^\text{min}
+\end{equation*}
+
+With the following curve fit parameters:
+
+\begin{align*}
+    c_1 &= 2.38 \times 10^{-5} - 4.54 \times 10^{-9} T_v + 1.65 \times 10^{-13} T_v^2 \\
+    c_2 &= 1.78 \times 10^{-8} + 2.11 \times 10^{-12} T_v - 2.23 \times 10^{-17} T_v^2 \\
+    c_3 &= 1.17 \times 10^{-13} \\
+\end{align*}
+
+And:
+
+\begin{align*}
+    T_e^\text{min} &= \frac{b}{T_v + a} \\
+    p_e \tau_e^ \text{min} &= c + d T_v \\
+    a &= \qty{2.21599e4}{\kelvin} \\
+    b &= \qty{1.60e8}{\kelvin\squared} \\
+    c &= \qty{1.20e-5}{\joule\per\meter\tothe{3}} \\
+    d &= \qty{5.90e-10}{\joule\per\meter\tothe{3}\second\per\kelvin} \\
+\end{align*}
+
+\subsection{Electron Impact Ionization Source Term}
+\label{sec:el_ion_source}
+Energy loss due to electron impact ionization is a source term that needs to be modelled in a two-temperature vibrational-electronic-electron or three-temperature electronic-electron conservation equation. The term is denoted as:
+
+\begin{equation*}
+    \mathcal{S}_{e-i}^{ve} = \sum_{s}^\text{NI} \dot{n}_{e,s} \hat{I}_s
+\end{equation*}
+
+Where the sum is taken over all ionized species undergoing an electron impact ionization reaction. $\dot{n}_{e,s}$ is the molar rate of ionization. In Park's models, there are only two electron impact ionization reactions:
+
+\begin{align*}
+    N + e^- \leftrightarrow N^+ + e^- + e^- \\
+    O + e^- \leftrightarrow O^+ + e^- + e^-
+\end{align*}
+
+Here, $\dot{n}_{e,s}$ is taken as the rate of the forward reaction. The first ionization energies for neutral species is shown in Table [\ref{tab:first-ion-energy}].
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{cccc}
+\hline
+$s$ & $\hat{I}_s$ (eV) & $\hat{I}_s$ (\unit{\joule\per\kilo\mole}) & $\hat{I}_s$ (\unit{\joule\per\kilo\gram}) \\
+\hline
+$N_2$ & 15.51 & $1.4967 \times 10^9$ & $5.343 \times 10^7$ \\
+$O_2$ & 12.5 & $1.2063 \times 10^9$ & $3.770 \times 10^7$ \\
+$NO$ & 9.5 & $0.9167 \times 10^9$ & $3.055 \times 10^7$ \\
+$N$ & 14.53 & $1.4021 \times 10^9$ & $1.0010 \times 10^8$ \\
+$O$ & 13.614 & $1.3138 \times 10^9$ & $8.211 \times 10^7$ \\
+\hline
+\end{tabular}
+\caption{Valus for the first ionization energies $\hat{I}_s$ of neutral species in different units. Ref. \cite{gnoffo1989}}
+\label{tab:first-ion-energy}
+\end{table}
+
+
+\subsection{Vibration-Chemical Energy Relaxation}
+\label{sec:vib-chem-source}
+
+The vibrational energy lost or gained due to depletion of vibrationally excited molecules through dissociation or recombination is a source term that needs to be modelled in the vibrational energy conservation equation. It is expressed by:
+
+\begin{equation}
+    \mathcal{S}_{v-c}^{v} = \sum_{s}^\text{ND} \mathcal{S}_{v-c,s}^{v} = \sum_s^\text{ND} \dot{w}_s \hat{D}_s
+\end{equation}
+
+Where $\dot{\omega}_s$ is the rate at which species $s$ is created or destroyed, and $\hat{D}_s$ is representative of the amount of vibrational energy that is associated with that molecule. A non-preferential method assumes that the vibrational energy associated with the molecule can be taken as the average among molecules of species $s$, i.e. $\hat{D}_s = e_{v,s}(T_v)$. This is an incomplete description, however, since it is believed that molecules at an elevated vibrational state are more likely to dissociate, and hence the non-preferential method tends to underestimate the amount of vibrational energy destroyed in a dissociation reaction.
+
+\hspace{5mm}
+Other appraoches assume is that the value of $\hat{D}_s$ is taken as the product of a constant and the dissociation energy of the molecule, $\tilde{D}_s$, or a constant and the average vibrational energy of species $s$:
+
+\begin{align*}
+    \hat{D}_s &= c_1 \tilde{D}_s \\
+    \hat{D}_s &= c_2 e_{v,s}(T_v)
+\end{align*}
+
+In these cases, $c_1$ is a value less that 1.0, with some examples being 0.8, or 0.3. $c_2$ is a constant higher than 1.0, to model that the vibrational energy dissociate is indeed higher than $e_{v,s}(T_v)$. The dissociation energies for air molecules $\tilde{D}_s$ are shown in Table [\ref{tab:diss-energies}]
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{cccc}
+\hline
+$s$ & $\tilde{D}_s$ (eV) & $\tilde{D}_s$ (\unit{\joule\per\kilo\mole}) & $\tilde{D}_s$ (\unit{\joule\per\kilo\gram}) \\
+\hline
+$N_2$ & 9.759 & $9.417 \times 10^8$ & $3.3618 \times 10^7$ \\
+$O_2$ & 5.115 & $4.936 \times 10^8$ & $1.5426 \times 10^7$ \\
+$NO$ & 6.496 & $6.269 \times 10^8$ & $2.0891 \times 10^7$ \\
+$N_2^+$ & 8.712 & $8.407 \times 10^8$ & $3.0011 \times 10^7$ \\
+$O_2^+$ & 6.663 & $6.430 \times 10^8$ & $2.0097 \times 10^7$ \\
+$NO^+$ & 10.85 & $1.047 \times 10^9$ & $3.4894 \times 10^7$ \\
+\hline
+\end{tabular}
+\caption{Values for the dissociation energies $\tilde{D}_s$ of molecules in different units. Ref. \cite{gnoffo1989}}
+\label{tab:diss-energies}
+\end{table}
+
+
+\newpage
+\section{Nonequilibrium Conservation Equations}
+
+In the following sections, we show the governing equations for a chemically reacting flow in thermal nonequilibrium. In each section, we show a conservation equation with alternate forms as well as the physical meaning of each term and explanations of variables. Included at the end of each equation is the reference the equation was taken from.
 
 \subsection{Species conservation equation}
 
@@ -1833,27 +2035,32 @@ The terms are:
     \item Time rate of change of $s$-species mass.
     \item Flux of mass due to convection.
     \item Molecular diffusion flux.
-    \item Chemical production rate due to reactions.
+    \item Chemical production rate due to reactions. This term is explained in Sec. [\ref{sec:chem_source}].
 \end{enumerate}
 
 The variables are:
 \begin{itemize}
-    \item $\rho_s$ is the density of species s
-    \item $u_j$ is the mass-averaged velocity in the $j$-direction
-    \item $D_s$ is the effective diffusion coefficient of species s
-    \item $y_s$ is the molar fraction of species s
-    \item $\dot{\omega}_s$ is the chemical production rate of species s
+    \item $\rho_s$ is the density of species $s$.
+    \item $u_j$ is the mass-averaged velocity in the $j$-direction.
+    \item $D_s$ is the effective diffusion coefficient of species $s$.
+    \item $y_s$ is the molar fraction of species $s$.
+    \item $\dot{\omega}_s$ is the chemical production rate of species $s$.
     \item $\boldsymbol{V}_s$ is the diffusion velocity of species $s$.
 \end{itemize}
 
-\begin{definition}[Molecular Diffusion Flux]
-    There are a number of ways to express the molecular diffusion flux. Sometimes if it gives as $J_s$ = $\rho_s \boldsymbol{V}_s$. From the above equation, we can see that $J_s$ is also equivalent to $\rho D_s \nabla y_s$. There are many different methods to compute the diffusion flux. Some examples are Fick's law, the modified Fick's law, and the Stefan-Maxwell equations. 
-\end{definition}
+\begin{definition}[Molecular diffusion flux]
+    There are a number of ways to express the molecular diffusion flux. Sometimes it is given as $J_s$ = $\rho_s \boldsymbol{V}_s$. From the above equation, we can see that $J_s$ is also equivalent to $\rho D_s \nabla y_s$. There are many different methods to compute the diffusion flux. Some examples are Fick's law, the modified Fick's law, and the Stefan-Maxwell equations. These methods are discussed in more detail in the next section. It is important to note that the sum of the diffusion fluxes across all species is zero, as this enforces mass conservation:
 
+\end{definition}
 
 
 \subsection{Total continuity equation}
     For chemically reacting flows, the total continuity equation is unaffected. It is:
+
+
+    \begin{equation*}
+        \pd{\rho}{t} + \pd{}{x_j} (\rho u_j) = 0
+    \end{equation*}
 
     \begin{equation}
         \pd{\rho}{t} + \nabla \cdot (\rho \textbf{u}) = 0
@@ -1878,31 +2085,31 @@ The variables are:
     The terms are:
 
     \begin{enumerate}
-        \item Rate of change of $i$th component of momentum.
+        \item Time rate of change of $i$th component of momentum.
         \item Flux of $i$th component of momentum due to convection.
         \item Pressure forces in $i$th direction.
         \item Viscous terms acting in $i$th direction.
         \item Electric field forces acting on the mixture.
     \end{enumerate}
 
-    Here, the mixture pressure is defined with Dalton's law of partial pressures, and the pressure of an individual heavy species is:
+    The variables are:
 
-    \begin{equation}
-        p_s = \frac{\rho_s \hat{R}T}{\mathcal{M}_s}
-    \end{equation}
-
-    For electron pressure, we get:
-
-    \begin{equation}
-        p_e = \frac{\rho_e \hat{R} T_e}{\mathcal{M}_e}
-    \end{equation}
-
-    Where the $e$ subscript denotes an electron property.
+    \begin{itemize}
+        \item $\rho u_i$ is the mass averaged momentum in the $i$ direction.
+        \item $u_j$ is the mass averaged velocity in the $j$ direction.
+        \item $p$ is the pressure of the mixture compute with Dalton's law of partial pressures.
+        \item $\mu$ is the mixture viscosity.
+        \item $n$ is the mixture number density.
+        \item $q = \sum_s X_s q_s$ is the mixture charge.
+        \item $\boldsymbol{E}' = \boldsymbol{E} + \boldsymbol{u} \times \boldsymbol{B}$ is the electric field in the hydrodynamic velocity frame. Here, $\boldsymbol{E}$ is the electric field while $\boldsymbol{B}$ is the magnetic field.
+        \item $\boldsymbol{j} = \sum_s \boldsymbol{j}_s = \sum_s n_s q_s \boldsymbol{V}_s$ is the mixture conduction current.
+    \end{itemize}
 
 \subsection{Vibrational energy conservation}
 
     \begin{multline}
-        \ub{\pd{}{t} \rho e_v}{1} + \ub{\pd{}{x_j}\rho e_v u_j}{2} = \ub{\pd{}{x_j} \bp{\eta_v \pd{T_v}{x_j}}}{3} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{v,s} D_s \pd{y_s}{x_j}}}{4} \\ + \ub{\sum_\text{s = mol.} \rho_s \frac{(e_{v,s}^* - e_{v,s})}{<\tau_s>}}{5} + \ub{\sum_\text{s=mol.} \rho_s \frac{(e_{v,s}^{**} - e_{v,s})}{<\tau_{es}>}}{6} + \ub{\sum_\text{s=mol.}\dot{w}_s \hat{D}_s}{7}
+        \ub{\pd{}{t} \rho e_v}{1} + \ub{\pd{}{x_j}\rho e_v u_j}{2} = \ub{\pd{}{x_j} \bp{\kappa_v \pd{T_v}{x_j}}}{3} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{v,s} D_s \pd{y_s}{x_j}}}{4} + \ub{\mathcal{S}_{t-v}^{v}}{5} + \ub{\mathcal{S}_{e-v}^{ve}}{6} + \ub{\mathcal{S}_{v-c}^{v}}{7} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
+        \label{eq:cons_vib_energy}
     \end{multline}
 
     The terms are:
@@ -1912,19 +2119,19 @@ The variables are:
         \item The flux of vibrational energy due to convection.
         \item The conduction of vibrational energy due to vibrational temperature gradients.
         \item The diffusion of vibrational energy due to molecular concentration gradients.
-        \item The energy exchange (relaxation) between vibrational and translational modes due to collisions within the cell.
-        \item The energy exchange between vibrational and electronic modes.
-        \item The vibrational lost/gained due to molecular depletion (dissociation) or production (recombination).
+        \item The energy exchange (relaxation) between vibrational and translational modes due to collisions within the cell. It is denoted as $\mathcal{S}_{t-v}^v$ and explained in Sec. [\ref{sec:vib-trans-relax}]
+        \item The energy exchange between vibrational and electronic modes. It is explained in Sec. [\ref{sec:el-trans-relax}].
+        \item The vibrational lost/gained due to molecular depletion (dissociation) or production (recombination). It is explained in [\ref{sec:vib-chem-source}].
     \end{enumerate}
 
     The variables are:
 
     \begin{itemize}
         \item $e_v$ is the vibrational energy per unit mass, defined as $\displaystyle e_v = \sum_{s=1}^\text{NS} \frac{\rho_s e_{v,s}}{\rho}$. $e_v$ is defined as a function of $T_v$, the vibrational temperature.
-        \item $\eta_v$ is the vibrational thermal conductivity.
+        \item $\kappa_v$ is the vibrational thermal conductivity.
         \item $h_{v,s}$ is the vibrational enthalpy. It is identical to $e_{v,s}$.
-        \item $e_{v,s}^*$ is the vibrational energy of species $s$ at the translational-rotational temperature.
-        \item $e_{v,s}^{**}$ is the vibrational energy at the electron temperature. 
+        \item $e_{v,s}^*$ is the vibrational energy of species $s$ evaluated at the translational-rotational temperature.
+        \item $e_{v,s}^{**}$ is the vibrational energy evaluated at the electron temperature. 
         \item $<\tau_s>$ is the characteristic relaxation times for translational-vibrational (T-V) energy exchange.
         \item $<\tau_{es}>$ is the characteristic relation times for electron-vibrational (e-V) energy exchange.
         \item $\hat{D}_s$ is the vibration energy level representative of those molecules of species $s$ which are created or destroyed (recombined or dissociated) because of their high vibrational quantum numbers.
@@ -1933,7 +2140,7 @@ The variables are:
 \subsection{Electron and electronic excitation energy conservation}
 
     \begin{multline}
-        \ub{\pd{}{t} \rho e_e}{1} + \ub{\pd{}{x_j} \bb{u_j(\rho e_e + p_e)}}{2} = \ub{u_j \pd{p_e}{x_j} }{3} + \ub{\pd{}{x_j} \bp{\eta_e \pd{T_e}{x_j}}}{4} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{e,s} D_s \pd{y_s}{x_j}}}{5} \\ + \ub{2 \rho_e \frac{3}{2} \hat{R}(T - T_e) \sum_{s=1}^\text{NS - 1} \frac{\nu_{es}}{\mathcal{M}_s}}{6}  - \ub{\sum_\text{s=ion}\dot{n}_{e,s} \hat{I}_s}{7} - \ub{\sum_\text{s=mol.} \rho_s \frac{e_{v,s}^{**} - e_{v,s}}{<\tau_{es}>}}{8} - \ub{Q_\text{rad}}{9}
+        \ub{\pd{}{t} \rho e_e}{1} + \ub{\pd{}{x_j} \bb{u_j(\rho e_e + p_e)}}{2} = \ub{u_j \pd{p_e}{x_j} }{3} + \ub{\pd{}{x_j} \bp{\kappa_e \pd{T_e}{x_j}}}{4} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{e,s} D_s \pd{y_s}{x_j}}}{5} \\ + \ub{\mathcal{S}_{t-e}^e}{6}  - \ub{\mathcal{S}_{e-i}^{e}}{7} - \ub{\mathcal{S}_{v-e}^{ve}}{8} - \ub{Q_\text{rad}}{9} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
     \end{multline}
 
     Terms are:
@@ -1941,12 +2148,12 @@ The variables are:
     \begin{enumerate}
         \item Rate of change of electronic energy per unit volume.
         \item The flux of electronic enthalpy due to convection.
-        \item The word done on electrons by an electron field by an electron pressure gradient.
+        \item The work done on electrons by an electron field by an electron pressure gradient.
         \item The conduction of electronic energy due to electron temperature gradient.
         \item The diffuction of electronic energy due to concentration gradients.
-        \item The energy exchange due to elastic collisions between electrons and heavy particles.
-        \item Energy loss due to electron impact ionization (note the sum indices sum over ionized species only).
-        \item The relaxation due to inelastic collisions between electrons and molecules. 
+        \item The energy exchange due to elastic collisions between electrons and heavy particles. Its expression is explained in Sec. [\ref{sec:el-trans-relax}].
+        \item Energy loss due to electron impact ionization. It is expression is explained in Sec. [\ref{sec:el_ion_source}].
+        \item The energy lost due to inelastic collisions between electrons and molecules, where electron energy is transfered into vibrational energy states of the molecule. It is the same term that appears in in the vibrational energy equation, but note that the sign is reversed. It's expression is detailed in Sec. [\ref{sec:vib-el-relax}]
         \item Rate of energy loss due to radiation caused by electronic transitions.
     \end{enumerate}
 
@@ -1999,18 +2206,20 @@ The variables are:
     By combining the vibrational and electronic energy equations, we get the vibrational-electronic energy conservation equation:
 
     \begin{multline}
-        \ub{ \pd{}{t} \rho e_V}{1} + \ub{\pd{}{x_j} \rho e_V u_j}{2} = \ub{- p_e \pd{u_j}{x_j}}{3} + \ub{\pd{}{x_j} \bb{(\eta_v + \eta_e) \pd{T_V}{x_j}}}{4} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{V,s} D_s \pd{y_s}{x_j}}}{5} + \ub{\sum_{s=mol.} \rho_s \frac{(e_{v,s}^* - e_{v,s})}{<\tau_s>}}{6} \\ + \ub{2 \rho_e \frac{3}{2} \hat{R}(T - T_V) \sum_{s=1}^\text{NS - 1} \frac{\nu_{es}}{\mathcal{M}_s}}{7}  - \ub{\sum_\text{s=ion} \dot{n}_{e,s} \hat{I}_s}{8} + \ub{ \sum_{s=mol.} \dot{w}_s \hat{D}_s}{9}- \ub{Q_\text{rad}}{10}
+        \ub{ \pd{}{t} \rho e_V}{1} + \ub{\pd{}{x_j} \rho e_V u_j}{2} = \ub{- p_e \pd{u_j}{x_j}}{3} + \ub{\pd{}{x_j} \bb{(\eta_v + \eta_e) \pd{T_V}{x_j}}}{4} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{V,s} D_s \pd{y_s}{x_j}}}{5} \\ + \ub{\mathcal{S}_{t-v}^v}{6} + \ub{\mathcal{S}_{t-e}^{ve}}{7}  - \ub{\mathcal{S}_{e-i}^{ve}}{8} + \ub{\mathcal{S}_{v-c}^{v}}{9}- \ub{Q_\text{rad}}{10}
     \end{multline}
 
     Where:
 
     \begin{align}
         e_V &= e_v + e_e
-        \\ h_{V,s} &= h_{v,s} h_{e,s}
+        \\ h_{V,s} &= h_{v,s} + h_{e,s}
     \end{align}
 
 
-\subsection{Derivatives}
+\subsection{Partial Derivatives}
+
+In this section, partial derivatives are given for numerous flow quanties for use in assembling the Jacobian matrices for the flow solver.
 
 \subsubsection{Partial derivatives of pressure ($P$)}
 
@@ -2530,8 +2739,75 @@ The nonlinear residual is:
 
 Where $U$ = $U^{n+1}$ or $U^{k+1}$. We aim to find a $U$ that satisfies $R(U^{n+1})$ = 0. Therefore, we use Newton steps to find this value. First, take your current $U_n$, and set it as $U_k$. 
 
-\clearpage
+\newpage
 \section{Stagnation Line Solver for Nonequilibirum Flow}
+
+The Dimensionally-Reduced Navier-Stokes Equations (DRNSE) are found by first casting the Navier-Stokes equations into cylindrical or polar coordinates and then using a separation of variables technique to cast certain flow quantities as functions of the radial coordinate $r$ only. An example is shown in the next section by introducing the conservation of electronic-electron internal energy equation into the DRNSE.
+
+\subsection{Derivation of Electronic-Electron Energy Conservation Equation for the DRNSE}
+
+First, we show the electronic-electron energy in cartesian coordinates again, grouping source terms together into $S_e$ for simplicity:
+
+\begin{equation*}
+    \pd{}{t} \rho e_e + \pd{}{x_j} \bb{u_j(\rho e_e + p_e)} + \pd{q_j^e}{x_j} = u_j \pd{p_e}{x_j} + S_e \hspace{5mm}
+\end{equation*}
+
+We use the following relationships from Ref. \cite{klomfass1996} to cast the divergences of scalars, vectors, and tensors in cartesian coordinates into polar coordinates, throwing away any derivatives with respect to the aximuthal angle, $\phi$, due to the assumption of rotationally-symmetric flow:
+
+\begin{equation}
+\begin{aligned}
+\pd{}{x_j} \cdot (p \boldsymbol{I}) &= \pd{p}{r} + \frac{1}{r} \pd{p}{\theta} \\
+\pd{}{x_j} \cdot (f(r) u_j) &= \pd{}{r}[f(r) u_r] + \frac{2}{r} f(r) u_r + \frac{\cot \theta}{r} f(r) u_\theta + \frac{1}{r} \pd{}{\theta} [f(r) u_\theta]
+\label{eq:polar_div}
+\end{aligned}
+\end{equation}
+
+The separation of variables technique assumes that we can cast a flow quantity dependant on $r$ and $\theta$ as the product of a function of $r$ and a function of $\theta$:
+
+\begin{equation*}
+    F(r, \theta) = \bar{F}(r) F^*(\theta)
+\end{equation*}
+
+We now need reasonable approximations for flow quantities using this ansatz. Klomfass and Muller chose the following:
+
+\begin{equation}
+\begin{aligned}
+    u_r (r, \theta) &= \bar{u}_r (r) \cos \theta \\
+    u_\theta (r, \theta) &= \bar{u}_\theta (r) \sin \theta \\
+    p(r, \theta) &= \bar{p}(r) \cos^2 \theta + p_\infty
+\end{aligned}
+\label{eq:DRNSE_ansatz}
+\end{equation}
+Pluggins Eqs. \ref{eq:DRNSE_ansatz} into \ref{eq:polar_div} and setting $f(r) = \rho e_e + p_e = \rho H_e$ gives:
+
+\begin{align*}
+    \pd{}{x_j} (\rho H_e u_j) &= \pd{}{r} [\rho H_e \bar{u}_r \cos \theta] + \frac{2 \rho H_e}{r} \bar{u}_r \cos \theta + \frac{\cot \theta}{r} \rho H_e \bar{u}_\theta \sin \theta + \frac{1}{r} \pd{}{\theta} [\rho H_e \bar{u}_\theta \sin \theta] \\
+    &= \bb{ \pd{}{r}[\rho H_e \bar{u}_r] + \frac{2 \rho H_e}{r} (\bar{u}_r + \bar{u}_\theta)} \cos \theta \\
+\end{align*}
+
+and:
+
+\begin{align*}
+    \pd{p_e}{x_j} &= \pd{}{r} [\bar{p}_e \cos^2 \theta + p_e^\infty] + \frac{1}{r} \pd{}{\theta} [\bar{p}_e \cos^2 \theta + p_\infty] \\
+    &= \pd{\bar{p}_e}{r} \cos^2 \theta - \frac{1}{r} \bar{p}_e \sin(2 \theta)
+\end{align*}
+
+Taking the limit as $\theta$ goes to 0 gives the following identities for stagnation line flow:
+
+\begin{align*}
+    \pd{}{x_j} (\rho H_e u_j) &= \pd{}{r}[\rho H_e \bar{u}_r] + \frac{2 \rho H_e}{r} (\bar{u}_r + \bar{u}_\theta) \\
+    \pd{p_e}{x_j} &= \pd{p_e}{r}
+\end{align*}
+
+The stagnation line equation for the electron-electronic energy is then:
+
+\begin{equation}
+    \pd{\rho e_e}{t} + \pd{}{r}[\rho H_e u_r] + \frac{2 \rho H_e}{r} (u_r + u_\theta) + \pd{q_r^e}{r} + \frac{2}{r} q_r^e = u_r \pd{p_e}{r} + S_e
+\end{equation}
+
+Where the overbar has been removed for conciseness. In the following sections, all variables are stagnation line quantities and so the overnar is not included again.
+
+\subsection{System of Equations}
 
 The system of equations for the stagnation line solver is:
 
@@ -2548,7 +2824,8 @@ The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V
         \rho u_r \\
         \rho u_\theta \\
         \rho E \\
-        \rho e_v 
+        \rho e_v, \rho e_{ve}  \\
+        \rho e_e
     \end{bmatrix}
     \hspace{5mm} 
     \boldsymbol{V} = \begin{bmatrix}
@@ -2556,7 +2833,8 @@ The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V
         u_r \\
         u_\theta \\
         p \\
-        e_v 
+        e_v, e_{ve} \\ 
+        e_e \\
     \end{bmatrix}
     \hspace{5mm} 
     \boldsymbol{W} = \begin{bmatrix}
@@ -2564,7 +2842,8 @@ The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V
         u_r \\
         u_\theta \\
         T_{tr} \\
-        T_{ve} 
+        T_{v}, T_{ve} \\ 
+        T_{e} 
     \end{bmatrix}
     \hspace{5mm} 
     \boldsymbol{Y} = \begin{bmatrix}
@@ -2572,7 +2851,8 @@ The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V
         u_r \\
         u_\theta \\
         T_{tr} \\
-        T_{ve} 
+        T_{v}, T_{ve} \\
+        T_{e}
     \end{bmatrix}
     \hspace{5mm} 
 \end{equation*}
@@ -2585,7 +2865,8 @@ The convective flux vector ($\boldsymbol{F}_c$) and diffusive flux vector ($\bol
         \rho u_r^2 + p \\
         \rho u_r u_\theta \\
         \rho u_r H \\
-        \rho u_r e_v 
+        \rho u_r e_v, u_r e_{ve} \\
+        \rho u_r H_e
     \end{bmatrix}
         \hspace{5mm} 
     \boldsymbol{F_d} = \begin{bmatrix}
@@ -2593,21 +2874,32 @@ The convective flux vector ($\boldsymbol{F}_c$) and diffusive flux vector ($\bol
         \tau_{rr} \\ 
         \tau_{r\theta} \\ 
         q_r + \tau_{rr} u_r \\ 
-        q_r^{ve}
+        q_r^v, q_r^{ve} \\
+        q_r^e
     \end{bmatrix}
 \end{equation}
 
 The DRNSE also results in a convective source term ($\boldsymbol{S}_c$) and a diffusive source term ($\boldsymbol{S}_d$), along with the species-mass and vibrational-electronic energy source vector ($\boldsymbol{S}_k$), and the radiative source term ($\boldsymbol{S}_r$):
 
 \begin{equation}
-    \boldsymbol{S}_c = -\frac{u_r + u_\theta}{r}
+    \boldsymbol{S}_c = -\frac{2(u_r + u_\theta)}{r}
         \begin{bmatrix}
-        2 \rho_s \\ 2 \rho u_r \\ \ 3 \rho u_\theta - 2 \frac{p-p_\infty}{u_r + u_\theta} \\ 2 \rho H \\ 2 \rho e_{ve}   
+        \rho_s \\  
+        \rho u_r \\ 
+        \frac{3}{2} \rho u_\theta - \frac{p-p_\infty}{u_r + u_\theta} \\ 
+        \rho H \\ 
+        \rho e_{v}, \rho e_{ve} \\
+        \rho H_e
         \end{bmatrix}
     \hspace{5mm}
     \boldsymbol{S}_d = -\frac{2}{r}
         \begin{bmatrix}
-        J_{rs} \\ \tau_{rr} - \tau_{\theta \theta} + \tau_{r \theta} \\ \frac{1}{2} (3\tau_{r \theta} - \tau_{\theta \theta}) \\ q_r + \tau_{rr} u_r + \tau_{r \theta} u_r + \tau_{\theta \theta} u_\theta \\ q_r^{ve}   
+        J_{rs} \\ 
+        \tau_{rr} - \tau_{\theta \theta} + \tau_{r \theta} \\ 
+        \frac{1}{2} (3\tau_{r \theta} - \tau_{\theta \theta}) \\ 
+        q_r + \tau_{rr} u_r + \tau_{r \theta} u_r + \tau_{\theta \theta} u_\theta \\
+        q_r^v, q_r^{ve} \\
+        q_r^e
         \end{bmatrix}
 \end{equation}
 \begin{equation}
@@ -3333,9 +3625,10 @@ Where we have the following definitions for the matrices $\boldsymbol{A}$, $\bol
     \\ \textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_i^S + \boldsymbol{S}_{C,i} + \boldsymbol{S}_{K,i} + \boldsymbol{S}_{R,i}} (r_{i+\frac{1}{2}} - r_{i - \frac{1}{2}})   }
 \end{multline}
 
-
+\newpage
 \section{Stagnation Line Solver for Chemical Equilibrium Flow}
 
+efsefsefsef
 \subsection{Governing Equations}
 
 The new vectors of conserved, primitive, and viscous primitive variables are:
