@@ -1,1 +1,10 @@
 build
+.aux
+.bbl
+.blg
+.ilg
+.log
+.nlo
+nout
+.syntex.gz
+.toc

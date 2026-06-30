@@ -1,0 +1,38 @@
+\begin{thebibliography}{1}
+
+\bibitem{candler1988}
+Graham Candler and Chul Park.
+\newblock The computation of radiation from nonequilibrium hypersonic flows.
+\newblock {\em AIAA}, 1988.
+
+\bibitem{gnoffo1989}
+Peter~A. Gnoffo, Roop~N. Gutpa, and Judy~L. Shinn.
+\newblock Conservation equations and physical models for hypersonic air flows
+  in thermal and chemical nonequilibrium.
+\newblock Technical report, National Aeronautics and Space Administration,
+  1989.
+
+\bibitem{klomfass1996}
+Arno Klomfass and Siegfried Müller.
+\newblock A quasi-onedimensional appoach for hypersonic stagnation-point flows.
+\newblock Technical report, Institut für Geometrie und Praktische Mathematik
+  RWTH, 1996.
+
+\bibitem{laporta2013}
+V.~Laporta and D.~Bruno.
+\newblock Electron-vibration energy exchange models in nitrogen-containing
+  plasma flows.
+\newblock {\em The Journal of Chemical Physics}, 2013.
+
+\bibitem{laporta2016}
+V.~Laporta, K.L. Heritier, and M.~Panesi.
+\newblock Electron-vibration relaxation in oxygen plasmas.
+\newblock {\em Chemical Physics}, 2016.
+
+\bibitem{scogginsthesis}
+James~B. Scoggins.
+\newblock {\em Development of Numerical Methods and Study of Coupled Flow,
+  Radiation, and Ablation Phenomena for Atmospheric Entry}.
+\newblock PhD thesis, von Karman Institute for Fluid Dynamics, 2017.
+
+\end{thebibliography}

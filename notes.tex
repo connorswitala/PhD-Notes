@@ -41,34 +41,34 @@
 \subsection{Definitions}
 
 \begin{definition}[Moles / molecular weight]
-One mole of a substance contains an Avogadro's number of particles. The molecular weight of a substance is the mass of one mole of that substance. In this text it is denoted as $\mathcal{M}$ and is typically given in units of \unit{\kilo\gram\per\kilo\mole} or \unit{\gram\per\mole}. For example, the molecular weight of $O_2$ is $\qty{32}{\kilo\gram\per\kilo\mole}$.
+One mole of a substance contains an Avogadro's number of particles. The molecular weight of a substance is the mass of one mole of that substance. In this text it is denoted as $\mathcal{M}$ and is typically given in units of \si{\kilo\gram\per\kilo\mole} or \si{\gram\per\mole}. For example, the molecular weight of $O_2$ is $32 \si{\kilo\gram\per\kilo\mole}$.
 \vspace{5mm}
 \\ The molecular weight and number of moles of a single species is denoted as $\mathcal{M}_s$ and $\mathcal{N}_s$, respectively. Mixture properties are given an overbar: $\bar{\mathcal{M}}, \bar{\mathcal{N}}$
 \label{def:MW}
 \end{definition}
 
 \begin{definition}[Avogadro's constant]
-Avogradro's constant is the number of particles in one mole of that substance. It is denoted as '$\text{N}_\text{A}$' and is equal to $6.02 \cdot 10^{26}$ particles per \unit{\kilo\mole}.    
+Avogradro's constant is the number of particles in one mole of that substance. It is denoted as '$\text{N}_\text{A}$' and is equal to $6.02 \cdot 10^{26}$ particles per \si{\kilo\mole}.    
 \label{def:NA}
 \end{definition}
 
 \begin{definition}[Boltzmann constant]
-The Boltzmann constant is denoted by $k_B$ and is equal to $\qty{1.381e-23}{\joule\per\kelvin}$. It is the increment in energy of a particle per increase in temperature.
+The Boltzmann constant is denoted by $k_B$ and is equal to $1.381 \times 10^{-23} \si{\joule\per\kelvin}$. It is the increment in energy of a particle per increase in temperature.
 \label{def:kB}
 \end{definition}
 
 \begin{definition}[Universal gas constant]
-The universal gas constant is denoted by $\hat{R}$ and is equal to $\qty{8.314}{\joule\per\mole\per\kelvin}$. It is the molar equivalent of $\kB$ and is actually computed as $\hat{R} = \kB \NA$. It is the increment in energy of a mole of substance per increase in temperature.
+The universal gas constant is denoted by $\hat{R}$ and is equal to $8.314 \si{\joule\per\mole\per\kelvin}$. It is the molar equivalent of $\kB$ and is actually computed as $\hat{R} = \kB \NA$. It is the increment in energy of a mole of substance per increase in temperature.
 \label{def:Rhat}
 \end{definition}
 
 \begin{definition}[Permittivity of free space]
-The permitivity of free space is denoted by $\varepsilon_0$ is a measurement of how dense of an electric field is allowed to be greated in reponse to an electric charge. It has a value of $\qty{8.854}{\farad\per\meter}$.
+The permitivity of free space is denoted by $\varepsilon_0$ is a measurement of how dense of an electric field is allowed to be greated in reponse to an electric charge. It has a value of $8.854\si{\farad\per\meter}$.
 \label{def:eps0}
 \end{definition}
 
 \begin{definition}[Elementary charge]
-The elementary charge is the electric charge a single electron has. It is denoted as $e$ and has a vale of $\qty{1.602}{\coulomb}$ in SI units.
+The elementary charge is the electric charge a single electron has. It is denoted as $e$ and has a vale of $1.602\si{\coulomb}$ in SI units.
 \label{def:electronCharge}    
 \end{definition}
 
@@ -1987,8 +1987,8 @@ And:
 
 \begin{align*}
     T_e^\text{min} = \frac{b}{T_v + a}, &\hspace{5mm} p_e \tau_e^ \text{min} = c + d T_v \\
-    a = \qty{2.21599e4}{\kelvin}, &\hspace{5mm} b = \qty{1.60e8}{\kelvin\squared} \\
-    c = \qty{1.20e-5}{\joule\per\meter\tothe{3}}, &\hspace{5mm} d = \qty{5.90e-10}{\joule\per\meter\tothe{3}\second\per\kelvin}
+    a = 2.21599e4 \si{\kelvin}, &\hspace{5mm} b = 1.60e8 \si{\kelvin\squared} \\
+    c = 1.20e-5\si{\joule\per\meter\tothe{3}}, &\hspace{5mm} d = 5.90e-10 \si{\joule\per\meter\tothe{3}\second\per\kelvin}
 \end{align*}
 
 If modelling of energy transfer between $O_2$ and free electrons is desired, more curve fits have been generated. Ref \cite{laporta2016} gives the following curve fit equation for the interval 2000 K $\leq T_e \leq$ 20,000 K, and 0 $\leq T_v \leq$ 20.000 K:
@@ -2038,7 +2038,7 @@ Here, $\dot{n}_{e,s}$ is taken as the rate of the forward reaction. The first io
 \centering
 \begin{tabular}{cccc}
 \hline
-$s$ & $\hat{I}_s$ (eV) & $\hat{I}_s$ (\unit{\joule\per\kilo\mole}) & $\hat{I}_s$ (\unit{\joule\per\kilo\gram}) \\
+$s$ & $\hat{I}_s$ (eV) & $\hat{I}_s$ (\si{\joule\per\kilo\mole}) & $\hat{I}_s$ (\si{\joule\per\kilo\gram}) \\
 \hline
 $N_2$ & 15.51 & $1.4967 \times 10^9$ & $5.343 \times 10^7$ \\
 $O_2$ & 12.5 & $1.2063 \times 10^9$ & $3.770 \times 10^7$ \\
@@ -2077,7 +2077,7 @@ In these cases, $c_1$ is a value less that 1.0, with some examples being 0.8, or
 \centering
 \begin{tabular}{cccc}
 \hline
-$s$ & $\tilde{D}_s$ (eV) & $\tilde{D}_s$ (\unit{\joule\per\kilo\mole}) & $\tilde{D}_s$ (\unit{\joule\per\kilo\gram}) \\
+$s$ & $\tilde{D}_s$ (eV) & $\tilde{D}_s$ (\si{\joule\per\kilo\mole}) & $\tilde{D}_s$ (\si{\joule\per\kilo\gram}) \\
 \hline
 $N_2$ & 9.759 & $9.417 \times 10^8$ & $3.3618 \times 10^7$ \\
 $O_2$ & 5.115 & $4.936 \times 10^8$ & $1.5426 \times 10^7$ \\

@@ -1,0 +1,99 @@
+\contentsline {section}{\nonumberline Nomenclature}{4}{Doc-Start}%
+\contentsline {section}{\numberline {1}Basic Thermodynamics and Universal Constants}{5}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Definitions}{5}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Equations of state}{7}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Statistical Thermodynamics}{8}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Electronic energies}{11}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Diatomic internal energies}{11}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Chemical Equilibrium CFD}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Minimization Procedures}{12}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Constraints for Both Procedures}{12}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}The Lagrangian}{12}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}Newton-Raphson Iterative Method}{12}{subsubsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.4}Gibbs Minimization}{13}{subsubsection.3.1.4}%
+\contentsline {subsubsection}{\numberline {3.1.5}Constraints}{13}{subsubsection.3.1.5}%
+\contentsline {subsubsection}{\numberline {3.1.6}Derivatives}{14}{subsubsection.3.1.6}%
+\contentsline {subsubsection}{\numberline {3.1.7}Derivatives of $f_1$}{15}{subsubsection.3.1.7}%
+\contentsline {subsubsection}{\numberline {3.1.8}Derivatives of $f_2$}{15}{subsubsection.3.1.8}%
+\contentsline {subsubsection}{\numberline {3.1.9}Derivatives of $f_3$}{16}{subsubsection.3.1.9}%
+\contentsline {subsubsection}{\numberline {3.1.10}Derivatives of $f_4$}{16}{subsubsection.3.1.10}%
+\contentsline {subsubsection}{\numberline {3.1.11}Derivatives of $f_5$}{16}{subsubsection.3.1.11}%
+\contentsline {subsubsection}{\numberline {3.1.12}Derivatives of $f_6$}{17}{subsubsection.3.1.12}%
+\contentsline {subsubsection}{\numberline {3.1.13}Reduced Gibbs Equations}{17}{subsubsection.3.1.13}%
+\contentsline {subsubsection}{\numberline {3.1.14}Helmholtz Minimization}{18}{subsubsection.3.1.14}%
+\contentsline {subsubsection}{\numberline {3.1.15}Constraints}{19}{subsubsection.3.1.15}%
+\contentsline {subsubsection}{\numberline {3.1.16}Derivatives}{20}{subsubsection.3.1.16}%
+\contentsline {subsubsection}{\numberline {3.1.17}Derivatives for $f_1$}{20}{subsubsection.3.1.17}%
+\contentsline {subsubsection}{\numberline {3.1.18}Derivatives for $f_2$}{20}{subsubsection.3.1.18}%
+\contentsline {subsubsection}{\numberline {3.1.19}Derivatives for $f_3$}{21}{subsubsection.3.1.19}%
+\contentsline {subsubsection}{\numberline {3.1.20}Derivatives for $f_4$}{21}{subsubsection.3.1.20}%
+\contentsline {subsubsection}{\numberline {3.1.21}Derivatives for $f_5$}{21}{subsubsection.3.1.21}%
+\contentsline {subsubsection}{\numberline {3.1.22}Reduced Helmholtz Equations}{22}{subsubsection.3.1.22}%
+\contentsline {subsection}{\numberline {3.2}Thermodynamic Derivatives}{23}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Base equations and derivatives:}{23}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Notes on derivatives and Bridgmann tables}{24}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Temperature derivatives and $c_p$}{25}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}Pressure derivatives}{27}{subsubsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.5}CFD derivatives}{28}{subsubsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.3}Standard State Chemical Potential Derivatives}{29}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Useful Relationships}{29}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Gibbs Derivative}{30}{subsubsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.4}Helmholtz Derivative}{30}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Nonequilibrium Transport Models}{31}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Collision integral definitions}{31}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Transport properties of a single species}{32}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Transport properties of a mixture}{32}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Nonequilibrium Thermodynamics}{36}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Translational Energy}{36}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Rotational Energy}{36}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Nonequilibrium Source Terms}{36}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Species Mass Source Term}{37}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Reaction Types}{38}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Efficiencies in Third-Body Reactions}{39}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Example rate equation solution}{41}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Translational-Vibrational Energy Relaxation}{42}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Electron-Translational Energy Relaxation}{43}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}Vibrational-Electron Energy Relaxation}{43}{subsection.6.7}%
+\contentsline {subsection}{\numberline {6.8}Electron Impact Ionization Source Term}{45}{subsection.6.8}%
+\contentsline {subsection}{\numberline {6.9}Vibration-Chemical Energy Relaxation}{45}{subsection.6.9}%
+\contentsline {section}{\numberline {7}Nonequilibrium Conservation Equations}{47}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Species Mass Conservation}{47}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Total Continuity}{48}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Mixture Momentum Conservation}{48}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Vibrational Energy Conservation}{49}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Electron-Electronic Energy Conservation}{50}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Total Energy Conservation}{51}{subsection.7.6}%
+\contentsline {subsection}{\numberline {7.7}Two temperature model}{51}{subsection.7.7}%
+\contentsline {section}{\numberline {8}Partial Derivatives for Noequilibrium Jacobians}{53}{section.8}%
+\contentsline {subsubsection}{\numberline {8.0.1}Partial derivatives of pressure ($p$)}{53}{subsubsection.8.0.1}%
+\contentsline {subsubsection}{\numberline {8.0.2}Partial derivatives of total energy ($E$)}{53}{subsubsection.8.0.2}%
+\contentsline {subsubsection}{\numberline {8.0.3}Partial derivatives of $T$}{54}{subsubsection.8.0.3}%
+\contentsline {subsubsection}{\numberline {8.0.4}Partial derivatives of vibrational temperature ($T_v$)}{54}{subsubsection.8.0.4}%
+\contentsline {subsubsection}{\numberline {8.0.5}Partial derivatives of vibrational energy ($e_vs$)}{54}{subsubsection.8.0.5}%
+\contentsline {subsection}{\numberline {8.1}Jacobians}{55}{subsection.8.1}%
+\contentsline {subsubsection}{\numberline {8.1.1}Flux Jacobians}{55}{subsubsection.8.1.1}%
+\contentsline {subsubsection}{\numberline {8.1.2}Source term Jacobians - Third body reactions}{55}{subsubsection.8.1.2}%
+\contentsline {subsubsection}{\numberline {8.1.3}Source term Jacobians - Normal reactions}{59}{subsubsection.8.1.3}%
+\contentsline {subsubsection}{\numberline {8.1.4}Source term Jacobians - Vibrational relaxation}{60}{subsubsection.8.1.4}%
+\contentsline {subsubsection}{\numberline {8.1.5}Explicit 0D Reactor}{64}{subsubsection.8.1.5}%
+\contentsline {subsubsection}{\numberline {8.1.6}Implicit 0D Reactor}{64}{subsubsection.8.1.6}%
+\contentsline {section}{\numberline {9}Stagnation Line Solver for Nonequilibirum Flow}{65}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Derivation of Electronic-Electron Energy Conservation Equation for the DRNSE}{65}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}System of Equations}{66}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Jacobians}{67}{subsection.9.3}%
+\contentsline {subsubsection}{\numberline {9.3.1}Convective Flux Jacobians}{68}{subsubsection.9.3.1}%
+\contentsline {subsubsection}{\numberline {9.3.2}Diffusive Flux Jacobians}{72}{subsubsection.9.3.2}%
+\contentsline {subsubsection}{\numberline {9.3.3}Source Jacobians}{74}{subsubsection.9.3.3}%
+\contentsline {subsection}{\numberline {9.4}Boundary Conditions}{76}{subsection.9.4}%
+\contentsline {subsubsection}{\numberline {9.4.1}Inviscid Explicit Boundary Conditions}{76}{subsubsection.9.4.1}%
+\contentsline {subsubsection}{\numberline {9.4.2}Viscous Explicit Boundary Conditions}{76}{subsubsection.9.4.2}%
+\contentsline {subsubsection}{\numberline {9.4.3}Inviscid Implicit Boundary Conditions}{76}{subsubsection.9.4.3}%
+\contentsline {subsubsection}{\numberline {9.4.4}Viscous Implicit Boundary Conditions}{77}{subsubsection.9.4.4}%
+\contentsline {subsection}{\numberline {9.5}Solving the system of equations}{78}{subsection.9.5}%
+\contentsline {subsubsection}{\numberline {9.5.1}Explicit time stepping}{78}{subsubsection.9.5.1}%
+\contentsline {subsubsection}{\numberline {9.5.2}Implicit time stepping}{78}{subsubsection.9.5.2}%
+\contentsline {section}{\numberline {10}Stagnation Line Solver for Chemical Equilibrium Flow}{82}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Governing Equations}{82}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Convective Jacobian}{83}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Viscous Fluxes}{84}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Source Terms}{84}{subsection.10.4}%
