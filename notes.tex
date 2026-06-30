@@ -177,6 +177,7 @@ The definitions for each variable are:
 
 \newpage
 \section{Statistical Thermodynamics}
+\label{sec:stat-thermo}
 
 \begin{definition}[Bose-Einstein (BE) statistics]
     For atoms and molecules made up of an \textit{even} number of elementary particles such as electrons, protons, and neutrons, there is no limit to the number of particles that can be in any energy state at a given instant.
@@ -1533,6 +1534,59 @@ For species summation and Wilke's mixing rule, $\mu_j$ and $\kappa_j$ are calcul
 
 
 \newpage
+
+\newpage
+
+\section{Nonequilibrium Thermodynamics}
+
+In this section, a brief overview of the thermodynamics for modelling fluids in nonequilibrium is given. This is mainly a review of the most important concepts given in $\ref{sec:stat-thermo}$, with some extra points given. Each internal energy mode is gone over in detail, along with methods to compute their temperatures and specific heats.
+
+\subsection{Translational Energy}
+
+The translation energy of an atom or molecule can be found with:
+
+\begin{equation*}
+    E_{t,s} = \rho_s e_{t,s} = \rho_s \bb{\frac{3}{2} \frac{\Rhat}{\MW_s}} T_t
+\end{equation*}
+
+Where the subscript $t$ denotes a translational quantity. The total translational energy of all heavy species in a mixture is then:
+
+\begin{equation*}
+    E_t = \rho e_t = \sum_{s \neq e}^\text{NS} \rho_s \bb{\frac{3}{2} \frac{\Rhat}{\MW_s}} T_t = \rho \bar{c}_{v,t} T_t
+\end{equation*}
+
+Where the mixture specific heat is computed as:
+
+\begin{equation*}
+    \bar{c}_{v,t} = \sum_{s \neq e}^\text{NS} \Ymass_s c_{v,s}^{t} \rightarrow \rho \bar{c}_{v,t} = \sum_{s \neq e}^\text{NS} \rho_s c_{v,s}^{t}
+    \label{eq:cvtbar}
+\end{equation*}
+
+The translation specific heat for a given species is defined as:
+
+\begin{equation}
+    c_{v,s}^{t} \equiv \pd{e_t}{T_t}\bigg|_v = \frac{3}{2} \frac{\Rhat}{\MW_s}
+\end{equation}
+
+The translational energy of free electrons uses the same expression:
+
+\begin{equation*}
+    E_{t,e} = \rho_e \frac{3}{2} \frac{\Rhat}{\MW_e} T_e
+\end{equation*}
+
+Where the subscript $e$ denotes an electron specific equantiy. $T_e$ is the temperature of the free electrons.
+
+\subsection{Rotational Energy}
+
+The rotational energy of a molecule depends on the degrees of freedom of that molecule, i.e., how many different ways that molecule can rotate. The degrees of freedom (DOF) are denoted by $\eta$, and therefore the spefic heat of a species is defined as:
+
+\begin{equation*}
+    c_{v,s}^r = \pd{e_r}{T_r}\bigg|_v = \frac{\eta}{2} \frac{\Rhat}{\MW_s}
+\end{equation*}
+
+Note that for the translational energy, there are 3 degrees of freedom in the $x$, $y$, and $z$ directions. 
+
+
 \section{Nonequilibrium Source Terms}
 
 \subsection{Species Mass Source Term}
@@ -1897,13 +1951,13 @@ Energy exchange between free electrons and vibrational modes is either neglected
     e^- + N_2(X^1 \Sigma_g^+;v) \rightarrow N_2^-(^2 \Pi_g) \rightarrow e^- + N_2(X^1 \Sigma_g^+; w)
 \end{equation*}
 
-Here, a free electron collides with an $N_2$ molecule and briefly attaches and detaches. However, this inelastic collision increases the vibrational level of $N_2$ from $v$ to $w$. A number of curve fits exist to compute this energy source term where a Landau-Teller form is used:
+Here, a free electron collides with an $N_2$ molecule and briefly attaches and then detaches. However, this inelastic collision increases the vibrational level of $N_2$ from $v$ to $w$. A number of curve fits exist to compute this energy source term where a Landau-Teller form is used:
 
 \begin{equation*}
-    \mathcal{S}_{v-e}^{ve} = \frac{e_v^{N_2}(T_e) - e_v^{N_2}(T_v)}{\tau_{ve}}
+    \mathcal{S}_{v-e}^{ve} = \frac{e_v(T_e) - e_v(T_v)}{\tau_{ve}}
 \end{equation*}
 
-The above equation implies that the source term is only accounting for this specific resonance in $N_2$, and so there is no sum of all diatomic species. One model for the relaxation time is proposed by Ref. \cite{candler1988}:
+One earlier model for the relaxation time is proposed by Ref. \cite{candler1988}:
 
 \begin{equation}
 \log\!\left(p_e \tau_e\right)=
@@ -1932,13 +1986,36 @@ With the following curve fit parameters:
 And:
 
 \begin{align*}
-    T_e^\text{min} &= \frac{b}{T_v + a} \\
-    p_e \tau_e^ \text{min} &= c + d T_v \\
-    a &= \qty{2.21599e4}{\kelvin} \\
-    b &= \qty{1.60e8}{\kelvin\squared} \\
-    c &= \qty{1.20e-5}{\joule\per\meter\tothe{3}} \\
-    d &= \qty{5.90e-10}{\joule\per\meter\tothe{3}\second\per\kelvin} \\
+    T_e^\text{min} = \frac{b}{T_v + a}, &\hspace{5mm} p_e \tau_e^ \text{min} = c + d T_v \\
+    a = \qty{2.21599e4}{\kelvin}, &\hspace{5mm} b = \qty{1.60e8}{\kelvin\squared} \\
+    c = \qty{1.20e-5}{\joule\per\meter\tothe{3}}, &\hspace{5mm} d = \qty{5.90e-10}{\joule\per\meter\tothe{3}\second\per\kelvin}
 \end{align*}
+
+If modelling of energy transfer between $O_2$ and free electrons is desired, more curve fits have been generated. Ref \cite{laporta2016} gives the following curve fit equation for the interval 2000 K $\leq T_e \leq$ 20,000 K, and 0 $\leq T_v \leq$ 20.000 K:
+
+\begin{equation}
+    p_e \tau_e = \sum_{n=0}^4 \sum_{m=0}^2 c_{n,m} T_e^n T_v^m
+\end{equation}
+
+Where the constants $c_{n,m}$ are given in Table [\ref{tab:o2-electron-constants}].
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{cccc}
+\hline
+n/m & 0 & 1 & 2 \\
+\hline
+0 & $2.418 \times 10^0$ & $-2.660 \times 10^{-4}$ & $1.015 \times 10^{-8}$ \\
+1 & $-2.094 \times 10^{-3}$ & $3.537 \times 10^{-7}$ & $-1.153 \times 10^{-11}$ \\
+2 & $7.174 \times 10^{-7}$ & $-7.578 \times 10^{-11}$ & $2.442 \times 10^{-15}$ \\
+3 &$ -4.511 \times 10^{-11}$ & $4.435 \times 10^{-15}$ & $-1.407 \times 10^{-19}$ \\
+4 & $8.682 \times 10^{-16}$ & $-8.131 \times 10^{-20}$ & $2.610 \times 10^{-24}$ \\
+\hline
+\end{tabular}
+\caption{Curve fit constants $c_{n,m}$ for $O_2$ vibrational-electron energy exchange. Ref \cite{laporta2016}.}
+\label{tab:o2-electron-constants}
+\end{table}
+
 
 \subsection{Electron Impact Ionization Source Term}
 \label{sec:el_ion_source}
@@ -2014,13 +2091,12 @@ $NO^+$ & 10.85 & $1.047 \times 10^9$ & $3.4894 \times 10^7$ \\
 \label{tab:diss-energies}
 \end{table}
 
-
 \newpage
 \section{Nonequilibrium Conservation Equations}
 
 In the following sections, we show the governing equations for a chemically reacting flow in thermal nonequilibrium. In each section, we show a conservation equation with alternate forms as well as the physical meaning of each term and explanations of variables. Included at the end of each equation is the reference the equation was taken from.
 
-\subsection{Species conservation equation}
+\subsection{Species Mass Conservation}
 
 \begin{equation}
 \underbracket{ \pd{}{t} \rho_s}_1 + \underbracket{\pd{}{x_j} \rho_s u_j}_2 = \underbracket{\pd{}{x_j} (\rho D_s \pd{}{x_j} y_s)}_3 + \underbracket{\dot{\omega}_s}_4  \hspace{5mm}  \text{Ref. \cite{gnoffo1989}}
@@ -2049,179 +2125,171 @@ The variables are:
 \end{itemize}
 
 \begin{definition}[Molecular diffusion flux]
-    There are a number of ways to express the molecular diffusion flux. Sometimes it is given as $J_s$ = $\rho_s \boldsymbol{V}_s$. From the above equation, we can see that $J_s$ is also equivalent to $\rho D_s \nabla y_s$. There are many different methods to compute the diffusion flux. Some examples are Fick's law, the modified Fick's law, and the Stefan-Maxwell equations. These methods are discussed in more detail in the next section. It is important to note that the sum of the diffusion fluxes across all species is zero, as this enforces mass conservation:
-
+There are a number of ways to express the molecular diffusion flux. Sometimes it is given as $J_s$ = $\rho_s \boldsymbol{V}_s$. From the above equation, we can see that $J_s$ is also equivalent to $\rho D_s \nabla y_s$. There are many different methods to compute the diffusion flux. Some examples are Fick's law, the modified Fick's law, and the Stefan-Maxwell equations. These methods are discussed in more detail in the next section. It is important to note that the sum of the diffusion fluxes across all species is zero, as this enforces mass conservation:
 \end{definition}
 
 
-\subsection{Total continuity equation}
-    For chemically reacting flows, the total continuity equation is unaffected. It is:
+\subsection{Total Continuity}
+For chemically reacting flows, the total continuity equation is unaffected. It is:
 
 
-    \begin{equation*}
-        \pd{\rho}{t} + \pd{}{x_j} (\rho u_j) = 0
-    \end{equation*}
+\begin{equation*}
+    \pd{\rho}{t} + \pd{}{x_j} (\rho u_j) = 0
+\end{equation*}
 
-    \begin{equation}
-        \pd{\rho}{t} + \nabla \cdot (\rho \textbf{u}) = 0
-    \end{equation}
+\begin{equation}
+    \pd{\rho}{t} + \nabla \cdot (\rho \textbf{u}) = 0
+\end{equation}
 
-    Since no mass can be created or destroyed, the condition of atomic conservation is applied, which yields:
+Since no mass can be created or destroyed, the condition of atomic conservation is applied, which yields:
 
-    \begin{equation}
-        \sum_{s} \dot{w}_s = 0
-    \end{equation}
+\begin{equation}
+    \sum_{s} \dot{w}_s = 0
+\end{equation}
 
-\subsection{Mixture momentum conservation}
+\subsection{Mixture Momentum Conservation}
 
-    \begin{equation}
-        \underbracket{\pd{}{t} \rho u_i}_{1} + \underbracket{\pd{}{x_j} \rho u_i u_j}_{2} = \underbracket{-\pd{p}{x_i}}_{3} + \underbracket{\pd{}{x_j} \left[ \mu \left( \pd{u_i}{x_j} + \pd{u_j}{x_i} \right) - \frac{2}{3} \mu \pd{u_k}{x_k} \delta_{ij} \right]}_4 \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
-    \end{equation}
+\begin{equation}
+    \underbracket{\pd{}{t} \rho u_i}_{1} + \underbracket{\pd{}{x_j} \rho u_i u_j}_{2} = \underbracket{-\pd{p}{x_i}}_{3} + \underbracket{\pd{}{x_j} \left[ \mu \left( \pd{u_i}{x_j} + \pd{u_j}{x_i} \right) - \frac{2}{3} \mu \pd{u_k}{x_k} \delta_{ij} \right]}_4 \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
+\end{equation}
 
-    \begin{equation*}
-        \pd{}{t} \rho \boldsymbol{u} + \nabla \cdot (\rho \textbf{u} \otimes \textbf{u}) = -\nabla p + \nabla \cdot \boldsymbol{\bar{\Pi}} + \ub{nq\boldsymbol{E}' + \boldsymbol{j} \times \boldsymbol{B}}{5} \hspace{5mm} \text{Ref. \cite{scogginsthesis}}
-    \end{equation*}
+\begin{equation*}
+    \pd{}{t} \rho \boldsymbol{u} + \nabla \cdot (\rho \textbf{u} \otimes \textbf{u}) = -\nabla p + \nabla \cdot \boldsymbol{\bar{\Pi}} + \ub{nq\boldsymbol{E}' + \boldsymbol{j} \times \boldsymbol{B}}{5} \hspace{5mm} \text{Ref. \cite{scogginsthesis}}
+\end{equation*}
 
-    The terms are:
+The terms are:
 
-    \begin{enumerate}
-        \item Time rate of change of $i$th component of momentum.
-        \item Flux of $i$th component of momentum due to convection.
-        \item Pressure forces in $i$th direction.
-        \item Viscous terms acting in $i$th direction.
-        \item Electric field forces acting on the mixture.
-    \end{enumerate}
+\begin{enumerate}
+    \item Time rate of change of $i$th component of momentum.
+    \item Flux of $i$th component of momentum due to convection.
+    \item Pressure forces in $i$th direction.
+    \item Viscous terms acting in $i$th direction.
+    \item Electric field forces acting on the mixture.
+\end{enumerate}
 
-    The variables are:
+The variables are:
 
-    \begin{itemize}
-        \item $\rho u_i$ is the mass averaged momentum in the $i$ direction.
-        \item $u_j$ is the mass averaged velocity in the $j$ direction.
-        \item $p$ is the pressure of the mixture compute with Dalton's law of partial pressures.
-        \item $\mu$ is the mixture viscosity.
-        \item $n$ is the mixture number density.
-        \item $q = \sum_s X_s q_s$ is the mixture charge.
-        \item $\boldsymbol{E}' = \boldsymbol{E} + \boldsymbol{u} \times \boldsymbol{B}$ is the electric field in the hydrodynamic velocity frame. Here, $\boldsymbol{E}$ is the electric field while $\boldsymbol{B}$ is the magnetic field.
-        \item $\boldsymbol{j} = \sum_s \boldsymbol{j}_s = \sum_s n_s q_s \boldsymbol{V}_s$ is the mixture conduction current.
-    \end{itemize}
+\begin{itemize}
+    \item $\rho u_i$ is the mass averaged momentum in the $i$ direction.
+    \item $u_j$ is the mass averaged velocity in the $j$ direction.
+    \item $p$ is the pressure of the mixture compute with Dalton's law of partial pressures.
+    \item $\mu$ is the mixture viscosity.
+    \item $n$ is the mixture number density.
+    \item $q = \sum_s X_s q_s$ is the mixture charge.
+    \item $\boldsymbol{E}' = \boldsymbol{E} + \boldsymbol{u} \times \boldsymbol{B}$ is the electric field in the hydrodynamic velocity frame. Here, $\boldsymbol{E}$ is the electric field while $\boldsymbol{B}$ is the magnetic field.
+    \item $\boldsymbol{j} = \sum_s \boldsymbol{j}_s = \sum_s n_s q_s \boldsymbol{V}_s$ is the mixture conduction current.
+\end{itemize}
 
-\subsection{Vibrational energy conservation}
+\subsection{Vibrational Energy Conservation}
 
-    \begin{multline}
-        \ub{\pd{}{t} \rho e_v}{1} + \ub{\pd{}{x_j}\rho e_v u_j}{2} = \ub{\pd{}{x_j} \bp{\kappa_v \pd{T_v}{x_j}}}{3} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{v,s} D_s \pd{y_s}{x_j}}}{4} + \ub{\mathcal{S}_{t-v}^{v}}{5} + \ub{\mathcal{S}_{e-v}^{ve}}{6} + \ub{\mathcal{S}_{v-c}^{v}}{7} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
-        \label{eq:cons_vib_energy}
-    \end{multline}
+\begin{multline}
+    \ub{\pd{}{t} \rho e_v}{1} + \ub{\pd{}{x_j}\rho e_v u_j}{2} = \ub{\pd{}{x_j} \bp{\kappa_v \pd{T_v}{x_j}}}{3} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{v,s} D_s \pd{y_s}{x_j}}}{4} + \ub{\mathcal{S}_{t-v}^{v}}{5} + \ub{\mathcal{S}_{e-v}^{ve}}{6} + \ub{\mathcal{S}_{v-c}^{v}}{7} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
+    \label{eq:cons_vib_energy}
+\end{multline}
 
-    The terms are:
+The terms are:
 
-    \begin{enumerate}
-        \item Rate of change of vibrational energy per unit volume.
-        \item The flux of vibrational energy due to convection.
-        \item The conduction of vibrational energy due to vibrational temperature gradients.
-        \item The diffusion of vibrational energy due to molecular concentration gradients.
-        \item The energy exchange (relaxation) between vibrational and translational modes due to collisions within the cell. It is denoted as $\mathcal{S}_{t-v}^v$ and explained in Sec. [\ref{sec:vib-trans-relax}]
-        \item The energy exchange between vibrational and electronic modes. It is explained in Sec. [\ref{sec:el-trans-relax}].
-        \item The vibrational lost/gained due to molecular depletion (dissociation) or production (recombination). It is explained in [\ref{sec:vib-chem-source}].
-    \end{enumerate}
+\begin{enumerate}
+    \item Rate of change of vibrational energy per unit volume.
+    \item The flux of vibrational energy due to convection.
+    \item The conduction of vibrational energy due to vibrational temperature gradients.
+    \item The diffusion of vibrational energy due to molecular concentration gradients.
+    \item The energy exchange (relaxation) between vibrational and translational modes due to collisions within the cell. It is denoted as $\mathcal{S}_{t-v}^v$ and explained in Sec. [\ref{sec:vib-trans-relax}]
+    \item The energy exchange between vibrational and electronic modes. It is explained in Sec. [\ref{sec:el-trans-relax}].
+    \item The vibrational lost/gained due to molecular depletion (dissociation) or production (recombination). It is explained in [\ref{sec:vib-chem-source}].
+\end{enumerate}
 
-    The variables are:
+The variables are:
 
-    \begin{itemize}
-        \item $e_v$ is the vibrational energy per unit mass, defined as $\displaystyle e_v = \sum_{s=1}^\text{NS} \frac{\rho_s e_{v,s}}{\rho}$. $e_v$ is defined as a function of $T_v$, the vibrational temperature.
-        \item $\kappa_v$ is the vibrational thermal conductivity.
-        \item $h_{v,s}$ is the vibrational enthalpy. It is identical to $e_{v,s}$.
-        \item $e_{v,s}^*$ is the vibrational energy of species $s$ evaluated at the translational-rotational temperature.
-        \item $e_{v,s}^{**}$ is the vibrational energy evaluated at the electron temperature. 
-        \item $<\tau_s>$ is the characteristic relaxation times for translational-vibrational (T-V) energy exchange.
-        \item $<\tau_{es}>$ is the characteristic relation times for electron-vibrational (e-V) energy exchange.
-        \item $\hat{D}_s$ is the vibration energy level representative of those molecules of species $s$ which are created or destroyed (recombined or dissociated) because of their high vibrational quantum numbers.
-    \end{itemize}
+\begin{itemize}
+    \item $e_v$ is the vibrational energy per unit mass, defined as $\displaystyle e_v = \sum_{s=1}^\text{NS} \frac{\rho_s e_{v,s}}{\rho}$. $e_v$ is defined as a function of $T_v$, the vibrational temperature.
+    \item $\kappa_v$ is the vibrational thermal conductivity.
+    \item $h_{v,s}$ is the vibrational enthalpy. It is identical to $e_{v,s}$.
+    \item $e_{v,s}^*$ is the vibrational energy of species $s$ evaluated at the translational-rotational temperature.
+    \item $e_{v,s}^{**}$ is the vibrational energy evaluated at the electron temperature. 
+    \item $<\tau_s>$ is the characteristic relaxation times for translational-vibrational (T-V) energy exchange.
+    \item $<\tau_{es}>$ is the characteristic relation times for electron-vibrational (e-V) energy exchange.
+    \item $\hat{D}_s$ is the vibration energy level representative of those molecules of species $s$ which are created or destroyed (recombined or dissociated) because of their high vibrational quantum numbers.
+\end{itemize}
 
-\subsection{Electron and electronic excitation energy conservation}
+\subsection{Electron-Electronic Energy Conservation}
 
-    \begin{multline}
-        \ub{\pd{}{t} \rho e_e}{1} + \ub{\pd{}{x_j} \bb{u_j(\rho e_e + p_e)}}{2} = \ub{u_j \pd{p_e}{x_j} }{3} + \ub{\pd{}{x_j} \bp{\kappa_e \pd{T_e}{x_j}}}{4} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{e,s} D_s \pd{y_s}{x_j}}}{5} \\ + \ub{\mathcal{S}_{t-e}^e}{6}  - \ub{\mathcal{S}_{e-i}^{e}}{7} - \ub{\mathcal{S}_{v-e}^{ve}}{8} - \ub{Q_\text{rad}}{9} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
-    \end{multline}
+\begin{multline}
+    \ub{\pd{}{t} \rho e_e}{1} + \ub{\pd{}{x_j} \bb{u_j(\rho e_e + p_e)}}{2} = \ub{u_j \pd{p_e}{x_j} }{3} + \ub{\pd{}{x_j} \bp{\kappa_e \pd{T_e}{x_j}}}{4} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{e,s} D_s \pd{y_s}{x_j}}}{5} \\ + \ub{\mathcal{S}_{t-e}^e}{6}  - \ub{\mathcal{S}_{e-i}^{e}}{7} - \ub{\mathcal{S}_{v-e}^{ve}}{8} - \ub{Q_\text{rad}}{9} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
+\end{multline}
 
-    Terms are:
+Terms are:
 
-    \begin{enumerate}
-        \item Rate of change of electronic energy per unit volume.
-        \item The flux of electronic enthalpy due to convection.
-        \item The work done on electrons by an electron field by an electron pressure gradient.
-        \item The conduction of electronic energy due to electron temperature gradient.
-        \item The diffuction of electronic energy due to concentration gradients.
-        \item The energy exchange due to elastic collisions between electrons and heavy particles. Its expression is explained in Sec. [\ref{sec:el-trans-relax}].
-        \item Energy loss due to electron impact ionization. It is expression is explained in Sec. [\ref{sec:el_ion_source}].
-        \item The energy lost due to inelastic collisions between electrons and molecules, where electron energy is transfered into vibrational energy states of the molecule. It is the same term that appears in in the vibrational energy equation, but note that the sign is reversed. It's expression is detailed in Sec. [\ref{sec:vib-el-relax}]
-        \item Rate of energy loss due to radiation caused by electronic transitions.
-    \end{enumerate}
+\begin{enumerate}
+    \item Rate of change of electronic energy per unit volume.
+    \item The flux of electronic enthalpy due to convection.
+    \item The work done on electrons by an electron field by an electron pressure gradient.
+    \item The conduction of electronic energy due to electron temperature gradient.
+    \item The diffuction of electronic energy due to concentration gradients.
+    \item The energy exchange due to elastic collisions between electrons and heavy particles. Its expression is explained in Sec. [\ref{sec:el-trans-relax}].
+    \item Energy loss due to electron impact ionization. It is expression is explained in Sec. [\ref{sec:el_ion_source}].
+    \item The energy lost due to inelastic collisions between electrons and molecules, where electron energy is transfered into vibrational energy states of the molecule. It is the same term that appears in in the vibrational energy equation, but note that the sign is reversed. It's expression is detailed in Sec. [\ref{sec:vib-el-relax}]
+    \item Rate of energy loss due to radiation caused by electronic transitions.
+\end{enumerate}
 
-    The variables are:
-    \begin{itemize}
-        \item $e_e$ is the electronic energy per unit mass and contains contributions from electronic energy levels. It is defined as $\displaystyle e_e = \sum_{s=1}^\text{NS} \frac{\rho_s e_{e,s}}{\rho}$
-        \item  $e_{e,s}$ is the electronic energy per unit mass of species $s$ and is defined as a function of $T_e$.
-        \item $T_e$ is the electron temperature.
-        \item $\eta_e$ is the is the electronic thermal conductivity.
-        \item $h_{e,s}$ is the electronic enthalpy per unit mass and is idential to $e_{e,s}$ for all species except free electrons. For free electrons it is defined as: $ \displaystyle h_{e,e} = e_{e,e} + \frac{\hat{R}T_e}{\mathcal{M}_e}$
-        \item $\nu_{e,s}$ is the effective collision frequency of electrons with heavy particles.
-        \item $\dot{n}_{e,s}$ is the molar rate of production of species $s$ by electron impact ionizations.
-        \item $\hat{I}_s$ is the energy per unit mole lost by a free electron in producing species $s$ through electron impact ionization.
-        \item $Q_\text{rad}$ is the radiant energy transfer rate due to electron transitions.
-    \end{itemize}
+The variables are:
+\begin{itemize}
+    \item $e_e$ is the electronic energy per unit mass and contains contributions from electronic energy levels. It is defined as $\displaystyle e_e = \sum_{s=1}^\text{NS} \frac{\rho_s e_{e,s}}{\rho}$
+    \item  $e_{e,s}$ is the electronic energy per unit mass of species $s$ and is defined as a function of $T_e$.
+    \item $T_e$ is the electron temperature.
+    \item $\eta_e$ is the is the electronic thermal conductivity.
+    \item $h_{e,s}$ is the electronic enthalpy per unit mass and is idential to $e_{e,s}$ for all species except free electrons. For free electrons it is defined as: $ \displaystyle h_{e,e} = e_{e,e} + \frac{\hat{R}T_e}{\mathcal{M}_e}$
+    \item $\nu_{e,s}$ is the effective collision frequency of electrons with heavy particles.
+    \item $\dot{n}_{e,s}$ is the molar rate of production of species $s$ by electron impact ionizations.
+    \item $\hat{I}_s$ is the energy per unit mole lost by a free electron in producing species $s$ through electron impact ionization.
+    \item $Q_\text{rad}$ is the radiant energy transfer rate due to electron transitions.
+\end{itemize}
 
-\subsection{Total energy conservation}
+\subsection{Total Energy Conservation}
 
-    \begin{multline}
-        \ub{\pd{}{t} \rho E}{1} + \ub{\pd{}{x_j} \rho H u_j}{2} = \ub{\pd{}{x_j} \bp{\eta \pd{T}{x_j} + \eta_v \pd{T_v}{x_j} + \eta_e \pd{T_e}{x_j}}}{3} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_s D_s \pd{y_s}{x_j}}}{4} + \ub{\pd{}{x_j} \bb{u_i \mu \bp{\pd{u_i}{x_j} + \pd{u_j}{x_i}}}}{5} - \ub{Q_\text{rad}}{6}
-    \end{multline}
-    
-    The terms are:
+\begin{multline}
+    \ub{\pd{}{t} \rho E}{1} + \ub{\pd{}{x_j} \rho H u_j}{2} = \ub{\pd{}{x_j} \bp{\eta \pd{T}{x_j} + \eta_v \pd{T_v}{x_j} + \eta_e \pd{T_e}{x_j}}}{3} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_s D_s \pd{y_s}{x_j}}}{4} + \ub{\pd{}{x_j} \bb{u_i \mu \bp{\pd{u_i}{x_j} + \pd{u_j}{x_i}}}}{5} - \ub{Q_\text{rad}}{6}
+\end{multline}
 
-    \begin{enumerate}
-        \item Rate of change of total energy per unit volume.
-        \item The flux of total enthalpy due to convection.
-        \item The conduction of energy due to temperature, vibrational temperature, and electron temperature gradients.
-        \item The diffusion of energy due to concentration gradients.
-        \item The word done by shear forces.
-        \item The rate of energy loss due to radiation caused by electronic transitions.
-    \end{enumerate}
+The terms are:
 
-    The variables are:
+\begin{enumerate}
+    \item Rate of change of total energy per unit volume.
+    \item The flux of total enthalpy due to convection.
+    \item The conduction of energy due to temperature, vibrational temperature, and electron temperature gradients.
+    \item The diffusion of energy due to concentration gradients.
+    \item The word done by shear forces.
+    \item The rate of energy loss due to radiation caused by electronic transitions.
+\end{enumerate}
 
-    \begin{itemize}
-        \item $E$ is the total energy per unit volume, defined as $\displaystyle E = \frac{u_i u_i}{2} + \sum_{s=1}^\text{NS} \frac{\rho_s e_s}{\rho}$
-        \item $H$ is the total enthalpy per unit mass, defined as $\displaystyle H = E + \frac{p}{\rho}$
-        \item $\eta$ is the frozen thermal conductivity of heavy particles. The part in which exchanges of translational and rotational energy occur.
-    \end{itemize}
+The variables are:
+
+\begin{itemize}
+    \item $E$ is the total energy per unit volume, defined as $\displaystyle E = \frac{u_i u_i}{2} + \sum_{s=1}^\text{NS} \frac{\rho_s e_s}{\rho}$
+    \item $H$ is the total enthalpy per unit mass, defined as $\displaystyle H = E + \frac{p}{\rho}$
+    \item $\eta$ is the frozen thermal conductivity of heavy particles. The part in which exchanges of translational and rotational energy occur.
+\end{itemize}
 
 \subsection{Two temperature model}
 
-    Everything before this assumes a three-temperature model, where there is a single temperature dedicated to translational-rotational energy, vibrational energy, and electronic-electron energies. The two temperature model assumes that one temperature can be used for describing the energy of translational-rotational energies, and then the rest (vib-electronic-electron) are desibed by the second temperature, $T_V$. Therefore:
-    
-    \begin{equation}
-        T_v = T_e = T_V
-    \end{equation}
+Everything before this assumes a three-temperature model, where there is a single temperature dedicated to translational-rotational energy, vibrational energy, and electronic-electron energies. The two temperature model assumes that one temperature can be used for describing the energy of translational-rotational energies, and then the rest (vib-electronic-electron) are desibed by the second temperature, $T_V$. Therefore:
 
-    By combining the vibrational and electronic energy equations, we get the vibrational-electronic energy conservation equation:
+\begin{equation}
+    T_v = T_e = T_{ve}
+\end{equation}
 
-    \begin{multline}
-        \ub{ \pd{}{t} \rho e_V}{1} + \ub{\pd{}{x_j} \rho e_V u_j}{2} = \ub{- p_e \pd{u_j}{x_j}}{3} + \ub{\pd{}{x_j} \bb{(\eta_v + \eta_e) \pd{T_V}{x_j}}}{4} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{V,s} D_s \pd{y_s}{x_j}}}{5} \\ + \ub{\mathcal{S}_{t-v}^v}{6} + \ub{\mathcal{S}_{t-e}^{ve}}{7}  - \ub{\mathcal{S}_{e-i}^{ve}}{8} + \ub{\mathcal{S}_{v-c}^{v}}{9}- \ub{Q_\text{rad}}{10}
-    \end{multline}
+By combining the vibrational and electronic energy equations, we get the vibrational-electronic energy conservation equation:
 
-    Where:
+\begin{multline}
+    \ub{ \pd{}{t} \rho e_{ve}}{1} + \ub{\pd{}{x_j} \rho e_{ve} u_j}{2} = \ub{- p_e \pd{u_j}{x_j}}{3} + \ub{\pd{}{x_j} \bb{(\eta_v + \eta_e) \pd{T_{ve}}{x_j}}}{4} + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{{ve},s} D_s \pd{y_s}{x_j}}}{5} \\ + \ub{\mathcal{S}_{t-v}^v}{6} + \ub{\mathcal{S}_{t-e}^{ve}}{7}  - \ub{\mathcal{S}_{e-i}^{ve}}{8} + \ub{\mathcal{S}_{v-c}^{v}}{9}- \ub{Q_\text{rad}}{10}
+\end{multline}
 
-    \begin{align}
-        e_V &= e_v + e_e
-        \\ h_{V,s} &= h_{v,s} + h_{e,s}
-    \end{align}
-
-
-\subsection{Partial Derivatives}
+\newpage
+\section{Partial Derivatives for Noequilibrium Jacobians}
 
 In this section, partial derivatives are given for numerous flow quanties for use in assembling the Jacobian matrices for the flow solver.
 
-\subsubsection{Partial derivatives of pressure ($P$)}
+\subsubsection{Partial derivatives of pressure ($p$)}
 
 \begin{subequations}
     \begin{align}
