@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/TeX Live for SUSE Linux) (preloaded format=pdflatex 2024.9.12)  30 JUN 2026 10:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/TeX Live for SUSE Linux) (preloaded format=pdflatex 2024.9.12)  30 JUN 2026 16:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1363,146 +1363,147 @@ Package mdframed Info: mdframed detected package amsthm
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
 (mdframed)              on input line 1422.
- [33] [34] [35] [36] [37]
+ [33] [34] [35] [36] [37] [38] [39]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 1661.
+(mdframed)              on input line 1766.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 1688.
- [38]
+(mdframed)              on input line 1793.
+ [40]
+Package mdframed Info: Not enough space on this page on input line 1813.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 1710.
+(mdframed)              on input line 1815.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 1722.
+(mdframed)              on input line 1827.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 1730.
+(mdframed)              on input line 1835.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 1742.
- [39]
+(mdframed)              on input line 1847.
+ [41]
 
 Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 1756.
+(caption)                particular \caption on input line 1861.
 See the caption package documentation for explanation.
 
-[40] [41] [42] [43]
+[42] [43] [44] [45]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[44] [45] [46]
+[46] [47] [48]
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 2127.
- [47] [48] [49] [50] [51] [52]
+(mdframed)              on input line 2232.
+ [49] [50] [51] [52] [53] [54]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 2292.
+(hyperref)                than one, level fixed on input line 2397.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2292.
+(hyperref)                removing `math shift' on input line 2397.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2292.
+(hyperref)                removing `math shift' on input line 2397.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2305.
+(hyperref)                removing `math shift' on input line 2410.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2305.
+(hyperref)                removing `math shift' on input line 2410.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2319.
+(hyperref)                removing `math shift' on input line 2424.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2319.
+(hyperref)                removing `math shift' on input line 2424.
 
-[53]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2333.
-
+[55]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 2333.
+(hyperref)                removing `math shift' on input line 2438.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2333.
+(hyperref)                removing `subscript' on input line 2438.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2346.
+(hyperref)                removing `math shift' on input line 2438.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 2346.
+(hyperref)                removing `math shift' on input line 2451.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2346.
+(hyperref)                removing `subscript' on input line 2451.
 
-[54] [55] [56] [57]
-Underfull \hbox (badness 10000) detected at line 2512
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 2451.
+
+[56] [57] [58] [59]
+Underfull \hbox (badness 10000) detected at line 2617
  []$[]   \OT1/cmr/m/n/10 = [] [][] [][]$ [][]  
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2525
+Underfull \hbox (badness 10000) detected at line 2630
  []$[]  []$ [][]  
  []
 
-[58]
-Underfull \hbox (badness 1931) detected at line 2558
+[60]
+Underfull \hbox (badness 1931) detected at line 2663
  []$[]  [] \OT1/cmr/m/n/10 = [] [] [][] [][]$ [][]  
  []
 
-[59] [60] [61] [62] [63] [64]
-Overfull \hbox (3.56955pt too wide) in paragraph at lines 2815--2815
+[61] [62] [63] [64] [65] [66]
+Overfull \hbox (3.56955pt too wide) in paragraph at lines 2920--2920
 |[]\OT1/ppl/b/n/12 Derivation of Electronic-Electron En-ergy Con-ser-va-tion Equa-tion for the DRNSE| 
  []
 
-[65] [66] [67] [68] [69] [70] [71] [72] [73] [74]
-Overfull \hbox (11.64589pt too wide) detected at line 3488
+[67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77]
+Overfull \hbox (11.64589pt too wide) detected at line 3616
 [][] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@[] []
  []
 
-[75] [76] [77] [78]
-Overfull \hbox (12.97365pt too wide) detected at line 3652
+[78] [79] [80] [81]
+Overfull \hbox (12.97365pt too wide) detected at line 3780
 []
  []
 
-[79]
-Overfull \hbox (12.97365pt too wide) detected at line 3688
+[82]
+Overfull \hbox (12.97365pt too wide) detected at line 3816
 []
  []
 
-[80] [81] [82] [83] [84] (./notes.bbl) [85] (./notes.aux)
+[83] [84] [85] [86] (./notes.bbl) [87] (./notes.aux)
 Package rerunfilecheck Info: File `notes.out' has not changed.
-(rerunfilecheck)             Checksum: EC596E8000960453E233A35929E1824D;22538.
+(rerunfilecheck)             Checksum: 95575EFFDB8C2E8DC4EC49275579602B;23878.
  ) 
 Here is how much of TeX's memory you used:
- 31519 strings out of 479007
- 572216 string characters out of 5867743
- 974818 words of memory out of 5000000
- 47705 multiletter control sequences out of 15000+600000
+ 31558 strings out of 479007
+ 572654 string characters out of 5867743
+ 963750 words of memory out of 5000000
+ 47735 multiletter control sequences out of 15000+600000
  430567 words of font info for 106 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,20n,130p,926b,1521s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 128i,20n,130p,926b,1557s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/base/8r.enc}</usr/share/texmf/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texmf/fonts/type1/urw/palatino/uplbi8a.pfb></usr/share/texmf/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on notes.pdf (86 pages, 562848 bytes).
+Output written on notes.pdf (88 pages, 572753 bytes).
 PDF statistics:
- 1869 PDF objects out of 2073 (max. 8388607)
- 1680 compressed objects within 17 object streams
- 704 named destinations out of 1000 (max. 500000)
- 805 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1943 PDF objects out of 2073 (max. 8388607)
+ 1747 compressed objects within 18 object streams
+ 713 named destinations out of 1000 (max. 500000)
+ 853 words of extra memory for PDF output out of 10000 (max. 10000000)
 

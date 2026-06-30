@@ -1551,9 +1551,10 @@ The translation energy of an atom or molecule can be found with:
 
 Where the subscript $t$ denotes a translational quantity. The total translational energy of all heavy species in a mixture is then:
 
-\begin{equation*}
+\begin{equation}
     E_t = \rho e_t = \sum_{s \neq e}^\text{NS} \rho_s \bb{\frac{3}{2} \frac{\Rhat}{\MW_s}} T_t = \rho \bar{c}_{v,t} T_t
-\end{equation*}
+    \label{eq:trans-energy}
+\end{equation}
 
 Where the mixture specific heat is computed as:
 
@@ -1562,7 +1563,7 @@ Where the mixture specific heat is computed as:
     \label{eq:cvtbar}
 \end{equation*}
 
-The translation specific heat for a given species is defined as:
+The translational specific heat for a given species is defined as:
 
 \begin{equation}
     c_{v,s}^{t} \equiv \pd{e_t}{T_t}\bigg|_v = \frac{3}{2} \frac{\Rhat}{\MW_s}
@@ -1571,21 +1572,125 @@ The translation specific heat for a given species is defined as:
 The translational energy of free electrons uses the same expression:
 
 \begin{equation*}
-    E_{t,e} = \rho_e \frac{3}{2} \frac{\Rhat}{\MW_e} T_e
+    E_{e} = \rho_e \frac{3}{2} \frac{\Rhat}{\MW_e} T_e
+    \label{eq:e-energy}
 \end{equation*}
 
-Where the subscript $e$ denotes an electron specific equantiy. $T_e$ is the temperature of the free electrons.
+Where the subscript $e$ denotes an electron specific equantiy. $T_e$ is the temperature of the free electrons. It should be noted that if the electron temperature is assumed to be in equilibrium with the translational temperature, the sum in Eq. [\ref{eq:trans-energy}] should include electrons. Clearly, the specific heat for the electron translational energy is just:
+
+\begin{equation*}
+    c_{v,e}^t = \frac{3}{2} \frac{\Rhat}{\MW_e}
+    \label{eq:cve}
+\end{equation*}
 
 \subsection{Rotational Energy}
 
-The rotational energy of a molecule depends on the degrees of freedom of that molecule, i.e., how many different ways that molecule can rotate. The degrees of freedom (DOF) are denoted by $\eta$, and therefore the spefic heat of a species is defined as:
+The rotational energy of a molecule depends on the degrees of freedom of that molecule, i.e., how many different ways that molecule can rotate. The rotational degrees of freedom (DOF) are denoted by $\eta_r$, and therefore the rotational specific heat of a species is defined as:
 
 \begin{equation*}
-    c_{v,s}^r = \pd{e_r}{T_r}\bigg|_v = \frac{\eta}{2} \frac{\Rhat}{\MW_s}
+    c_{v,s}^r = \pd{e_r}{T_r}\bigg|_v = \frac{\eta_r}{2} \frac{\Rhat}{\MW_s}
 \end{equation*}
 
-Note that for the translational energy, there are 3 degrees of freedom in the $x$, $y$, and $z$ directions. 
+Note that for the translational energy, there are 3 degrees of freedom in the $x$, $y$, and $z$ directions. The total energy stored in the rotational mode is then:
 
+\begin{equation*}
+    E_{r} = \sum_{s=1}^\text{ND} \rho_s \bb{\frac{\eta_{r,s}}{2} \frac{\Rhat}{\MW_s}} T_r
+    \label{eq:rot-energy}
+\end{equation*}
+
+The mixture specific heat for the rotational mode is then:
+
+\begin{equation*}
+    \bar{c}_{v,r} = \sum_{s=1}^\text{ND} \Ymass_s c_{v,s}^r \rightarrow \rho \bar{c}_{v,r} = \sum_{s=1}^\text{NS} \rho_s c_{v,s}^r
+    \label{eq:cvrbar}
+\end{equation*}
+
+\subsection{Translational-Rotational Energy}
+
+Translational and rotational energies are usually grouped together as one energy mode, evlaulated at a single translation-rotational temperatures $T_{tr}$. Since the rotational energy mode equilibrates with the translational one quickly, this is a valid assumption in most situations. The combined energy gives:
+
+\begin{equation*}
+    E_{tr} = \rho e_{tr} = \sum_{s}^\text{NS} \rho_s \bb{\frac{3}{2} + \frac{\eta_{r,s}}{2}} T_{tr}
+    \label{eq:trans-rot-energy}
+\end{equation*}
+
+Where $\eta_{r,s}$ is zero for atomic species. The spefic heat of the combined energy mdoes for a species is then:
+
+\begin{equation*}
+    c_{v,s}^{tr} = \pd{e_{s, tr}}{T_{tr}}\bigg|_v = \frac{3}{2} + \frac{\eta_{r,s}}{2}
+\end{equation*}
+
+The mixture translational-rotational specific heat is then:
+
+\begin{equation*}
+    \bar{c}_{v,tr} = \sum_{s=1}^\text{NS} \Ymass_s c_{v,s}^{tr} \rightarrow \rho \bar{c}_{v,tr} = \sum_{s=1}^\text{NS} \rho_s c_{v,s}^{tr}
+    \label{eq:cvbar}
+\end{equation*}
+
+\subsection{Vibrational energy}
+
+Vibrational energy is only associated with polyatomic molecules, where atoms attached via atomic bonds are assumed to osccilate harmonically as though connected to springs. This gives rise the the Simple Harmonic Oscillator (SHO) model where the specific vibrational energy is computed as:
+
+\begin{equation*}
+    e_{v,s} = \frac{\Rhat}{\MW_s} \frac{\theta_{v,s}}{e^{\theta_{v,s} / T_v} - 1} 
+\end{equation*}
+
+Here, $\theta_v$ is the characteristic vibrational temperature defined as $hv/\kB$, where $h$ is Planck's constant, and $v$ is the harmonic oscillator's frequency. $T_v$ is the vibrational temperature. The specific heat is then:
+
+\begin{equation*}
+    c_{v,s}^v = \pd{e_{v,s}}{T_v}\bigg|_v = \frac{\Rhat}{\MW_s} \bp{\frac{\theta_{v,s}}{T_v}}^2 \frac{e^{\theta_{v,s}/T_v}}{\bp{e^{\theta_{v,s} / T_v} -1}^2}
+\end{equation*}
+
+The total vibrational energy is then:
+
+\begin{equation*}
+    E_v = \sum_{i=1}^\text{ND} \rho_s e_s = \sum_{i=1}^\text{ND} \rho_s e_{v,s} = \frac{\Rhat}{\MW_s} \frac{\theta_{v,s}}{e^{\theta_{v,s} / T_v} - 1} 
+    \label{eq:vib-energy}
+\end{equation*}
+
+\subsection{Electronic Energy}
+
+Electronic energy of an atom is due to the electrons in orbit around that atom. The electronic energy of a species has the form:
+
+\begin{equation*}
+    e_{e,s} = \frac{\Rhat}{\MW_s} \bb{\frac{\displaystyle\sum_{i=1}^\infty g_{i,s} \theta_{e,i,s} e^{-\theta_{e,i,s}/ T_e}}{\displaystyle\sum_{i=0}^\infty g_{i,s} e^{- \theta_{e,i,s} / T_e}}}
+\end{equation*}
+
+The total electronic energy for a mixture is then:
+
+\begin{equation*}
+    E_{el} = \sum_{s=1}^\text{NS} \rho_s \frac{\Rhat}{\MW_s} \bb{\frac{\displaystyle\sum_{i=1}^\infty g_{i,s} \theta_{e,i,s} e^{-\theta_{e,i,s}/ T_e}}{\displaystyle\sum_{i=0}^\infty g_{i,s} e^{- \theta_{e,i,s} / T_e}}}
+    \label{eq:el-energy}
+\end{equation*}
+
+\subsection{Electron-Electron Energy}
+
+For three temperature models, the electronic and electron-translational energy are combined into a single energy, $E_{el-e}$. That is:
+
+\begin{equation*}
+    E_{el-e} = \sum_{s \neq e}^\text{NS} \bb{\rho_s e_{el,s}} + \Ee
+    \label{eq:el-e-energy}
+\end{equation*}
+
+\subsection{Heat of Formation}
+
+The heat of formation of a species is a constant that defined the amount of energy necessary to create that species. It is denoted by $h_{f}^\circ \label{eq:heat-form}$. For example, the heat of formation of $N_2$ is taken as zero since it is in its natural state in Earth's atmosphere. However, in high-temperature flows, enough energy is directed into the molecule to dissociate it in two $N$ atoms. Therefore, the heat of formation for $N$ is not zero. This constant is necessary to balance the energy equation, as energy is lost in dissociation of the molecule, but not destroyed. Therefore, the total energy that has been "lost" due to creation of a species is:
+
+
+
+\begin{equation*}
+    E_f^\circ = \sum_{s=1}^\text{NS} \hform_{,s}
+    \label{eq:form-energy}
+\end{equation*}
+
+\subsection{Kinetic Energy}
+
+The total kinetic energy in the flow is:
+
+\begin{equation*}
+    E_{ke} = \sum_{i=1}^\text{NS} \rho_s \boldsymbol{u} \cdot \boldsymbol{u}
+    \label{eq:kinetic-energy}
+\end{equation*}
 
 \section{Nonequilibrium Source Terms}
 
@@ -2808,16 +2913,16 @@ The nonlinear residual is:
 Where $U$ = $U^{n+1}$ or $U^{k+1}$. We aim to find a $U$ that satisfies $R(U^{n+1})$ = 0. Therefore, we use Newton steps to find this value. First, take your current $U_n$, and set it as $U_k$. 
 
 \newpage
-\section{Stagnation Line Solver for Nonequilibirum Flow}
+\section{Stagnation Line Solver for Nonequilibirum Flow with Arbitrary Number of Energy Equations}
 
 The Dimensionally-Reduced Navier-Stokes Equations (DRNSE) are found by first casting the Navier-Stokes equations into cylindrical or polar coordinates and then using a separation of variables technique to cast certain flow quantities as functions of the radial coordinate $r$ only. An example is shown in the next section by introducing the conservation of electronic-electron internal energy equation into the DRNSE.
 
 \subsection{Derivation of Electronic-Electron Energy Conservation Equation for the DRNSE}
 
-First, we show the electronic-electron energy in cartesian coordinates again, grouping source terms together into $S_e$ for simplicity:
+First, we show the electronic-electron energy in cartesian coordinates again, grouping source terms together into $S_e$ for simplicity. The "$el$" subscript denotes an electronic equantiy, while "$e$" denotes an electron quantity.
 
 \begin{equation*}
-    \pd{}{t} \rho e_e + \pd{}{x_j} \bb{u_j(\rho e_e + p_e)} + \pd{q_j^e}{x_j} = u_j \pd{p_e}{x_j} + S_e \hspace{5mm}
+    \pd{}{t} \rho e_{el-e} + \pd{}{x_j} \bb{u_j(\rho e_{el-e} + p_e)} + \pd{q_j^{el-e}}{x_j} = u_j \pd{p_e}{x_j} + S_{el-e} \hspace{5mm}
 \end{equation*}
 
 We use the following relationships from Ref. \cite{klomfass1996} to cast the divergences of scalars, vectors, and tensors in cartesian coordinates into polar coordinates, throwing away any derivatives with respect to the aximuthal angle, $\phi$, due to the assumption of rotationally-symmetric flow:
@@ -2846,11 +2951,12 @@ We now need reasonable approximations for flow quantities using this ansatz. Klo
 \end{aligned}
 \label{eq:DRNSE_ansatz}
 \end{equation}
-Pluggins Eqs. \ref{eq:DRNSE_ansatz} into \ref{eq:polar_div} and setting $f(r) = \rho e_e + p_e = \rho H_e$ gives:
+
+Pluggins Eqs. \ref{eq:DRNSE_ansatz} into \ref{eq:polar_div} and setting $f(r) = \rho e_{el-e} + p_e = \rho H_{el-e}$ gives:
 
 \begin{align*}
-    \pd{}{x_j} (\rho H_e u_j) &= \pd{}{r} [\rho H_e \bar{u}_r \cos \theta] + \frac{2 \rho H_e}{r} \bar{u}_r \cos \theta + \frac{\cot \theta}{r} \rho H_e \bar{u}_\theta \sin \theta + \frac{1}{r} \pd{}{\theta} [\rho H_e \bar{u}_\theta \sin \theta] \\
-    &= \bb{ \pd{}{r}[\rho H_e \bar{u}_r] + \frac{2 \rho H_e}{r} (\bar{u}_r + \bar{u}_\theta)} \cos \theta \\
+    \pd{}{x_j} (\rho H_{el-e} u_j) &= \pd{}{r} [\rho H_{el-e} \bar{u}_r \cos \theta] + \frac{2 \rho H_{el-e}}{r} \bar{u}_r \cos \theta + \frac{\cot \theta}{r} \rho H_{el-e} \bar{u}_\theta \sin \theta + \frac{1}{r} \pd{}{\theta} [\rho H_{el-e} \bar{u}_\theta \sin \theta] \\
+    &= \bb{ \pd{}{r}[\rho H_{el-e} \bar{u}_r] + \frac{2 \rho H_{el-e}}{r} (\bar{u}_r + \bar{u}_\theta)} \cos \theta \\
 \end{align*}
 
 and:
@@ -2863,17 +2969,17 @@ and:
 Taking the limit as $\theta$ goes to 0 gives the following identities for stagnation line flow:
 
 \begin{align*}
-    \pd{}{x_j} (\rho H_e u_j) &= \pd{}{r}[\rho H_e \bar{u}_r] + \frac{2 \rho H_e}{r} (\bar{u}_r + \bar{u}_\theta) \\
+    \pd{}{x_j} (\rho H_{el-e} u_j) &= \pd{}{r}[\rho H_{el-e} \bar{u}_r] + \frac{2 \rho H_{el-e}}{r} (\bar{u}_r + \bar{u}_\theta) \\
     \pd{p_e}{x_j} &= \pd{p_e}{r}
 \end{align*}
 
 The stagnation line equation for the electron-electronic energy is then:
 
 \begin{equation}
-    \pd{\rho e_e}{t} + \pd{}{r}[\rho H_e u_r] + \frac{2 \rho H_e}{r} (u_r + u_\theta) + \pd{q_r^e}{r} + \frac{2}{r} q_r^e = u_r \pd{p_e}{r} + S_e
+    \pd{\rho e_{el-e}}{t} + \pd{}{r}[\rho H_{el-e} u_r] + \frac{2 \rho H_{el-e}}{r} (u_r + u_\theta) + \pd{q_r^{el-e}}{r} + \frac{2}{r} q_r^{el-e} = u_r \pd{p_e}{r} + S_{el-e}
 \end{equation}
 
-Where the overbar has been removed for conciseness. In the following sections, all variables are stagnation line quantities and so the overnar is not included again.
+Where the overbar has been removed for conciseness. In the following sections, all variables are stagnation line quantities and so the overbar is not included again.
 
 \subsection{System of Equations}
 
@@ -2884,7 +2990,7 @@ The system of equations for the stagnation line solver is:
 \end{equation}
 
 
-The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V}), viscous primitive variable vector (\textbf{W}) and secondary primitive variables vector (\textbf{Y}) are :
+The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V}), viscous primitive variable vector (\textbf{W}) and secondary primitive variable vector (\textbf{Y}) are :
 
 \begin{equation*}
     \boldsymbol{U} = \begin{bmatrix}
@@ -2892,8 +2998,9 @@ The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V
         \rho u_r \\
         \rho u_\theta \\
         \rho E \\
-        \rho e_v, \rho e_{ve}  \\
-        \rho e_e
+        \rho e_r \\
+        \rho e_v \\
+        \rho e_{el-e}
     \end{bmatrix}
     \hspace{5mm} 
     \boldsymbol{V} = \begin{bmatrix}
@@ -2901,16 +3008,18 @@ The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V
         u_r \\
         u_\theta \\
         p \\
-        e_v, e_{ve} \\ 
-        e_e \\
+        e_r \\
+        e_v \\ 
+        e_{el-e} \\
     \end{bmatrix}
     \hspace{5mm} 
     \boldsymbol{W} = \begin{bmatrix}
         Y_s \\
         u_r \\
         u_\theta \\
-        T_{tr} \\
-        T_{v}, T_{ve} \\ 
+        T_{t} \\
+        T_{r} \\
+        T_{v} \\ 
         T_{e} 
     \end{bmatrix}
     \hspace{5mm} 
@@ -2918,8 +3027,9 @@ The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V
         \rho_s \\
         u_r \\
         u_\theta \\
-        T_{tr} \\
-        T_{v}, T_{ve} \\
+        T_{t} \\
+        T_{r} \\
+        T_{v} \\
         T_{e}
     \end{bmatrix}
     \hspace{5mm} 
@@ -2933,8 +3043,9 @@ The convective flux vector ($\boldsymbol{F}_c$) and diffusive flux vector ($\bol
         \rho u_r^2 + p \\
         \rho u_r u_\theta \\
         \rho u_r H \\
-        \rho u_r e_v, u_r e_{ve} \\
-        \rho u_r H_e
+        \rho u_r e_r \\
+        \rho u_r e_v \\
+        \rho u_r H_{el-e} 
     \end{bmatrix}
         \hspace{5mm} 
     \boldsymbol{F_d} = \begin{bmatrix}
@@ -2942,12 +3053,13 @@ The convective flux vector ($\boldsymbol{F}_c$) and diffusive flux vector ($\bol
         \tau_{rr} \\ 
         \tau_{r\theta} \\ 
         q_r + \tau_{rr} u_r \\ 
-        q_r^v, q_r^{ve} \\
-        q_r^e
+        q_r^r \\
+        q_r^v \\
+        q_r^{el-e}
     \end{bmatrix}
 \end{equation}
 
-The DRNSE also results in a convective source term ($\boldsymbol{S}_c$) and a diffusive source term ($\boldsymbol{S}_d$), along with the species-mass and vibrational-electronic energy source vector ($\boldsymbol{S}_k$), and the radiative source term ($\boldsymbol{S}_r$):
+The DRNSE also results in a convective source term ($\boldsymbol{S}_c$) and a diffusive source term ($\boldsymbol{S}_d$), along with the species-mass and vibrational-electronic energy source vector ($\boldsymbol{S}_k$):
 
 \begin{equation}
     \boldsymbol{S}_c = -\frac{2(u_r + u_\theta)}{r}
@@ -2956,8 +3068,9 @@ The DRNSE also results in a convective source term ($\boldsymbol{S}_c$) and a di
         \rho u_r \\ 
         \frac{3}{2} \rho u_\theta - \frac{p-p_\infty}{u_r + u_\theta} \\ 
         \rho H \\ 
-        \rho e_{v}, \rho e_{ve} \\
-        \rho H_e
+        \rho e_r \\
+        \rho e_{v} \\
+        \rho H_{el-e}
         \end{bmatrix}
     \hspace{5mm}
     \boldsymbol{S}_d = -\frac{2}{r}
@@ -2966,20 +3079,16 @@ The DRNSE also results in a convective source term ($\boldsymbol{S}_c$) and a di
         \tau_{rr} - \tau_{\theta \theta} + \tau_{r \theta} \\ 
         \frac{1}{2} (3\tau_{r \theta} - \tau_{\theta \theta}) \\ 
         q_r + \tau_{rr} u_r + \tau_{r \theta} u_r + \tau_{\theta \theta} u_\theta \\
-        q_r^v, q_r^{ve} \\
-        q_r^e
+        q_r^r \\
+        q_r^v \\
+        q_r^{el-e}
         \end{bmatrix}
 \end{equation}
 \begin{equation}
     \boldsymbol{S}_k =
         \begin{bmatrix}
-        \dot{\omega}_s \\ 0 \\ 0 \\ 0 \\ \Omega_{ve}
-        \end{bmatrix}
-    \hspace{5mm}
-    \boldsymbol{S}_r =
-        \begin{bmatrix}
-        \dot{\phi}_s \\ 0 \\ 0 \\ \mathcal{P} \\ \mathcal{P}_{ve}
-        \end{bmatrix}
+        \dot{\omega}_s & 0 & 0 & 0 & \mathcal{S}_r & \mathcal{S}_v & \mathcal{S}_{el-e}
+        \end{bmatrix}^T
 \end{equation}
 
 The terms in the diffusive flux and source vectors are as follows:
@@ -2989,7 +3098,9 @@ The terms in the diffusive flux and source vectors are as follows:
     \\ \tau_{r\theta} &= -\mu \bp{\pd{u_\theta}{r} - \frac{u_r + u_\theta}{r}}
     \\ \tau_{\theta\theta} &= -\frac{1}{2} \tau_{rr}
     \\ q_r &= \sum_s J_{rs} h_s - \kappa^{tr}\pd{T_{tr}}{r} - \kappa^{ve} \pd{T_{ve}}{r}
-    \\ q_r^{ve} &= \sum_s J_{rs} h_s^{ve} - \kappa^{ve} \pd{T_{ve}}{r}
+    \\ q_r^{r} &= \sum_s J_{rs} e_s^{r} - \kappa^{r} \pd{T_{r}}{r}
+    \\ q_r^{v} &= \sum_s J_{rs} e_s^{v} - \kappa^{v} \pd{T_{v}}{r}
+    \\ q_r^{el-e} &= \sum_s J_{rs} h_s^{el-e} - \kappa^{el-e} \pd{T_{e}}{r}
 \end{align*}
 
 The modified Fickian model for the species diffusion flux is used, which is a correction to the standard Fickian model to ensure that the sum of the species diffusion fluxes is zero (i.e., mass conservation is satisfied):
@@ -3035,6 +3146,8 @@ In order to find the flux Jacobian $\boldsymbol{A} = \partial{\boldsymbol{F_c}}/
         U_3 / \sum_s U_s \\
         p(\boldsymbol{U}) \\
         U_5 / \sum_s U_s \\
+        U_6 / \sum_s U_s \\
+        U_7 / \sum_s U_s 
     \end{bmatrix}
     \hspace{5mm}
     \boldsymbol{\boldsymbol{U}(\boldsymbol{V})} = \begin{bmatrix}
@@ -3043,6 +3156,8 @@ In order to find the flux Jacobian $\boldsymbol{A} = \partial{\boldsymbol{F_c}}/
         \sum_s V_s V_3 \\
         \rho E(\boldsymbol{V}) \\
         \sum_s V_s V_5 \\
+        \sum_s V_s V_6 \\
+        \sum_s V_s V_7 
     \end{bmatrix}
     \hspace{5mm}
     \boldsymbol{\boldsymbol{F_c}(\boldsymbol{V})} = \begin{bmatrix}
@@ -3051,32 +3166,45 @@ In order to find the flux Jacobian $\boldsymbol{A} = \partial{\boldsymbol{F_c}}/
         \sum_s V_s V_2 V_3 \\
         [\rho E(\boldsymbol{V}) + V_4]V_2 \\
         \sum_s V_s V_2 V_5 \\
+        \sum_s V_s V_2 V_5 \\
+        \bb{\sum_{s} V_s V_7 + p_e(\boldsymbol{V})} V_2
     \end{bmatrix}   
 \end{equation*}
 
-Pressure is found by using the equation of state for a mixture of ideal gases and recovering translational energy from the total energy equation by subtracting out the other energy modes:
+Pressure is found by using the equation of state for a mixture of ideal gases and recovering translational energy from the total energy equation by subtracting out the other energy modes. For most temperature formulations, the translational and rotational energies are assumed to be in equilibrium with the common temperature $T_{tr}$. For a four temperature model, rotational energy has its own temperature $T_r$. Because of this, some equations have to expressions to account for the difference between these models. Equations highlighted in black are equations that specifically account for four temperatures, while equations in $\textcolor{defgreen}{green}$ assume translational-rotational equilibrium.
 
 \begin{equation*}
-    p = \rho \Rbar T_\text{tr} = \frac{\Rbar}{\cvbar} \bb{\rho e^\text{tr}} = \frac{\Rbar}{\cvbar} \bb{\rho E - \frac{\rho}{2} u_r^2 - \rho e_v - \sum_s \rho_s h_s^f}
+    p = \rho \Rbar T_\text{tr} = \frac{\Rbar}{\cvtbar} \bb{\rho e^\text{tr}} = \frac{\Rbar}{\cvtbar} \bb{\rho E - \sum_\text{int} E_i}
+\end{equation*}
+
+Where "int" is the number of internal energies to subtract from the total energy. This is equivalent to:
+
+\begin{equation*}
+    \sum_\text{int} = \Erot + \Evib + \Eele + \Eke + \Eform
 \end{equation*}
 
 In conserved variable form, this is:
 
-\begin{equation*}
-    p(\boldsymbol{U}) = \frac{\sum U_s R_s}{\sum U_s c_{v,s}^\text{tr}} \bb{U_4 - \frac{1}{2} \frac{1}{\sum_s U_s} U_2^2 - U_5 - \sum_s U_s h_s^\circ}
-\end{equation*}
+\begin{align*}
+    p(\boldsymbol{U}) &= \frac{\sum U_s R_s}{\sum U_s c_{v,s}^\text{t}} \bb{U_4 - \frac{1}{2} \frac{1}{\sum_s U_s} U_2^2 - U_5 - U_6 - U_7 - \sum_s U_s h_s^\circ}
+    \\ \textcolor{defgreen}{p(\boldsymbol{U})} &\textcolor{defgreen}{= \frac{\sum U_s R_s}{\sum U_s c_{v,s}^\text{tr}} \bb{U_4 - \frac{1}{2} \frac{1}{\sum_s U_s} U_2^2 - U_6 - U_7 - \sum_s U_s h_s^\circ}}
+\end{align*}
 
-For internal energy, we can rearrange the above equation to get:
+For internal energy, we can rearrange the above equations to get:
 
-\begin{equation*}
-    \rho E = \frac{\cvbar}{\Rbar} p + \frac{1}{2} \rho u_r^2 + \rho e_v + \sum_s \rho_s h_s^f
-\end{equation*}
+\begin{align*}
+    \rho E &= \frac{\cvtbar}{\Rbar} p + \frac{1}{2} \rho u_r^2 + \rho e_r + \rho e_v + \rho e_{el-e} + \sum_s \rho_s h_s^f \\
+    \textcolor{defgreen}{\rho E} &= \textcolor{defgreen}{\frac{\cvbar}{\Rbar} p + \frac{1}{2} \rho u_r^2 + \rho e_v + \rho e_{el-e} + \sum_s \rho_s h_s^f}
+\end{align*}
 
 In primitive variable form, this is:
 
-\begin{equation*}
-    \rho E(\boldsymbol{V}) = \frac{\sum_s V_s c_{v,s}^\text{tr}}{\sum_s V_s R_s} V_4 + \frac{1}{2} \sum_s V_s \cdot V_2^2 + \sum_s V_s \cdot V_5 + \sum_s V_s h_s^\circ
-\end{equation*}
+\begin{align*}
+    \rho E(\boldsymbol{V}) &= \frac{\sum_s V_s c_{v,s}^\text{t}}{\sum_s V_s R_s} V_4 + \frac{1}{2} \sum_s V_s \cdot V_2^2 + \sum_s V_s \cdot V_5 + \sum_s V_s \cdot V_6 + \sum_s V_s \cdot V_7 + \sum_s V_s h_s^\circ \\
+    \textcolor{defgreen}{\rho E(\boldsymbol{V})} &= \textcolor{defgreen}{\frac{\sum_s V_s c_{v,s}^\text{tr}}{\sum_s V_s R_s} V_4 + \frac{1}{2} \sum_s V_s \cdot V_2^2 + \sum_s V_s \cdot V_6 + \sum_s V_s \cdot V_7 + \sum_s V_s h_s^\circ}
+\end{align*}
+
+Notice in the above equations that for less than four temperatures, the rotational energy in implicitly included in $\cvbar$, which is the translational-rotational specific heat. For the four temperature model, the rotational energy mode is subtracted out and therefore we only divide/multiply by $\cvtbar$, which is the translational specific heat.
 
 The derivates are now straightforward and the Jacobians are as follows: 
 \begin{equation*}
@@ -3694,6 +3822,898 @@ Where we have the following definitions for the matrices $\boldsymbol{A}$, $\bol
 \end{multline}
 
 \newpage
+
+
+
+
+\newpage
+% \section{Stagnation Line Solver for Nonequilibirum Flow}
+
+% The Dimensionally-Reduced Navier-Stokes Equations (DRNSE) are found by first casting the Navier-Stokes equations into cylindrical or polar coordinates and then using a separation of variables technique to cast certain flow quantities as functions of the radial coordinate $r$ only. An example is shown in the next section by introducing the conservation of electronic-electron internal energy equation into the DRNSE.
+
+% \subsection{Derivation of Electronic-Electron Energy Conservation Equation for the DRNSE}
+
+% First, we show the electronic-electron energy in cartesian coordinates again, grouping source terms together into $S_e$ for simplicity:
+
+% \begin{equation*}
+%     \pd{}{t} \rho e_e + \pd{}{x_j} \bb{u_j(\rho e_e + p_e)} + \pd{q_j^e}{x_j} = u_j \pd{p_e}{x_j} + S_e \hspace{5mm}
+% \end{equation*}
+
+% We use the following relationships from Ref. \cite{klomfass1996} to cast the divergences of scalars, vectors, and tensors in cartesian coordinates into polar coordinates, throwing away any derivatives with respect to the aximuthal angle, $\phi$, due to the assumption of rotationally-symmetric flow:
+
+% \begin{equation}
+% \begin{aligned}
+% \pd{}{x_j} \cdot (p \boldsymbol{I}) &= \pd{p}{r} + \frac{1}{r} \pd{p}{\theta} \\
+% \pd{}{x_j} \cdot (f(r) u_j) &= \pd{}{r}[f(r) u_r] + \frac{2}{r} f(r) u_r + \frac{\cot \theta}{r} f(r) u_\theta + \frac{1}{r} \pd{}{\theta} [f(r) u_\theta]
+% \label{eq:polar_div}
+% \end{aligned}
+% \end{equation}
+
+% The separation of variables technique assumes that we can cast a flow quantity dependant on $r$ and $\theta$ as the product of a function of $r$ and a function of $\theta$:
+
+% \begin{equation*}
+%     F(r, \theta) = \bar{F}(r) F^*(\theta)
+% \end{equation*}
+
+% We now need reasonable approximations for flow quantities using this ansatz. Klomfass and Muller chose the following:
+
+% \begin{equation}
+% \begin{aligned}
+%     u_r (r, \theta) &= \bar{u}_r (r) \cos \theta \\
+%     u_\theta (r, \theta) &= \bar{u}_\theta (r) \sin \theta \\
+%     p(r, \theta) &= \bar{p}(r) \cos^2 \theta + p_\infty
+% \end{aligned}
+% \label{eq:DRNSE_ansatz}
+% \end{equation}
+% Pluggins Eqs. \ref{eq:DRNSE_ansatz} into \ref{eq:polar_div} and setting $f(r) = \rho e_e + p_e = \rho H_e$ gives:
+
+% \begin{align*}
+%     \pd{}{x_j} (\rho H_e u_j) &= \pd{}{r} [\rho H_e \bar{u}_r \cos \theta] + \frac{2 \rho H_e}{r} \bar{u}_r \cos \theta + \frac{\cot \theta}{r} \rho H_e \bar{u}_\theta \sin \theta + \frac{1}{r} \pd{}{\theta} [\rho H_e \bar{u}_\theta \sin \theta] \\
+%     &= \bb{ \pd{}{r}[\rho H_e \bar{u}_r] + \frac{2 \rho H_e}{r} (\bar{u}_r + \bar{u}_\theta)} \cos \theta \\
+% \end{align*}
+
+% and:
+
+% \begin{align*}
+%     \pd{p_e}{x_j} &= \pd{}{r} [\bar{p}_e \cos^2 \theta + p_e^\infty] + \frac{1}{r} \pd{}{\theta} [\bar{p}_e \cos^2 \theta + p_\infty] \\
+%     &= \pd{\bar{p}_e}{r} \cos^2 \theta - \frac{1}{r} \bar{p}_e \sin(2 \theta)
+% \end{align*}
+
+% Taking the limit as $\theta$ goes to 0 gives the following identities for stagnation line flow:
+
+% \begin{align*}
+%     \pd{}{x_j} (\rho H_e u_j) &= \pd{}{r}[\rho H_e \bar{u}_r] + \frac{2 \rho H_e}{r} (\bar{u}_r + \bar{u}_\theta) \\
+%     \pd{p_e}{x_j} &= \pd{p_e}{r}
+% \end{align*}
+
+% The stagnation line equation for the electron-electronic energy is then:
+
+% \begin{equation}
+%     \pd{\rho e_e}{t} + \pd{}{r}[\rho H_e u_r] + \frac{2 \rho H_e}{r} (u_r + u_\theta) + \pd{q_r^e}{r} + \frac{2}{r} q_r^e = u_r \pd{p_e}{r} + S_e
+% \end{equation}
+
+% Where the overbar has been removed for conciseness. In the following sections, all variables are stagnation line quantities and so the overnar is not included again.
+
+% \subsection{System of Equations}
+
+% The system of equations for the stagnation line solver is:
+
+% \begin{equation}
+%     \pd{\boldsymbol{U}}{t} + \pd{\boldsymbol{F}_c}{r} + \pd{\boldsymbol{F}_d}{r} = \boldsymbol{S}_c + \boldsymbol{S}_d + \boldsymbol{S}_k + \boldsymbol{S}_r
+% \end{equation}
+
+
+% The conserved variable vector (\textbf{U}), primitive variable vector (\textbf{V}), viscous primitive variable vector (\textbf{W}) and secondary primitive variables vector (\textbf{Y}) are :
+
+% \begin{equation*}
+%     \boldsymbol{U} = \begin{bmatrix}
+%         \rho_s \\
+%         \rho u_r \\
+%         \rho u_\theta \\
+%         \rho E \\
+%         \rho e_v, \rho e_{ve}  \\
+%         \rho e_e
+%     \end{bmatrix}
+%     \hspace{5mm} 
+%     \boldsymbol{V} = \begin{bmatrix}
+%         \rho_s \\
+%         u_r \\
+%         u_\theta \\
+%         p \\
+%         e_v, e_{ve} \\ 
+%         e_e \\
+%     \end{bmatrix}
+%     \hspace{5mm} 
+%     \boldsymbol{W} = \begin{bmatrix}
+%         Y_s \\
+%         u_r \\
+%         u_\theta \\
+%         T_{tr} \\
+%         T_{v}, T_{ve} \\ 
+%         T_{e} 
+%     \end{bmatrix}
+%     \hspace{5mm} 
+%     \boldsymbol{Y} = \begin{bmatrix}
+%         \rho_s \\
+%         u_r \\
+%         u_\theta \\
+%         T_{tr} \\
+%         T_{v}, T_{ve} \\
+%         T_{e}
+%     \end{bmatrix}
+%     \hspace{5mm} 
+% \end{equation*}
+
+% The convective flux vector ($\boldsymbol{F}_c$) and diffusive flux vector ($\boldsymbol{F}_d$) are:
+
+% \begin{equation}
+%     \boldsymbol{F_c} = \begin{bmatrix}
+%         \rho_s u_r\\
+%         \rho u_r^2 + p \\
+%         \rho u_r u_\theta \\
+%         \rho u_r H \\
+%         \rho u_r e_v, u_r e_{ve} \\
+%         \rho u_r H_e
+%     \end{bmatrix}
+%         \hspace{5mm} 
+%     \boldsymbol{F_d} = \begin{bmatrix}
+%         J_{rs} \\ 
+%         \tau_{rr} \\ 
+%         \tau_{r\theta} \\ 
+%         q_r + \tau_{rr} u_r \\ 
+%         q_r^v, q_r^{ve} \\
+%         q_r^e
+%     \end{bmatrix}
+% \end{equation}
+
+% The DRNSE also results in a convective source term ($\boldsymbol{S}_c$) and a diffusive source term ($\boldsymbol{S}_d$), along with the species-mass and vibrational-electronic energy source vector ($\boldsymbol{S}_k$), and the radiative source term ($\boldsymbol{S}_r$):
+
+% \begin{equation}
+%     \boldsymbol{S}_c = -\frac{2(u_r + u_\theta)}{r}
+%         \begin{bmatrix}
+%         \rho_s \\  
+%         \rho u_r \\ 
+%         \frac{3}{2} \rho u_\theta - \frac{p-p_\infty}{u_r + u_\theta} \\ 
+%         \rho H \\ 
+%         \rho e_{v}, \rho e_{ve} \\
+%         \rho H_e
+%         \end{bmatrix}
+%     \hspace{5mm}
+%     \boldsymbol{S}_d = -\frac{2}{r}
+%         \begin{bmatrix}
+%         J_{rs} \\ 
+%         \tau_{rr} - \tau_{\theta \theta} + \tau_{r \theta} \\ 
+%         \frac{1}{2} (3\tau_{r \theta} - \tau_{\theta \theta}) \\ 
+%         q_r + \tau_{rr} u_r + \tau_{r \theta} u_r + \tau_{\theta \theta} u_\theta \\
+%         q_r^v, q_r^{ve} \\
+%         q_r^e
+%         \end{bmatrix}
+% \end{equation}
+% \begin{equation}
+%     \boldsymbol{S}_k =
+%         \begin{bmatrix}
+%         \dot{\omega}_s \\ 0 \\ 0 \\ 0 \\ \Omega_{ve}
+%         \end{bmatrix}
+%     \hspace{5mm}
+%     \boldsymbol{S}_r =
+%         \begin{bmatrix}
+%         \dot{\phi}_s \\ 0 \\ 0 \\ \mathcal{P} \\ \mathcal{P}_{ve}
+%         \end{bmatrix}
+% \end{equation}
+
+% The terms in the diffusive flux and source vectors are as follows:
+
+% \begin{align*}
+%     \tau_{rr} &= -\frac{4}{3}\mu \bp{\pd{u_r}{r} - \frac{u_r + u_\theta}{r}}
+%     \\ \tau_{r\theta} &= -\mu \bp{\pd{u_\theta}{r} - \frac{u_r + u_\theta}{r}}
+%     \\ \tau_{\theta\theta} &= -\frac{1}{2} \tau_{rr}
+%     \\ q_r &= \sum_s J_{rs} h_s - \kappa^{tr}\pd{T_{tr}}{r} - \kappa^{ve} \pd{T_{ve}}{r}
+%     \\ q_r^{ve} &= \sum_s J_{rs} h_s^{ve} - \kappa^{ve} \pd{T_{ve}}{r}
+% \end{align*}
+
+% The modified Fickian model for the species diffusion flux is used, which is a correction to the standard Fickian model to ensure that the sum of the species diffusion fluxes is zero (i.e., mass conservation is satisfied):
+% \begin{equation}
+%     J_{rs} = -\rho D_s \pd{Y_s}{r} + Y_s \sum_{i=1}^\text{NS} \bb{ \rho D_i \pd{Y_i}{r}}
+% \end{equation}
+
+% \subsection{Jacobians}
+
+% In this section, we will derive all of the Jacobians that are necessary for the implicit time-stepping of the stagnation line solver. This includes the flux Jacobians, the source term Jacobians, and the Jacobian of the diffusive fluxes. There are quite a number of Jacobians, so a brief summary is given here:
+
+% \begin{itemize}
+%     \item $ \pd{\boldsymbol{U}}{\boldsymbol{V}}$ = Jacobian of conserved variables with respect to primitive variables.
+%     \item $\pd{\boldsymbol{V}}{\boldsymbol{U}}$ = Jacobian of primitive variables with respect to conserved variables.
+%     \item $\boldsymbol{N}$ = $\pd{\boldsymbol{U}}{\boldsymbol{Y}}$ = Jacobian of conserved variables with respect to secondary visous primitive variables.
+%     \item $\boldsymbol{N}^{-1}$ = $\pd{\boldsymbol{Y}}{\boldsymbol{U}}$ = Jacobian of secondary viscous primitive variables with respect to conserved variables.
+%     \item $\pd{\boldsymbol{F}_c}{\boldsymbol{V}}$ = Jacobian of convective flux vector with respect to primitive variables.
+%     \item $\tilde{\boldsymbol{R}}$ = Matrix of right eigenvectors of the convective flux Jacobian.
+%     \item $\tilde{\boldsymbol{L}}$ = Matrix of left eigenvectors of the convective flux Jacobian.
+%     \item $\boldsymbol{\Lambda}^\pm$ = Diagonal matrix of positive and negative eigenvalues of the convective flux Jacobian.
+%     \item $\boldsymbol{L}$ = Matrix of left eigenvectors of the convective flux Jacobian multiplied by the Jacobian of the primitive variables with respect to the conserved variables.
+%     \item $\boldsymbol{R}$ = Matrix of right eigenvectors of the convective flux Jacobian multiplied by the Jacobian of the conserved variables with respect to the primitive variables.
+%     \item $\boldsymbol{A}^\pm$ = Convective flux Jacobian $\boldsymbol{R} \boldsymbol{\Lambda}^\pm \boldsymbol{L}$.
+%     \item $\boldsymbol{M}_D^F$ = Coefficient matrix that holds transport quantities for the diffusive flux vector. 
+%     \item $\boldsymbol{B}_D^F$ = Coefficient vector that holds values not dependant on spatical gradients in the diffusive flux vector.
+%     \item $\boldsymbol{M}_D^S$ = Coefficient matrix that holds transport quantities for the diffusive source vector.
+%     \item $\boldsymbol{B}_D^S$ = Coefficient vector that holds values not dependant on spatical gradients in the diffusive source vector.
+%     \item $\boldsymbol{J}_D = \pd{\boldsymbol{W}}{\boldsymbol{U}}$ = Jacobian matrix  use for mapping from viscous primitive vector to conserved variable vector.
+%     \item $\boldsymbol{J}_B^F$ = Jacobian of $\boldsymbol{B}_D^F$ with respect to $\boldsymbol{U}$.
+%     \item $\boldsymbol{J}_B^S$ = Jacobian of $\boldsymbol{B}_D^S$ with respect to $\boldsymbol{U}$.
+%     \item $\boldsymbol{J}_D^S$ = Jacobian of $\boldsymbol{S}_d$ with respect to $\boldsymbol{U}$.
+%     \item $\boldsymbol{J}_C^S$ = Jacobian of $\boldsymbol{S}_c$ with respect to $\boldsymbol{U}$.
+% \end{itemize}
+
+% \subsubsection{Convective Flux Jacobians}
+
+% In order to find the flux Jacobian $\boldsymbol{A} = \partial{\boldsymbol{F_c}}/\partial{\boldsymbol{U}}$, we need to compute a series of Jacobians. The first is the Jacobian of $\boldsymbol{U}$ with respect to $\boldsymbol{V}$. This is done by putting the conserved variables in terms of the primitive variables and then taking the derivatives. Then for the Jacobians of $\boldsymbol{V}$ with respect to $\boldsymbol{U}$, we do the same. By denoting $\rho_s$ as either $U_s$ or $V_s$, $\rho u_r$ as $U_2$, $u_r$ as $V_2$, etc., we can write the vectors as:
+
+% \begin{equation*}
+%     \boldsymbol{\boldsymbol{V}(\boldsymbol{U})} = \begin{bmatrix}
+%         U_s \\
+%         U_2 / \sum_s U_s \\
+%         U_3 / \sum_s U_s \\
+%         p(\boldsymbol{U}) \\
+%         U_5 / \sum_s U_s \\
+%     \end{bmatrix}
+%     \hspace{5mm}
+%     \boldsymbol{\boldsymbol{U}(\boldsymbol{V})} = \begin{bmatrix}
+%         V_s \\
+%         \sum_s V_s V_2 \\
+%         \sum_s V_s V_3 \\
+%         \rho E(\boldsymbol{V}) \\
+%         \sum_s V_s V_5 \\
+%     \end{bmatrix}
+%     \hspace{5mm}
+%     \boldsymbol{\boldsymbol{F_c}(\boldsymbol{V})} = \begin{bmatrix}
+%         V_s V_2 \\
+%         \sum_s V_s V_2^2 + V_4 \\
+%         \sum_s V_s V_2 V_3 \\
+%         [\rho E(\boldsymbol{V}) + V_4]V_2 \\
+%         \sum_s V_s V_2 V_5 \\
+%     \end{bmatrix}   
+% \end{equation*}
+
+% Pressure is found by using the equation of state for a mixture of ideal gases and recovering translational energy from the total energy equation by subtracting out the other energy modes:
+
+% \begin{equation*}
+%     p = \rho \Rbar T_\text{tr} = \frac{\Rbar}{\cvbar} \bb{\rho e^\text{tr}} = \frac{\Rbar}{\cvbar} \bb{\rho E - \frac{\rho}{2} u_r^2 - \rho e_v - \sum_s \rho_s h_s^f}
+% \end{equation*}
+
+% In conserved variable form, this is:
+
+% \begin{equation*}
+%     p(\boldsymbol{U}) = \frac{\sum U_s R_s}{\sum U_s c_{v,s}^\text{tr}} \bb{U_4 - \frac{1}{2} \frac{1}{\sum_s U_s} U_2^2 - U_5 - \sum_s U_s h_s^\circ}
+% \end{equation*}
+
+% For internal energy, we can rearrange the above equation to get:
+
+% \begin{equation*}
+%     \rho E = \frac{\cvbar}{\Rbar} p + \frac{1}{2} \rho u_r^2 + \rho e_v + \sum_s \rho_s h_s^f
+% \end{equation*}
+
+% In primitive variable form, this is:
+
+% \begin{equation*}
+%     \rho E(\boldsymbol{V}) = \frac{\sum_s V_s c_{v,s}^\text{tr}}{\sum_s V_s R_s} V_4 + \frac{1}{2} \sum_s V_s \cdot V_2^2 + \sum_s V_s \cdot V_5 + \sum_s V_s h_s^\circ
+% \end{equation*}
+
+% The derivates are now straightforward and the Jacobians are as follows: 
+% \begin{equation*}
+%     \pd{\boldsymbol{U}}{\boldsymbol{V}} = \begin{bmatrix}
+%         1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%         0 & \ddots & 0 & 0 & 0 & 0 & 0 \\
+%         0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+%         u_r & \dots & u_r & \rho & 0 & 0 & 0 \\
+%         u_\theta & \dots & u_\theta & 0 & \rho & 0 & 0 \\
+%         \rho E_{\rho_1} & \dots & \rho E_{\rho_\text{NS}} & \rho E_{u_r} & \rho E_{u_\theta} & \rho E_{p} & \rho E_{e_v} \\
+%         e_v & \dots & e_v & 0 & 0 & 0 & \rho \\
+%     \end{bmatrix}
+% \end{equation*}
+
+
+% \begin{equation*}
+%     \pd{\boldsymbol{V}}{\boldsymbol{U}} = \begin{bmatrix}
+%         1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%         0 & \ddots & 0 & 0 & 0 & 0 & 0 \\
+%         0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+%         -u_r / \rho & \dots & -u_r / \rho  & 1 / \rho & 0 & 0 & 0 \\
+%         -u_\theta / \rho & \dots & -u_\theta / \rho & 0 & 1 / \rho & 0 & 0 \\
+%         p_{\rho_1} & \dots & p_{\rho_\text{NS}} & p_{\rho u_r} & p_{\rho u_\theta} & p_{\rho E} & p_{\rho e_v}  \\
+%         -e_v / \rho & \dots & -e_v / \rho & 0 & 0 & 0 & 1 / \rho \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% \begin{equation*}
+%     \pd{\boldsymbol{F_c}}{\boldsymbol{V}} = \begin{bmatrix}
+%         u_r & 0 & 0 & \rho_s & 0 & 0 & 0 \\
+%         0 & \ddots & 0 & \vdots & 0 & 0 & 0 \\
+%         0 & 0 & u_r & \rho_s & 0 & 0 & 0 \\
+%         u_r^2 & \dots & u_r^2 & 2 \rho u_r & 0 & 1 & 0 \\
+%         u_r u_\theta & \dots & u_r u_\theta & \rho u_\theta & \rho u_r & 0 & 0 \\
+%         \rho E_{\rho_1} u_r & \dots & \rho E_{\rho_\text{NS}} u_r & \rho E_{u_r} u_r + \rho H & \rho E_{u_\theta} u_r & (\rho E_p + 1) u_r & \rho E_{e_v} u_r \\
+%         u_r e_{v} & \dots & u_r e_{v} & \rho e_{v} & 0 & 0 & \rho u_r \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% Where we have the following derivatives for pressure and energy:
+
+% \begin{multicols}{2}
+%     \begin{align*}
+%     p_{\rho_s} &= \bb{R_s - \frac{\Rbar}{\cvbar} c_{v,s}} T_\text{tr} + \frac{\Rbar}{\cvbar} \bb{\frac{u_r^2}{2} - h_s^\circ}
+%     \\ p_{\rho u_r} &= -\frac{\Rbar}{\cvbar} u_r
+%     \\ p_{\rho u_\theta} &= 0
+%     \\ p_{\rho E} &= \frac{\Rbar}{\cvbar}
+%     \\ p_{\rho e_v} &= -\frac{\Rbar}{\cvbar}
+% \end{align*}
+
+% \begin{align*}
+%     \rho E_{\rho_s} &= \bb{c_{v,s} - \frac{\cvbar}{\Rbar} R_s} T_\text{tr} + \frac{u_r^2}{2} + e_v + h_s^\circ
+%     \\ \rho E_{u_r} &= \rho u_r
+%     \\ \rho E_{u_\theta} &= 0
+%     \\ \rho E_{p} &= \frac{\cvbar}{\Rbar}
+%     \\ \rho E_{e_v} &= \rho
+% \end{align*}
+% \end{multicols}
+
+
+% The matrix product of $\partial \boldsymbol{V} / \partial \boldsymbol{U}$ and $\partial \boldsymbol{F_c} / \partial \boldsymbol{V}$ gives the flux Jacobian that needs to be diagonlized for the upwinding:
+
+% \begin{equation*}
+%     \pd{\boldsymbol{V}}{\boldsymbol{U}} \pd{\boldsymbol{F_c}}{\boldsymbol{V}} = \begin{bmatrix}
+%         u_r & 0 & 0 & \rho_s & 0 & 0 & 0 \\
+%         0 & \ddots & 0 & \vdots & 0 & 0 & 0 \\
+%         0 & 0 & u_r & \rho_s & 0 & 0 & 0 \\
+%         0 & \dots & 0 & u_r & 0 & 1 / \rho & 0 \\
+%         0 & \dots & 0 & 0 & u_r & 0 & 0 \\
+%         0 & \dots & 0 &  \rho a^2 & 0 & u_r & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & u_r
+%     \end{bmatrix}
+% \end{equation*}
+
+% Where $\rho a^2$ is found as:
+
+% \begin{equation*}
+%     \rho a^2 = p \bp{1 + \frac{\Rbar}{\cvbar}}
+% \end{equation*}
+
+% The eigenvalues of this matrix are:
+
+% \begin{equation*}
+%     \lambda = \begin{bmatrix}
+%         u_r, \dots, u_r, u_r - a, u_r + a, u_r, u_r
+%     \end{bmatrix}
+% \end{equation*}
+
+% The diagonal matrix of eigenvalues is:
+
+% \begin{equation*}
+%     \Lambda = \begin{bmatrix}
+%         \lambda_1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%         0 & \ddots & 0 & 0 & 0 & 0 & 0 \\
+%         0 & \dots & \lambda_1 & 0 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & \lambda_2 & 0 & 0 & 0  \\
+%         0 & \dots & 0 & 0 & \lambda_3 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 0 &\lambda_1 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & \lambda_1
+%     \end{bmatrix}
+% \end{equation*}
+
+% Where $\lambda_1 = u_r$, $\lambda_2 = u_r - a$, and $\lambda_3 = u_r + a$. The left and right matrix of eigenvectors are:
+
+% \begin{equation*}
+%     \tilde{\boldsymbol{L}} = \begin{bmatrix}
+%         1 & 0 & 0 & 0 & 0 & -\frac{\rho_1}{\rho a^2} & 0 \\
+%         0 & \ddots & 0 & \vdots & \vdots & \vdots & \vdots \\
+%         0 & 0 & 1 & 0 & 0 & -\frac{\rho_{N_s}}{\rho a^2} & 0 \\[2mm]
+%         0 & \cdots & 0 & -\frac{1}{2a} & 0 & \frac{1}{2\rho a^2} & 0 \\[2mm]
+%         0 & \cdots & 0 & \frac{1}{2a} & 0 & \frac{1}{2\rho a^2} & 0 \\[2mm]
+%         0 & \cdots & 0 & 0 & 1 & 0 & 0 \\
+%         0 & \cdots & 0 & 0 & 0 & 0 & 1
+%     \end{bmatrix}
+%     \hspace{3mm}
+%     \tilde{\boldsymbol{R}} = \begin{bmatrix}
+%         1 & 0 & 0 & \rho_1 & \rho_1 & 0 & 0 \\
+%         0 & \ddots & 0 & \vdots & \vdots & 0 & 0 \\
+%         0 & \dots & 1 & \rho_\text{NS} & \rho_\text{NS} & 0 & 0 \\
+%         0 & \dots & 0 & -a & a & 0 & 0  \\
+%         0 & \dots & 0 & 0 & 0 & 1 & 0 \\
+%         0 & \dots & 0 & \rho a^2 & \rho a^2 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & 1
+%     \end{bmatrix}
+% \end{equation*}
+
+% These matrices are subsequently multiplied by the primitive/consvered variable Jacobians as $\boldsymbol{L} = \tilde{L} \pd{V}{U}$ and $\boldsymbol{R} = \pd{U}{V} \tilde{R}$ to get the final left and right eigenvector matrices that are used for the upwinding of the fluxes. These matrices are:
+
+% \begin{equation*}
+%     \boldsymbol{L} = \tilde{\boldsymbol{L}} \pd{\boldsymbol{V}}{\boldsymbol{U}} = \begin{bmatrix}
+%         1 - \frac{Y_1 p_{\rho_1}}{a^2} & - \frac{Y_1 p_{\rho_s}}{a^2} & - \frac{Y_1 p_{\rho_\text{NS}}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
+
+%         - \frac{Y_s p_{\rho_1}}{a^2} & \ddots & - \frac{Y_s p_{\rho_\text{NS}}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
+
+%         - \frac{Y_\text{NS} p_{\rho_1}}{a^2} & - \frac{Y_\text{NS} p_{\rho_s}}{a^2} & 1 - \frac{Y_\text{NS} p_{\rho_\text{NS}}}{a^2} & \frac{Y_s \bar{R} u_r}{a^2 \bar{c}_v} & 0 & -\frac{Y_s \bar{R}}{a^2 \bar{c}_v} & \frac{Y_s \bar{R}}{a^2 \bar{c}_v} \\
+%         \frac{1}{2 \rho a} \bb{\frac{p_{\rho_1}}{a} + u_r} & \dots & \frac{1}{2 \rho a} \bb{\frac{p_{\rho_\text{NS}}}{a} + u_r} & -\frac{1}{2 \rho a} \bb{1 + \frac{\bar{R} u_r}{\bar{c}_v a}} & 0 & \frac{\bar{R}}{2 \rho a^2 \bar{c}_v} & -\frac{\bar{R}}{2 \rho a^2 \bar{c}_v} \\
+%         \frac{1}{2 \rho a} \bb{\frac{p_{\rho_1}}{a} - u_r} & \dots & \frac{1}{2 \rho a} \bb{\frac{p_{\rho_\text{NS}}}{a} - u_r} & \frac{1}{2 \rho a} \bb{1 - \frac{\bar{R} u_r}{\bar{c}_v a}} & 0 & \frac{\bar{R}}{2 \rho a^2 \bar{c}_v} & -\frac{\bar{R}}{2 \rho a^2 \bar{c}_v} \\
+%         - \frac{u_\theta}{\rho} & \dots & - \frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0 & 0 \\
+%         - \frac{e_v}{\rho} & \dots & - \frac{e_v}{\rho} & 0 & 0 & 0 & \frac{1}{\rho} \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% \begin{equation*}
+%     \boldsymbol{R} = \pd{\boldsymbol{U}}{\boldsymbol{V}} \tilde{\boldsymbol{R}} = \begin{bmatrix}
+%         1 & 0 & 0 & \rho_1 & \rho_1 & 0 & 0 \\
+%         0 & \ddots & 0 & \vdots & \vdots & 0 & 0 \\
+%         0 & \dots & 1 & \rho_\text{NS} & \rho_\text{NS} & 0 & 0 \\
+%         u_r & \dots & u_r & \rho(u_r - a) & \rho(u_r + a) & 0 & 0  \\
+%         u_\theta & \dots & u_\theta & \rho u_\theta & \rho u_\theta & \rho & 0 \\
+%         \rho E_{\rho_1} & \dots & \rho E_{\rho_\text{NS}} & \rho(H - u_r a) & \rho(H + u_r a) & 0 & \rho \\
+%         e_v & \dots & e_v & \rho e_v & \rho e_v & 0 & \rho \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% The final flux Jacobian $\boldsymbol{A}^\pm$ can be reduced to the following form:
+
+% \begin{equation}
+% \boldsymbol{A}^\pm = \boldsymbol{R} \boldsymbol{\Lambda}^\pm \boldsymbol{L} = \lambda_1^\pm \boldsymbol{I} + (\lambda_2^\pm - \lambda_1^\pm) \boldsymbol{r}^{(2)} \otimes \boldsymbol{l}^{(2)} + (\lambda_3^\pm - \lambda_1^\pm) \boldsymbol{r}^{(3)} \otimes  \boldsymbol{l}^{(3)}
+% \end{equation}
+
+% With the following vector definitions:
+
+% \begin{equation}
+% \begin{aligned}
+%  \boldsymbol{r}^{(2)} &= \begin{bmatrix} \rho_1 & \dots & \rho_\text{NS} & \rho (u_r - a) & \rho u_\theta & \rho (H - u_r a) & \rho e_{ve} \end{bmatrix} ^T \\
+%  \boldsymbol{r}^{(3)} &= \begin{bmatrix} \rho_1 & \dots & \rho_\text{NS} & \rho (u_r + a) & \rho u_\theta & \rho (H + u_r a) & \rho e_{ve} \end{bmatrix} ^T \\
+%  \boldsymbol{l}^{(2)} &= \frac{1}{2 \rho a} \begin{bmatrix} \frac{1}{a} \pd{p}{\rho_1} + u_r & \dots & \frac{1}{a} \pd{p}{\rho_\text{NS}} + u_r & -\bp{1 + \frac{\Rbar u_r }{\cvbar a}} & 0 & \frac{\Rbar}{\cvbar a} & - \frac{\Rbar}{\cvbar a} \end{bmatrix} \\
+%  \boldsymbol{l}^{(3)} &= \frac{1}{2 \rho a} \begin{bmatrix} \frac{1}{a} \pd{p}{\rho_1} - u_r & \dots & \frac{1}{a} \pd{p}{\rho_\text{NS}} - u_r & 1 - \frac{\Rbar u_r}{\cvbar a} & 0 & \frac{\Rbar}{\cvbar a} & - \frac{\Rbar}{\cvbar a} \end{bmatrix}
+% \end{aligned}
+% \end{equation}
+
+% And eigenvalues split by their signs as:
+
+% \begin{equation}
+% \begin{aligned}
+% \lambda_1^\pm &= \frac{1}{2} \bp{u_r \pm |u_r|} \\
+% \lambda_2^\pm &= \frac{1}{2} \bp{u_r - a \pm |u_r - a|} \\
+% \lambda_3^\pm &= \frac{1}{2} \bp{u_r + a \pm |u_r + a|}
+% \end{aligned}
+% \end{equation}
+
+% \subsubsection{Diffusive Flux Jacobians}
+
+% The explicit diffusive flux computed by using a coefficient matrix, a Jacobian matrix, a vector of derivatives, and a vector of fluxes not dependant on gradients:
+
+% \begin{equation*}
+%     \boldsymbol{F}_d = \boldsymbol{M}_D^F \pd{\boldsymbol{W}}{r} + \boldsymbol{B}_D^F
+% \end{equation*}
+
+% For implicit time integration, a Jacobian of the $\boldsymbol{B}_D^F$ term is also needed to linearize the flux as:
+
+% \begin{equation*}
+%     \boldsymbol{F}_d^{n+1} = \boldsymbol{F}_d^n + \delta \boldsymbol{F}_d = \boldsymbol{M}_D^F \pd{\boldsymbol{W}^n}{r} + \boldsymbol{B}_D^F + \boldsymbol{M}_D^F \boldsymbol{J}_D \pd{\delta \boldsymbol{U}}{r} + \boldsymbol{J}_B \delta \boldsymbol{U}
+% \end{equation*}
+
+% We will go through each matrix here. The coefficient matrix $\boldsymbol{M}$ contains the viscous coefficients:
+
+% \begin{equation*}
+%     \boldsymbol{M}_D^F = \begin{bmatrix}
+%         D_1(\rho_1-\rho) & \rho_1 D_s & \rho_1 D_\text{NS} & 0 & 0 & 0 & 0 \\
+%         \rho_s D_1 & D_s(\rho_s - \rho) & \rho_s D_\text{NS} & 0 & 0 & 0 & 0 \\
+%         \rho_\text{NS} D_1 & \rho_\text{NS} D_s & D_\text{NS}(\rho_\text{NS} - \rho) & 0 & 0 & 0 & 0 \\
+%         0 & 0 & 0 & -\frac{4}{3} \mu & 0 & 0 & 0 \\
+%         0 & 0 & 0 & 0 & -\mu & 0 & 0 \\
+%         a^1 & b^1 & c^1 & - \frac{4}{3} \mu u_r & 0 & -\kappa^{tr} & -\kappa^{ve} \\
+%         a^{ve} & b^{ve} & c^{ve} & 0 & 0 & 0 & -\kappa^{ve} \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% Where we have the following definitions for $a$, $b$, and $c$:
+
+% \begin{align*}
+%     a^m &= h_1^m D_1(\rho_1 - \rho) + \sum_{k\neq 1} h_k^m \rho_k D_1 \\
+%     b^m &= h_s^m D_s (\rho_s - \rho) + \sum_{k\neq s} h_k^m \rho_k D_s \\
+%     c^m &= h_\text{NS}^m D_\text{NS} (\rho_\text{NS} - \rho) + \sum_{k\neq \text{NS}} h_k^m \rho_k D_\text{NS}
+% \end{align*}
+
+% Superscript $m$ denotes which enthalpy is being used. For $a^1$, we use the total specific enthalpy. For $a^{ve}$, we use the vibrational-electronic specific enthalpy defined as $h_s^{ve} = e_s^{ve}$. The same applies for $b$ and $c$. These equations are essentially just the contributions from each species towards the diffusive fluxes multiplied by the species enthalpy using the modified Fickian model for mass diffusion. The Jacobians $\boldsymbol{J}_D$ maps primitive variable gradients to conserved variable gradients. The following primitive variable vector is used:
+
+% \begin{equation*}
+%     \boldsymbol{W} = \begin{bmatrix}
+%         Y_s & u_r & u_\theta & T_{tr} & T_{ve}  
+%     \end{bmatrix}^T
+% \end{equation*}
+
+% Therefore, the Jacobian $\boldsymbol{J}_D$ is defined as $ \pd{\boldsymbol{W}}{\boldsymbol{U}}$. As before, we must write the primitive variables in terms of the conserved variables to take the derivatives:
+
+% \begin{equation*}
+%     \boldsymbol{W}(\boldsymbol{U}) = \begin{bmatrix}
+%         U_s / \sum_s U_s \\
+%         U_2 / \sum_s U_s \\
+%         U_3 / \sum_s U_s \\
+%         T_{tr}(\boldsymbol{U}) \\
+%         T_{ve}(\boldsymbol{U})
+%     \end{bmatrix}
+% \end{equation*}
+
+% The translational termperature is found by rearranging the equation for total energy and subtracting out the contributions from the other energy modes:
+
+% \begin{equation*}
+%     T_{tr} = \bb{\rho E - \rho e_{ve} - \frac{\rho}{2} u_r^2 - \sum_s \rho_s h_s^\circ} \frac{1}{\sum_s \rho_s c_{v,s}^\text{tr}}
+% \end{equation*}
+
+% In conserved variable form, this is:
+
+% \begin{equation*}
+%     T_{tr}(\boldsymbol{U}) = \bb{U_4 - U_5 - \frac{1}{2} \frac{U_2^2}{\sum_s U_s} - \sum_s U_s h_s^\circ} \frac{1}{\sum_s U_s c_{v,s}^\text{tr}}
+% \end{equation*}
+
+% It is then straight corward to compute the derivative for $T_{tr}$. The derivatives are shown below:
+
+% \begin{align*}
+%     \pd{T_{tr}}{\rho_j} &= \frac{1}{\rho \cvbar} \bb{\frac{1}{2} u_r^2 - h_j^\circ - c_{v,j}^\text{tr} T_{tr}} \\
+%     \pd{T_{tr}}{\rho u_r} &= -\frac{u_r}{\rho \cvbar} \\
+%     \pd{T_{tr}}{\rho u_\theta} &= 0 \\
+%     \pd{T_{tr}}{\rho E} &= \frac{1}{\rho \cvbar} \\
+%     \pd{T_{tr}}{\rho e_v} &= -\frac{1}{\rho \cvbar}
+% \end{align*}
+
+% For the vibrational-electronic temperature, we use implicit differentiation to find the derivative. We start with the equation for vibrational-electronic energy:
+
+% \begin{equation*}
+%     \rho e_{ve} = \sum_s \rho_s e_s^{ve}
+% \end{equation*}
+
+% By subtracting the right hand side from the left hand side, we can set the equation equal to zero:
+
+% \begin{equation*}
+%     \rho e_{ve} - \sum_s \rho_s e_s^{ve} = 0
+% \end{equation*}
+
+% By taking the derivative with respect to $U_i$, we can find the Jacobian entries for the vibrational-electronic temperature implicitly:
+
+% \begin{equation}
+%     \pd{\rho e_{ve}}{U_i} - \sum_s \pd{\rho_s}{U_i} e_s^{ve} - \sum_s \rho_s \pd{e_s^{ve}}{T_{ve}} \pd{T_{ve}}{U_i} = 0
+% \end{equation}
+
+% Rearranging this equation to solve for $\pd{T_{ve}}{U_i}$ gives:
+
+% \begin{equation*}
+%     \pd{T_{ve}}{U_i} = \frac{\pd{\rho e_{ve}}{U_i} -\sum_s \pd{\rho_s}{U_i} e_s^{ve} }{\sum_s \rho_s \pd{e_s^{ve}}{T_{ve}}}
+% \end{equation*}
+
+% This gives the following derivatives of $T_{ve}$ with respect to the conserved variables, where $\rho c_v^{ve} = \sum_s \rho_s \pd{e_s^{ve}}{T_{ve}}$ is the mass weighted vibrational-electronic specific heat:
+
+% \begin{equation}
+%     \pd{T_{ve}}{\rho_j} = - \frac{e_j^{ve}}{\rho c_v^{ve}}, \hspace{5mm} \pd{T_{ve}}{\rho e_v} = \frac{1}{\rho c_v^{ve}}
+% \end{equation}
+
+% \begin{equation}
+%     \pd{T_{ve}}{\rho u_r} = \pd{T_{ve}}{\rho u_\theta} = \pd{T_{ve}}{\rho E} = 0
+% \end{equation}
+
+% With these results for the temperature derivatives, we can write the full Jacobian $\boldsymbol{J}_D$ as:
+
+% \begin{equation*}
+%     \boldsymbol{J}_D = \pd{\boldsymbol{W}}{\boldsymbol{U}} = \begin{bmatrix}
+%         \frac{1}{\rho} [1 - Y_1] & -\frac{Y_1}{\rho} & -\frac{Y_1}{\rho} & 0 & 0 & 0 & 0 \\
+%         -\frac{Y_s}{\rho} & \frac{1}{\rho} [1 - Y_s] & -\frac{Y_s}{\rho} & 0 & 0 & 0 & 0 \\
+%         -\frac{Y_\text{NS}}{\rho} & -\frac{Y_\text{NS}}{\rho} & \frac{1}{\rho} [1 - Y_\text{NS}] & 0 & 0 & 0 & 0 \\
+%         -\frac{u_r}{\rho} & -\frac{u_r}{\rho} & -\frac{u_r}{\rho} & \frac{1}{\rho} & 0 & 0 & 0 \\
+%         -\frac{u_\theta}{\rho} & -\frac{u_\theta}{\rho} & -\frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0 & 0 \\
+%         \pd{T_{tr}}{\rho_s} & \dots & \pd{T_{tr}}{\rho_s} & \pd{T_{tr}}{\rho u_r} & \pd{T_{tr}}{\rho u_\theta} & \pd{T_{tr}}{\rho E} & \pd{T_{tr}}{\rho e_v} \\
+%         \pd{T_{ve}}{\rho_s} & \dots & \pd{T_{ve}}{\rho_s} & 0 & 0 & 0 & \pd{T_{ve}}{\rho e_v}
+%     \end{bmatrix}
+% \end{equation*}
+
+% The matrix $\boldsymbol{B}_D^F$ that is not dependant on the spatial gradients is:
+
+% \begin{equation*}
+%     \boldsymbol{B}_D^F = \frac{\mu \hat{u}}{r}
+%     \begin{bmatrix}
+%         0 & 0 & 0 & \frac{4}{3} & 1 & \frac{4}{3} u_r & 0
+%     \end{bmatrix}^T
+% \end{equation*}
+
+% Again, we must put this in terms of the conserved variables to take the derivatives for the Jacobian $\boldsymbol{J}_B^F$:
+
+% \begin{equation*}
+%     \boldsymbol{B}_D^F = \frac{1}{r}
+%     \begin{bmatrix}
+%         0 & 0 & 0 & \frac{4}{3} \mu \frac{U_2 + U_3}{\sum_s U_s} & \mu \frac{U_2 + U_3}{\sum_s U_s} & \frac{4}{3} \mu \frac{U_2^2 + U_2 U_3}{(\sum_s U_s)^2} & 0
+%     \end{bmatrix}^T
+% \end{equation*}
+
+% The derivatives are straightforward to compute and the Jacobian $\boldsymbol{J}_B^F$ is:
+
+% \begin{equation}
+%     \boldsymbol{J}_B^F = \pd{\boldsymbol{B}}{\boldsymbol{U}} = \frac{1}{r} \frac{\mu}{\rho}
+%     \begin{bmatrix}
+%         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%         -\frac{4}{3} \hat{u} & -\frac{4}{3} \hat{u} & -\frac{4}{3} \hat{u} & \frac{4}{3} & \frac{4}{3} & 0 & 0 \\ 
+%         -\hat{u} & -\hat{u} & -\hat{u} & 1 & 1 & 0 & 0 \\
+%         -\frac{8}{3} u_r \hat{u} & -\frac{8}{3} u_r \hat{u} & -\frac{8}{3} u_r \hat{u} & \frac{4}{3} (\hat{u} + u_r) & \frac{4}{3} u_r & 0 & 0 \\
+%         0 & 0 & 0 & 0 & 0 & 0 & 0
+%     \end{bmatrix}
+% \end{equation}
+
+% Where $\hat{u} = u_r + u_\theta$.
+
+% \subsubsection{Source Jacobians}
+
+% We must first take source terms and write them in terms of the conserved variables:
+
+% \begin{equation*}
+%     \boldsymbol{S_c} =
+%         \begin{bmatrix}
+%         -2 U_s \frac{U_2 + U_3}{\sum_s U_s r} \\ -2 U_2 \frac{U_2 + U_3}{\sum_s U_s r} \\ \ 3 U_3 \frac{U_2 + U_3}{\sum_s U_s r} - 2 \frac{p(\boldsymbol{U})-p_\infty}{r} \\ -2 (U_4 + p(\boldsymbol{U})) \frac{U_2 + U_3}{\sum_s U_s r} \\ -2 U_5 \frac{U_2 + U_3}{\sum_s U_s r}
+%         \end{bmatrix}
+%     \hspace{5mm}
+% \end{equation*}
+
+% \begin{equation*}
+%     \boldsymbol{S_d} = -\frac{2}{r}
+%     \begin{bmatrix}
+%     J_{rs} \\ -2 \mu \pd{u_r}{r} + \mu \pd{u_\theta}{r} \\ -\frac{1}{3} \mu \pd{u_r}{r} - \frac{3}{2} \mu \pd{u_\theta}{r} \\ q_r + \bb{\frac{2}{3} \mu u_\theta -\frac{4}{3} \mu u_r} \pd{u_r}{r} - \mu u_r \pd{u_\theta}{r} \\ q_r^{ve}   
+%     \end{bmatrix}
+%     - \frac{2 \mu \hat{u}}{r^2}     
+%     \begin{bmatrix}
+%         0 \\ 1 \\ \frac{11}{6} \\ \frac{7}{3} u_r - \frac{2}{3} u_\theta \\ 0
+%     \end{bmatrix}
+% \end{equation*}
+
+% First, the convective source term Jacobian is computed as:
+
+% \begin{equation*}
+%     \boldsymbol{J}_C^S = \pd{\boldsymbol{S_c}}{\boldsymbol{U}} = -\frac{2}{r}
+%     \begin{bmatrix}
+%     (\delta_{sj} - Y_s) \hat{u} & Y_s & Y_s & 0 & 0 \\
+%     -u_r \hat{u} & u_r + \hat{u} & u_r & 0 & 0 \\
+%     -\frac{3}{2} u_\theta \hat{u} - p_{\rho_s} & \frac{3}{2} u_\theta + \frac{\Rbar}{\cvbar} u_r & \frac{3}{2} (u_\theta + \hat{u}) & -\frac{\Rbar}{\cvbar} & \frac{\Rbar}{\cvbar} \\
+%     \hat{u} (p_{\rho_s} - H) & H - \frac{\Rbar}{\cvbar} u_r \hat{u} & H & \hat{u} (1 +\frac{\Rbar}{\cvbar}) & -\frac{\Rbar}{\cvbar} \hat{u} \\    
+%     - \hat{u} e_{ve} & e_{ve} & e_{ve} & 0 & \hat{u}
+%     \end{bmatrix}
+% \end{equation*}
+
+% The diffusive source term is again   split up as $\boldsymbol{S}_d = \boldsymbol{M}_D^S \boldsymbol{J}_D \pd{\boldsymbol{U}}{r} + \boldsymbol{B}_D^S$, giving the following matrices and vectors:
+
+% \begin{equation*}
+%     \boldsymbol{M}_D^S = -\frac{2}{r}\begin{bmatrix}
+%         D_1(\rho_1-\rho) & \rho_1 D_s & \rho_1 D_\text{NS} & 0 & 0 & 0 & 0 \\
+%         \rho_s D_1 & D_s(\rho_s - \rho) & \rho_s D_\text{NS} & 0 & 0 & 0 & 0 \\
+%         \rho_\text{NS} D_1 & \rho_\text{NS} D_s & D_\text{NS}(\rho_\text{NS} - \rho) & 0 & 0 & 0 & 0 \\
+%         0 & 0 & 0 & -2 \mu & -\mu & 0 & 0 \\
+%         0 & 0 & 0 & -\frac{1}{3} \mu & -\frac{3}{2} \mu & 0 & 0 \\
+%         a^1 & b^1 & c^1 & \frac{2}{3} \mu (u_\theta - 2 u_r) & -\mu u_r & -\kappa^{tr} & -\kappa^{ve} \\
+%         a^{ve} & b^{ve} & c^{ve} & 0 & 0 & 0 & -\kappa^{ve} \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% \begin{equation*}
+%     \boldsymbol{B}_D^S = -\frac{2 \mu \hat{u}}{r^2} \begin{bmatrix}
+%         0 & 0 & 0 & 3 & \frac{11}{6} & \frac{1}{3}(7 u_r - 2 u _\theta) & 0
+%     \end{bmatrix}^T
+% \end{equation*}
+
+% \begin{equation*}
+%     \boldsymbol{J}_B^S = - \frac{2 \mu}{ \rho r^2} \begin{bmatrix}
+%         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%         -3\hat{u} & -3\hat{u} & -3\hat{u} & 3 & 3 & 0 & 0 \\
+%         -\frac{11}{6} \hat{u} & -\frac{11}{6} \hat{u} & -\frac{11}{6} \hat{u} & \frac{11}{6} & \frac{11}{6} & 0 & 0 \\
+%         -\frac{2}{3} \hat{u} (7 u_r - 2 u_\theta) & -\frac{2}{3} \hat{u} (7 u_r - 2 u_\theta) & -\frac{2}{3} \hat{u} (7 u_r - 2 u_\theta) & \frac{1}{3} (14 u_r + 5 u_\theta) & \frac{1}{3} (5 u_r - 4 u_\theta) & 0 & 0 \\
+%         0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% \subsection{Boundary Conditions}
+
+% Boundary conditions are needed for both the explicit and implicit time stepping. For explicit time stepping, the boundary conditions are applied using ghost cells. For implicit time stepping, the boundary conditions are applied by modifying the update $\delta \boldsymbol{U}$ for the inner cell at the boundaries. We will go through each of these cases for both inviscid and viscous boundary conditions. 
+% \\
+% \vspace{5mm}
+% Each explicit boundary conditions ensures that properties are guaranteed to be satisfied at the boundary face. For an inflow, the ghost cell is set such that the primitive variables at the boundary face are equal to the specified primitive variables. For an outflow, the ghost cell is set such that the primitive variables at the boundary face are equal to the primitive variables at the inner cell such that there are no gradients at the outflow. For a symmetry boundary, the ghost cell is set such that the normal velocity at the boundary face is 0 and the other primitive variables at the boundary face are equal to the primitive variables at the inner cell. 
+% \\
+% \vspace{5mm}
+% For implicit boundary conditions, the update $\delta \boldsymbol{U}$ for the ghost cell is folded back into the update for the inner cell. For inflows, the update $\delta \boldsymbol{U}$ for the inner cell is set to 0 since the primitive variables are specified. For outflows, the update $\delta \boldsymbol{U}$ for the inner cell is modified such that there are no gradients at the boundary face. For symmetry boundaries, the update $\delta \boldsymbol{U}$ for the inner cell is modified such that the normal velocity at the boundary face is 0 and there are no gradients for the other primitive variables at the boundary face. In all cases, the ghost cell update is either all 0s, or the ghost cell update is some linear combination of the inner cell update, therefore the inner cell update can be modified to account for the ghost cell update as:
+
+% \begin{equation}
+%     \delta \boldsymbol{U}_i = \bb{\boldsymbol{I} \pm \boldsymbol{E}} \delta \boldsymbol{U}_i
+% \end{equation}
+
+% First-order perturbations are used to generate the $\boldsymbol{E}$ matrix for each boundary condition. These derivations will be shown below.
+
+
+% \subsubsection{Inviscid Explicit Boundary Conditions}
+
+% \subsubsection{Viscous Explicit Boundary Conditions}
+
+% \subsubsection{Inviscid Implicit Boundary Conditions}
+
+% For inflows, the primitive variables are specified, therefore the update $\delta \boldsymbol{U}$ is 0, and hence the $\boldsymbol{E}$ matrix is also 0 since it has no dependance on the inner cell's update.
+
+% \vspace{5mm}
+
+% For symmetry boundaries, the normal velocity at the boundary face is 0. Densities and energies remain the same, as well as $u_\theta$, but the $u_r$ velocity component is flipped across the boundary. These are the only two inviscid matrices that are needed since there are no outflow boundary conditions in a stagnation-line solver. The $\boldsymbol{E}$ matrices are shown below.
+
+% \begin{equation*}
+%     \boldsymbol{E}_\text{symmetry}^C = \begin{bmatrix}
+%         1 & \dots & 0 & 0 & 0 & 0 & 0 \\
+%         \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+%         0 & \dots & 1 & 0 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & -1 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 1 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 1 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & 1 \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% \begin{equation*}
+%     \boldsymbol{E}_\text{inflow}^C = \begin{bmatrix}
+%         0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+%         \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+%         0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & 0 \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% \subsubsection{Viscous Implicit Boundary Conditions}
+
+% For an inflow, we retain the same matrix of 0s as before. Likewise for a symmetry boundary condition. However, for a no-slip isothermal or adibatic wall, the primitive variables at the face or ghost cell are specified. For temperature, we have:
+
+% \begin{equation*}
+%     T_g = 2 T_w - T_i
+% \end{equation*}
+
+% By perturbing this equation, we can find the entry for $\boldsymbol{E}$ for the temperature update:
+
+% \begin{align*}
+%     \delta T_g &= 2 \delta T_w - \delta T_i \\
+%     \delta T_g &= -\delta T_i    
+% \end{align*}
+
+% The pressure in the ghost cell is set equal to the inner cell, therefore we must update the density in the ghost cell to satisfy the equation of state. Perturbing the equation of state gives:
+
+% \begin{align*}
+%     \rho_g &= 2 \rho_w - \rho_i\\
+%     \rho_g &= 2 \frac{\rho_i T_i}{T_w} - \rho _i\\
+%     \delta \rho_g &=  \bb{2 \frac{T_i}{T_w} - 1} \delta \rho_i + 2  \frac{\rho_i}{T_w} \delta T_i \\
+%     \delta \rho_g &=  \alpha \delta \rho_i + \beta \delta T_i 
+% \end{align*}
+
+% Since the velocity at the wall is 0, the momentum in the ghost cell is set equal to the negative of the momentum in the inner cell. Perturbing this gives:
+
+% \begin{align*}
+%     \delta (\rho u)_g &= -\delta (\rho u)_i \\
+%     \delta (\rho u)_g &= -\delta (\rho u)_i \\
+% \end{align*}
+
+% The final $\boldsymbol{E}$ matrix for a no-slip isothermal wall is shown below:
+
+% \begin{equation*}
+%     \boldsymbol{E}_\text{isothermal}^V = \begin{bmatrix}
+%         \alpha & \dots & 0 & 0 & 0 & \beta & 0 \\
+%         \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+%         0 & \dots & \alpha & 0 & 0 & \beta & 0 \\
+%         0 & \dots & 0 & -1 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & -1 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & -1 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & -1 \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% For an adiabatic wall, the temperature in the ghost cell is set equal to the temperature in the inner cell. Because of this, the density in the ghost cell is also set equal to the density in the inner cell to satisfy the equation of state. No-slip is still enfored so the final matrix is:
+
+% \begin{equation*}
+%     \boldsymbol{E}_\text{isothermal}^V = \begin{bmatrix}
+%         1 & \dots & 0 & 0 & 0 & 0 & 0 \\
+%         \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+%         0 & \dots & 1 & 0 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & -1 & 0 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & -1 & 0 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 1 & 0 \\
+%         0 & \dots & 0 & 0 & 0 & 0 & 1 \\
+%     \end{bmatrix}
+% \end{equation*}
+
+% \subsection{Solving the system of equations}
+
+% \subsubsection{Explicit time stepping}
+
+% \subsubsection{Implicit time stepping}
+
+% The solution procedure for the implicit time stepping uses linearization of the flux and source terms. The linearized terms are found by using a truncated Taylor series expansion:
+
+% \begin{equation*}
+%     \boldsymbol{F}_{c, i+\frac{1}{2}}^{n+1} = \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ \boldsymbol{U}_i + \boldsymbol{A}_{i+\frac{1}{2}}^- \boldsymbol{U}_{i+1}}{\boldsymbol{F}_{c, i + \frac{1}{2}}} + \ub{\boldsymbol{A}_{i+\frac{1}{2}}^+ \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{A}_{i+\frac{1}{2}}^- \delta \boldsymbol{U}_{i+1}^{n+1}}{\delta \boldsymbol{F}_{c, i + \frac{1}{2}}}
+% \end{equation*}
+% \begin{equation}
+%     \boldsymbol{S_c}^{n+1} = \boldsymbol{S}_{c,i} + \boldsymbol{J}_{c,i}^S \delta \boldsymbol{U}_i^{n+1}
+% \end{equation}
+% \begin{multline*}
+%     \boldsymbol{F}_{d, i + \frac{1}{2}}^{n+1} = \ob{\boldsymbol{M}_{D, i + \frac{1}{2}}^F \frac{\boldsymbol{W}_{i+1} - \boldsymbol{W}_i}{\Delta r_i} + \boldsymbol{B}_{D, i + \frac{1}{2}}^F}{\boldsymbol{F}_{d, i + \frac{1}{2}}}
+%     \\ + \ub{\boldsymbol{M}_{D, i + \frac{1}{2}}^F \boldsymbol{J}_{D, i + \frac{1}{2}} \frac{\delta \boldsymbol{U}_{i+1}^{n+1} - \delta \boldsymbol{U}_i^{n+1}}{\Delta r_i} + \frac{1}{2} \bb{\boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} + \boldsymbol{J}_{B, i+1}^F \delta \boldsymbol{U}_{i+1}^{n+1}}}{\delta \boldsymbol{F}_{d, i + \frac{1}{2}}}
+% \end{multline*}
+% \begin{equation*}
+%     \boldsymbol{S}_{d,i}^{n+1} =  \ub{\boldsymbol{M}_{D, i}^S \frac{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}}{2 \Delta r_i} + \boldsymbol{B}_{D, i}^S}{\boldsymbol{S}_{d,i}} + \ub{\boldsymbol{M}_{D, i}^S \boldsymbol{J}_{D, i} \frac{\delta \boldsymbol{U}_{i+1}^{n+1} - \delta \boldsymbol{U}_{i-1}^{n+1}}{2 \Delta r_i} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1}}{\delta \boldsymbol{S}_{d,i}}
+% \end{equation*}
+% \begin{equation*}
+%     \boldsymbol{S}_{k,i}^{n+1} = \boldsymbol{S}_{k,i} + \pd{\boldsymbol{S}_{k,i}}{\boldsymbol{U}_i} \delta \boldsymbol{U}_i^{n+1}
+% \end{equation*}
+
+% The updated equation for the implicit time stepping is:
+
+% \begin{align*}
+%     \frac{\delta \boldsymbol{U}_i^{n+1}}{\Delta t} \Delta r_i &= \textcolor{defblue}{\boldsymbol{A}_L^+ \boldsymbol{U}_{i-1} + \boldsymbol{A}_L^- \boldsymbol{U}_i + \boldsymbol{A}_L^- \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{A}_L^- \delta \boldsymbol{U}_i^{n+1}}
+%     \\ &\textcolor{defblue}{- \boldsymbol{A}_R^+ \boldsymbol{U}_i - \boldsymbol{A}_R^- \boldsymbol{U}_{i+1} - \boldsymbol{A}_R^+ \delta \boldsymbol{U}_i^{n+1} - \boldsymbol{A}_R^- \delta \boldsymbol{U}_{i+1}^{n+1}}
+%     \\ &\textcolor{defred}{+ \boldsymbol{M}_L^F \frac{\boldsymbol{W}_{i} - \boldsymbol{W}_{i-1}}{\Delta r_i} + \boldsymbol{B}_L^F - \boldsymbol{M}_R^F \frac{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i}}{\Delta r_i} - \boldsymbol{B}_R^F}
+%     \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i-1}^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i-1}^F \delta \boldsymbol{U}_{i-1}^{n+1}}
+%     \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i+1}^F \delta \boldsymbol{U}_{i+1}^{n+1}}
+%     \\ &\textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{2 \Delta r} \bp{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}} + \boldsymbol{B}_i^S + \frac{\boldsymbol{M}_i^S}{2 \Delta r} \boldsymbol{J}_i^D \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{\boldsymbol{M}_i^S}{2 \Delta r} \boldsymbol{J}_i^D \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+%     \\ &\textcolor{red}{+ \bb{ S_{c,i} + \boldsymbol{J}_{c,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+%     \\ &\textcolor{blue}{+ \bb{ S_{k,i} + \boldsymbol{J}_{k,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+% \end{align*}
+
+% Solving this equation for the update $\delta U$ gives:
+
+% \begin{equation}
+%     \textcolor{defred}{\boldsymbol{A}} \delta \boldsymbol{U}_{i+1}^{n+1} + \textcolor{defblue}{\boldsymbol{B}} \delta \boldsymbol{U}_{i}^{n+1} + \textcolor{deforange}{\boldsymbol{C}} \delta \boldsymbol{U}_{i-1}^{n+1} = \textcolor{defgreen}{\boldsymbol{D}}
+% \end{equation}
+
+% Where we have the following definitions for the matrices $\boldsymbol{A}$, $\boldsymbol{B}$, $\boldsymbol{C}$, and $\boldsymbol{D}$:
+
+% \begin{align}
+%     \textcolor{defred}{\boldsymbol{A}} &= \textcolor{defred}{\boldsymbol{A}_R^- + \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} \boldsymbol{J}_R^D + \frac{1}{2} \boldsymbol{J}_{B,i+1}^F - \frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} \boldsymbol{J}_i^D (r_{i + \frac{1}{2}} - r_{i - \frac{1}{2}})}
+%     \\ \textcolor{defblue}{\boldsymbol{B}} &= \textcolor{defblue}{ \frac{r_{i+\frac{1}{2}} - r_{i-\frac{1}{2}}}{\Delta t} \boldsymbol{I} + \boldsymbol{A}_R^+ - \boldsymbol{A}_L^- - \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} \boldsymbol{J}_L^D - \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} \boldsymbol{J}_R^D - \bp{\boldsymbol{J}_{B,i}^S + \boldsymbol{J}_{c,i}^S + \boldsymbol{J}_{K,i} + \boldsymbol{J}_{R,i}}\bp{r_{i+\frac{1}{2}} - r_{i _ \frac{1}{2}}}}
+%     \\ \textcolor{deforange}{\boldsymbol{C}} &= \textcolor{deforange}{-\boldsymbol{A}_L^+ + \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} \boldsymbol{J}_L^D - \frac{1}{2} \boldsymbol{J}_{B,i-1}^F + \frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} \boldsymbol{J}_i^D (r_{i + \frac{1}{2}} - r_{i - \frac{1}{2}})}
+% \end{align}
+
+% \begin{multline}
+%     \textcolor{defgreen}{\boldsymbol{D}} = \textcolor{defgreen}{ \boldsymbol{A}_L^+ \boldsymbol{U}_{i-1} + \boldsymbol{A}_L^- \boldsymbol{U}_i - \boldsymbol{A}_R^+ \boldsymbol{U}_i - \boldsymbol{A}_R^- \boldsymbol{U}_{i+1}}
+%     \\ \textcolor{defgreen}{ + \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} (\boldsymbol{W}_i - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_L^F - \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i}) - \boldsymbol{B}_R^F}
+%     \\ \textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_i^S + \boldsymbol{S}_{C,i} + \boldsymbol{S}_{K,i} + \boldsymbol{S}_{R,i}} (r_{i+\frac{1}{2}} - r_{i - \frac{1}{2}})   }
+% \end{multline}
+
+
+% Which gives a block tridiagonal system of equations to be solved for:
+
+
+
+% \begin{align*}
+%     \frac{\delta \boldsymbol{U}_i^{n+1}}{\Delta t} \Delta r_i &= \textcolor{defblue}{\boldsymbol{A}_L^+ \boldsymbol{U}_{i-1} + \boldsymbol{A}_L^- \boldsymbol{U}_i + \boldsymbol{A}_L^- \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{A}_L^- \delta \boldsymbol{U}_i^{n+1}}
+%     \\ &\textcolor{defblue}{- \boldsymbol{A}_R^+ \boldsymbol{U}_i - \boldsymbol{A}_R^- \boldsymbol{U}_{i+1} - \boldsymbol{A}_R^+ \delta \boldsymbol{U}_i^{n+1} - \boldsymbol{A}_R^- \delta \boldsymbol{U}_{i+1}^{n+1}}
+%     \\ &\textcolor{defred}{+ \boldsymbol{M}_L^F \frac{\boldsymbol{W}_{i} - \boldsymbol{W}_{i-1}}{\Delta r_i} + \boldsymbol{B}_L^F - \boldsymbol{M}_R^F \frac{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i}}{\Delta r_i} - \boldsymbol{B}_R^F}
+%     \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_L^F}{\Delta r_i} \boldsymbol{J}_L^D \delta \boldsymbol{U}_{i-1}^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} + \frac{1}{2} \boldsymbol{J}_{B, i-1}^F \delta \boldsymbol{U}_{i-1}^{n+1}}
+%     \\ &\textcolor{defred}{+ \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i}^{n+1} - \frac{\boldsymbol{M}_R^F}{\Delta r_i} \boldsymbol{J}_R^D \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i}^F \delta \boldsymbol{U}_i^{n+1} - \frac{1}{2} \boldsymbol{J}_{B, i+1}^F \delta \boldsymbol{U}_{i+1}^{n+1}}
+%     \\ &\textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{2 \Delta r} \bp{\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}} + \boldsymbol{B}_i^S + \frac{\boldsymbol{M}_i^S}{2 \Delta r} \boldsymbol{J}_i^D \delta \boldsymbol{U}_{i+1}^{n+1} - \frac{\boldsymbol{M}_i^S}{2 \Delta r} \boldsymbol{J}_i^D \delta \boldsymbol{U}_{i-1}^{n+1} + \boldsymbol{J}_{B, i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+%     \\ &\textcolor{red}{+ \bb{ S_{c,i} + \boldsymbol{J}_{c,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+%     \\ &\textcolor{blue}{+ \bb{ S_{k,i} + \boldsymbol{J}_{k,i}^S \delta \boldsymbol{U}_i^{n+1} } \Delta r_i}
+% \end{align*}
+
+% Solving this equation for the update $\delta U$ gives:
+
+% \begin{equation}
+%     \textcolor{defred}{\boldsymbol{A}} \delta \boldsymbol{U}_{i+1}^{n+1} + \textcolor{defblue}{\boldsymbol{B}} \delta \boldsymbol{U}_{i}^{n+1} + \textcolor{deforange}{\boldsymbol{C}} \delta \boldsymbol{U}_{i-1}^{n+1} = \textcolor{defgreen}{\boldsymbol{D}}
+% \end{equation}
+
+% Where we have the following definitions for the matrices $\boldsymbol{A}$, $\boldsymbol{B}$, $\boldsymbol{C}$, and $\boldsymbol{D}$:
+
+% \begin{align}
+%     \textcolor{defred}{\boldsymbol{A}} &= \textcolor{defred}{\boldsymbol{A}_R^- + \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} \boldsymbol{J}_R^D + \frac{1}{2} \boldsymbol{J}_{B,i+1}^F - \frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} \boldsymbol{J}_i^D (r_{i + \frac{1}{2}} - r_{i - \frac{1}{2}})}
+%     \\ \textcolor{defblue}{\boldsymbol{B}} &= \textcolor{defblue}{ \frac{r_{i+\frac{1}{2}} - r_{i-\frac{1}{2}}}{\Delta t} \boldsymbol{I} + \boldsymbol{A}_R^+ - \boldsymbol{A}_L^- - \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} \boldsymbol{J}_L^D - \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} \boldsymbol{J}_R^D - \bp{\boldsymbol{J}_{B,i}^S + \boldsymbol{J}_{c,i}^S + \boldsymbol{J}_{K,i} + \boldsymbol{J}_{R,i}}\bp{r_{i+\frac{1}{2}} - r_{i _ \frac{1}{2}}}}
+%     \\ \textcolor{deforange}{\boldsymbol{C}} &= \textcolor{deforange}{-\boldsymbol{A}_L^+ + \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} \boldsymbol{J}_L^D - \frac{1}{2} \boldsymbol{J}_{B,i-1}^F + \frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} \boldsymbol{J}_i^D (r_{i + \frac{1}{2}} - r_{i - \frac{1}{2}})}
+% \end{align}
+
+% \begin{multline}
+%     \textcolor{defgreen}{\boldsymbol{D}} = \textcolor{defgreen}{ \boldsymbol{A}_L^+ \boldsymbol{U}_{i-1} + \boldsymbol{A}_L^- \boldsymbol{U}_i - \boldsymbol{A}_R^+ \boldsymbol{U}_i - \boldsymbol{A}_R^- \boldsymbol{U}_{i+1}}
+%     \\ \textcolor{defgreen}{ + \frac{\boldsymbol{M}_L^F}{r_i - r_{i-1}} (\boldsymbol{W}_i - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_L^F - \frac{\boldsymbol{M}_R^F}{r_{i+1} - r_i} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i}) - \boldsymbol{B}_R^F}
+%     \\ \textcolor{defgreen}{ + \bb{\frac{\boldsymbol{M}_i^S}{r_{i+1} - r_{i-1}} (\boldsymbol{W}_{i+1} - \boldsymbol{W}_{i-1}) + \boldsymbol{B}_i^S + \boldsymbol{S}_{C,i} + \boldsymbol{S}_{K,i} + \boldsymbol{S}_{R,i}} (r_{i+\frac{1}{2}} - r_{i - \frac{1}{2}})   }
+% \end{multline}
+
+% \newpage
+
 \section{Stagnation Line Solver for Chemical Equilibrium Flow}
 
 efsefsefsef
