@@ -3171,30 +3171,34 @@ In order to find the flux Jacobian $\boldsymbol{A} = \partial{\boldsymbol{F_c}}/
     \end{bmatrix}   
 \end{equation*}
 
-Pressure is found by using the equation of state for a mixture of ideal gases and recovering translational energy from the total energy equation by subtracting out the other energy modes. For most temperature formulations, the translational and rotational energies are assumed to be in equilibrium with the common temperature $T_{tr}$. For a four temperature model, rotational energy has its own temperature $T_r$. Because of this, some equations have to expressions to account for the difference between these models. Equations highlighted in black are equations that specifically account for four temperatures, while equations in $\textcolor{defgreen}{green}$ assume translational-rotational equilibrium.
+Pressure is found by using the equation of state for a mixture of ideal gases and recovering translational energy from the total energy equation by subtracting out the other energy modes. For most temperature formulations, the translational and rotational energies are assumed to be in equilibrium with the common temperature $T_{tr}$. For a four temperature model, rotational energy has its own temperature $T_r$. Because of this, some equations have to expressions to account for the difference between these models. Equations highlighted in black are equations that specifically account for four temperatures, while equations in $\textcolor{defgreen}{green}$ assume translational-rotational equilibrium. The pressure is split up between contributions from the heavy-species and the electons:
 
 \begin{equation*}
-    p = \rho \Rbar T_\text{tr} = \frac{\Rbar}{\cvtbar} \bb{\rho e^\text{tr}} = \frac{\Rbar}{\cvtbar} \bb{\rho E - \sum_\text{int} E_i}
+    p = \sum_{s}^\text{NH} \rho_s R_s T_t + \rho_e R_e T_e = p_h + p_e
 \end{equation*}
 
-Where "int" is the number of internal energies to subtract from the total energy. This is equivalent to:
+In conservative variable form, this is:
 
 \begin{equation*}
-    \sum_\text{int} = \Erot + \Evib + \Eele + \Eke + \Eform
+    p = \frac{\displaystyle \sum_s^\text{NH} \rho_s R_s }{\displaystyle \sum_s^\text{NH} \rho_s c_{v,s}^t} \bb{\rho E - \sum_i E_i} + \rho _e \frac{R_e}{c_{v,e}^t} T_e
 \end{equation*}
 
-In conserved variable form, this is:
+Where the sum of $E_i$ is taken over all internal energy modes along the kinetic energy and heat of formation. This is equivalent to:
+
+\begin{equation*}
+    \sum_\text{i} E_i = \Erot + \Evib + \Eele + \Eke + \Eform
+\end{equation*}
+
+Therefore, in terms of conserved variables for Jacobians, the pressure is:
+
+\begin{equation*}
+    p = \frac{\displaystyle \sum_s^\text{NH} U_s R_s }{\displaystyle \sum_s^\text{NH} U_s c_{v,s}^t} \bb{U_4 - U_5 - U_6 - U_7 - \sum_s^\text{NS} U_s h_{f,s}^\circ - \frac{1}{2} \frac{U_2^2}{\sum_s^\text{NS} U_s}} + \rho_e \frac{R_e}{c_{v,e}^t} T_e
+\end{equation*}
+
+Internal energy can be expressed using primitive variables by rearranging the equation for pressure:
 
 \begin{align*}
-    p(\boldsymbol{U}) &= \frac{\sum U_s R_s}{\sum U_s c_{v,s}^\text{t}} \bb{U_4 - \frac{1}{2} \frac{1}{\sum_s U_s} U_2^2 - U_5 - U_6 - U_7 - \sum_s U_s h_s^\circ}
-    \\ \textcolor{defgreen}{p(\boldsymbol{U})} &\textcolor{defgreen}{= \frac{\sum U_s R_s}{\sum U_s c_{v,s}^\text{tr}} \bb{U_4 - \frac{1}{2} \frac{1}{\sum_s U_s} U_2^2 - U_6 - U_7 - \sum_s U_s h_s^\circ}}
-\end{align*}
-
-For internal energy, we can rearrange the above equations to get:
-
-\begin{align*}
-    \rho E &= \frac{\cvtbar}{\Rbar} p + \frac{1}{2} \rho u_r^2 + \rho e_r + \rho e_v + \rho e_{el-e} + \sum_s \rho_s h_s^f \\
-    \textcolor{defgreen}{\rho E} &= \textcolor{defgreen}{\frac{\cvbar}{\Rbar} p + \frac{1}{2} \rho u_r^2 + \rho e_v + \rho e_{el-e} + \sum_s \rho_s h_s^f}
+    \rho E &= \frac{\displaystyle \sum_s^\text{NH} V_s c_{v,s}^t}{\displaystyle \sum_s^\text{NH} V_s R_s } \bb{V_4 - \rho_e \frac{R_e}{c_{v,e}^t} T_e} + \sum_{s \neq e}^\text{NS} V_s \bb{V_5 + V_6 + V_7 + h_{f,s}^\circ} + \frac{1}{2} \sum_s V_s \cdot V_2^2
 \end{align*}
 
 In primitive variable form, this is:
@@ -3204,7 +3208,7 @@ In primitive variable form, this is:
     \textcolor{defgreen}{\rho E(\boldsymbol{V})} &= \textcolor{defgreen}{\frac{\sum_s V_s c_{v,s}^\text{tr}}{\sum_s V_s R_s} V_4 + \frac{1}{2} \sum_s V_s \cdot V_2^2 + \sum_s V_s \cdot V_6 + \sum_s V_s \cdot V_7 + \sum_s V_s h_s^\circ}
 \end{align*}
 
-Notice in the above equations that for less than four temperatures, the rotational energy in implicitly included in $\cvbar$, which is the translational-rotational specific heat. For the four temperature model, the rotational energy mode is subtracted out and therefore we only divide/multiply by $\cvtbar$, which is the translational specific heat.
+Notice in the above equations that for less than four temperatures, the rotational energy is implicitly included in $\cvbar$, which is the translational-rotational specific heat. For the four temperature model, the rotational energy mode is subtracted out and therefore we only divide/multiply by $\cvtbar$, which is the translational specific heat.
 
 The derivates are now straightforward and the Jacobians are as follows: 
 \begin{equation*}
