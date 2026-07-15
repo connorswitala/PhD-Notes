@@ -1692,6 +1692,7 @@ The total kinetic energy in the flow is:
     \label{eq:kinetic-energy}
 \end{equation*}
 
+\newpage
 \section{Nonequilibrium Source Terms}
 
 \subsection{Species Mass Source Term}
@@ -2350,6 +2351,12 @@ The variables are:
     \item $Q_\text{rad}$ is the radiant energy transfer rate due to electron transitions.
 \end{itemize}
 
+\subsection{Electron Energy Conservation}
+
+\begin{equation}
+\pd{E_e}{t} + \pd{}{x_j} \bp{E_e u_j} = -\pd{}{x_j} \bp{E_e v_{ej}} - p_e \pd{u_j}{x_j} - \pd{q_{ej}}{x_j} + \mathcal{S}_{t-e}^e - \sum_{s=1}^{\text{ND}} \mathcal{S}_{e-v}^{e} + \mathcal{S}_{e-c}^{e} 
+\end{equation}
+
 \subsection{Total Energy Conservation}
 
 \begin{multline}
@@ -2917,12 +2924,12 @@ Where $U$ = $U^{n+1}$ or $U^{k+1}$. We aim to find a $U$ that satisfies $R(U^{n+
 
 The Dimensionally-Reduced Navier-Stokes Equations (DRNSE) are found by first casting the Navier-Stokes equations into cylindrical or polar coordinates and then using a separation of variables technique to cast certain flow quantities as functions of the radial coordinate $r$ only. An example is shown in the next section by introducing the conservation of electronic-electron internal energy equation into the DRNSE.
 
-\subsection{Derivation of Electronic-Electron Energy Conservation Equation for the DRNSE}
+\subsection{Derivation of Electron Energy Conservation Equation for the DRNSE}
 
 First, we show the electronic-electron energy in cartesian coordinates again, grouping source terms together into $S_e$ for simplicity. The "$el$" subscript denotes an electronic equantiy, while "$e$" denotes an electron quantity.
 
 \begin{equation*}
-    \pd{}{t} \rho e_{el-e} + \pd{}{x_j} \bb{u_j(\rho e_{el-e} + p_e)} + \pd{q_j^{el-e}}{x_j} = u_j \pd{p_e}{x_j} + S_{el-e} \hspace{5mm}
+    \pd{}{t} \rho e_{e} + \pd{}{x_j} \bb{u_j(\rho e_{el-e} + p_e)} + \pd{q_j^{el-e}}{x_j} = u_j \pd{p_e}{x_j} + S_{el-e} \hspace{5mm}
 \end{equation*}
 
 We use the following relationships from Ref. \cite{klomfass1996} to cast the divergences of scalars, vectors, and tensors in cartesian coordinates into polar coordinates, throwing away any derivatives with respect to the aximuthal angle, $\phi$, due to the assumption of rotationally-symmetric flow:
