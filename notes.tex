@@ -35,6 +35,10 @@
 \end{multicols}
 
 
+
+
+\newpage
+\part{Not Yet Categorized}
 \newpage
 \section{Basic Thermodynamics and Universal Constants}
 
@@ -1298,7 +1302,323 @@ The final derivative is:
     \boxed{ \frac{\partial}{\partial [\ln(T)]} \left( \frac{\mu_j^0}{RT} \right) = -\frac{U_j^0}{RT} - 1}
 \end{equation}
 
+\part{Nonequilibrium Fluid Dynamics}
 
+
+\newpage 
+\section{Equations of State for Nonequilibrium Flows}
+
+In this section, a brief overview of the thermodynamics for modelling fluids in nonequilibrium is given. This is mainly a review of the most important concepts given in $\ref{sec:stat-thermo}$, with some extra points given. Each internal energy mode is gone over in detail, along with methods to compute their specific heats.
+
+\subsection{Species Sets}
+
+There are a number of sets that need to be defined. Here, we define the sets and give examples of the sets for an 11-species air mixure.
+
+\begin{definition}[Set of All Species]
+    \label{def:species-set}
+    The set of all species in a mixture is defined as:
+
+    \begin{equation}
+        \mathcal{S} = \{ 1, 2, \dots, N_s \}
+    \end{equation}
+
+    For 11-species air mixture, this set is defined as:
+
+    \begin{equation*}
+        \mathcal{S} = \{ N_2, O_2, NO, N, O, N_2^+, O_2^+, NO^+, N^+, O^+, e^- \}
+    \end{equation*}
+\end{definition}
+
+\begin{definition}[Set of Heavy Species]
+    \label{def:heavies-set}
+    The set of all heavy species, that is, all species that are not an electron, is defined as:
+
+    \begin{equation}
+        \mathcal{H} = \{ 1, 2, \dots, N_h \}
+    \end{equation}
+
+    For 11-species air mixture, this set is defined as:
+
+    \begin{equation*}
+        \mathcal{H} = \{ N_2, O_2, NO, N, O, N_2^+, O_2^+, NO^+, N^+, O^+ \}
+    \end{equation*}
+\end{definition}
+
+\begin{definition}[Set of Polyatomic Species]
+    \label{def:poly-set}
+    The set of all polyatomic species, that is, species with more than one atom, is defined as:
+
+    \begin{equation}
+        \mathcal{P} = \{ 1, 2, \dots, N_p \}
+    \end{equation}
+
+    For 11-species air mixture, this set is defined as:
+
+    \begin{equation*}
+        \mathcal{P} = \{ N_2, O_2, NO, N_2^+, O_2^+, NO^+\}
+    \end{equation*}
+\end{definition}
+
+When summations are given, the symbol at the bottom of the summation indicates which set the summation is over. For example, $\sum_{j \in \species}$ indicates a summation over all species in the mixture, while $\sum_{j \in \heavies}$ indicates a summation over all heavy species in the mixture.
+
+\subsection{Translational Energy}
+
+The translation energy of an electron, atom, or molecule can be found with:
+
+\begin{equation*}
+    e_{t,s} = \bb{\frac{3}{2} \frac{\Rhat}{\MW_s}} T_t
+\end{equation*}
+
+Where the subscript $t$ denotes a translational quantity. The total translational energy per unit mass of all species in a mixture is then:
+
+\begin{equation}
+    E_t = \rho e_t = \sum_{s \in \species} \rho_s \bb{\frac{3}{2} \frac{\Rhat}{\MW_s}} T_t = \rho \bar{c}_{v,t} T_t
+    \label{eq:trans-energy}
+\end{equation}
+
+Where the mixture translational specific heat is computed as:
+
+\begin{equation*}
+    \bar{c}_{v,t} = \sum_{s \in species}^\text{NS} \Ymass_s c_{v,s}^{t} \rightarrow \rho \bar{c}_{v,t} = \sum_{s \in \species} \rho_s c_{v,s}^{t}
+    \label{eq:cvtbar}
+\end{equation*}
+
+The translational specific heat for a given species is defined as:
+
+\begin{equation}
+    c_{v,s}^{t} \equiv \pd{e_{t,s}}{T_t}\bigg|_v = \frac{3}{2} \frac{\Rhat}{\MW_s}
+\end{equation}
+
+\subsection{Rotational Energy}
+
+The rotational energy of a molecule depends on the degrees of freedom (DOF) of that molecule, i.e., how many different ways that molecule can rotate. The rotational DOF of a molecule are denoted by $\eta_{r,s}$, and therefore the rotational energy of a molecule is defined as:
+
+\begin{equation*}
+    e_{r,s} = \bb{\frac{\eta_{r,s}}{2} \frac{\Rhat}{\MW_s}} T_r
+\end{equation*}
+
+The total rotational energy per unit mass of all species in a mixture is then:
+
+\begin{equation*}
+    E_r = \rho e_r = \sum_{s \in \polys} \rho_s \bb{\frac{\eta_{r,s}}{2} \frac{\Rhat}{\MW_s}} T_r = \rho \bar{c}_{v,r} T_r
+\end{equation*}
+
+Where the mixture rotational specific heat is computed as:
+
+\begin{equation*}
+    \bar{c}_{v,r} = \sum_{s \in \polys} \Ymass_s c_{v,s}^{r} \rightarrow \rho \bar{c}_{v,r} = \sum_{s \in \polys} \rho_s c_{v,s}^{r}
+\end{equation*}
+
+The definition of the rotational specific heat for a given species is then:
+
+\begin{equation*}
+    c_{v,s}^r = \pd{e_{r,s}}{T_r}\bigg|_v = \frac{\eta_{r,s}}{2} \frac{\Rhat}{\MW_s}
+\end{equation*}
+
+Note that for the translational energy, there are 3 degrees of freedom in the $x$, $y$, and $z$ directions. 
+
+\subsection{Trans-Rotational Energy}
+
+Translational and rotational energies are usually grouped together as one energy mode, evalulated at a single translation-rotational temperatures $T_{tr}$. Since the rotational energy mode equilibrates with the translational one quickly, this is a valid assumption in most situations. The combined energy gives:
+
+\begin{equation*}
+    E_{tr} = \rho e_{tr} = \rho (e_t + e_r) = \bb{\sum_{s \in \species} \rho_s c_{v,s}^t + \sum_{s \in \polys} \rho_s c_{v,s}^r} T_{tr} =  \sum_{s \in \species} \rho_s c_{v,s}^{tr} T_{tr}
+    \label{eq:trans-rot-energy}
+\end{equation*}
+
+The specific heat of the combined energy modes for a species is then:
+
+\begin{equation*}
+    c_{v,s}^{tr} = \pd{e_{s, tr}}{T_{tr}}\bigg|_v = \frac{3}{2} + \frac{\eta_{r,s}}{2}
+\end{equation*}
+
+Where $\eta_{r,s}$ is zero for atomic species. The mixture translational-rotational specific heat is then:
+
+\begin{equation*}
+    \bar{c}_{v,tr} = \sum_{s=1}^\text{NS} \Ymass_s c_{v,s}^{tr} \rightarrow \rho \bar{c}_{v,tr} = \sum_{s=1}^\text{NS} \rho_s c_{v,s}^{tr}
+    \label{eq:cvbar}
+\end{equation*}
+
+\subsection{Vibrational energy}
+
+Vibrational energy is only associated with polyatomic molecules, where atoms attached via atomic bonds are assumed to oscillate harmonically as though connected to springs. This gives rise the the Simple Harmonic Oscillator (SHO) model where the specific vibrational energy is computed as:
+
+\begin{equation*}
+    e_{v,s} = \frac{\Rhat}{\MW_s} \frac{\theta_{v,s}}{e^{\theta_{v,s} / T_{v,s}} - 1} 
+\end{equation*}
+
+Here, $\theta_{v,s}$ is the characteristic vibrational temperature of species $s$, defined as $hv/\kB$, where $h$ is Planck's constant, and $v$ is the harmonic oscillator's frequency. $T_{v,s}$ is the vibrational temperature. The specific heat is then:
+
+\begin{equation*}
+    c_{v,s}^v = \pd{e_{v,s}}{T_{v,s}}\bigg|_v = \frac{\Rhat}{\MW_s} \bp{\frac{\theta_{v,s}}{T_{v,s}}}^2 \frac{e^{\theta_{v,s}/T_{v,s}}}{\bp{e^{\theta_{v,s} / T_{v,s}} -1}^2}
+\end{equation*}
+
+The total vibrational energy is then:
+
+\begin{equation*}
+    E_v = \rho e_v = \sum_{s \in \polys} \rho_s e_{v,s} = \sum_{s \in \polys} \rho_s \frac{\Rhat}{\MW_s} \frac{\theta_{v,s}}{e^{\theta_{v,s} / T_{v,s}} - 1} 
+    \label{eq:vib-energy}
+\end{equation*}
+
+\subsection{Electronic Energy}
+
+Electronic energy of an atom is due to the electrons in orbit around that atom. The electronic energy of a species has the form:
+
+\begin{equation*}
+    e_{e,s} = \frac{\Rhat}{\MW_s} \bb{\frac{\displaystyle\sum_{i=1}^\infty g_{i,s} \theta_{e,i,s} e^{-\theta_{e,i,s}/ T_e}}{\displaystyle\sum_{i=0}^\infty g_{i,s} e^{- \theta_{e,i,s} / T_e}}}
+\end{equation*}
+
+The total electronic energy for a mixture is then:
+
+\begin{equation*}
+    E_{el} = \sum_{s \in \heavies} \rho_s \frac{\Rhat}{\MW_s} \bb{\frac{\displaystyle\sum_{i=1}^\infty g_{i,s} \theta_{e,i,s} e^{-\theta_{e,i,s}/ T_e}}{\displaystyle\sum_{i=0}^\infty g_{i,s} e^{- \theta_{e,i,s} / T_e}}}
+    \label{eq:el-energy}
+\end{equation*}
+
+The electronic specific heat is then:
+
+\begin{equation*}
+    c_{v,s}^{el} = \pd{e_{el,s}}{T_e}\bigg|_v = \frac{\Rhat}{\MW_s} \frac{1}{T_e^2} \bb{\frac{\displaystyle\sum_{i=1}^\infty g_{i} \theta_{i}^2 e^{-\theta_{i}/ T_e}}{\displaystyle\sum_{i=0}^\infty g_{i} e^{- \theta_{i} / T_e}} - \bp{\frac{\displaystyle\sum_{i=1}^\infty g_{i} \theta_{i} e^{-\theta_{i}/ T_e}}{ \displaystyle\sum_{i=0}^\infty g_{i} e^{- \theta_{i} / T_e}} }^2}
+\end{equation*}
+
+\subsection{Heat of Formation}
+
+The heat of formation of a species is a constant that defined the amount of energy necessary to create that species. It is denoted by $h_{f}^\circ \label{eq:heat-form}$. For example, the heat of formation of $N_2$ is taken as zero since it is in its natural state in Earth's atmosphere. However, in high-temperature flows, enough energy is directed into the molecule to dissociate it in two $N$ atoms. Therefore, the heat of formation for $N$ is not zero. This constant is necessary to balance the energy equation, as energy is lost in dissociation of the molecule, but not destroyed. Therefore, the total energy that has been "lost" due to creation of a species is:
+
+
+
+\begin{equation*}
+    E_f^\circ = \sum_{s=1}^\text{NS} \hform_{,s}
+    \label{eq:form-energy}
+\end{equation*}
+
+\subsection{Kinetic Energy}
+
+The total kinetic energy in the flow is:
+
+\begin{equation*}
+    E_{ke} = \sum_{i=1}^\text{NS} \rho_s \boldsymbol{u} \cdot \boldsymbol{u}
+    \label{eq:kinetic-energy}
+\end{equation*}
+
+\subsection{Total Energy}
+
+The total total energy of a fluid in nonequilibrium is the sum of the translational, rotational, vibrational, and electronic energies, as well as the kinetic energy of the bulk motion and the formation energy of the species. The total energy is given by:
+
+\begin{multline}
+    \rho E = \sum_{s \in \mathcal{H}} \rho_s e_{t,s} (T_t) + \rho_e e_{t,e} (T_e) + \sum_{s \in \mathcal{P}} \rho_s e_{r,s} (T_r) \\ + \sum_{s \in \mathcal{P}} \rho_s e_{v,s} (T_{v,s}) + \sum_{s \in \mathcal{H}} \rho_s e_{el,s} (T_{el}) + \frac{1}{2} \rho \hat{u} \cdot \hat{u} + \sum_{s \in \mathcal{S}} \rho_s h_{f,s}
+\end{multline}
+
+This is the most general form of the total energy for a nonequilibrium fluid mixture. Every energy mode is included and is a function of its own temperature. From this equation, any temperature model can be derived. We first make the common assumption that the translational and rotational temperatures are in equilibrium, and that the rotational modes are fully excited. This allows us to explitly express the trans-rotational energy as a function of the trans-rotational temperature:
+
+\begin{equation}
+    \rho E = \sum_{s \in \mathcal{H}} \rho_s c_{v,s}^{tr} T_{tr} + \rho_e e_{t,e} (T_e) + \sum_{s \in \mathcal{P}} \rho_s e_{v,s} (T_{v,s}) + \sum_{s \in \mathcal{H}} \rho_s e_{el,s} (T_{el}) + \frac{1}{2} \rho \hat{u} \cdot \hat{u} + \sum_{s \in \mathcal{S}} \rho_s h_{f,s}
+\end{equation}
+
+We can now beging deriving multi-temperature models.
+
+\subsection{One-Temperature Models}
+
+One-temperature models are the most simple. Every energy mode is assumed to be in equilibrium at the trans-rotational temperature, $T_{tr}$. Each model includes one extra energy mode. The models, as well as a unique identifier that is used in the CFD code, are listed in Table [\ref{tab:1Tmodels}].
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Model} & $\mathbf{e_{tr}}$ & $\mathbf{e_v}$ & $\mathbf{e_{el}}$ \\
+\midrule
+Model 10 & \cmark &         &         \\
+Model 11 & \cmark & \cmark  &         \\
+Model 12 & \cmark & \cmark  & \cmark  \\
+\bottomrule
+\end{tabular}
+\caption{Energy modes included in each one-temperature model.}
+\label{tab:1Tmodels}
+\end{table}
+
+Model 10 has a direct inversion for the translational temperature. It can be found via:
+
+\begin{equation*}
+    T_{tr} = \frac{1}{\displaystyle \sum_{s \in \species} \rho_s c_{v,s}^{tr}} \bb{\rho E - \text{KE} - \sum_{s \in \species} \rho_s h_{f,s}}
+\end{equation*}
+
+Models 11 and 12 need to use a Newton method since the inclusion of internal energies does not give a closed-form expression for $T_{tr}$. The derivative of the translational temperature with respect to conserved quantities depends on the model that is being used. Implicit differentiation is used to find derivatives of any temperature.
+
+\begin{remark}
+    Given a residual $F = F(T_{tr}, \boldsymbol{U})$ = 0, the partial derivative of $T_{tr}$ with respect to $\boldsymbol{U}$ can be found via:
+
+    \begin{equation*}
+        \pd{T_{tr}}{\boldsymbol{U}_j} = \frac{\partial F / \partial \boldsymbol{U}_j}{\partial F / \partial T_{tr}}
+    \end{equation*}
+
+    An example can be found using Model 10, where:
+    
+    \begin{equation}
+        F = \rho E - \sum_{s \in \species} \rho_s c_{v,s}^{tr} T_{tr} - \frac{1}{\sum_{s \in \species} \rho_s} \bb{(\rho u)^2 + (\rho v)^2 + (\rho w)^2} - \sum_{s \in \species} \rho_s h_{f,s} = 0
+    \end{equation}
+
+    We know that $\partial F / \partial T_{tr} = \displaystyle \sum_{s \in \species} \rho_s c_{v,s}^{tr}$. So this is always the denominator. Then we take derivatives wrt to conserved variables, which is quite simple. Pressure derivatives can be found via the relation:
+
+    \begin{equation*}
+        \pd{p}{\boldsymbol{U}_j} = \pd{p}{\boldsymbol{U}_j}\bigg|_{T_{tr}} + \pd{p}{T_{tr}} \pd{T_{tr}}{\boldsymbol{U}_j}
+    \end{equation*}
+
+    Given that $p = \displaystyle \sum_{s \in \species} \rho_s R_s T_{tr}$ for a one-temperature model, this becomes trivial to compute.
+\end{remark}
+
+The above process can be carried out for each model. Note that as each internal energy mode is included, the denominator will include their contributions to the specific heat. Therefore, a general form of the trans-rotational temperature derivative can be computed:
+
+\begin{equation*}
+    \pd{T_{tr}}{\boldsymbol U_j} = \frac{1}{\rho c_v^*} \bb{\pd{F}{\boldsymbol{U}_j}}
+\end{equation*}
+
+For the above one-temperature models, the derivatives for trans-rotational temperature and pressure are shown below. $c_v^*$ and $e_s^*$ are the total internal energy modes for the model being used:
+
+\begin{equation*}
+    \rho c_v^* = \sum_{s \in \species} \rho_s \bb{c_{v,s}^{tr} + \ub{c_{v,s}^v}{\text{if included}} + \ub{c_{v,s}^{el}}{\text{if included}}}
+\end{equation*}
+
+\begin{equation*}
+    e_s^* = e_{s}^{tr} + \ub{e_{s}^v}{\text{if included}} + \ub{e_{s}^{el}}{\text{if included}}
+\end{equation*}
+
+\begin{multicols}{2}    
+    \begin{align*}
+        \partial \bp{T_{tr}}_{\rho_s} &= \frac{1}{\rho c_v^{*}} \bb{\frac{1}{\rho} \text{KE} - e_s^* - h_{f,s}}
+        \\ \partial \bp{T_{tr}}_{\rho u} &= - \frac{u}{\rho c_v^{*}}
+        \\ \partial \bp{T_{tr}}_{\rho v} &= - \frac{v}{\rho c_v^{*}}
+        \\ \partial \bp{T_{tr}}_{\rho w} &= - \frac{w}{\rho c_v^{*}}
+        \\ \partial \bp{T_{tr}}_{\rho E} &= \frac{1}{\rho c_v^{*}}
+    \end{align*}        
+
+    \begin{align*}
+        \partial \bp{p}_{\rho_s} &= R_s T_{tr} + \frac{\Rbar}{c_v^{*}} \bb{\frac{1}{\rho} \text{KE} - e_s^* - h_{f,s}}
+        \\ \partial \bp{p}_{\rho u} &= -u \frac{\Rbar}{c_v^{*}}
+        \\ \partial \bp{p}_{\rho v} &= -v \frac{\Rbar}{c_v^{*}}
+        \\ \partial \bp{p}_{\rho w} &= -w \frac{\Rbar}{c_v^{*}}
+        \\ \partial \bp{p}_{\rho E} &= \frac{\Rbar}{c_v^{*}}
+    \end{align*}    
+\end{multicols}
+
+
+\subsection{Two-temperature models}
+
+\begin{enumerate}
+    \item The translational and rotational temperatures of the heavy species are in equilibrium with one another: $\{T_t = T_r\} = T_{tr}$.
+    \item All vibrational and electronic energies, along with the free-electron translational energy, are in equilibrium with one another: $\{T_{v,s} = T_{el} = T_e\} = T_{vee}$.
+\end{enumerate}
+
+We can 
+
+\begin{equation*}
+    \rho E = \sum_{s \in \mathcal{H}} + \rho_s e_{tr,s} (T_{tr}) + \rho_e e_{t,e} (T_{vee}) + \sum_{s \in \mathcal{P}} \rho_s e_{v,s} (T_{vee}) + \sum_{s \in \mathcal{H}} \rho_s e_{el,s} (T_{vee}) + \frac{1}{2} \rho \hat{u} \cdot \hat{u} + \sum_{s \in \mathcal{S}} \rho_s h_{f,s} 
+\end{equation*}
+
+Furthermore, because the rotational modes are assumed to be completely excited, the trans-rotational energy can be explicitly expressed as a function of the trans-rotational temperature, $T_{tr}$. Therefore, the total energy can be further simplified to:
+
+\begin{equation*}
+    \rho E = \sum_{s \in \mathcal{H}} \rho_s c_{v,s}^{tr} T_{tr} + \rho_s e_{tr,s} (T_{tr}) + \sum_{s \in \mathcal{P}} \rho_s e_{v,s} (T_{vee}) + \sum_{s \in \mathcal{H}} \rho_s e_{el,s} (T_{vee}) + \frac{1}{2} \rho \hat{u} \cdot \hat{u} + \sum_{s \in \mathcal{S}} \rho_s h_{f,s}
+\end{equation*}
 
 \newpage
 \section{Nonequilibrium Transport Models}
@@ -1537,162 +1857,6 @@ For species summation and Wilke's mixing rule, $\mu_j$ and $\kappa_j$ are calcul
 
 \newpage
 
-\section{Nonequilibrium Thermodynamics}
-
-In this section, a brief overview of the thermodynamics for modelling fluids in nonequilibrium is given. This is mainly a review of the most important concepts given in $\ref{sec:stat-thermo}$, with some extra points given. Each internal energy mode is gone over in detail, along with methods to compute their temperatures and specific heats.
-
-\subsection{Translational Energy}
-
-The translation energy of an atom or molecule can be found with:
-
-\begin{equation*}
-    E_{t,s} = \rho_s e_{t,s} = \rho_s \bb{\frac{3}{2} \frac{\Rhat}{\MW_s}} T_t
-\end{equation*}
-
-Where the subscript $t$ denotes a translational quantity. The total translational energy of all heavy species in a mixture is then:
-
-\begin{equation}
-    E_t = \rho e_t = \sum_{s \neq e}^\text{NS} \rho_s \bb{\frac{3}{2} \frac{\Rhat}{\MW_s}} T_t = \rho \bar{c}_{v,t} T_t
-    \label{eq:trans-energy}
-\end{equation}
-
-Where the mixture specific heat is computed as:
-
-\begin{equation*}
-    \bar{c}_{v,t} = \sum_{s \neq e}^\text{NS} \Ymass_s c_{v,s}^{t} \rightarrow \rho \bar{c}_{v,t} = \sum_{s \neq e}^\text{NS} \rho_s c_{v,s}^{t}
-    \label{eq:cvtbar}
-\end{equation*}
-
-The translational specific heat for a given species is defined as:
-
-\begin{equation}
-    c_{v,s}^{t} \equiv \pd{e_t}{T_t}\bigg|_v = \frac{3}{2} \frac{\Rhat}{\MW_s}
-\end{equation}
-
-The translational energy of free electrons uses the same expression:
-
-\begin{equation*}
-    E_{e} = \rho_e \frac{3}{2} \frac{\Rhat}{\MW_e} T_e
-    \label{eq:e-energy}
-\end{equation*}
-
-Where the subscript $e$ denotes an electron specific equantiy. $T_e$ is the temperature of the free electrons. It should be noted that if the electron temperature is assumed to be in equilibrium with the translational temperature, the sum in Eq. [\ref{eq:trans-energy}] should include electrons. Clearly, the specific heat for the electron translational energy is just:
-
-\begin{equation*}
-    c_{v,e}^t = \frac{3}{2} \frac{\Rhat}{\MW_e}
-    \label{eq:cve}
-\end{equation*}
-
-\subsection{Rotational Energy}
-
-The rotational energy of a molecule depends on the degrees of freedom of that molecule, i.e., how many different ways that molecule can rotate. The rotational degrees of freedom (DOF) are denoted by $\eta_r$, and therefore the rotational specific heat of a species is defined as:
-
-\begin{equation*}
-    c_{v,s}^r = \pd{e_r}{T_r}\bigg|_v = \frac{\eta_r}{2} \frac{\Rhat}{\MW_s}
-\end{equation*}
-
-Note that for the translational energy, there are 3 degrees of freedom in the $x$, $y$, and $z$ directions. The total energy stored in the rotational mode is then:
-
-\begin{equation*}
-    E_{r} = \sum_{s=1}^\text{ND} \rho_s \bb{\frac{\eta_{r,s}}{2} \frac{\Rhat}{\MW_s}} T_r
-    \label{eq:rot-energy}
-\end{equation*}
-
-The mixture specific heat for the rotational mode is then:
-
-\begin{equation*}
-    \bar{c}_{v,r} = \sum_{s=1}^\text{ND} \Ymass_s c_{v,s}^r \rightarrow \rho \bar{c}_{v,r} = \sum_{s=1}^\text{NS} \rho_s c_{v,s}^r
-    \label{eq:cvrbar}
-\end{equation*}
-
-\subsection{Translational-Rotational Energy}
-
-Translational and rotational energies are usually grouped together as one energy mode, evlaulated at a single translation-rotational temperatures $T_{tr}$. Since the rotational energy mode equilibrates with the translational one quickly, this is a valid assumption in most situations. The combined energy gives:
-
-\begin{equation*}
-    E_{tr} = \rho e_{tr} = \sum_{s}^\text{NS} \rho_s \bb{\frac{3}{2} + \frac{\eta_{r,s}}{2}} T_{tr}
-    \label{eq:trans-rot-energy}
-\end{equation*}
-
-Where $\eta_{r,s}$ is zero for atomic species. The spefic heat of the combined energy mdoes for a species is then:
-
-\begin{equation*}
-    c_{v,s}^{tr} = \pd{e_{s, tr}}{T_{tr}}\bigg|_v = \frac{3}{2} + \frac{\eta_{r,s}}{2}
-\end{equation*}
-
-The mixture translational-rotational specific heat is then:
-
-\begin{equation*}
-    \bar{c}_{v,tr} = \sum_{s=1}^\text{NS} \Ymass_s c_{v,s}^{tr} \rightarrow \rho \bar{c}_{v,tr} = \sum_{s=1}^\text{NS} \rho_s c_{v,s}^{tr}
-    \label{eq:cvbar}
-\end{equation*}
-
-\subsection{Vibrational energy}
-
-Vibrational energy is only associated with polyatomic molecules, where atoms attached via atomic bonds are assumed to osccilate harmonically as though connected to springs. This gives rise the the Simple Harmonic Oscillator (SHO) model where the specific vibrational energy is computed as:
-
-\begin{equation*}
-    e_{v,s} = \frac{\Rhat}{\MW_s} \frac{\theta_{v,s}}{e^{\theta_{v,s} / T_v} - 1} 
-\end{equation*}
-
-Here, $\theta_v$ is the characteristic vibrational temperature defined as $hv/\kB$, where $h$ is Planck's constant, and $v$ is the harmonic oscillator's frequency. $T_v$ is the vibrational temperature. The specific heat is then:
-
-\begin{equation*}
-    c_{v,s}^v = \pd{e_{v,s}}{T_v}\bigg|_v = \frac{\Rhat}{\MW_s} \bp{\frac{\theta_{v,s}}{T_v}}^2 \frac{e^{\theta_{v,s}/T_v}}{\bp{e^{\theta_{v,s} / T_v} -1}^2}
-\end{equation*}
-
-The total vibrational energy is then:
-
-\begin{equation*}
-    E_v = \sum_{i=1}^\text{ND} \rho_s e_s = \sum_{i=1}^\text{ND} \rho_s e_{v,s} = \frac{\Rhat}{\MW_s} \frac{\theta_{v,s}}{e^{\theta_{v,s} / T_v} - 1} 
-    \label{eq:vib-energy}
-\end{equation*}
-
-\subsection{Electronic Energy}
-
-Electronic energy of an atom is due to the electrons in orbit around that atom. The electronic energy of a species has the form:
-
-\begin{equation*}
-    e_{e,s} = \frac{\Rhat}{\MW_s} \bb{\frac{\displaystyle\sum_{i=1}^\infty g_{i,s} \theta_{e,i,s} e^{-\theta_{e,i,s}/ T_e}}{\displaystyle\sum_{i=0}^\infty g_{i,s} e^{- \theta_{e,i,s} / T_e}}}
-\end{equation*}
-
-The total electronic energy for a mixture is then:
-
-\begin{equation*}
-    E_{el} = \sum_{s=1}^\text{NS} \rho_s \frac{\Rhat}{\MW_s} \bb{\frac{\displaystyle\sum_{i=1}^\infty g_{i,s} \theta_{e,i,s} e^{-\theta_{e,i,s}/ T_e}}{\displaystyle\sum_{i=0}^\infty g_{i,s} e^{- \theta_{e,i,s} / T_e}}}
-    \label{eq:el-energy}
-\end{equation*}
-
-\subsection{Electron-Electron Energy}
-
-For three temperature models, the electronic and electron-translational energy are combined into a single energy, $E_{el-e}$. That is:
-
-\begin{equation*}
-    E_{el-e} = \sum_{s \neq e}^\text{NS} \bb{\rho_s e_{el,s}} + \Ee
-    \label{eq:el-e-energy}
-\end{equation*}
-
-\subsection{Heat of Formation}
-
-The heat of formation of a species is a constant that defined the amount of energy necessary to create that species. It is denoted by $h_{f}^\circ \label{eq:heat-form}$. For example, the heat of formation of $N_2$ is taken as zero since it is in its natural state in Earth's atmosphere. However, in high-temperature flows, enough energy is directed into the molecule to dissociate it in two $N$ atoms. Therefore, the heat of formation for $N$ is not zero. This constant is necessary to balance the energy equation, as energy is lost in dissociation of the molecule, but not destroyed. Therefore, the total energy that has been "lost" due to creation of a species is:
-
-
-
-\begin{equation*}
-    E_f^\circ = \sum_{s=1}^\text{NS} \hform_{,s}
-    \label{eq:form-energy}
-\end{equation*}
-
-\subsection{Kinetic Energy}
-
-The total kinetic energy in the flow is:
-
-\begin{equation*}
-    E_{ke} = \sum_{i=1}^\text{NS} \rho_s \boldsymbol{u} \cdot \boldsymbol{u}
-    \label{eq:kinetic-energy}
-\end{equation*}
-
-\newpage
 \section{Nonequilibrium Source Terms}
 
 \subsection{Species Mass Source Term}
@@ -1991,6 +2155,34 @@ Where $\tau_s^P$ is defined as:
 
 Here, $\sigma_{v,s}$ is a constant for each species.
 
+\subsection{Vibrational-Vibrational Energy Relaxation} 
+\label{sec:vib-vib-relax}
+
+When modelling vibrational energy, sometimes the vibrational energy of each polyatomic species is modelled with a separate conservation equation. In this case, the energy exchange between vibrational modes of different species needs to be modelled. Candler \cite{candlerthesis} states the vibrational energy transfer between species $s$ and $r$ is given by by product of a probability, $P_{s-r}$, a number of $s-r$ collisions per unit volume and time, $Z_{s-r}$, and the average vibrational energy per species $r$:
+
+\begin{equation*}
+    \mathcal{S}_{v-v,s,r} = P_{sr} Z_{s-r} \epsilon_{v,r}
+\end{equation*}
+
+The number of collisions per unit volume and time is given from kinetic theory as:
+
+\begin{equation*}
+    Z_{s-r} = N_s N_r \sigma_{sr} \sqrt{\frac{8 \kB T_t}{\pi \mu_{sr}}}
+\end{equation*}
+
+Here, $\mu_{sr}$ is the reduced mass of species $s$ and $r$, and $\sigma_{sr}$ is the collision cross section between species $s$ and $r$. The average vibrational energy of species $r$ is easily taken from the vibrational energy equation:
+
+\begin{equation*}
+    \epsilon_{v,r} = \frac{\Rhat}{\NA} \frac{\theta_{v,r}}{e^{\theta_{v,r}/T_{v,r}} - 1} = e_{v,r} \MW_r = \frac{E_{v,r} \MW_r}{\rho_r} 
+\end{equation*}
+
+Finally, the probabability of energy transfer between species $s$ and $r$ is taken as $10^{-2}$. For species $s$, the vibrational energy transfer is then:
+
+\begin{equation*}
+    \mathcal{S}_{v-v,s} = \sum_{r \neq s}^\text{ND} \bb{\NA \sigma_{sr} \sqrt{\frac{8 \kB T_t}{\pi \mu_{sr}}} \bp{P_{s-r} \frac{\rho_s}{\MW_s}E_{v,r} - P_{r-s} \frac{\rho_r}{\MW_r}E_{v,s}}} 
+\end{equation*}
+
+
 \subsection{Electron-Translational Energy Relaxation}
 \label{sec:el-trans-relax}
 The transfer of energy between electron and translational energy modes is a source term that needs to be modelled in either a two-temperature vibration-electronic-electron or a three-temperature electronic-electron conservation equation. This source term is given by:
@@ -2263,6 +2455,10 @@ Since no mass can be created or destroyed, the condition of atomic conservation 
     \pd{}{t} \rho \boldsymbol{u} + \nabla \cdot (\rho \textbf{u} \otimes \textbf{u}) = -\nabla p + \nabla \cdot \boldsymbol{\bar{\Pi}} + \ub{nq\boldsymbol{E}' + \boldsymbol{j} \times \boldsymbol{B}}{5} \hspace{5mm} \text{Ref. \cite{scogginsthesis}}
 \end{equation*}
 
+\begin{equation*}
+    \pd{}{t} (\rho u_i) + \pd{}{x_j} (\rho u_i u_j + p \delta_{ij}) = - \pd{\tau_{ij}}{x_j} - \sum_{i=1}^\text{NS} \frac{N_s}{N_e} Z_s \pd{p_e}{x_i} \hspace{5mm} \text{Ref. \cite{candlerthesis}}
+\end{equation*}
+
 The terms are:
 
 \begin{enumerate}
@@ -2286,7 +2482,13 @@ The variables are:
     \item $\boldsymbol{j} = \sum_s \boldsymbol{j}_s = \sum_s n_s q_s \boldsymbol{V}_s$ is the mixture conduction current.
 \end{itemize}
 
-\subsection{Vibrational Energy Conservation}
+\subsection{Total Rotational Energy Conservation}
+
+\begin{equation*}
+    \ub{\pd{}{t} (\rho e_r)}{1} + \ub{\pd{}{x_j} (\rho e_r u_j)}{2} = \ub{\pd{}{x_j} \bp{\kappa_r \pd{T_r}{x_j}}}{3} + \ub{\mathcal{S}_{t-r}^{r}}{4} + \ub{\mathcal{S}_{e-r}^{re}}{5} + \ub{\mathcal{S}_{r-c}^{r}}{6} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
+\end{equation*}
+
+\subsection{Total Vibrational Energy Conservation}
 
 \begin{multline}
     \ub{\pd{}{t} \rho e_v}{1} + \ub{\pd{}{x_j}\rho e_v u_j}{2} = \ub{\pd{}{x_j} \bp{\kappa_v \pd{T_v}{x_j}}}{3} \\ + \ub{\pd{}{x_j} \bp{\rho \sum_{s=1}^\text{NS} h_{v,s} D_s \pd{y_s}{x_j}}}{4} + \ub{\mathcal{S}_{t-v}^{v}}{5} + \ub{\mathcal{S}_{e-v}^{ve}}{6} + \ub{\mathcal{S}_{v-c}^{v}}{7} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
@@ -2318,6 +2520,26 @@ The variables are:
     \item $\hat{D}_s$ is the vibration energy level representative of those molecules of species $s$ which are created or destroyed (recombined or dissociated) because of their high vibrational quantum numbers.
 \end{itemize}
 
+\subsection{Species Vibrational Energy Conservation}
+
+\begin{multline}
+    \ub{\pd{E_{v,s}}{t}}{1} + \ub{\pd{}{x_j} (E_{v,s} u_j)}{2} = - \ub{\pd{}{x_j} (E_{v,s} v_{s,j})}{3} - \ub{\pd{q_{v,s,j}}{x_j}}{4} + \ub{\mathcal{S}_{t-v,s}^{v}}{5} + \ub{\mathcal{S}_{v-v,s}^{v}}{6} + \ub{\mathcal{S}_{e-v,s}^{ev}}{7} + \ub{\mathcal{S}_{v-c,s}^{v}}{8} \hspace{5mm} \text{Ref. \cite{candlerthesis}}
+\end{multline}
+
+The terms are:
+
+\begin{enumerate}
+    \item The time rate of change of the vibrational energy of species $s$.
+    \item The flux of vibrational energy of species $s$ due to convection.
+    \item The flux of vibrational energy due to mass diffusion of species $s$.
+    \item The flux of vibrational energy due to conduction.
+    \item The energy exchange between translational modes of all species and the vibrational mode of species $s$. This term is explained in Sec. [\ref{sec:vib-trans-relax}].
+    \item The energy exchange between the vibrational modes of other species and the vibrational mode of species $s$. This term is explained in Sec. [\ref{sec:vib-vib-relax}].
+    \item The energy exchange between the free electrons and the vibrational mode of species $s$. This term is explained in Sec. [\ref{sec:vib-el-relax}].
+    \item The energy lost or gained due to the depletion or production of species $s$ through chemical reactions. This term is explained in Sec. [\ref{sec:vib-chem-source}].
+\end{enumerate}
+
+
 \subsection{Electron-Electronic Energy Conservation}
 
 \begin{multline}
@@ -2329,7 +2551,7 @@ Terms are:
 \begin{enumerate}
     \item Rate of change of electronic energy per unit volume.
     \item The flux of electronic enthalpy due to convection.
-    \item The work done on electrons by an electron field by an electron pressure gradient.
+    \item The work done on electrons by an electric field incudes by an electron pressure gradient.
     \item The conduction of electronic energy due to electron temperature gradient.
     \item The diffuction of electronic energy due to concentration gradients.
     \item The energy exchange due to elastic collisions between electrons and heavy particles. Its expression is explained in Sec. [\ref{sec:el-trans-relax}].
@@ -2353,9 +2575,31 @@ The variables are:
 
 \subsection{Electron Energy Conservation}
 
+In some methods, electronic energy is included in the total energy and evaluated at the electron temperature, but the free-electron energy is separated as its own conservation equation. Therefore, the electron temperature is evolved only because of the electron energy equation, and the electronic energy is assumed to be in equilibrium with the electron temperature. The electron energy conservation equation is:
+
 \begin{equation}
-\pd{E_e}{t} + \pd{}{x_j} \bp{E_e u_j} = -\pd{}{x_j} \bp{E_e v_{ej}} - p_e \pd{u_j}{x_j} - \pd{q_{ej}}{x_j} + \mathcal{S}_{t-e}^e - \sum_{s=1}^{\text{ND}} \mathcal{S}_{e-v}^{e} + \mathcal{S}_{e-c}^{e} 
+\ub{\pd{E_e}{t}}{1} + \ub{\pd{}{x_j} \bp{E_e u_j}}{2} = - \ub{\pd{}{x_j} \bp{E_e v_{ej}}}{3} - \ub{p_e \pd{u_j}{x_j}}{4} - \ub{\pd{q_{ej}}{x_j}}{5} + \ub{\mathcal{S}_{t-e}^e}{6} - \ub{\mathcal{S}_{e-v}^{e}}{7} + \ub{\mathcal{S}_{e-c}^{e}}{8} \hspace{5mm} \text{Ref. \cite{candlerthesis}}
 \end{equation}
+
+Here, $E_e$ is defined as the combinationation of the thermal and kinetic energy of the free electrons:
+
+\begin{equation*}
+    E_e = \rho_e c_{ve} T_e + \frac{1}{2} \rho_e (u^2 + v^2 + w^2)
+\end{equation*}
+
+The terms are:
+
+\begin{enumerate}
+    \item The time rate of change of the electron energy.
+    \item The flux of electron energy due to convection.
+    \item The flux of electron energy due to molecular diffusion.
+    \item The work done on electrons by an electric field incudes by an electron pressure gradient.
+    \item The flux of electron energy due to conduction.
+    \item The energy exchange between translational modes of all species and the electronic mode of species $s$. This term is explained in Sec. [\ref{sec:el-trans-relax}].
+    \item The energy exchange between the vibrational modes of other species and the electronic mode of species $s$. This term is explained in Sec. [\ref{sec:vib-el-relax}].
+    \item The energy lost or gained due to the depletion or production of species $s$   
+\end{enumerate}
+
 
 \subsection{Total Energy Conservation}
 
@@ -2430,30 +2674,60 @@ In this section, partial derivatives are given for numerous flow quanties for us
 
 \subsubsection{Partial derivatives of $T$}
 
+Note that for a general $n$-temperature model, the translational temperature is defined as:
+
+\begin{equation*}
+    T_{tr}(\boldsymbol{U}) = \frac{1}{\rho c_v^*} \bb{\rho E - \text{KE} - \sum_s^\mathcal{S} \rho_s h_s^\circ - \sum_s^\mathcal{P} \rho_s e_{v,s} (T_v) - \sum_s^\mathcal{H} \rho_s e_{e,s} (T_e) - \rho_e e_{tr, e} (T_e)}
+\end{equation*}
+
+Here, $\text{KE} = \frac{1}{2} \rho (u^2 + v^2 + w^2)$ is the kinetic energy per unit volume, $\mathcal{P}$ is the set of polyatomic molecules that contain vibrational energy, and $\mathcal{H}$ is the set of heavy species that contain electronic energy. For a one-temperature model, you can set $T_v = T_e = T$ and the vibrational and electronic energy terms will be evaluated at the translational temperature, or neglected if these energy modes are to be ignored. If  
+
 \begin{subequations}
     \begin{align}
-        \pd{T}{\rho_s} &= \frac{1}{\rho c_v} \bp{-c_{vs}T + \frac{1}{2} (u^2 + v^2 + w^2) - h_s^\circ}
-        \\ \pd{T}{(\rho u)} &= -\frac{u}{\rho c_v}
-        \\ \pd{T}{(\rho v)} &= -\frac{v}{\rho c_v}
-        \\ \pd{T}{(\rho w)} &= -\frac{w}{\rho c_v}
-        \\ \pd{T}{E_v} &= -\frac{1}{\rho c_v}
-        \\ \pd{T}{E} &= \frac{1}{\rho c_v}
-        \\ \pd{c_r}{\rho_s} &= (\delta_{rs} - c_r) \frac{1}{\rho}
+        \pd{T}{\rho_s} &= \frac{1}{\rho c_v^*} \bb{-c_{v,s}T + \frac{1}{2} (u^2 + v^2 + w^2) - h_s^\circ}
+        \\ \textcolor{blue}{\pd{T}{\rho_e}} &\textcolor{blue}{= \frac{1}{\rho c_v^*} \bb{\frac{1}{2} (u^2 + v^2 + w^2) - h_{f,e}^\circ} \hspace{5mm} \text{(for three temperature models)}}
+        \\ \pd{T}{(\rho u)} &= -\frac{u}{\rho c_v^*}
+        \\ \pd{T}{(\rho v)} &= -\frac{v}{\rho c_v^*}
+        \\ \pd{T}{(\rho w)} &= -\frac{w}{\rho c_v^*}
+        \\ \pd{T}{E} &= \frac{1}{\rho c_v^*}
+        \\ \textcolor{red}{\pd{T}{E_v}} &\textcolor{red}{= -\frac{1}{\rho c_v^*}}
+        \\ \textcolor{red}{\pd{T}{E_{v,s}}} &\textcolor{red}{= -\frac{1}{\rho c_v^*}}
+        \\ \textcolor{blue}{\pd{T}{E_e}} &\textcolor{blue}{= -\frac{1}{\rho c_v^*}}
     \end{align}
 \end{subequations}
 
 \subsubsection{Partial derivatives of vibrational temperature ($T_v$)}
 
+
+For one vibrational temperature equation, the derivative includes sums over all vibrational species. When a separate vibrational temperature is solved for each species, the form remains the same but the sums are not present:
+
+\begin{multicols}{2}
+    
 \begin{subequations}
     \begin{align}
     \pd{T_v}{\rho_i} &= -e_{vi} / \sum_{s=1}^\text{NS} \bb{\rho_s \bp{\pd{e_{vs}}{T_v}}}
     \\ \pd{T_v}{(\rho u)} &= 0
     \\ \pd{T_v}{(\rho v)} &= 0
     \\ \pd{T_v}{(\rho w)} &= 0
-    \\ \pd{T_v}{E_v} &= 1 / \sum_{s=1}^\text{NS} \bb{\rho_s \bp{\pd{e_{vs}}{T_v}}}
     \\ \pd{T_v}{E} &= 0
+    \\ \pd{T_v}{E_v} &= 1 / \sum_{s=1}^\text{NS} \bb{\rho_s \bp{\pd{e_{vs}}{T_v}}}
+    \\ \pd{T_v}{E_e} &= 0
     \end{align}
 \end{subequations}
+
+\begin{subequations}
+    \begin{align}
+    \pd{T_{v,s}}{\rho_s} &= -e_{v,s} / \bp{\rho_s \pd{e_{v,s}}{T_{v,s}}}
+    \\ \pd{T_{v,s}}{(\rho u)} &= 0
+    \\ \pd{T_{v,s}}{(\rho v)} &= 0
+    \\ \pd{T_{v,s}}{(\rho w)} &= 0
+    \\ \pd{T_{v,s}}{E} &= 0
+    \\ \pd{T_{v,s}}{E_{v,s}} &= 1 / \bp{\rho_s \pd{e_{v,s}}{T_{v,s}}}
+    \\ \pd{T_{v,s}}{E_e} &= 0
+    \end{align}
+\end{subequations}
+
+\end{multicols}
 
 \subsubsection{Partial derivatives of vibrational energy ($e_vs$)}
 
