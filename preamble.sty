@@ -55,6 +55,8 @@
 \definecolor{defred}{HTML}{8f0342}
 \definecolor{deforange}{HTML}{ba6006}
 \definecolor{defgreen}{HTML}{017301}
+\definecolor{defpurple}{RGB}{88,50,168}
+\definecolor{boxbg}{RGB}{248,248,248}
 
 % ── Section heading styles ────────────────────────────────────────────────────
 \titleformat{\section}
@@ -128,14 +130,12 @@
 
 
 % ── Remark environment (numbered) ────────────────────────────────────────────
-\definecolor{remarkpurple}{RGB}{88,50,168}
-\definecolor{remarkbg}{RGB}{248,248,248}
 
 \newtheoremstyle{remarkstyle}
   {3pt}{3pt}
   {\normalfont}
   {}
-  {\bfseries\color{remarkpurple}}
+  {\bfseries\color{defpurple}}
   {:}
   {0.5em}
   {\thmname{#1}\thmnumber{ #2}\thmnote{ \textit{(#3)}}}
@@ -145,8 +145,8 @@
 
 \newenvironment{remark}[1][]{%
   \begin{mdframed}[
-    linecolor=remarkpurple,
-    backgroundcolor=remarkbg,
+    linecolor=defpurple,
+    backgroundcolor=boxbg,
     linewidth=1pt,
     topline=false,
     rightline=false,
@@ -161,6 +161,41 @@
   \begin{remarkinner}[#1]%
 }{%
   \end{remarkinner}%
+  \end{mdframed}%
+}
+
+% ── Derivation environment (numbered) ────────────────────────────────────────────
+
+\newtheoremstyle{derivationstyle}
+  {3pt}{3pt}
+  {\normalfont}
+  {}
+  {\bfseries\color{deforange}}
+  {:}
+  {0.5em}
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ \textit{(#3)}}}
+
+\theoremstyle{derivationstyle}
+\newtheorem{derivationinner}{Derivation}[section]
+
+\newenvironment{derivation}[1][]{%
+  \begin{mdframed}[
+    linecolor=deforange,
+    backgroundcolor=boxbg,
+    linewidth=1pt,
+    topline=false,
+    rightline=false,
+    bottomline=false,
+    leftline=true,
+    nobreak=false,
+    innerleftmargin=8pt,
+    innerrightmargin=8pt,
+    innertopmargin=4pt,
+    innerbottommargin=4pt
+  ]%
+  \begin{derivationinner}[#1]%
+}{%
+  \end{derivationinner}%
   \end{mdframed}%
 }
 

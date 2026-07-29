@@ -1544,17 +1544,17 @@ Model 10 has a direct inversion for the translational temperature. It can be fou
 
 Models 11 and 12 need to use a Newton method since the inclusion of internal energies does not give a closed-form expression for $T_{tr}$. The derivative of the translational temperature with respect to conserved quantities depends on the model that is being used. Implicit differentiation is used to find derivatives of any temperature.
 
-\begin{remark}
-    Given a residual $F = F(T_{tr}, \boldsymbol{U})$ = 0, the partial derivative of $T_{tr}$ with respect to $\boldsymbol{U}$ can be found via:
+\begin{derivation}
+    Given a residual $F = F(T, \boldsymbol{U})$ = 0, the partial derivative of $T$ with respect to $\boldsymbol{U}$ can be found via:
 
     \begin{equation*}
-        \pd{T_{tr}}{\boldsymbol{U}_j} = \frac{\partial F / \partial \boldsymbol{U}_j}{\partial F / \partial T_{tr}}
+        \pd{T}{\boldsymbol{U}_j} = -\frac{\partial F / \partial \boldsymbol{U}_j}{\partial F / \partial T}
     \end{equation*}
 
-    An example can be found using Model 10, where:
+    An example can be found using the total energy equation of Model 10. The residual is:
     
     \begin{equation}
-        F = \rho E - \sum_{s \in \species} \rho_s c_{v,s}^{tr} T_{tr} - \frac{1}{\sum_{s \in \species} \rho_s} \bb{(\rho u)^2 + (\rho v)^2 + (\rho w)^2} - \sum_{s \in \species} \rho_s h_{f,s} = 0
+        F = \sum_{s \in \species} \rho_s c_{v,s}^{tr} T_{tr} + \frac{1}{2 \sum_{s \in \species} \rho_s} \bb{(\rho u)^2 + (\rho v)^2 + (\rho w)^2} + \sum_{s \in \species} \rho_s h_{f,s} - \rho E= 0
     \end{equation}
 
     We know that $\partial F / \partial T_{tr} = \displaystyle \sum_{s \in \species} \rho_s c_{v,s}^{tr}$. So this is always the denominator. Then we take derivatives wrt to conserved variables, which is quite simple. Pressure derivatives can be found via the relation:
@@ -1564,7 +1564,7 @@ Models 11 and 12 need to use a Newton method since the inclusion of internal ene
     \end{equation*}
 
     Given that $p = \displaystyle \sum_{s \in \species} \rho_s R_s T_{tr}$ for a one-temperature model, this becomes trivial to compute.
-\end{remark}
+\end{derivation}
 
 The above process can be carried out for each model. Note that as each internal energy mode is included, the denominator will include their contributions to the specific heat. Therefore, a general form of the trans-rotational temperature derivative can be computed:
 
@@ -1603,22 +1603,71 @@ For the above one-temperature models, the derivatives for trans-rotational tempe
 
 \subsection{Two-temperature models}
 
+Two temperature models have the next level of robustness. The most famous is Park's two-temperature model, which makes the following assumptions:
+
 \begin{enumerate}
     \item The translational and rotational temperatures of the heavy species are in equilibrium with one another: $\{T_t = T_r\} = T_{tr}$.
-    \item All vibrational and electronic energies, along with the free-electron translational energy, are in equilibrium with one another: $\{T_{v,s} = T_{el} = T_e\} = T_{vee}$.
+    \item All vibrational and electronic energies, along with the free-electron translational energy, are in equilibrium with one another: $\{T_{v} = T_{el} = T_e\} = T_{v}$.
 \end{enumerate}
 
-We can 
+We can make further modelling choices to generate other 2T models. For example, by assuming the vibrational temperature is only evolved by the total vibrational energy and treating free-electron translational energy and electronic energies as functions of $T_{tr}$ we have another model. A more involved method splits the total vibrational energy up into one vibrational energy equation per polyatomic species. This gives one vibrational temperature for each polyatomic species. In every case, the electronic-electron energies are grouped together as $e_{el-e}$. Table [\ref{tab:2Tmodels}] shows which temperature evaluate which energy mode for certain models. The total energy equation remains the same as before by evaluating each energy mode with the correct temperature. 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Model} & $\mathbf{e_{tr}}$ & $\mathbf{e_{v}}$ & $\mathbf{e_{el-e}}$ \\
+\midrule
+20 & $T_{tr}$ & $T_v$ & $T_{tr}$ \\
+21 & $T_{tr}$ & $T_{v}$ & $T_{v}$ \\
+22 & $T_{tr}$ & $T_{v,s}$ & $T_{tr}$ \\
+\bottomrule
+\end{tabular}
+\caption{Temperatures used to evaluate each energy mode in the two-temperature models.}
+\label{tab:2Tmodels}
+\end{table}
 
 \begin{equation*}
     \rho E = \sum_{s \in \mathcal{H}} + \rho_s e_{tr,s} (T_{tr}) + \rho_e e_{t,e} (T_{vee}) + \sum_{s \in \mathcal{P}} \rho_s e_{v,s} (T_{vee}) + \sum_{s \in \mathcal{H}} \rho_s e_{el,s} (T_{vee}) + \frac{1}{2} \rho \hat{u} \cdot \hat{u} + \sum_{s \in \mathcal{S}} \rho_s h_{f,s} 
 \end{equation*}
 
-Furthermore, because the rotational modes are assumed to be completely excited, the trans-rotational energy can be explicitly expressed as a function of the trans-rotational temperature, $T_{tr}$. Therefore, the total energy can be further simplified to:
+The pressure is then split up into contributions from the heavy species and electrons separately:
 
 \begin{equation*}
-    \rho E = \sum_{s \in \mathcal{H}} \rho_s c_{v,s}^{tr} T_{tr} + \rho_s e_{tr,s} (T_{tr}) + \sum_{s \in \mathcal{P}} \rho_s e_{v,s} (T_{vee}) + \sum_{s \in \mathcal{H}} \rho_s e_{el,s} (T_{vee}) + \frac{1}{2} \rho \hat{u} \cdot \hat{u} + \sum_{s \in \mathcal{S}} \rho_s h_{f,s}
+    p = \sum_{s \in \heavies} \rho_s R_s T_{tr} + \rho_e R_e T_e
 \end{equation*}
+
+If $e_{el-e} (T_{tr})$ (models 20 and 22), this equation is just an expanded form of the normal sum over partial pressures. For $e_{el-e} (T_{v})$, (model 21), the free-electron translational temperature is not identical to the heavy-species one. Careful consideration must be taken when evaluating the pressure and its derivatives.
+
+
+\begin{derivation}
+    Another residual equation is needed to compute derivatives of $T_v$ from the vibrational energy equation. In the case that $e_{el-e}$ is evaluated at $T_v$, the residual is:
+
+    \begin{equation}
+        F = \sum_{s \in \polys} \rho_s e_{v,s} + \sum_{s \in \heavies} \rho_s e_{el,s} + \rho_e c_{v,e}^{tr} T_v - \rho E_v = 0
+    \end{equation}
+
+    Derivatives are computed in the same as for $T_{tr}$. First, $\partial F / \partial T_v$ is found to be:
+
+    \begin{equation*}
+        \pd{F}{T_v} = \rho c_v^* = \sum_{s \in \polys} \rho_s c_{v,s}^v + \ub{ \sum_{s \in \heavies} \rho_s c_{v,s}^{el}}{\text{if included}} + \ub{\rho_e c_{v,e}^{tr}}{\text{if included}}
+    \end{equation*}
+\end{derivation}
+
+
+\begin{derivation}
+    The derivative of pressure with respect to conserved variables is now more involved. Given:
+
+    \begin{equation*}
+        p = p_\mathcal{H} + p_e = \ub{\sum_{s \in \heavies} \rho_s R_s}{A} T_{tr} + \ub{\rho_e R_e}{B} T_e
+    \end{equation*}
+
+    The derivatives wrt conserved variables is then:
+
+    \begin{equation*}
+        \pd{p}{\boldsymbol{U}_j} = \pd{A}{\boldsymbol{U}_j} T_{tr} + A \pd{T_{tr}}{\boldsymbol{U}_j} + \pd{B}{\boldsymbol{U}_j} T_e + B \pd{T_e}{\boldsymbol{U}_j}
+    \end{equation*}
+\end{derivation}
 
 \newpage
 \section{Nonequilibrium Transport Models}
