@@ -1631,6 +1631,13 @@ We can make further modelling choices to generate other 2T models. For example, 
     \rho E = \sum_{s \in \mathcal{H}} + \rho_s e_{tr,s} (T_{tr}) + \rho_e e_{t,e} (T_{vee}) + \sum_{s \in \mathcal{P}} \rho_s e_{v,s} (T_{vee}) + \sum_{s \in \mathcal{H}} \rho_s e_{el,s} (T_{vee}) + \frac{1}{2} \rho \hat{u} \cdot \hat{u} + \sum_{s \in \mathcal{S}} \rho_s h_{f,s} 
 \end{equation*}
 
+
+The total vibrational-electronic-electron energy then:
+
+\begin{equation}
+    \rho E_{vee} = \sum_{s \in \polys} \rho_s e_{v,s} + \sum_{s \in \heavies} \rho_s e_{el,s} + \rho_e e_{tr,e}
+\end{equation}
+
 The pressure is then split up into contributions from the heavy species and electrons separately:
 
 \begin{equation*}
@@ -1644,13 +1651,13 @@ If $e_{el-e} (T_{tr})$ (models 20 and 22), this equation is just an expanded for
     Another residual equation is needed to compute derivatives of $T_v$ from the vibrational energy equation. In the case that $e_{el-e}$ is evaluated at $T_v$, the residual is:
 
     \begin{equation}
-        F = \sum_{s \in \polys} \rho_s e_{v,s} + \sum_{s \in \heavies} \rho_s e_{el,s} + \rho_e c_{v,e}^{tr} T_v - \rho E_v = 0
+        F = \sum_{s \in \polys} \rho_s e_{v,s} + \sum_{s \in \heavies} \rho_s e_{el,s} + \rho_e c_{v,e}^{tr} T_v - \rho E_{vee} = 0
     \end{equation}
 
     Derivatives are computed in the same as for $T_{tr}$. First, $\partial F / \partial T_v$ is found to be:
 
     \begin{equation*}
-        \pd{F}{T_v} = \rho c_v^* = \sum_{s \in \polys} \rho_s c_{v,s}^v + \ub{ \sum_{s \in \heavies} \rho_s c_{v,s}^{el}}{\text{if included}} + \ub{\rho_e c_{v,e}^{tr}}{\text{if included}}
+        \pd{F}{T_v} = \rho c_v^* = \sum_{s \in \polys} \rho_s c_{v,s}^v + \ub{ \sum_{s \in \heavies} \rho_s c_{v,s}^{el} + \rho_e c_{v,e}^{tr}}{\text{if included}}
     \end{equation*}
 \end{derivation}
 
@@ -1668,6 +1675,26 @@ If $e_{el-e} (T_{tr})$ (models 20 and 22), this equation is just an expanded for
         \pd{p}{\boldsymbol{U}_j} = \pd{A}{\boldsymbol{U}_j} T_{tr} + A \pd{T_{tr}}{\boldsymbol{U}_j} + \pd{B}{\boldsymbol{U}_j} T_e + B \pd{T_e}{\boldsymbol{U}_j}
     \end{equation*}
 \end{derivation}
+
+\subsection{Three-temperature models}
+
+Three-temperature models are the most involved models that will be gone over here. The assumptions are:
+
+\begin{enumerate}
+    \item The translational and rotational temperatures of the heavy species are in equilibrium with one another: $\{T_t = T_r\} = T_{tr}$.
+    \item Vibrational energies are assumed to be in equilibrium at a single $T_v$ or in equilibrium with each molecular species' own $T_{v,s}$.
+    \item Electronic energies, along with the free-electron translational energy, are in equilibrium with each other: $\{T_{el} = T_e\} = T_{e}$.
+\end{enumerate}
+
+For one vibrational temperature, the conserved variables are then:
+
+\begin{align}
+    \rho E = \sum_{s \in \mathcal{H}} + \rho_s e_{tr,s} (T_{tr}) + \rho_e e_{t,e} (T_{e}) + \sum_{s \in \mathcal{P}} \rho_s e_{v,s} (T_{v}) + \sum_{s \in \mathcal{H}} \rho_s e_{el,s} (T_{e}) + \frac{1}{2} \rho \hat{u} \cdot \hat{u} + \sum_{s \in \mathcal{S}} \rho_s h_{f,s} 
+    \rho E_v &= \sum_{s \in \polys} \rho_s e_{v,s} \\
+    \rho E_{el-e} &=  \sum_{s \in \heavies} \rho_s e_{el-e} + \rho_e e_{tr,e}
+\end{align}
+
+For both three-temperature models, we can obtain $T_{tr}$ via a direct inversion. Both $T_{v,s}$ and $T_e$ need Newton methods. The derivatives are obtained in the same manner as before.
 
 \newpage
 \section{Nonequilibrium Transport Models}
