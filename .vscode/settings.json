@@ -1,0 +1,111 @@
+{
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash"
+        },
+        "bash (MSYS2)": {
+            "path": "C:\\msys64\\usr\\bin\\bash.exe",
+            "args": [
+                "--login",
+                "-i"
+            ],
+            "env": {
+                "CHERE_INVOKING": "1"
+            }
+        },
+        "MSYS2 MINGW64": {
+            "path": "C:\\msys64\\usr\\bin\\bash.exe",
+            "args": ["--login", "-i"],
+            "env": {
+            "MSYSTEM": "MINGW64",
+            "CHERE_INVOKING": "1"
+        }
+    }
+    },
+
+
+    "terminal.integrated.defaultProfile.windows": "MSYS2 MINGW64",
+    "git.openRepositoryInParentFolders": "never",
+    "C_Cpp.default.compilerPath": "C:/msys64/mingw64/bin/gcc.exe",
+    "workbench.colorTheme": "Monokai Classic",
+    "workbench.iconTheme": "Monokai Classic Icons",
+
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "comment",
+                "settings": {
+                    "foreground": "#00ffd5",  // bright green
+                    "fontStyle": "italic"
+                }
+            }
+        ]
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+
+    "latex-workshop.latex.tools": [
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-output-directory=build",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "build/%DOCFILE%"
+            ]
+        },
+        {
+            "name": "makeindex-nomencl",
+            "command": "makeindex",
+            "args": [
+                "build/%DOCFILE%.nlo",
+                "-s",
+                "nomencl.ist",
+                "-o",
+                "build/%DOCFILE%.nls"
+            ]
+        }
+    ],
+
+    "latex-workshop.latex.outDir": "./build",
+
+    "latex-workshop.latex.clean.args": [
+        "-outdir=./build",
+        "-auxdir=./build",
+        "-c",
+        "%DOC_EXT%"
+    ],
+
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "pdflatex → bibtex → nomenclature → pdflatex×2",
+            "tools": ["pdflatex", "bibtex", "makeindex-nomencl", "pdflatex", "pdflatex"]
+        }
+    ],
+
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "ctrl-click",
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "latex-workshop.latex.autoBuild.run": "never"
+
+}

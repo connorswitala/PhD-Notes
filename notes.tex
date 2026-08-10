@@ -2264,7 +2264,7 @@ Finally, the probabability of energy transfer between species $s$ and $r$ is tak
 The transfer of energy between electron and translational energy modes is a source term that needs to be modelled in either a two-temperature vibration-electronic-electron or a three-temperature electronic-electron conservation equation. This source term is given by:
 
 \begin{equation*}
-    \mathcal{S}_{t-e}^e = 2 \rho_e \frac{3}{2} \Rhat (T_{tr} - T_e) \sum_{s \neq e}^\text{NS} \frac{\nu_{es}}{\MW_s} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
+    \mathcal{S}_{t-e}^e = 3 \rho_e  \Rhat (T_{tr} - T_e) \sum_{s \neq e}^\text{NS} \frac{\nu_{es}}{\MW_s} \hspace{5mm} \text{Ref. \cite{gnoffo1989}}
 \end{equation*}
 
 Note that this is a Landau-Teller like form for energy relaxation:
@@ -5332,6 +5332,73 @@ We can now insert all of our terms in for the master equation of $\partial \tau_
     \pd{\tau_s}{U_j} = \tau_s^\text{P} \bb{\frac{3}{2 T_{tr}} \pd{T_{tr}}{U_j} \ub{- \frac{\NA}{n \MW_j}}{\text{when $U_j$ = $\rho_j$} } } 
     \\-<\tau_s>^2  \bcb {\underbracket{\frac{\MW_{\heavies}}{\rho_{\heavies} \MW_j} \bp{\frac{1}{\tau_{sj}}  - \frac{1}{<\tau_s>}}}_{\text{when $U_j$ = $\rho_j$}} + \sum_{r \in \heavies} \bb{ \frac{X_r}{\tau_{sr}} \bp{\frac{1}{p} \pd{p}{U_j} + \frac{1}{3} \pd{T_{tr}}{U_j} T_{tr}^{-4/3} A_{sr}}} }
 \end{multline}
+
+\subsection{Energy Equations: e-T Source Term}
+
+Recall the translational - electron energy source term:
+
+\begin{equation}
+    \mathcal{S}_{t-e} = 3 \rho_e \Rhat (T_{tr} - T_e) \sum_{s \in \heavies} \frac{\nu_{es}}{\MW_s}
+\end{equation}
+
+The derivative of this term with respect to any conserved variables $U_j$ is:
+
+\begin{equation}
+    3 \Rhat \bcb{\pd{\rho_e}{U_j} (T_{tr} - T_e) \sum_{s \in \heavies} \frac{\nu_{es}}{\MW_s} + \rho_e \bb{ \bp{\pd{T_{tr}}{U_j} - \pd{T_e}{U_j}}\sum_{s \in \heavies} \frac{\nu_{es}}{\MW_s} + (T_{tr} - T_e) \sum_{s \in \heavies} \pd{}{U_j} \frac{\nu_{es}}{\MW_s} } }
+\end{equation}
+
+We must now find the derivative of $\nu_{es}$ with respect to $U_j$. The derivative depends on whether the collision partner is neutral or ionized. For neutral species, we have:
+
+\begin{equation}
+    \nu_{es} = n_s \sigma_{es} \bar{c}_e = n_s \bp{a_s + b_s T_e + c_s T_e^2}  \bp{\frac{8 \kB T_e}{\pi m_e}}^{1/2}
+\end{equation}
+
+
+\begin{equation}
+    \pd{\nu_{es}}{U_j} = \pd{n_s}{U_j} \sigma_{es} \bar{c}_{e} + n_s \bb{\pd{\sigma_{es}}{U_j} \bar{c}_{e} + \sigma_{es} \pd{\bar{c}_{e}}{U_j}}
+\end{equation}
+
+From before, we know the derivative of the number density:
+
+\begin{equation}
+    \pd{n_s}{U_j} = \begin{cases} \dfrac{\NA}{\mathcal{M}_s}, & U_j = \rho_s, 
+    \\[8pt] 0, & \text{otherwise.}
+    \end{cases}
+\end{equation}
+
+We also have the derivative of the cross-section:
+
+\begin{equation}
+    \pd{\sigma_{es}}{U_j} = \pd{}{U_j} \bb{a_s + b_s T_e + c_s T_e^2} = \bb{b_s + 2 c_s T_e} \pd{T_e}{U_j}
+\end{equation}
+
+And finally, the derivative of the mean electron speed:
+
+\begin{equation}
+    \pd{\bar{c}_e}{U_j} = \pd{}{U_j} \bb{\bp{\frac{8 \kB T_e}{\pi m_e}}^{1/2}} = \bar{c}_e \bb{\frac{1}{2 T_e} \pd{T_e}{U_j}}   
+\end{equation}
+
+So for neutral species, we have:
+
+\begin{equation}
+    \pd{\nu_{es}}{U_j} = \ub{\frac{\NA}{\mathcal{M}_s} \sigma_{es} \bar{c}_{e}}{\text{if } U_j = \rho_s} + n_s \bar{c}_e \pd{T_e}{U_j} \bb{b_s + 2 c_s T_e + 0.5 \frac{\sigma_{es}}{T_e}} 
+\end{equation}
+
+Now for ionized species, we have:
+
+\begin{equation}
+    \nu_{es} = \frac{8}{3} \sqrt{\frac{\pi}{m_e}} q^2 n_s(2 \kB T_e)^{-3/2} \ln \bb{\frac{(\kB T_e)^3}{\pi n_e q^3}}
+\end{equation}
+
+Giving the derivative:
+
+\begin{multline}
+    \pd{\nu_{es}}{U_j} = \frac{8}{3} \sqrt{\frac{\pi}{m_e}} q^2 \bigg\{ \pd{n_s}{U_j} (2 \kB T_e)^{-3/2} \ln \bb{\frac{(\kB T_e)^3}{\pi n_e q^3}} 
+    \\ +  n_s \bigg[ - \frac{3}{2} (2 \kB T_e)^{-5/2} 2 \kB \pd{T_e}{U_j} \ln \bb{\frac{(\kB T_e)^3}{\pi n_e q^3}} 
+    \\ + (2 \kB T_e)^{-3/2} \frac{\pi n_e q^3}{(\kB T_e)^3} \bp{ \frac{3 (\kB T_e)^2}{\pi n_e q^3} \kB \pd{T_e}{U_j} - \frac{(\kB T_e)^3}{\bp{\pi n_e q^3}^2} \pi q^3 \pd{n_e}{U_j}  }  \bigg] \bigg\}
+\end{multline}
+
+
 
 
 
