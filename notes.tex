@@ -5398,6 +5398,34 @@ Giving the derivative:
     \\ + (2 \kB T_e)^{-3/2} \frac{\pi n_e q^3}{(\kB T_e)^3} \bp{ \frac{3 (\kB T_e)^2}{\pi n_e q^3} \kB \pd{T_e}{U_j} - \frac{(\kB T_e)^3}{\bp{\pi n_e q^3}^2} \pi q^3 \pd{n_e}{U_j}  }  \bigg] \bigg\}
 \end{multline}
 
+\subsection{Energy Equations: v-e Source Term}
+
+Recall the vibrational-electron source term:
+
+\begin{equation}
+    \mathcal{S}_{v-e,s} = \rho_s \frac{e_{v,s}(T_e) - e_{v,s}(T_{v,s})}{\tau_{ve,s}}
+\end{equation}
+
+Ther derivative of the source term with repect to conserved variables is:
+
+\begin{equation}
+    \pd{\mathcal{S}_{v-e,s}}{U_j} = \pd{\rho_s}{U_j} \frac{e_{v,s}(T_e) - e_{v,s}(T_{v,s})}{\tau_{ve,s}} + \rho_s \bb{\frac{c_{v,s}(T_e) - c_{v,s}(T_{v,s})}{\tau_{ve,s}}} - \frac{\mathcal{S}_{v-e,s}}{\tau_{ve,s}} \pd{\tau_{ve,s}}{U_j} 
+\end{equation}
+
+
+From Candler and Park's curve fits for $N_2$ relaxation, we are able to convert the base-10 logarithms to natural logarithms:
+
+\begin{equation}
+\ln\!\left(p_e \tau_e\right)=
+\begin{cases}
+\frac{7.50}{\ln 10} (\log T_e)^2 - 57.0 \log T_e + 98.70 \ln(10),
+& T_e < 7000~\si{\kelvin}, \\[0.5em]
+\frac{2.36}{\ln 10} (\log T_e)^2 - 17.9 \log T_e + 24.35 \ln(10),
+& T_e > 7000~\si{\kelvin}.
+\end{cases}
+\end{equation}
+
+
 
 
 
