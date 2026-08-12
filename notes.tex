@@ -5409,7 +5409,7 @@ Recall the vibrational-electron source term:
 Ther derivative of the source term with repect to conserved variables is:
 
 \begin{equation}
-    \pd{\mathcal{S}_{v-e,s}}{U_j} = \pd{\rho_s}{U_j} \frac{e_{v,s}(T_e) - e_{v,s}(T_{v,s})}{\tau_{ve,s}} + \rho_s \bb{\frac{c_{v,s}(T_e) - c_{v,s}(T_{v,s})}{\tau_{ve,s}}} - \frac{\mathcal{S}_{v-e,s}}{\tau_{ve,s}} \pd{\tau_{ve,s}}{U_j} 
+    \pd{\mathcal{S}_{v-e,s}}{U_j} = \pd{\rho_s}{U_j} \frac{e_{v,s}(T_e) - e_{v,s}(T_{v,s})}{\tau_{ve,s}} + \frac{\rho_s}{\tau_{ve,s}} \bb{c_{v,s}(T_e) \pd{T_e}{U_j} - c_{v,s}(T_{v,s}) \pd{T_{v,s}}{U_j}} - \frac{\mathcal{S}_{v-e,s}}{\tau_{ve,s}} \pd{\tau_{ve,s}}{U_j} 
 \end{equation}
 
 
@@ -5418,14 +5418,31 @@ From Candler and Park's curve fits for $N_2$ relaxation, we are able to convert 
 \begin{equation}
 \ln\!\left(p_e \tau_e\right)=
 \begin{cases}
-\frac{7.50}{\ln 10} (\log T_e)^2 - 57.0 \log T_e + 98.70 \ln(10),
+\frac{7.50}{\ln 10} (\ln T_e)^2 - 57.0 \ln T_e + 98.70 \ln(10),
 & T_e < 7000~\si{\kelvin}, \\[0.5em]
-\frac{2.36}{\ln 10} (\log T_e)^2 - 17.9 \log T_e + 24.35 \ln(10),
+\frac{2.36}{\ln 10} (\ln T_e)^2 - 17.9 \ln T_e + 24.35 \ln(10),
 & T_e > 7000~\si{\kelvin}.
 \end{cases}
 \end{equation}
 
+By inverting these equations for $\tau_{ve}$, we can find the derivative of $\tau_{ve}$ with respect to $U_j$. By denoting the coefficients of the quadratic fits as $a$, $b$, and $c$, we can write the final equation for $\tau_{ve}$ as:
 
+\begin{align}
+    \tau_{ve} &= \frac{101325}{p_e} \exp{f} \\
+    f &= a (\ln T_e)^2 + b \ln T_e + c
+\end{align}
+
+We can now find the derifvative of $\tau_{ve}$ with respect to $U_j$:
+
+\begin{equation}
+    \pd{\tau_{ve}}{U_j} = \tau_{ve} \bb{\pd{f}{U_j} - \frac{1}{p_e} \pd{p_e}{U_j}}
+\end{equation}
+
+Where:
+
+\begin{equation}
+    \pd{f}{U_j} = \bb{2 a \ln T_e + b} \frac{1}{T_e} \pd{T_e}{U_j}
+\end{equation}
 
 
 
