@@ -2234,10 +2234,10 @@ Here, $\sigma_{v,s}$ is a constant for each species.
 \subsection{Vibrational-Vibrational Energy Relaxation} 
 \label{sec:vib-vib-relax}
 
-When modelling vibrational energy, sometimes the vibrational energy of each polyatomic species is modelled with a separate conservation equation. In this case, the energy exchange between vibrational modes of different species needs to be modelled. Candler \cite{candlerthesis} states the vibrational energy transfer between species $s$ and $r$ is given by by product of a probability, $P_{s-r}$, a number of $s-r$ collisions per unit volume and time, $Z_{s-r}$, and the average vibrational energy per species $r$:
+When modelling vibrational energy, sometimes the vibrational energy of each polyatomic species is modelled with a separate conservation equation. In this case, the energy exchange between vibrational modes of different species needs to be modelled. Candler \cite{candlerthesis} states the vibrational energy transfer between species $s$ and $r$ is given by by product of a probability, $P_{s-r}$, a number of $s-r$ collisions per unit volume and time, $Z_{s-r}$, and the change in vibrational energy:
 
 \begin{equation*}
-    \mathcal{S}_{v-v,s,r} = P_{sr} Z_{s-r} \epsilon_{v,r}
+    \mathcal{S}_{v-v,s,r} = P_{s-r} \cdot Z_{s-r} \cdot \Delta \varepsilon_{v,s-r}
 \end{equation*}
 
 The number of collisions per unit volume and time is given from kinetic theory as:
@@ -2246,16 +2246,22 @@ The number of collisions per unit volume and time is given from kinetic theory a
     Z_{s-r} = N_s N_r \sigma_{sr} \sqrt{\frac{8 \kB T_t}{\pi \mu_{sr}}}
 \end{equation*}
 
-Here, $\mu_{sr}$ is the reduced mass of species $s$ and $r$, and $\sigma_{sr}$ is the collision cross section between species $s$ and $r$. The average vibrational energy of species $r$ is easily taken from the vibrational energy equation:
+Here, $\mu_{sr}$ is the reduced mass of species $s$ and $r$, and $\sigma_{sr}$ is the collision cross section between species $s$ and $r$. The change in vibrational energy assumes that when two molecules collide, the post-collision vibrational temperatures of the species are the same. Therefore:
+
+\begin{equation}
+    \varepsilon_{v,s} (T_{v,s}) + \varepsilon_{v,r}(T_{v,r}) = \varepsilon_{v,s} (T_{vsr}') + \varepsilon_{v,r} (T_{vsr}')
+\end{equation}
+
+This gives the trivial result that $\Delta \varepsilon_{v,s} = \varepsilon_{v,s} (T_{vsr}') - \varepsilon_{v,s} (T_{v,s})$. From the simple harmonic oscillator, we can comptue $T_{vsr}'$ using a Newton method and the following equation for vibrational energy per molecule:
 
 \begin{equation*}
-    \epsilon_{v,r} = \frac{\Rhat}{\NA} \frac{\theta_{v,r}}{e^{\theta_{v,r}/T_{v,r}} - 1} = e_{v,r} \MW_r = \frac{E_{v,r} \MW_r}{\rho_r} 
+    \varepsilon_{v,s} = \frac{\Rhat}{\NA} \frac{\theta_{v,s}}{e^{\theta_{v,s}/T_{v,s}} - 1} = \frac{\MW_s}{\NA} e_{v,s}(T_{v,s}) = \frac{\MW_s}{\NA \rho_s} E_{v,s}(T_{v,s})
 \end{equation*}
 
-Finally, the probabability of energy transfer between species $s$ and $r$ is taken as $10^{-2}$. For species $s$, the vibrational energy transfer is then:
+Finally, the probabability of energy transfer between species $s$ and $r$ is either taken to be constant at $10^{-2}$ \cite{candlerthesis} or computed using curve fits \cite{chinnappan2026}.  For species $s$, the vibrational energy transfer is then:
 
 \begin{equation*}
-    \mathcal{S}_{v-v,s} = \sum_{r \neq s}^\text{ND} \bb{\NA \sigma_{sr} \sqrt{\frac{8 \kB T_t}{\pi \mu_{sr}}} \bp{P_{s-r} \frac{\rho_s}{\MW_s}E_{v,r} - P_{r-s} \frac{\rho_r}{\MW_r}E_{v,s}}} 
+    \mathcal{S}_{v-v,s} = \sum_{r \neq s}^{\heavies} P_{s-r} \cdot Z_{s-r} \cdot \frac{\MW_s}{\NA} \bb{e_{v,s}(T_{vsr}') - e_{v,s}(T_{v,s}')}
 \end{equation*}
 
 
@@ -5445,11 +5451,65 @@ Where:
 \end{equation}
 
 
+\subsection{Energy Equations: v-v Source Term}
 
+Recall the vibrational-vibrational energy exchange source term:
+
+\begin{equation*}
+    \mathcal{S}_{v-v,s,r} = P_{s-r} \cdot Z_{s-r} \cdot \Delta \varepsilon_{v,s-r}
+\end{equation*}
+
+The Jacobian is computed as:
+
+\begin{equation}
+    \pd{\mathcal{S}_{v-v,s}}{U_j} = \pd{P_{sr}}{U_j} \cdot Z_{sr} \cdot \Delta \varepsilon_{v,s} + P_{sr} \bb{\pd{Z_{sr}}{U_j} \Delta \varepsilon_{v,s} + Z_{sr} \pd{\Delta \varepsilon_{v,s}}{U_j} }
+\end{equation}
+
+In cases where $P_{sr}$ is constant, the first term is zero. In cases where $P_{sr}$ is curve-fit in the form of $P_{sr} = a T_{tr}^b + c$, we have:\
+
+\begin{equation}
+    \pd{P_{sr}}{U_j} = a b T_{tr}^{b-1} \pd{T_{tr}}{U_j}
+\end{equation}
+
+The derivative of the collision number is:
+
+\begin{equation}
+    \pd{Z_{sr}}{U_j} = Z_{sr} \frac{1}{2 T_{tr}} \pd{T_{tr}}{U_j} + \pd{N_s}{U_j} N_r g + N_s \pd{N_r}{U_j} g
+\end{equation}
+
+Where:
+
+\begin{equation}
+    g = \sqrt{\frac{8 \kB T_{tr}}{\pi \mu_{sr}}}
+\end{equation}
+
+Finally, the derivative of the change in vibrational energy is:
+
+\begin{equation}
+    \pd{\Delta \varepsilon_{v,s}}{U_j} = c_{v,s}^v (T_{vsr}') \pd{T_{vsr}'}{U_j} - c_{v,s}^v (T_{v,s}) \pd{T_{v,s}}{U_j}
+\end{equation}
+
+The derivatives of $T_{vsr}'$ are computed using implicit differentiation on the collision energy equation:
+
+\begin{equation}
+    F = \varepsilon_{v,s} (T_{v,s}) + \varepsilon_{v,r} (T_{v,r}) - \varepsilon_{v,s} (T_{vsr}') - \varepsilon_{v,r} (T_{vsr}') = 0
+\end{equation}
+
+The derivative of the residual wrt $U_j$ is:
+
+\begin{equation}
+    \pd{F}{U_j} = c_{v,s}^v (T_{v,s}) \pd{T_{v,s}}{U_j} + c_{v,r}^v (T_{v,r}) \pd{T_{v,r}}{U_j} - \bb{c_{v,s}^v (T_{vsr}') + c_{v,r}^v (T_{vsr}')} \pd{T_{vsr}'}{U_j} = 0
+\end{equation}
+
+Rearranging gives the final derivative. The molecular weight is added into to convert to a per-particle basis. Avogadro's number is included but gets cancelled in the numerator and denominator.
+
+\begin{equation}
+    \pd{T_{vsr}'}{U_j} = \frac{\MW_s c_{v,s}^v (T_{v,s}) \pd{T_{v,s}}{U_j} + \MW_r c_{v,r}^v (T_{v,r}) \pd{T_{v,r}}{U_j}}{\MW_s c_{v,s}^v (T_{vsr}') + \MW_r c_{v,r}^v (T_{vsr}')}
+\end{equation}
 
 
 \newpage
 \bibliographystyle{plain}
 \bibliography{bibliography}
 \end{flushleft}
-\end{document}
+\end{document} 
