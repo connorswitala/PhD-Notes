@@ -5507,6 +5507,146 @@ Rearranging gives the final derivative. The molecular weight is added into to co
     \pd{T_{vsr}'}{U_j} = \frac{\MW_s c_{v,s}^v (T_{v,s}) \pd{T_{v,s}}{U_j} + \MW_r c_{v,r}^v (T_{v,r}) \pd{T_{v,r}}{U_j}}{\MW_s c_{v,s}^v (T_{vsr}') + \MW_r c_{v,r}^v (T_{vsr}')}
 \end{equation}
 
+\newpage
+\section{Nonequilibrium Stagnational Flux Jacobians}
+
+For the nonequilibrium stagnation line solve, the vectors of conserved and primitive variables are:
+
+\begin{equation*}
+    \bigU = 
+    \begin{bmatrix}
+        \rho_1 \\ \vdots \\ \rho_\text{NS} \\ \rho u_r \\ \rho u_\theta \\ \rho E \\ \bigU_{\mathcal{E}}
+    \end{bmatrix}
+    \hspace{5mm}
+    \bigV = 
+    \begin{bmatrix}
+        \rho_1 \\ \vdots \\ \rho_\text{NS} \\ u_r \\ u_\theta \\ p \\ \bigV_{\mathcal{E}}
+    \end{bmatrix}
+\end{equation*}
+
+Here, $\bigU_{\mathcal{E}}$ and $\bigV_{\mathcal{E}}$ are the energy components of the conserved and primitive variable vectors, respectively. Table [\ref{tab:UV-Energy-Components}] shows the energy components for each energy model. The energy components are empty for models 10-12, as they do not include any additional energy equations. Models 20-22 include vibrational energy equations, while models 30 and 31 include both vibrational and electronic energy equations.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Energy Model} & $\bigU_{\mathcal{E}}$ & $\bigV_{\mathcal{E}}$ \\
+\midrule
+Models 10-12 & $\varnothing$ & $\varnothing$ \\
+Model 20 & $\rho e_v$ & $ e_v $ \\
+Model 21 & $\rho e_{vee} $ & $ e_{vee} $      \\
+Model 22 & $\begin{bmatrix} \rho_1 e_{v,1} & \dots & \rho_\text{ND} e_{v,\text{ND}} \end{bmatrix}^T$ & $\begin{bmatrix} e_{v,1} & \dots & e_{v,\text{ND}} \end{bmatrix}^T$    \\
+Model 30 & $\begin{bmatrix} \rho e_v & \rho e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} e_v & e_{el-e} \end{bmatrix}^T$            \\
+Model 31 & $\begin{bmatrix} \rho_1 e_{v,1} & \dots & \rho_\text{ND} e_{v,\text{ND}} & \rho e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} e_{v,1} & \dots & e_{v,\text{ND}} & \rho e_{el-e} \end{bmatrix}^T$       \\
+\bottomrule
+\end{tabular}
+\caption{Energy modes included in each energy model.}
+\label{tab:UV-Energy-Components}
+\end{table}
+
+The Jacobians of $\bigU$ and $\bigV$ with respect to the other vector has the same entries for the species and momentum components, but the energy components are different. The identical parts of the matrices are the following derivatives. They are given in terms of:
+
+\begin{equation*}
+    \pd{\bigU}{\bigV} = c \pd{\bigV}{\bigU} = \text{value}
+\end{equation*}
+
+Where $c$ is a constant that depends on the derivative.
+
+\begin{multicols}{3}
+    \begin{align*}
+        \pd{\rho_s}{\rho_j} = \pd{\rho_j}{\rho_s} &= \delta_{sj} \\
+        \pd{\rho_s}{u_r} = \pd{\rho_s}{(\rho u_r)} &= 0 \\
+        \pd{\rho_s}{u_\theta} = \pd{\rho_s}{(\rho u_\theta)} &= 0 \\
+        \pd{\rho_s}{p} = \pd{\rho_s}{\rho E} &= 0 \\
+        \pd{\rho_s}{\bigV_{\mathcal{E}}} = \pd{\rho_s}{\bigU_{\mathcal{E}}} &=  0
+    \end{align*}
+
+    \begin{align*}
+        \pd{(\rho u_r)}{\rho_s} = -\rho \pd{u_r}{\rho_s} &= u_r \\
+        \pd{(\rho u_r)}{u_r} = \rho^2 \pd{u_r}{(\rho u_r)} &= \rho \\
+        \pd{(\rho u_r)}{u_\theta} = \pd{\rho u_r}{(\rho u_\theta)} &= 0 \\
+        \pd{(\rho u_r)}{p} = \pd{\rho u_r}{p} &= 0 \\
+        \pd{(\rho u_r)}{\bigV_{\mathcal{E}}} = \pd{\rho u_r}{\bigU_{\mathcal{E}}} &=  0
+    \end{align*}
+
+    \begin{align*}
+        \pd{(\rho u_\theta)}{\rho_s} = -\rho \pd{u_\theta}{\rho_s} &= u_\theta \\
+        \pd{(\rho u_\theta)}{u_r} = \pd{\rho u_\theta}{(\rho u_r)} &= 0 \\
+        \pd{(\rho u_\theta)}{u_\theta} = \rho^2 \pd{u_\theta}{(\rho u_\theta)} &= \rho \\
+        \pd{(\rho u_\theta)}{p} = \pd{\rho u_\theta}{p} &= 0 \\
+        \pd{(\rho u_\theta)}{\bigV_{\mathcal{E}}} = \pd{\rho u_\theta}{\bigU_{\mathcal{E}}} &=  0
+    \end{align*}
+\end{multicols}
+
+Now we look at the energy components of the Jacobians. The derivatives of the energy components are different for each energy model. The following subsections show the derivatives for each energy model.
+
+\subsection{Energy Models 10-12}
+
+For every one temperature model, the derivatives are essentially the same. We first need to use implicit differentiation to find the derivatives of $T_{tr}$ with respect to both variable sets. For derivatives of $T_{tr}$ with respect to $\bigV$, we make use of the following equations:
+
+\begin{equation}
+    \pd{T_{tr}}{\bigV_j} = - \frac{\partial F / \partial \bigV_j}{\partial F / \partial T_{tr}}
+\end{equation}
+
+\begin{equation*}
+    p - \sum_{s \in \species} \rho_s R_s T_{tr} = 0
+\end{equation*}
+
+This gives the following derivatives:
+
+\begin{equation*}
+    \pd{T_{tr}}{\rho_s} \bigg|_{\bigV} = - \frac{R_s T_{tr}}{\rho \Rbar} = - \frac{R_s T_{tr}^2}{p}, \hspace{5mm} \pd{T_{tr}}{p} \bigg|_{\bigV} = \frac{1}{\rho \Rbar} = \frac{T_{tr}}{p}, \hspace{5mm} \partial_{u_r} = \partial_{u_\theta} = 0
+\end{equation*}
+
+ We already went over the derivatives of $T_{tr}$ with respect to $\bigU$, so we will not derive them, but they are listed below. Recall the following definitions where the sum over 'int' is over all internal energy modes included in the energy model:
+
+ \begin{equation*}
+    e_s^* = \sum_{\text{int}} e_s^\text{int}, \hspace{5mm} c_v^* = \sum_{s \in \species} c_{v,s}^*, \hspace{5mm} c_{v,s}^* = \sum_{\text{int}} c_{v,s}^\text{int}
+ \end{equation*}
+
+\begin{align*}
+    \pd{T_{tr}}{(\rho_s)} \bigg|_{\bigU} &= \frac{1}{\rho c_v^*} \bb{\frac{u_r^2}{2} - e_s^* - h_{f,s}}
+    \\ \pd{T_{tr}}{(\rho u_r)} \bigg|_{\bigU} &= - \frac{u_r}{\rho c_v^*}
+    \\ \pd{T_{tr}}{(\rho u_\theta)} \bigg|_{\bigU} &= 0
+    \\ \pd{T_{tr}}{(\rho E)} \bigg|_{\bigU} &= \frac{1}{\rho c_v^*}
+\end{align*}        
+
+\begin{multicols}{2}
+    \begin{align*}
+        \partial(\rho E)_{\rho_s} &= e_s^* + \rho c_v^* \pd{T_{tr}}{\rho_s} \bigg|_{\bigV} + \frac{u_r^2}{2} + h_{f,s} \\
+        \partial(\rho E)_{u_r} &= \rho u_r \\
+        \partial(\rho E)_{u_\theta} &= 0 \\ 
+        \partial(\rho E)_p &= \pd{(\rho E)}{T_{tr}} \pd{T_{tr}}{p} \bigg|_{\bigV} = \frac{c_v^*}{\Rbar} \\
+    \end{align*}
+
+    \begin{align*}
+        \partial \bp{p}_{\rho_s} &= R_s T_{tr} + \rho R \pd{T_{tr}}{(\rho_s)} \bigg|_{\bigU}
+        \\ \partial \bp{p}_{\rho u_r} &= \rho R \pd{T_{tr}}{(\rho u_r)} \bigg|_{\bigU} = -u_r \frac{\Rbar}{c_v^*}
+        \\ \partial \bp{p}_{\rho u_\theta} &= 0
+        \\ \partial \bp{p}_{\rho E} &= \rho R \pd{T_{tr}}{(\rho E)} \bigg|_{\bigU} = \frac{\Rbar}{c_v^*}
+    \end{align*}    
+\end{multicols}
+
+
+\subsection{Energy Model 11}
+
+\subsection{Energy Model 12}
+
+\subsection{Energy Model 20}
+
+\subsection{Energy Model 21}
+
+\subsection{Energy Model 22}
+
+\subsection{Energy Model 30}
+
+\subsection{Energy Model 31}
+
+
+
+
+
+
 
 \newpage
 \bibliographystyle{plain}
