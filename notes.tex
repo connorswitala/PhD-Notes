@@ -1488,7 +1488,7 @@ The heat of formation of a species is a constant that defined the amount of ener
 
 
 \begin{equation*}
-    E_f^\circ = \sum_{s=1}^\text{NS} \hform_{,s}
+    E_f^\circ = \sum_{s=1}^\text{NS} \rho_s h_{f,s}
     \label{eq:form-energy}
 \end{equation*}
 
@@ -5529,28 +5529,66 @@ For the nonequilibrium stagnation line solver, the vectors of conserved, primiti
     \end{bmatrix}^T
 \end{align*}
 
-Here, $\bigU_{\mathcal{E}}$, $\bigV_{\mathcal{E}}$, and $\bigF_{\mathcal{E}}$ are the energy components of their respective vectors. Table [\ref{tab:UV-Energy-Components}] shows these energy components for each model. The components are empty for models 10-12, as they do not include any additional energy equations. Models 20-22 include vibrational energy equations, while models 30 and 31 include both vibrational and electronic energy equations. In the table, $\boldsymbol{E}_v = \begin{bmatrix}
-\rho_1 e_{v,1} & \dots & \rho_{NM} e_{v,NM} \end{bmatrix}^T$, while  $\boldsymbol{e}_v = \begin{bmatrix} e_{v,1} & \dots & e_{v,NM} \end{bmatrix}^T$ These indicate the set of NM individual vibrational energy equations per polyatomic species.
+Here, $\bigU_{\mathcal{E}}$, $\bigV_{\mathcal{E}}$, and $\bigF_{\mathcal{E}}$ are the set of additional energy components for their respective vectors. Table [\ref{tab:UV-Energy-Components}] shows these energy components for each model. The components are empty for models 10-12, as they do not include any additional energy equations. In the table, $\boldsymbol{E}_v = \begin{bmatrix} \rho_1 e_{v,1} & \dots & \rho_{NM} e_{v,\text{NM}} \end{bmatrix}^T$, while  $\boldsymbol{e}_v = \begin{bmatrix} e_{v,1} & \dots & e_{v,\text{NM}} \end{bmatrix}^T$. These indicate the set of NM individual vibrational energy equations per polyatomic species. \\
+
+\vspace{5mm}
+We introduce useful notation to generalize these Jacobians for any energy model. First, let $\alpha$ indicate the complete set of energies that is contained in a single entry of $\bigU_\mathcal{E}$. Let $\mathcal{I}$ indicate the set of molecular internal energies in an entry of $\bigU_\mathcal{E}$. Finally, let $\mathcal{A}_{tr}$ be the set of energies that are evaluated at the trans-rotational temperature $T_{tr}$ for a given model. For a three-temperature model that models total vibrational energy in one equation, and electronic-electron energy in another, we have:
+
+\begin{equation*}
+    \bigU_{\mathcal{E}} = \begin{bmatrix}
+        \rho e_v \\ \rho e_{el-e}
+    \end{bmatrix} , \hspace{5mm}
+    \alpha = \begin{bmatrix}
+        \{v\} \\ \{el,e\}
+    \end{bmatrix}, \hspace{5mm} 
+    \mathcal{I} = \begin{bmatrix}
+        \{v\} \\ \{el\}
+    \end{bmatrix}, \hspace{5mm}
+    \mathcal{A}_{tr} = \{e_{tr}^{\heavies}\}    
+\end{equation*}
+
+Here, $\heavies$ denotes the set of heavy species. The definitions of $\alpha$, $\mathcal{I}$, and $\mathcal{A}_{tr}$ for each model are given in Table [\ref{tab:UV-Extra-Components}].
 
 \begin{table}[h!]
 \centering
 \begin{tabular}{lccc}
 \toprule
-\textbf{Energy Model} & $\bigU_{\mathcal{E}}$ & $\bigV_{\mathcal{E}}$ & $\bigF_{\mathcal{E}}$ \\
+\textbf{Energy Model} & $\bigU_{\mathcal{E}}$ & $\bigV_{\mathcal{E}}$ & $\bigF_{\mathcal{E}}$   \\
 \midrule
-Models 10-12 & $\varnothing$ & $\varnothing$ & $\varnothing$ \\
-Model 20 & $\rho e_v$ & $e_v$ & $\rho e_v u_r$ \\
-Model 21 & $\rho e_{vee}$ & $e_{vee}$ & $\rho e_{vee} u_r$ \\
+Models 10-12 & $\varnothing$ & $\varnothing$ & $\varnothing$  \\
+Model 20 & $\rho e_v$ & $e_v$ & $\rho e_v u_r$   \\
+Model 21 & $\rho e_{vee}$ & $e_{vee}$ & $\rho e_{vee} u_r$  \\
 Model 22 & $\begin{bmatrix} \boldsymbol{E}_v \end{bmatrix}^T$ & $\begin{bmatrix} \boldsymbol{e}_v \end{bmatrix}^T$ &  $ \begin{bmatrix} \boldsymbol{E}_v \end{bmatrix}^T u_r$ \\
-Model 30 & $\begin{bmatrix} \rho e_v & \rho e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} e_v & e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} \rho e_v & \rho e_{el-e} \end{bmatrix}^T u_r$ \\
-Model 31 & $\begin{bmatrix} \boldsymbol{E}_v & \rho e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} \boldsymbol{e}_v & \rho e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} \boldsymbol{E}_v & \rho e_{el-e} \end{bmatrix}^T u_r$ \\
+Model 30 & $\begin{bmatrix} \rho e_v & \rho e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} e_v & e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} \rho e_v & \rho e_{el-e} \end{bmatrix}^T u_r$  \\
+Model 31 & $\begin{bmatrix} \boldsymbol{E}_v & \rho e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} \boldsymbol{e}_v & \rho e_{el-e} \end{bmatrix}^T$ & $\begin{bmatrix} \boldsymbol{E}_v & \rho e_{el-e} \end{bmatrix}^T u_r$  \\
 \bottomrule
 \end{tabular}
 \caption{Energy modes included in each energy model.}
 \label{tab:UV-Energy-Components}
 \end{table}
 
-The Jacobians of $\bigU$ and $\bigV$ with respect to the other vector has the same entries for the species and momentum components, but the energy components are different. The identical parts of the matrices are shown below. They are given in terms of:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Energy Model} & $\alpha$ & $\mathcal{I}$ & $\mathcal{A}_{tr}$  \\
+\midrule
+Model 10 & $\varnothing$ & $\varnothing$ & $\bcb{e_{tr}^{\heavies}, e_{tr}^e}$ \\
+Model 11 & $\varnothing$ & $\varnothing$ & $\bcb{e_{tr}^{\heavies}, e_{tr}^e, e_v}$ \\
+Model 12 & $\varnothing$ & $\varnothing$ & $\bcb{e_{tr}^{\heavies}, e_{tr}^e, e_v, e_{el}}$ \\
+Model 20 & $\bcb{\text{v}}$ & $\bcb{\text{v}}$ & $\bcb{e_{tr}^{\heavies}, e_{tr}^e, e_{el}}$  \\
+Model 21 & $\bcb{\text{v, el, e}}$ & $\bcb{\text{v, el}}$ & $\bcb{e_{tr}^{\heavies}}$ \\
+Model 22 & $\bb{\bcb{\text{v}_s}}$ & $\bb{\bcb{\text{v}_s}}$ & $\bcb{e_{tr}^{\heavies}, e_{tr}^e, e_{el}}$ \\
+Model 30 & $\bb{\bcb{\text{v}}, \bcb{\text{el, e}}}$ & $\bb{\bcb{\text{v}}, \bcb{\text{el}}}$ & $\bcb{e_{tr}^{\heavies}}$  \\
+Model 31 & $\bb{\bcb{\text{v}_s}, \bcb{\text{el, e}}}$ & $\bb{\bcb{\text{v}_s}, \bcb{\text{el}}}$ & $\bcb{e_{tr}^{\heavies}}$ \\
+\bottomrule
+\end{tabular}
+\caption{Set of energies contained in each entry of $\bigU_{\mathcal{E}}$ ($\alpha$). Set of molecular internal energies in each entry of $\bigU_{\mathcal{E}}$ ($\mathcal{I}$). Set of energies evaluated at $T_{tr}$ ($\mathcal{A}_{tr}$)}
+\label{tab:UV-Extra-Components}
+\end{table}
+
+The Jacobians of $\bigU$ and $\bigV$ with respect to the other vector have the same entries for the species and momentum components, but the energy components are different. The identical parts of the matrices are shown below. They are given in terms of:
 
 \begin{equation*}
     \pd{\bigU}{\bigV} = c \pd{\bigV}{\bigU} = \text{value}
@@ -5568,17 +5606,17 @@ The Jacobians of $\bigU$ and $\bigV$ with respect to the other vector has the sa
     \begin{align*}
         \pd{(\rho u_r)}{\rho_s} = -\rho \pd{u_r}{\rho_s} &= u_r \\
         \pd{(\rho u_r)}{u_r} = \rho^2 \pd{u_r}{(\rho u_r)} &= \rho \\
-        \pd{(\rho u_r)}{u_\theta} = \pd{\rho u_r}{(\rho u_\theta)} &= 0 \\
-        \pd{(\rho u_r)}{p} = \pd{\rho u_r}{p} &= 0 \\
-        \pd{(\rho u_r)}{\bigV_{\mathcal{E}}} = \pd{\rho u_r}{\bigU_{\mathcal{E}}} &= \boldsymbol{0}
+        \pd{(\rho u_r)}{u_\theta} = \pd{u_r}{(\rho u_\theta)} &= 0 \\
+        \pd{(\rho u_r)}{p} = \pd{u_r}{(\rho E)} &= 0 \\
+        \pd{(\rho u_r)}{\bigV_{\mathcal{E}}} = \pd{u_r}{\bigU_{\mathcal{E}}} &= \boldsymbol{0}
     \end{align*}
 
     \begin{align*}
         \pd{(\rho u_\theta)}{\rho_s} = -\rho \pd{u_\theta}{\rho_s} &= u_\theta \\
-        \pd{(\rho u_\theta)}{u_r} = \pd{\rho u_\theta}{(\rho u_r)} &= 0 \\
+        \pd{(\rho u_\theta)}{u_r} = \pd{u_\theta}{(\rho u_r)} &= 0 \\
         \pd{(\rho u_\theta)}{u_\theta} = \rho^2 \pd{u_\theta}{(\rho u_\theta)} &= \rho \\
-        \pd{(\rho u_\theta)}{p} = \pd{\rho u_\theta}{p} &= 0 \\
-        \pd{(\rho u_\theta)}{\bigV_{\mathcal{E}}} = \pd{\rho u_\theta}{\bigU_{\mathcal{E}}} &= \boldsymbol{0}
+        \pd{(\rho u_\theta)}{p} = \pd{u_\theta}{(\rho E)} &= 0 \\
+        \pd{(\rho u_\theta)}{\bigV_{\mathcal{E}}} = \pd{u_\theta}{\bigU_{\mathcal{E}}} &= \boldsymbol{0}
     \end{align*}
 \end{multicols}
 
@@ -5603,187 +5641,257 @@ For the Jacobian $\partial \bigF / \partial \bigV$, the density and momentum flu
     \hspace{5mm}
         \begin{align*}
         \pd{}{\rho_j}(\rho u_r u_\theta) &= u_r u_\theta \\
-        \pd{}{u_r} (\rho u_r u_\theta) &= 2 \rho u_\theta \\
+        \pd{}{u_r} (\rho u_r u_\theta) &= \rho u_\theta \\
         \pd{}{u_\theta} (\rho u_r u_\theta) &= \rho u_r \\
         \pd{}{p} (\rho u_r u_\theta) &= 0 \\
         \pd{}{\bigV_{\mathcal{E}}} (\rho u_r u_\theta) &= \boldsymbol{0} \\
     \end{align*}
 \end{multicols}
 
+This gives the following matrices:
 
-\subsection{Temperature Derivatives}
-
-Before looking at the energy derivatives, we must first construct some derivatives of temperature. These derivatives are different for each mode, but follow the same approach. We use implicit differentiation to find the derivatives of $T_{tr}$ with respect to $\bigV$ or $\bigU$. We make use of the following equation to compute these derivatives:
+\begin{equation*}
+    \pd{\bigU}{\bigV} = 
+    \begin{bmatrix}
+        \delta_{ij} & 0 & 0 & 0 & \boldsymbol{0} \\
+        u_r & \rho & 0 & 0 & \boldsymbol{0} \\
+        u_\theta & 0 & \rho & 0 & \boldsymbol{0} \\
+        (\rho E)_{\rho_i} & (\rho E)_{u_r} & 0 & (\rho E)_{p} & (\rho E)_{\boldsymbol{V_{\mathcal{E}}}} \\
+        (\bigU_{\mathcal{E}})_{\rho_i} & 0 & 0 & 0 & (\bigU_{\mathcal{E}})_{\boldsymbol{V_{\mathcal{E}}}}
+    \end{bmatrix}
+\end{equation*}
 
 \begin{equation}
-    \pd{T}{V_j} = - \frac{ \displaystyle \pd{\mathcal{R}^{\bigV}}{V_j} \bigg|_T}{ \displaystyle \pd{\mathcal{R}^{\bigV}}{T} \bigg|_{V_j}}, \hspace{5mm} \pd{T}{U_j} = - \frac{ \displaystyle \pd{\mathcal{R}^{\bigU}}{U_j} \bigg|_T}{ \displaystyle \pd{\mathcal{R}^{\bigU}}{T} \bigg|_{U_j}}
+    \pd{\bigV}{\bigU} = \begin{bmatrix}
+        \delta_{ij} & 0 & 0 & 0 & \boldsymbol{0} \\
+        - u_r / \rho & 1 / \rho & 0 & 0 & \boldsymbol{0} \\
+        - u_\theta / \rho & 0 & 1 / \rho & 0 & \boldsymbol{0} \\
+        p_{\rho_i} & p_{\rho u_r} & 0 & p_{\rho E} & p_{\bigU_{\mathcal{E}}} \\ 
+        (\boldsymbol{V_{\mathcal{E}}})_{\rho_i} & 0 & 0 & 0 & (\boldsymbol{V_{\mathcal{E}}})_{\bigU_{\mathcal{E}}}
+    \end{bmatrix}
 \end{equation}
 
-Here, $\mathcal{R}$ is the residual equation for that temperature. $\mathcal{R}_{T_{tr}}^{\bigV} = \mathcal{R}(\bigV, T_{tr})$, and $\mathcal{R}_{T_e}^{\bigU} = \mathcal{R}(\bigU, T_e)$ Shown below are the residual equations for each model.
-
 \begin{equation*}
-    \mathcal{R}_{T_{tr}}^{\bigV} = \sum_{s \in \heavies} \rho_s R_s T_{tr} + \rho_e R_e T_e - p = 0
+    \pd{\bigF}{\bigV} = \begin{bmatrix}
+        \delta_{ij} u_r & \rho_i & 0 & 0 & \boldsymbol{0} \\
+        u_r^2 & 2 \rho u_r & 0 & 1 & \boldsymbol{0} \\
+        u_r u_\theta & \rho u_\theta & \rho u_r & 0 & \boldsymbol{0} \\
+        u_r (\rho E)_{\rho_i} & u_r (\rho E)_{u_r} + \rho H & 0 & u_r \bb{(\rho E)_p + 1} & u_r (\rho E)_{\boldsymbol{V_{\mathcal{E}}}} \\
+        u_r (\bigU_{\mathcal{E}})_{\rho_i} & u_r(\bigU_{\mathcal{E}})_{u_r} + \bigU_{\mathcal{E}} & 0 & 0 & u_r (\bigU_{\mathcal{E}})_{\boldsymbol{V_{\mathcal{E}}}}
+    \end{bmatrix}
 \end{equation*}
 
-\begin{equation*}
-    \mathcal{R}_{T_{tr}}^{\bigU} =  \sum_{s \in \heavies} \rho_s e_{tr,s} + \rho_e R_e T_e + \sum_\alpha^\text{int} \sum_{s \in \heavies} \rho_s e_s^\alpha (T_\alpha) + \frac{1}{2} \frac{1}{\sum_{s \in \species} \rho_s} (\rho u_r) ^2 + \sum_{s \in \species} \rho_s h_{f,s} - \rho E = 0
-\end{equation*}
 
-\begin{equation*}
-    \mathcal{R}_{T_{vee}}^{\bigV} = \mathcal{R}_{T_{vee}}^{\bigU} = \sum_{s \in \heavies} \rho_s \bp{e_{el,s} + e_{v,s}} + \rho_e e_{tr,e} - \rho e_{vee} = 0   
-\end{equation*}
+\subsection{$\bigU$ Energy Derivatives With Respect to $\bigV$}
 
-\begin{equation*}
-    \mathcal{R}_{T_{v}}^{\bigV} = \mathcal{R}_{T_{v}}^{\bigU} = \sum_{s \in \heavies} \rho_s e_{v,s} - \rho e_{v} = 0   
-\end{equation*}
-
-\begin{equation*}
-    \mathcal{R}_{T_{el-e}}^{\bigV} = \mathcal{R}_{T_{el-e}}^{\bigU} = \sum_{s \in \heavies} \rho_s e_{el,s} + \rho_e e_{tr,e} - \rho e_{el-e} = 0
-\end{equation*}
-
-Note that in the residual equation for $T_{tr}$, $T_e$ is a placeholder for the temperature used to describe the free-electron translational energy. A number of temperature models have $T_e = T_{tr}$. Park's 2T model has $T_e = T_{vee}$. This gives the following master equation for the derivatives of $T_{Tr}$, where $(\rho R)_{\heavies} = \sum_{s \in \heavies} \rho_s R_s$:
+Before looking at the energy derivatives, we must first construct some derivatives of temperature. These derivatives vary for each model, but all follow the same approach. We use implicit differentiation to find the derivatives of a temperature $T$ with respect to the entries of $\bigV$. We make use of the following equation to compute these derivatives:
 
 \begin{equation}
-    \pd{T_{tr}}{V_j} = \frac{1}{(\rho R)_{\heavies}} \bb{\pd{p}{V_j} - \pd{\rho_e}{V_j} R_e T_e - \rho_e R_e \pd{T_e}{V_j} - T_{tr} \pd{(\rho R)_{\heavies}}{V_j}}
-    \label{eq:Ttr_V-master}
+    \pd{T}{V_j} = - \frac{ \displaystyle \pd{\mathcal{R}_T}{V_j} \bigg|_T}{ \displaystyle \pd{\mathcal{R}_T}{T} \bigg|_{V_j}}
 \end{equation}
 
-In the case where $T_e = T_{tr}$, Eq [\ref{eq:Ttr_V-master}] collapses nicely to:
+Here, $\mathcal{R}_T$ is the residual equation for that temperature and $\mathcal{R}_{T_{tr}} = \mathcal{R}(\bigV, T_{tr})$. Shown below are the residual equations for each $T_{tr}$ and any secondary temperature $T_\alpha$. 
 
 \begin{equation}
-    \pd{T_{tr}}{V_j} = \frac{1}{\rho \Rbar} \pd{p}{V_j} - \frac{T_{tr}}{\rho \Rbar} \pd{(\rho \Rbar)}{V_j}
+    \mathcal{R}_{T_{tr}} = \sum_{s \in \heavies} \rho_s R_s T_{tr} + \rho_e R_e T_e - p = 0
+    \label{eq:Ttr-res-V}
+\end{equation}
+
+\begin{equation}
+    R_{T_\alpha} = \sum_{s \in \species} \rho_s \sum_{\beta \in \alpha} e_{\beta,s} - \sum_{s \in \species} \rho_s \bigV_{\mathcal{E},\alpha} = 0
+    \label{eq:Ta-res-V}
+\end{equation}
+
+Note that in Eq. [\ref{eq:Ttr-res-V}], $T_e$ is a placeholder for the temperature used to describe the free-electron translational energy. A number of models have $T_e = T_{tr}$. Park's 2T model has $T_e = T_{vee}$, and the three-temperature models has $T_e = T_{el-e}$. The sum over $\beta \in \alpha$ in Eq. [\ref{eq:Ta-res-V}] denotes the sum over every energy mode contained in $\alpha$ that species $s$ contributes to. For Park's 2T model, this gives the following results for a heavy species:
+
+\begin{equation}
+    \sum_{\beta \in \alpha} e_{\beta,s} = e_{v,s} + e_{el,s}
+\end{equation}
+
+This gives the following master equations for the derivatives of $T_{tr}$ and $T_\alpha$, where $(\rho R)_{\heavies} = \sum_{s \in \heavies} \rho_s R_s$ and $(\rho R)_e = \rho_e R_e$. Recall that these derivatives are taken while holding all other variables of $\bigV$ constant.
+
+\begin{equation}
+    \boxed{\pd{T_{tr}}{V_j} = - \frac{1}{(\rho R)_{\heavies}} \bb{ \sum_{s \in \heavies} \pd{\rho_s}{V_j} R_s T_{tr} + \pd{\rho_e}{V_j} R_e T_e + (\rho R)_e \pd{T_e}{V_j} - \pd{p}{V_j}}}
+    \label{eq:Ttr-V-master}
+\end{equation}
+
+\begin{equation}
+    \boxed{\pd{T_\alpha}{V_j} = \frac{1}{\displaystyle \rho c_v^\alpha} \bb{\sum_{s \in \heavies} \bp{\pd{\rho_s}{V_j} \bigV_{\mathcal{E}, \alpha} + \rho_s \pd{\bigV_{\mathcal{E}, \alpha}}{V_j}} - \sum_{s \in \heavies} \pd{\rho_s}{V_j} \sum_{\beta \in \alpha} e_{\beta,s}}}
+    \label{eq:Ta-V-master}
+\end{equation}
+
+In the case where $T_e = T_{tr}$, Eq [\ref{eq:Ttr-V-master}] collapses to:
+
+\begin{equation}
+    \boxed{\pd{T_{tr}}{V_j} = \frac{1}{\rho \Rbar} \pd{p}{V_j} - \frac{T_{tr}}{\rho \Rbar} \pd{(\rho \Rbar)}{V_j}}
 \end{equation}
 
  Which gives the following derivatives:
 
-\begin{equation*}
-    \pd{T_{tr}}{\rho_s} \bigg|_{\bigV} = - \frac{R_s T_{tr}}{\rho \Rbar} = - \frac{R_s T_{tr}^2}{p}, \hspace{5mm} \pd{T_{tr}}{p} \bigg|_{\bigV} = \frac{1}{\rho \Rbar} = \frac{T_{tr}}{p}, \hspace{5mm} \partial_{u_r} = \partial_{u_\theta} = 0
-\end{equation*}
-
-For $T_{el-e}$ derivatives, we have:
-
-\begin{equation*}
-    \pd{T_{el-e}}{V_j} = -\frac{1}{\rho c_{v}^{el} + \rho_e c_{v,e}^{tr}} \bb{\sum_{s} \pd{\rho_s}{V_j} e_{el,s} + \pd{\rho_e}{V_j} e_{tr,e} - \pd{\rho}{V_j} e_{el-e} - \rho \pd{e_{el-e}}{V_j}}
-    \label{eq:Te_V-master}
-\end{equation*}
-
-In general, for all internal temperature derivatives, we have:
-
 \begin{equation}
-    \pd{T_\alpha}{\rho_s} \bigg|_{\bigV} = \frac{e_\alpha - e_{\alpha,s}^*}{\rho c_{v, \alpha}}, \hspace{5mm} \pd{T_\alpha}{e_\alpha} \bigg|_{\bigV} = \frac{1}{ c_{v,\alpha}}
+    \pd{T_{tr}}{\rho_s} \bigg|_{\bigV} = - \frac{R_s T_{tr}}{\rho \Rbar} = - \frac{R_s T_{tr}^2}{p}, \hspace{5mm} \pd{T_{tr}}{p} \bigg|_{\bigV} = \frac{1}{\rho \Rbar} = \frac{T_{tr}}{p}, \hspace{5mm} \partial_{u_r} = \partial_{u_\theta} = 0
 \end{equation}
 
-Here, $\alpha$ labels an entry of $\bigV_{\mathcal{E}}$, and $e_{\alpha,s}^*$ is the contribution that species $s$ makes to $e_\alpha$. For example, in the case of $\alpha$ being the vibrational energy entry, we have:
+In Eq. [\ref{eq:Ta-V-master}], $\rho c_v^\alpha$ has the following definition and is equivalent to the density weighted combination of all specific heats that contribute to $\bigU_{\mathcal{E},\alpha}$: 
 
 \begin{equation*}
-    \pd{T_{v}}{\rho_s} \bigg|_{\bigV} = \frac{e_v - e_{v,s}}{\rho c_v^v}, \hspace{5mm} \pd{T_v}{e_v} \bigg|_{\bigV} = \frac{1}{c_v^v}
+    \rho c_v^\alpha = \sum_{s \in \species} \rho_s \sum_{\beta \in \alpha} e_{\beta,s}
 \end{equation*}
 
-For $\alpha$ being the electronic-electron energy entry, we have:
+As an example for Eq. [\ref{eq:Ta-V-master}], the derivatives of the temperature $T_{el-e}$ in the 3T model gives:
 
 \begin{equation*}
-    \pd{T_{el-e}}{\rho_{s \in \heavies}} \bigg|_{\bigV} = \frac{e_{el-e} - e_{el,s}}{\rho c_v^{el-e}} ,\hspace{5mm} \pd{T_{el-e}}{\rho_e} \bigg|_{\bigV} = \frac{e_{el-e} - (e_{tr,e})}{\rho c_{v}^{el-e}}, \hspace{5mm} \pd{T_{el-e}}{e_{el-e}} \bigg|_{\bigV} = \frac{1}{c_v^{el-e}}
+    \pd{T_{el-e}}{\rho_{s \in \heavies}} \bigg|_{\bigV} = \frac{e_{el-e} - e_{el,s}}{\rho c_v^{el-e}} ,\hspace{5mm} \pd{T_{el-e}}{\rho_e} \bigg|_{\bigV} = \frac{e_{el-e} - e_{tr,e}}{\rho c_{v}^{el-e}}, \hspace{5mm} \pd{T_{el-e}}{e_{el-e}} \bigg|_{\bigV} = \frac{1}{c_v^{el-e}}
 \end{equation*}
 
-A final example is when $\alpha$ is for the vibrational energy per species $(v,s$). This gives:
+A final example is when $\alpha$ = $v_s$ is for the vibrational energy per molecular species. This gives:
 
 \begin{equation}
     \pd{T_{v,s}}{\rho_j} \bigg|_{\bigV} = \frac{e_{v,s} - e_{v,s}}{\rho_s c_{v,s}^v} = 0, \hspace{5mm} \pd{T_{v,s}}{e_{v,j}} \bigg|_{\bigV} = \frac{\delta_{sj}}{c_{v,s}^v}
 \end{equation}
 
+It is now straightforward to compute the derivatives of $\bigU_{\mathcal{E}}$ with respect to $\bigV$. First, we look at the total energy equation in it's most general form:
 
-\subsection{Energy Derivatives}
+\begin{equation}
+    \boxed{\rho E = \sum_{s \in \heavies} \rho_s e_{tr,s} (T_{tr}) + \rho_e c_{v,e}^{tr} T_e + \sum_{s \in \species} \rho_s \sum_{\beta \in \mathcal{I}} e_{\beta,s} + \frac{1}{2} \sum_{s \in \species} \rho_s u_r^2 + \sum_{s \in \species} \rho_s h_{f,s}}
+\end{equation}
 
-The total energy can be written in it's most general form as:
-
-\begin{equation*}
-    \rho E = \sum_{s \in \heavies} \rho_s e_{tr,s} (T_{tr}) + \rho_e c_{v,e}^{tr} T_\alpha + \sum_{\alpha} \sum_{s \in \heavies} \rho_s e_{\alpha} (T_\alpha) + \frac{1}{2} \sum_{s \in \alpha} \rho_s u_r^2 + \sum_{s \in \species} \rho_s h_{f,s}
-\end{equation*}
-
-The sum over $\alpha$ indicates the sum over the internal energies besides the trans-rotational ones. The sum for $s \in \alpha$ sums over every species $s$ that contributes to energy mode $\alpha$. Only the derivatives of this equation with respect to primitive variables is needed. The master equations is then:
+Recall that the sum over $\beta \in \mathcal{I}$ indicates the sum over the molecular internal energies in $\alpha$. Since the free-electron energy has been explicitly included, we cannot double count it's contribution in the sum. The master equation for the derivative is then:
 
 \begin{multline}
     \pd{(\rho E)}{V_j} = \sum_{s \in \heavies} \bb{\pd{\rho_s}{V_j} e_{tr,s} + \rho_s c_{v,s}^{tr} \pd{T_{tr}}{V_j}} + \pd{\rho_e}{V_j} c_{v,e}^{tr} T_e + \rho_e c_{v,e}^{tr} \pd{T_e}{V_j}
-    \\ + \sum_\alpha \sum_{s \in \alpha} \bb{ \pd{\rho_s}{V_j} e_{\alpha,s} (T_\alpha) + \rho_s c_{v,s}^\alpha \pd{T_\alpha}{V_j}}  + \frac{1}{2} \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} u_r^2 + 2 \rho u_r \pd{u_r}{V_j}}   + \sum_{s \in \species} \pd{\rho_s}{V_j} h_{f,s}
+    \\ + \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} \sum_{\beta \in \mathcal{I}} e_{\beta,s} + \rho_s \sum_{\beta \in \mathcal{I}} c_{v,s}^\beta \pd{T_\alpha}{V_j}} + \frac{1}{2} \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} u_r^2} + 2 \rho u_r \pd{u_r}{V_j}   + \sum_{s \in \species} \pd{\rho_s}{V_j} h_{f,s}
 \end{multline}
 
-Derivatives of temperatures can now be subbed in and the resulting expression for $\partial (\rho E)$ can be found. For example, let us consider a 1T model that neglects vibrational and electronic energy. The sum over $\alpha$ goes away and the only temperature is the translational one. The term $\rho_e c_{v,e}^{tr} T_e$ gets absorbed into the sum over heavies and we have:
+Derivatives of temperatures can now be substituted in and the resulting expression for $\partial (\rho E)$ can be found. For example, let us consider a 1T model that neglects vibrational and electronic energy. Since there are no molecular internal energies besides rotational being modelled, the sum over $\beta \in \mathcal{I}$ goes away and the only temperature is the trans-rotational one. The term $\rho_e c_{v,e}^{tr} T_e$ gets absorbed into the sum over heavies and we have:
 
 \begin{equation*}
-    \pd{(\rho E)}{V_j} = \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} e_{tr,s} + \rho_s c_{v,s}^{tr} \pd{T_{tr}}{V_j}} + \frac{1}{2} \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} u_r^2 + 2 \rho u_r \pd{u_r}{V_j}}   + \sum_{s \in \species} \pd{\rho_s}{V_j} h_{f,s}
+    \pd{(\rho E)}{V_j} = \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} e_{tr,s} + \rho_s c_{v,s}^{tr} \pd{T_{tr}}{V_j}} + \frac{1}{2} \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} u_r^2} + 2 \rho u_r \pd{u_r}{V_j} + \sum_{s \in \species} \pd{\rho_s}{V_j} h_{f,s}
 \end{equation*}
 
 Choosing $V_j = \rho_j$ gives:
 
 \begin{equation*}
-    \pd{(\rho E)}{\rho_j} = e_{tr,j} + \rho \cvbar \pd{T_{tr}}{\rho_j} + \frac{u_r^2}{2} + h_{f,j} = \bb{c_{v,j} - \frac{\cvbar}{\Rbar} R_j} T_{tr} + \frac{u_r^2}{2} + h_{f,j}
+    \pd{(\rho E)}{\rho_j} = e_{tr,j} + \sum_{s \in \species} \rho c_{v,s}^{tr} \pd{T_{tr}}{\rho_j} + \frac{u_r^2}{2} + h_{f,j} = \bb{c_{v,j} - \frac{\cvbar}{\Rbar} R_j} T_{tr} + \frac{u_r^2}{2} + h_{f,j}
 \end{equation*}
 
-This can be done for all models, and although tedious, gives a general method for computing the derivatives necessary for the flux Jacobian matrices. For a Park's 2T model, we
-
-
-
-
-\subsection{Energy Models 10-12}
-
-For every one temperature model, the derivatives are essentially the same.
-We already went over the derivatives of $T_{tr}$ with respect to $\bigU$, so we will not derive them, but they are listed below. Recall the following definitions where the sum over 'int' is over all internal energy modes included in the energy model:
+ This can be done for all models, and although tedious, gives a general method for computing the derivatives necessary for the flux Jacobian matrices. For Park's 2T model, we find a similar result:
 
 \begin{equation*}
-e_s^* = \sum_{\text{int}} e_s^\text{int}, \hspace{5mm} c_v^* = \sum_{s \in \species} c_{v,s}^*, \hspace{5mm} c_{v,s}^* = \sum_{\text{int}} c_{v,s}^\text{int}
+    \pd{(\rho E)}{\rho_{j \in \heavies}} = e_{tr,j} + \sum_{\beta \in \mathcal{I}} e_{\beta,j} + \sum_{s \in \heavies} \rho_s c_{v,s}^{tr} \pd{T_{tr}}{\rho_j} + \rho c_v^{vee} \pd{T_{vee}}{\rho_j} + \frac{u_r^2}{2} + h_{f,j} 
 \end{equation*}
 
-For example, in model 10, only trans-rotational energy is included, so $e_s^* = e_{tr,s}$ and $c_v^* = \cvbar$. For model 11, vibrational energy is included, so $e_s^* = e_{tr,s} + e_{v,s}$, and $c_v^* = \cvbar + \bar{c}_{v,v}$. 
+We now look to the derivatives of the other entries of $\bigU_{\mathcal{E}}$ with respect to $\bigV$. These are quiet simple. For all $\alpha$, we have:
+
+\begin{equation*}
+    U_{\mathcal{E}, \alpha} = \sum_{s \in \species} \rho_s V_{\mathcal{E}, \alpha}
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\pd{U_{\mathcal{E}, \alpha}}{V_j} = \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} V_{\mathcal{E}, \alpha} + \rho_s \pd{V_{\mathcal{E}, \alpha}}{V_j} }}
+\end{equation*}
+
+\subsection{$\bigV_{\mathcal{E}}$ Energy Derivatives With Respect to $\bigU$}
+
+First, we rewrite the total energy equation in terms of $\bigU$:
+
+\begin{equation}
+\rho E = \sum_{s \in \species} \rho_s \sum_{\beta \in \mathcal{A}_{tr}} e_{\beta,s} (T_{tr}) + \sum_{\alpha \in \bigU_{\mathcal{E}}} U_{\mathcal{E},\alpha} + \frac{(\rho u_r^2)}{2 \rho} + \sum_{s \in \species} \rho_s h_{f,s}
+\end{equation}
+
+Recall that $\mathcal{A}_{tr}$ is the set of energies evaluated at the translational temperature. The sum over $\alpha \in \bigU_{\mathcal{E}}$ is over all additional conserved energy components in $\bigU_{\mathcal{E}}$ that is not evaluated at the translational temperature. As an example, consider the 1T model that includes only vibrational energy. In this case, $e_{tr}$ and $e_{v}$ are evaluated at $T_{tr}$. Therefore:
 
 \begin{align*}
-    \pd{T_{tr}}{(\rho_s)} \bigg|_{\bigU} &= \frac{1}{\rho c_v^*} \bb{\frac{u_r^2}{2} - e_s^* - h_{f,s}}
-    \\ \pd{T_{tr}}{(\rho u_r)} \bigg|_{\bigU} &= - \frac{u_r}{\rho c_v^*}
-    \\ \pd{T_{tr}}{(\rho u_\theta)} \bigg|_{\bigU} &= 0
-    \\ \pd{T_{tr}}{(\rho E)} \bigg|_{\bigU} &= \frac{1}{\rho c_v^*}
-\end{align*}        
-
-\begin{multicols}{2}
-    \begin{align*}
-        \partial(\rho E)_{\rho_s} &= e_s^* + \rho c_v^* \pd{T_{tr}}{\rho_s} \bigg|_{\bigV} + \frac{u_r^2}{2} + h_{f,s} \\
-        \partial(\rho E)_{u_r} &= \rho u_r \\
-        \partial(\rho E)_{u_\theta} &= 0 \\ 
-        \partial(\rho E)_p &= \pd{(\rho E)}{T_{tr}} \pd{T_{tr}}{p} \bigg|_{\bigV} = \frac{c_v^*}{\Rbar} \\
-    \end{align*}
-
-    \begin{align*}
-        \partial \bp{p}_{\rho_s} &= R_s T_{tr} + \rho R \pd{T_{tr}}{(\rho_s)} \bigg|_{\bigU}
-        \\ \partial \bp{p}_{\rho u_r} &= \rho R \pd{T_{tr}}{(\rho u_r)} \bigg|_{\bigU} = -u_r \frac{\Rbar}{c_v^*}
-        \\ \partial \bp{p}_{\rho u_\theta} &= 0
-        \\ \partial \bp{p}_{\rho E} &= \rho R \pd{T_{tr}}{(\rho E)} \bigg|_{\bigU} = \frac{\Rbar}{c_v^*}
-    \end{align*}    
-\end{multicols}
-
-We also have the following results for $\partial (\rho H u_r) / \partial \bigV$ which is a row in the $\partial \bigF / \partial \bigV$ Jacobian:
-
-\begin{align*}
-    \pd{(\rho H u_r)}{\rho_s} &= \partial(\rho E)_{\rho_s} u_r \\
-    \pd{(\rho H u_r)}{u_r} &= \partial(\rho E)_{u_r} u_r + \rho H \\
-    \pd{(\rho H u_r)}{u_\theta} &= 0 \\
-    \pd{(\rho H u_r)}{p} &= \bb{\partial(\rho E)_{p} + 1} u_r \\
+    \sum_{s \in \species} \rho_s \sum_{\beta \in \mathcal{A}_{tr}} e_{\beta,s} (T_{tr}) &= \sum_{s \in \heavies} \rho_s \bp{e_{tr,s} (T_{tr}) + e_{v,s} (T_{tr})} + \rho_e e_{tr,e} \\
+    \sum_{\alpha \in U_{\mathcal{E}}} \bigU_{\mathcal{E},\alpha} &= \varnothing
 \end{align*}
 
+For Park's two temperature mode, the free-electron translational energy, and vibrational/electronic energy of heavy species are evaluated at $T_{vee}$, while the translational energy of heavy species is evaluated at $T_{tr}$. Therefore:
+
+\begin{align*}
+    \sum_{s \in \species} \rho_s \sum_{\beta \in \mathcal{A}_{tr}} e_{\beta,s} (T_{tr}) &= \sum_{s \in \heavies} \rho_s e_{tr,s} (T_{tr}) \\
+    \sum_{\alpha \in U_{\mathcal{E}}} \bigU_{\mathcal{E},\alpha} &= \rho e_{vee}
+\end{align*}
+
+We can now use implicit differentiation to find the derivatives of $T$ with respect to $\bigU$. We again make use of the following equation to compute these derivatives:
 
 
+\begin{equation}
+\pd{T}{U_j} = - \frac{ \displaystyle \pd{\mathcal{R}_T}{U_j} \bigg|_T}{ \displaystyle \pd{\mathcal{R}_T}{T} \bigg|_{U_j}}
+\end{equation}
 
+The residual equation for all of the internal energy models is the same as used before. The translational temperature residual is now given by:
 
+\begin{equation}
+    \mathcal{R}_{T_{tr}} = \sum_{s \in \species} \rho_s \sum_{\beta \in \mathcal{A}_{tr}} e_{\beta,s} (T_{tr}) + \sum_{\alpha \in \bigU_{\mathcal{E}}} U_{\mathcal{E},\alpha} + \frac{1}{2}\frac{(\rho u_r)^2}{\sum_{s \in \species} \rho_s} + \sum_{s \in \species} \rho_s h_{f,s} - \rho E = 0
+\end{equation}
 
-\subsection{Energy Model 20}
+This gives the following master equation for the derivatives of $T_{tr}$ with respect to $\bigU$:
 
-\subsection{Energy Model 21}
+\begin{multline}
+    \pd{T_{tr}}{U_j} = \frac{1}{\displaystyle \sum_{s \in \species} \rho_s \sum_{\beta \in \mathcal{A}_{tr}} c_{v,s}^{\beta}} \bigg[\pd{(\rho E)}{U_j} + \frac{u_r^2}{2} \sum_{s \in \species} \pd{\rho_s}{U_j} - \sum_{s \in \species} \bp{\pd{\rho_s}{U_j} \sum_{\beta \in \mathcal{A}_{tr}} e_{\beta,s}} \\
+    - \sum_{\alpha \in \bigU_{\mathcal{E}}} \pd{\bigU_{\mathcal{E},\alpha}}{U_j} - u_r \pd{(\rho u_r)}{U_j} - \sum_{s \in \species} h_{f,s} \pd{\rho_s}{U_j} \bigg]
+\end{multline}
 
-\subsection{Energy Model 22}
+The fraction in front of the bracket is the inverse of the total heat capacity at constant volume for all energies evaluated at $T_{tr}$. That is, for a 1T model with no vibrational or electronic energy, the fraction is $1 / \rho \cvbar$. For Park's 2T model, the fraction is $1 / (\rho c_v^{tr})_{\heavies}$. By using Park's 2T model as a further example, we can see that the derivatives of $T_{tr}$ with respect to $\rho_{j \in \heavies}$ are:
 
-\subsection{Energy Model 30}
+\begin{equation*}
+    \pd{T_{tr}}{\rho_{j \in \heavies}} = \frac{1}{(\rho c_v^{tr})_{\heavies}} \bb{\frac{u_r^2}{2} - e_{tr,j} - h_{f,j}}
+\end{equation*}
 
-\subsection{Energy Model 31}
+We will now look at the derivatives of interal temperatures. As stated, we use the same residual equations that were used in the previous section. This gives the following master equation:
 
+\begin{equation*}
+    \boxed{\pd{T_{\alpha}}{U_j} = \frac{1}{\rho c_v^\alpha} \bb{\pd{U_{\mathcal{E},\alpha}}{U_j} - \sum_{s \in \species} \pd{\rho_s}{U_j} \sum_{\beta \in \alpha} e_{\beta,s}}}
+\end{equation*}
 
+We are now able to find the derivatives of $\bigV_{\mathcal{E}}$ with respect to $\bigU$. We make use of the pressure equation again:
 
+\begin{equation*}
+    p = \sum_{s \in \heavies} \rho_s R_s T_{tr} + \rho_e R_e T_e
+\end{equation*}
+
+The derivatives for pressure is then:
+
+\begin{equation}
+    \boxed{\pd{p}{U_j} = \sum_{s \in \heavies} \bb{\pd{\rho_s}{U_j} R_s T_{tr} + \rho_s R_s \pd{T_{tr}}{U_j}} + \pd{\rho_e}{U_j} R_e T_e + \rho_e R_e \pd{T_e}{U_j}}
+\end{equation}
+
+For any internal energy equation, the derivatives are:
+
+\begin{equation}
+    \boxed{\pd{V_{\mathcal{E},\alpha}}{U_j} = \frac{1}{\rho} \pd{U_{\mathcal{E},\alpha}}{U_j} - \frac{1}{\rho^2} \pd{\rho_s}{U_j} U_{\mathcal{E},\alpha}}
+\end{equation}
+
+\subsection{Eigenvector Matrices}
+
+The right and left eigenvector matrices are needed to compute the final split fluxes. We have the following:
+
+\begin{equation*}
+    \boldsymbol{R} = \begin{bmatrix}
+        \delta_{ij} & \rho_i & \rho_i & 0 & \boldsymbol{0} \\
+        u_r & \rho(u_r - a) & \rho (u_r + a) & 0 & \boldsymbol{0} \\
+        u_\theta & \rho u_\theta & \rho u_\theta & \rho & \boldsymbol{0} \\
+        (\rho E)_{\rho_j} & \rho(H - u_r a) & \rho(H + u_r a) & 0 & (\rho E)_{\bigV_{\mathcal{E}}} \\
+        (\bigU_{\mathcal{E}})_{\rho_j} & U_{\mathcal{E}} & U_{\mathcal{E}} & 0 & (\bigU_{\mathcal{E}})_{\bigV_{\mathcal{E}}}
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \boldsymbol{L} = \begin{bmatrix}
+        \delta_{ji} - \frac{Y_j p_{\rho_i}}{a^2} & -\frac{Y_j p_{u_r}}{a_2} & 0 & -\frac{Y_j p_{\rho E}}{a^2} & -\frac{Y_j p_{\bigU_{\mathcal{E}}}}{a^2} \\
+        \frac{1}{2 \rho a} \bp{\frac{p_{\rho_i}}{a} + u_r} & \frac{1}{2 \rho a} \bp{\frac{p_{\rho u_r}}{a} - 1} & 0 & \frac{p_{\rho E}}{2 \rho a^2} & \frac{p_{\bigU_{\mathcal{E}}}}{2 \rho a^2} \\
+        \frac{1}{2 \rho a} \bp{\frac{p_{\rho_i}}{a} - u_r} & \frac{1}{2 \rho a} \bp{\frac{p_{\rho u_r}}{a} + 1} & 0 & \frac{p_{\rho E}}{2 \rho a^2} & \frac{p_{\bigU_{\mathcal{E}}}}{2 \rho a^2} \\
+         -\frac{u_\theta}{\rho} & 0 & \frac{1}{\rho} & 0 & \boldsymbol{0} \\
+         (\bigV_{\mathcal{E}})_{\rho_i} & 0 & 0 & 0 & (\bigV_{\mathcal{E}})_{\bigU_{\mathcal{E}}}
+    \end{bmatrix}
+\end{equation*}
+
+With the following definition of $a$:
+
+\begin{equation}
+    a^2 = \sum_{s \in \species} Y_s p_{\rho_s} + u_r p_{\rho u_r} + H p_{\rho E} + \frac{1}{\rho} \sum_{\alpha \in \bigU_{\mathcal{E}}} U_{\mathcal{E}, \alpha} p_{\bigU_{\mathcal{E}, \alpha}}
+\end{equation}
 
 
 
