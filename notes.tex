@@ -5753,14 +5753,15 @@ A final example is when $\alpha$ = $v_s$ is for the vibrational energy per molec
 It is now straightforward to compute the derivatives of $\bigU_{\mathcal{E}}$ with respect to $\bigV$. First, we look at the total energy equation in it's most general form:
 
 \begin{equation}
-    \boxed{\rho E = \sum_{s \in \heavies} \rho_s e_{tr,s} (T_{tr}) + \rho_e c_{v,e}^{tr} T_e + \sum_{s \in \species} \rho_s \sum_{\beta \in \mathcal{I}} e_{\beta,s} + \frac{1}{2} \sum_{s \in \species} \rho_s u_r^2 + \sum_{s \in \species} \rho_s h_{f,s}}
+    \boxed{\rho E = \sum_{s \in \species} \rho_s 
+    \sum_{\beta \in \mathcal{A}_{tr}} e_{\beta,s} + \sum_{s \in \species} \rho_s \sum_{\beta \in \bigV_{\mathcal{E}}} \bigV_{\mathcal{E}, \beta} + \frac{1}{2} \sum_{s \in \species} \rho_s u_r^2 + \sum_{s \in \species} \rho_s h_{f,s}}
 \end{equation}
 
-Recall that the sum over $\beta \in \mathcal{I}$ indicates the sum over the molecular internal energies in $\alpha$. Since the free-electron energy has been explicitly included, we cannot double count it's contribution in the sum. The master equation for the derivative is then:
+Recall that the sum over $\beta \in \mathcal{A_{tr}}$ indicates the sum over the energies evaluvated at the translational temperature. Since the free-electron energy has been explicitly included, we cannot double count it's contribution in the sum, so if it appears in $\bigV_\mathcal{E}$, it does not appear in this sum. The master equation for the derivative is then:
 
 \begin{multline}
-    \pd{(\rho E)}{V_j} = \sum_{s \in \heavies} \bb{\pd{\rho_s}{V_j} e_{tr,s} + \rho_s c_{v,s}^{tr} \pd{T_{tr}}{V_j}} + \pd{\rho_e}{V_j} c_{v,e}^{tr} T_e + \rho_e c_{v,e}^{tr} \pd{T_e}{V_j}
-    \\ + \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} \sum_{\beta \in \mathcal{I}} e_{\beta,s} + \rho_s \sum_{\beta \in \mathcal{I}} c_{v,s}^\beta \pd{T_\alpha}{V_j}} + \frac{1}{2} \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} u_r^2} + 2 \rho u_r \pd{u_r}{V_j}   + \sum_{s \in \species} \pd{\rho_s}{V_j} h_{f,s}
+    \pd{(\rho E)}{V_j} = \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} \sum_{\beta \in \mathcal{A}_{tr}} e_{\beta,s} + \rho_s \sum_{\beta \in \mathcal{A}_{tr}} c_v^\beta \pd{T_{tr}}{V_j}} + \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} \sum_{\beta \in \bigV_{\mathcal{E}}} \bigV_{\mathcal{E}, \beta} + \rho_s \sum_{\beta \in \bigV_{\mathcal{E}}} \pd{\bigV_{\mathcal{E}, \beta}}{V_j}}
+    \\ + \frac{1}{2} \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} u_r^2} + 2 \rho u_r \pd{u_r}{V_j}   + \sum_{s \in \species} \pd{\rho_s}{V_j} h_{f,s}
 \end{multline}
 
 Derivatives of temperatures can now be substituted in and the resulting expression for $\partial (\rho E)$ can be found. For example, let us consider a 1T model that neglects vibrational and electronic energy. Since there are no molecular internal energies besides rotational being modelled, the sum over $\beta \in \mathcal{I}$ goes away and the only temperature is the trans-rotational one. The term $\rho_e c_{v,e}^{tr} T_e$ gets absorbed into the sum over heavies and we have:
