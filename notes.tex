@@ -5897,6 +5897,14 @@ With the following definition of $a$:
 
 \subsection{Additional Jacobians}
 
+The diffusive flux can be split up into a vector dependant on spatial gradients, and a vector due to the geometric / variable separation techniques:
+
+\begin{equation*}
+    \bigF_d = \bigM_D^F \pd{\bigW}{r} + \bigB_D^F
+\end{equation*}
+
+
+
 Recall the convective source term vector for the stagnation line solve:
 
 \begin{equation}
@@ -5916,6 +5924,7 @@ Here, $\boldsymbol{H}_{\mathcal{E}} $ is the enthalpy of the grouped inteneral e
         \hat{u} [(p_e)_{\rho_j} - H_\mathcal{E}] & H_\mathcal{E} & H_\mathcal{E} & 0 & \hat{u} [(p_e)_{\bigU_{\mathcal{E}}} + 1] \\
     \end{bmatrix}
 \end{equation}
+
 
 
 
