@@ -5761,7 +5761,7 @@ Recall that the sum over $\beta \in \mathcal{A_{tr}}$ indicates the sum over the
 
 \begin{multline}
     \pd{(\rho E)}{V_j} = \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} \sum_{\beta \in \mathcal{A}_{tr}} e_{\beta,s} + \rho_s \sum_{\beta \in \mathcal{A}_{tr}} c_v^\beta \pd{T_{tr}}{V_j}} + \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} \sum_{\beta \in \bigV_{\mathcal{E}}} \bigV_{\mathcal{E}, \beta} + \rho_s \sum_{\beta \in \bigV_{\mathcal{E}}} \pd{\bigV_{\mathcal{E}, \beta}}{V_j}}
-    \\ + \frac{1}{2} \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} u_r^2} + 2 \rho u_r \pd{u_r}{V_j}   + \sum_{s \in \species} \pd{\rho_s}{V_j} h_{f,s}
+    \\ +  \frac{1}{2} \sum_{s \in \species} \bb{\pd{\rho_s}{V_j} u_r^2} + 2 \rho u_r \pd{u_r}{V_j}   + \sum_{s \in \species} \pd{\rho_s}{V_j} h_{f,s}
 \end{multline}
 
 Derivatives of temperatures can now be substituted in and the resulting expression for $\partial (\rho E)$ can be found. For example, let us consider a 1T model that neglects vibrational and electronic energy. Since there are no molecular internal energies besides rotational being modelled, the sum over $\beta \in \mathcal{I}$ goes away and the only temperature is the trans-rotational one. The term $\rho_e c_{v,e}^{tr} T_e$ gets absorbed into the sum over heavies and we have:
@@ -5892,6 +5892,29 @@ With the following definition of $a$:
 
 \begin{equation}
     a^2 = \sum_{s \in \species} Y_s p_{\rho_s} + u_r p_{\rho u_r} + H p_{\rho E} + \frac{1}{\rho} \sum_{\alpha \in \bigU_{\mathcal{E}}} U_{\mathcal{E}, \alpha} p_{\bigU_{\mathcal{E}, \alpha}}
+\end{equation}
+
+
+\subsection{Additional Jacobians}
+
+Recall the convective source term vector for the stagnation line solve:
+
+\begin{equation}
+    \boldsymbol{S}_c = -\frac{2}{r} \hat{u} \begin{bmatrix}
+        \rho_s \\ \rho u_r \\ \frac{3}{2} \rho u_\theta - \frac{p - p_\infty}{u_r + u_\theta} \\ \rho H \\ \rho \boldsymbol{H}_{\mathcal{E}} 
+    \end{bmatrix}, \hspace{5mm} \hat{u} = u_r + u_\theta
+\end{equation}
+
+Here, $\boldsymbol{H}_{\mathcal{E}} $ is the enthalpy of the grouped inteneral energy of $\mathcal{E}_\alpha$. For purely internal energy, this reduced to $e_\mathcal{E}$. However, for models in which the electron energy is not evaluated at the trans-rotational temperature, $p_e$ must be included, and so $\boldsymbol{H}_\mathcal{E} = e_\mathcal{E} + p_e$. The Jacobian for this vector is:
+
+\begin{equation}
+    \bigJ_c = \pd{\bigS_c}{\bigU} = -\frac{2}{r} \begin{bmatrix}
+        (\delta_{ij} - Y_i) \hat{u} & Y_i & Y_i & 0 & \boldsymbol{0} \\
+        -u_r \hat{u} & u_r + \hat{u} & u_r & 0 & \boldsymbol{0} \\
+        -\frac{3}{2} u_\theta \hat{u} - p_{\rho_j} & \frac{3}{2} u_\theta - p_{\rho u_r} & \frac{3}{2} (\hat{u} + u_\theta) & - p_{\rho E} & -p_{\bigU_{\mathcal{E}}} \\
+        \hat{u} (p_{\rho_j} - H) & \hat{u} p_{\rho u_r} + H & H & \hat{u} (p_{\rho E} + 1) & \hat{u} p_{\bigU_{\mathcal{E}}} \\
+        \hat{u} [(p_e)_{\rho_j} - H_\mathcal{E}] & H_\mathcal{E} & H_\mathcal{E} & 0 & \hat{u} [(p_e)_{\bigU_{\mathcal{E}}} + 1] \\
+    \end{bmatrix}
 \end{equation}
 
 
